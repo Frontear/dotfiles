@@ -1,3 +1,7 @@
+if [ -z $GPG_TTY ]; then
+  export GPG_TTY=$(tty) # powerlevel10k instant prompt breaks stdin
+fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -6,8 +10,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 if [ "$TERM" = "linux" ]; then
-	PS1="[%n@%m %~]$ "
-	return # don't execute rest of script
+  PS1="[%n@%m %~]$ "
+  return # don't execute rest of script
 fi
 
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -58,13 +62,9 @@ else
   export EDITOR='nvim'
 fi
 
-if [ -z $GPG_TTY ]; then
-	export GPG_TTY=$(tty) # why?
-fi
-
 CACHE_DIR=${XDG_CONFIG_DIR:-$HOME/.cache}
 if [ ! -d $CACHE_DIR ]; then
-	mkdir -p $CACHE_DIR
+  mkdir -p $CACHE_DIR
 fi
 
 export ZSH_COMPDUMP=$CACHE_DIR/.zcompdump
