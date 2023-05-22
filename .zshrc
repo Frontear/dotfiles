@@ -12,6 +12,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 CACHE_DIR=${XDG_CACHE_DIR:-$HOME/.cache}
+DATA_DIR=${XDG_DATA_HOME:-$HOME/.local/share}
 
 ZSH=/usr/share/oh-my-zsh/
 ZSH_THEME="powerlevel10k"
@@ -21,6 +22,7 @@ export HISTFILE=$CACHE_DIR/.zsh_history
 export LESSHISTFILE=$CACHE_DIR/.lesshst
 export RUSTUP_HOME=$CACHE_DIR/.rustup
 export CARGO_HOME=$CACHE_DIR/.cargo
+export GNUPGHOME=$DATA_DIR/gnupg
 
 export PATH="$HOME/.local/bin:$PATH:$CARGO_HOME/bin"
 
