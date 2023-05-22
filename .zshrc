@@ -1,4 +1,4 @@
-export GPG_TTY=$TTY
+export GPG_TTY=$(tty)
 
 if [ "$TERM" = "linux" ]; then
   PS1="[%n@%m %~]$ "; return
