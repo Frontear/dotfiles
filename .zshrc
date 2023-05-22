@@ -14,7 +14,7 @@ if [ "$TERM" = "linux" ]; then
   return # don't execute rest of script
 fi
 
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
 
 ZSH=/usr/share/oh-my-zsh/
 ZSH_THEME="powerlevel10k"
@@ -49,7 +49,7 @@ ZSH_THEME="powerlevel10k"
 # much, much faster.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(colored-man-pages git zsh-autosuggestions zsh-syntax-highlighting)
 
 # User configuration
 
@@ -74,7 +74,6 @@ export CARGO_HOME=$CACHE_DIR/.cargo
 export RUSTUP_HOME=$CACHE_DIR/.rustup
 
 alias dotfiles="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
-alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 
 ZSH_CACHE_DIR=$CACHE_DIR/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
