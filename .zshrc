@@ -20,8 +20,8 @@ fi
 ZSH=/usr/share/oh-my-zsh/
 ZSH_THEME="powerlevel10k"
 ZSH_CACHE_DIR=$XDG_CACHE_HOME/oh-my-zsh
+ZSH_COMPDUMP=$XDG_CACHE_HOME/.zcompdump
 
-export ZSH_COMPDUMP=$XDG_CACHE_HOME/.zcompdump
 export HISTFILE=$XDG_CACHE_HOME/.zsh_history
 export LESSHISTFILE=$XDG_CACHE_HOME/.lesshst
 export RUSTUP_HOME=$XDG_CACHE_HOME/.rustup
