@@ -35,7 +35,7 @@ plugins=(colored-man-pages git zsh-autosuggestions zsh-syntax-highlighting)
 
 alias dotfiles="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 
-ZSH_CACHE_DIR=$CACHE_DIR/oh-my-zsh
+ZSH_CACHE_DIR=$XDG_CACHE_HOME/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir -p $ZSH_CACHE_DIR 
 fi
