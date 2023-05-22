@@ -19,6 +19,7 @@ fi
 
 ZSH=/usr/share/oh-my-zsh/
 ZSH_THEME="powerlevel10k"
+ZSH_CACHE_DIR=$XDG_CACHE_HOME/oh-my-zsh
 
 export ZSH_COMPDUMP=$XDG_CACHE_HOME/.zcompdump
 export HISTFILE=$XDG_CACHE_HOME/.zsh_history
@@ -35,11 +36,9 @@ plugins=(colored-man-pages git zsh-autosuggestions zsh-syntax-highlighting)
 
 alias dotfiles="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 
-ZSH_CACHE_DIR=$XDG_CACHE_HOME/oh-my-zsh
 if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir -p $ZSH_CACHE_DIR 
 fi
 
 source $ZSH/oh-my-zsh.sh
-
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
