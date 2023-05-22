@@ -1,6 +1,4 @@
-if [ -z $GPG_TTY ]; then
-  export GPG_TTY=$TTY # powerlevel10k instant prompt breaks stdin
-fi
+export GPG_TTY=$TTY # powerlevel10k instant prompt breaks stdin
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
