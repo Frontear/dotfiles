@@ -1,5 +1,11 @@
 export GPG_TTY=$(tty)
 
+# https://wiki.archlinux.org/title/XDG_Base_Directory
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
+
 if [ "$TERM" = "linux" ]; then
   PS1="[%n@%m %~]$ "; return
 fi
@@ -11,18 +17,15 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-CACHE_DIR=${XDG_CACHE_DIR:-$HOME/.cache}
-DATA_DIR=${XDG_DATA_HOME:-$HOME/.local/share}
-
 ZSH=/usr/share/oh-my-zsh/
 ZSH_THEME="powerlevel10k"
 
-export ZSH_COMPDUMP=$CACHE_DIR/.zcompdump
-export HISTFILE=$CACHE_DIR/.zsh_history
-export LESSHISTFILE=$CACHE_DIR/.lesshst
-export RUSTUP_HOME=$CACHE_DIR/.rustup
-export CARGO_HOME=$CACHE_DIR/.cargo
-export GNUPGHOME=$DATA_DIR/gnupg
+export ZSH_COMPDUMP=$XDG_CACHE_HOME/.zcompdump
+export HISTFILE=$XDG_CACHE_HOME/.zsh_history
+export LESSHISTFILE=$XDG_CACHE_HOME/.lesshst
+export RUSTUP_HOME=$XDG_CACHE_HOME/.rustup
+export CARGO_HOME=$XDG_CACHE_HOME/.cargo
+export GNUPGHOME=$XDG_DATA_HOME/gnupg
 
 export PATH="$HOME/.local/bin:$PATH:$CARGO_HOME/bin"
 
