@@ -14,12 +14,6 @@ ZSH_COMPDUMP=$XDG_CACHE_HOME/.zcompdump
 
 export HISTFILE=$XDG_CACHE_HOME/.zsh_history
 export LESSHISTFILE=$XDG_CACHE_HOME/.lesshst
-export RUSTUP_HOME=$XDG_CACHE_HOME/.rustup
-export CARGO_HOME=$XDG_CACHE_HOME/.cargo
-export GNUPGHOME=$XDG_DATA_HOME/gnupg
-
-export PATH="$HOME/.local/bin:$PATH:$CARGO_HOME/bin"
-
 export EDITOR="nvim"
 
 plugins=(colored-man-pages git zsh-autosuggestions zsh-syntax-highlighting)
@@ -31,7 +25,8 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
 fi
 
 
-if [ "$TERM" = "linux" ]; then
+# No valid display session, we are likely in tty
+if [ -z $DISPLAY ]; then
   PS1="[%n@%m %~]$ "
 else
   source $ZSH/oh-my-zsh.sh
