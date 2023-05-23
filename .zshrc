@@ -1,8 +1,4 @@
-export GPG_TTY=$(tty)
-
-if [ "$TERM" = "linux" ]; then
-  PS1="[%n@%m %~]$ "; return
-fi
+export GPG_TTY=$TTY
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -34,5 +30,10 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir -p $ZSH_CACHE_DIR 
 fi
 
-source $ZSH/oh-my-zsh.sh
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+if [ "$TERM" = "linux" ]; then
+  PS1="[%n@%m %~]$ "
+else
+  source $ZSH/oh-my-zsh.sh
+  [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+fi  
