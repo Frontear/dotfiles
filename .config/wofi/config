@@ -1,0 +1,4 @@
+mode=drun
+allow_images=true
+term=kitty
+gtk_dark=true
