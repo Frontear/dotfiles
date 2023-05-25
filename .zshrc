@@ -24,7 +24,6 @@ if [[ ! -d $ZSH_CACHE_DIR ]]; then
   mkdir -p $ZSH_CACHE_DIR 
 fi
 
-
 # No valid display session, we are likely in tty
 if [ -z $DISPLAY ]; then
   PS1="[%n@%m %~]$ "
