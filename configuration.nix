@@ -1,5 +1,8 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: let
+    impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
+in {
+    imports = [ "${impermanence}/nixos.nix" ];
+
     # silent boot
     boot.consoleLogLevel = 0;
     boot.initrd.verbose = false;
@@ -28,6 +31,22 @@
     # TODO: environment.etc
     # TODO: environment.localBinInPath
 
+    # set some files to persist from impermanence
+    environment.persistence."/nix/persist" = {
+        directories = [
+            "/home/frontear" # TODO: remove
+
+            "/etc/NetworkManager"
+            { directory = "/etc/nixos"; group = "wheel"; mode = "0775" }
+            "/var/db/sudo/lectured"
+            "/var/log"
+        ];
+
+        files = [
+            "/etc/machine-id"
+        ];
+    };
+
     # disable some plasma5 packages
     environment.plasma5.excludePackages = with pkgs.libsForQt5; [
         elisa
@@ -51,12 +70,10 @@
             noCheck = true; # TODO: necessary
             options = [ "defaults" "size=1G" "mode=755" ];
         };
-
         "/boot" = {
             device = "/dev/nvme0n1p1";
             fsType = "vfat";
         };
-
         "/nix" = {
             device = "/dev/nvme0n1p4";
             fsType = "ext4";
@@ -161,13 +178,23 @@
     # sets timezone
     time.timeZone = "America/Toronto";
 
-    # add my user and disable any user mutating (part of impermanence)
+    # add my user and disable any user mutating (part of impermanence), plus configure zsh
+    programs.zsh = {
+        enable = true;
+        enableBashCompletion = true;
+        autosuggestions.enable = true;
+        promptInit = "autoload -U promptinit && promptinit && prompt redhat && setopt prompt_sp";
+        syntaxHighlighting.enable = true;
+    };
+
     users.extraUsers."frontear" = {
         extraGroups = [ "wheel" "networkmanager" ];
         initialHashedPassword = "$y$j9T$egLJSMMd/l4M3n8BuZ3W7/$AOR0P9FLDq5vh6oVJ48TaijmMWP519MyurNmR041UJ3";
         isNormalUser = true;
 
         # TODO: openssh
+
+        shell = pkgs.zsh;
     };
     users.mutableUsers = false;
 
