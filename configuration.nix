@@ -37,7 +37,7 @@ in {
             "/home/frontear" # TODO: remove
 
             "/etc/NetworkManager"
-            { directory = "/etc/nixos"; group = "wheel"; mode = "0775" }
+            { directory = "/etc/nixos"; group = "wheel"; mode = "0775"; }
             "/var/db/sudo/lectured"
             "/var/log"
         ];
@@ -47,11 +47,28 @@ in {
         ];
     };
 
-    # disable some plasma5 packages
+    # setup plasma5 on system, grab some packages for sanity, remove some packages
     environment.plasma5.excludePackages = with pkgs.libsForQt5; [
         elisa
         khelpcenter
     ];
+
+    users.extraUsers."frontear".packages = with pkgs; [
+        armcord
+        fastfetch
+        google-chrome
+        gparted
+        vscode
+    ];
+
+    services.xserver = {
+        enable = true;
+        desktopManager.plasma5.enable = true;
+        displayManager = {
+            defaultSession = "plasmawayland";
+            sddm.enable = true;
+        };
+    };
 
     # install neovim across the system (TODO: programs.neovim)
     environment = {
@@ -101,7 +118,7 @@ in {
     hardware.sensor.hddtemp = {
         enable = true;
         drives = [ "/dev/nvme0n1" ];
-    }
+    };
 
     # wireless regulatory database
     hardware.wirelessRegulatoryDatabase = true;
@@ -149,6 +166,28 @@ in {
     # TODO powerManagement
 
     # TODO: programs
+
+    # setup git and gnupg
+    programs = {
+        git = {
+            enable = true;
+            config = {
+                commit.gpgSign = true;
+                init.defaultBranch = "main";
+                user = {
+                    email = "perm-iterate-0b@icloud.com";
+                    name = "Ali Rizvi";
+                    signingKey = "BCB5CEFDE22282F5";
+                };
+            };
+        };
+        gnupg.agent = {
+            enable = true;
+            enableBrowserSocket = true;
+            enableExtraSocket = true;
+            enableSSHSupport = true;
+        };
+    };
 
     # TODO: qt
 
