@@ -1,132 +1,181 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./impermanence.nix
-      ./user.nix
-      ./swap.nix
+    # silent boot
+    boot.consoleLogLevel = 0;
+    boot.initrd.verbose = false;
+    boot.kernelParams = [ "quiet" "udev.log_level=3" ];
+    boot.loader.timeout = 0;
 
-      ./plasma.nix
+    # kernel compression
+    boot.initrd.compressor = "lz4";
+    boot.initrd.compressorArgs = [ "-l" "-9" ];
+
+    # liquorix kernel
+    boot.kernelPackages = pkgs.linuxKernel.packages.linux_lqx;
+
+    # systemd-boot
+    boot.loader.efi.canTouchEfiVariables = true;
+    boot.loader.systemd-boot = {
+        enable = true;
+
+        configurationLimit = 5;
+        memtest86.enable = true;
+    };
+
+    # plymouth
+    boot.plymouth.enable = true;
+
+    # TODO: environment.etc
+    # TODO: environment.localBinInPath
+
+    # disable some plasma5 packages
+    environment.plasma5.excludePackages = with pkgs.libsForQt5; [
+        elisa
+        khelpcenter
     ];
 
-  fileSystems = {
-    "/home/frontear/Documents/archive" = {
-      device = "/dev/nvme0n1p5";
-      fsType = "btrfs";
-      options = [ "defaults" "discard=async" "commit=120"  "compress-force=zstd:15" ];
+    # install neovim across the system (TODO: programs.neovim)
+    environment = {
+        systemPackages = [ pkgs.neovim ];
+        variables = {
+            EDITOR = "nvim";
+            VISUAL = "nvim";
+        };
     };
-  };
 
-  nixpkgs.config.allowUnfree = true;
+    # part of impermanence
+    fileSystems = {
+        "/" = {
+            device = "none";
+            fsType = "tmpfs";
+            noCheck = true; # TODO: necessary
+            options = [ "defaults" "size=1G" "mode=755" ];
+        };
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+        "/boot" = {
+            device = "/dev/nvme0n1p1";
+            fsType = "vfat";
+        };
 
-  networking.hostName = "nixos"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+        "/nix" = {
+            device = "/dev/nvme0n1p4";
+            fsType = "ext4";
+        };
+    };
 
-  # Set your time zone.
-  time.timeZone = "America/Toronto";
+    # TODO: fonts
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+    # enables all firmware, even for things that aren't "free"
+    nixpkgs.config.allowUnfree = true;
+    hardware.enableAllFirmware = true;
 
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
+    # TODO: hardware
 
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
+    # explicitly enables microcode updates
+    hardware.cpu = {
+        amd.updateMicrocode = true;
+        intel.updateMicrocode = true;
+    };
 
+    # adds va-api/vdapu drivers for OpenGL
+    hardware.opengl.extraPackages = with pkgs; [ intel-media-driver intel-ocl ];
 
-  
+    # hdd/ssd temp sensors?
+    hardware.sensor.hddtemp = {
+        enable = true;
+        drives = [ "/dev/nvme0n1" ];
+    }
 
-  # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
+    # wireless regulatory database
+    hardware.wirelessRegulatoryDatabase = true;
 
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
+    # set system locale
+    i18n.defaultLocale = "en_US.UTF-8";
 
-  # Enable sound.
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
+    # TODO: location
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+    # TODO: networking
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  #users.mutableUsers = false;
-  #users.users."frontear" = {
-  #  isNormalUser = true;
-  #  initialPassword = "rizvi922";
-  #  extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
-  #  packages = with pkgs; [
-  #    neovim
-  #  ];
-  #};
-  #users.users.root.initialPassword = "rizvi922";
+    # TODO: networking.firewall
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  # environment.systemPackages = with pkgs; [
-  #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #   wget
-  # ];
+    # sets system hostname
+    networking.hostName = "frontear-net";
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+    # set dns to cloudflare ones and disable networkmanager dns resolution
+    networking.nameservers = [
+        "1.1.1.1"
+        "1.0.0.1"
+        "2606:4700:4700::1111"
+        "2606:4700:4700::1001"
+    ];
+    networking.networkmanager.dns = "none";
 
-  # List services that you want to enable:
+    # use network manager
+    networking.networkmanager.enable = true;
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+    # TODO: networkmanager.wifi.powersave
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+    # enable stevenblack hosts
+    networking.stevenblack = {
+        enable = true;
+        block = [ "fakenews" "gambling" "porn" "social" ];
+    };
 
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  system.copySystemConfiguration = true;
+    # clean up nix store and optimise it
+    nix = {
+        gc.automatic = true;
+        optimise.automatic = true;
+    };
 
-  # This option defines the first version of NixOS you have installed on this particular machine,
-  # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
-  #
-  # Most users should NEVER change this value after the initial install, for any reason,
-  # even if you've upgraded your system to a new NixOS release.
-  #
-  # This value does NOT affect the Nixpkgs version your packages and OS are pulled from,
-  # so changing it will NOT upgrade your system.
-  #
-  # This value being lower than the current NixOS release does NOT mean your system is
-  # out of date, out of support, or vulnerable.
-  #
-  # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
-  # and migrated your data accordingly.
-  #
-  # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = "23.11"; # Did you read the comment?
+    # TODO: nix.settings
+
+    # TODO powerManagement
+
+    # TODO: programs
+
+    # TODO: qt
+
+    # TODO: security.pam
+
+    # TODO: security.polkit
+
+    # prevent non-wheel users from even running sudo
+    security.sudo.execWheelOnly = true;
+
+    # TODO: services
+
+    # enable sound TODO: add pipewire
+    sound.enable = true;
+
+    # TODO: swapDevices
+
+    # TODO: system.autoUpgrade?
+
+    # TODO: system.copySystemConfiguration?
+
+    # Set system state version, never change this
+    system.stateVersion = "23.11";
+
+    # TODO: systemd
+
+    # sets timezone
+    time.timeZone = "America/Toronto";
+
+    # add my user and disable any user mutating (part of impermanence)
+    users.extraUsers."frontear" = {
+        extraGroups = [ "wheel" "networkmanager" ];
+        initialHashedPassword = "$y$j9T$egLJSMMd/l4M3n8BuZ3W7/$AOR0P9FLDq5vh6oVJ48TaijmMWP519MyurNmR041UJ3";
+        isNormalUser = true;
+
+        # TODO: openssh
+    };
+    users.mutableUsers = false;
+
+    # TODO: xdg.portal
+
+    # use a zram device for swapping TODO: set swappiness
+    zramSwap = {
+        enable = true;
+        priority = 100;
+    };
 }
-
