@@ -80,24 +80,6 @@ in {
         };
     };
 
-    # part of impermanence TODO: remove lib.mkForce by moving to hardware-configuration or elsewhere
-    fileSystems = {
-        "/" = lib.mkForce {
-            device = "none";
-            fsType = "tmpfs";
-            noCheck = true; # TODO: necessary
-            options = [ "defaults" "size=1G" "mode=755" ];
-        };
-        "/boot" = lib.mkForce {
-            device = "/dev/nvme0n1p1";
-            fsType = "vfat";
-        };
-        "/nix" = lib.mkForce {
-            device = "/dev/nvme0n1p4";
-            fsType = "ext4";
-        };
-    };
-
     # TODO: fonts
 
     # enables all firmware, even for things that aren't "free"
