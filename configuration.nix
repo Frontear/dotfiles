@@ -1,7 +1,10 @@
-{ pkgs, ... }: let
+{ lib, pkgs, ... }: let
     impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
 in {
-    imports = [ "${impermanence}/nixos.nix" ];
+    imports = [
+        ./hardware-configuration.nix
+        "${impermanence}/nixos.nix"
+    ];
 
     # silent boot
     boot.consoleLogLevel = 0;
@@ -77,19 +80,19 @@ in {
         };
     };
 
-    # part of impermanence
+    # part of impermanence TODO: remove lib.mkForce by moving to hardware-configuration or elsewhere
     fileSystems = {
-        "/" = {
+        "/" = lib.mkForce {
             device = "none";
             fsType = "tmpfs";
             noCheck = true; # TODO: necessary
             options = [ "defaults" "size=1G" "mode=755" ];
         };
-        "/boot" = {
+        "/boot" = lib.mkForce {
             device = "/dev/nvme0n1p1";
             fsType = "vfat";
         };
-        "/nix" = {
+        "/nix" = lib.mkForce {
             device = "/dev/nvme0n1p4";
             fsType = "ext4";
         };
