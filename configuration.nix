@@ -8,6 +8,7 @@ in {
     boot.initrd.verbose = false;
     boot.kernelParams = [ "quiet" "udev.log_level=3" ];
     boot.loader.timeout = 0;
+    boot.plymouth.enable = true;
 
     # kernel compression
     boot.initrd.compressor = "lz4";
@@ -24,9 +25,6 @@ in {
         configurationLimit = 5;
         memtest86.enable = true;
     };
-
-    # plymouth
-    boot.plymouth.enable = true;
 
     # TODO: environment.etc
     # TODO: environment.localBinInPath
