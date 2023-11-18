@@ -1,9 +1,8 @@
-{ lib, pkgs, ... }: let
-    impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
-in {
+{ lib, pkgs, ... }:
+{
     imports = [
         ./hardware-configuration.nix
-        "${impermanence}/nixos.nix"
+        "${builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz"}/nixos.nix"
     ];
 
     # silent boot
@@ -35,16 +34,16 @@ in {
     # set some files to persist from impermanence
     environment.persistence."/nix/persist" = {
         directories = [
-            "/home/frontear" # TODO: remove
+            { directory = "/home/frontear"; user = "frontear"; mode = "0700"; }
 
-            "/etc/NetworkManager"
-            { directory = "/etc/nixos"; group = "wheel"; mode = "0775"; }
+            "/etc/NetworkManager/system-connections"
+            "/etc/nixos"
+
             "/var/db/sudo/lectured"
             "/var/log"
         ];
-
         files = [
-            "/etc/machine-id"
+            "/etc/machine-id" # needed for /var/log, as it keeps files based on machine-id
         ];
     };
 
