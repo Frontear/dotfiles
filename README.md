@@ -2,33 +2,13 @@
 
 My work-in-progress dotfiles powered by NixOS. They will stay WIP for a while as I learn Nix, the language, Nix, the package manager(?), and Nix, the command line.
 
-## Setup Impermanence
+## How to use
 
-My dotfiles are explicitly designed to make use of [impermanence](https://github.com/nix-community/impermanence). As such, I recommend setting up an impermanence-styled mount setup.
+- Download the dotfiles either via a `git clone` or simple https download
+- Extract all the files to `/etc/nixos`
+- Run `sudo nixos-rebuild boot` and reboot
 
-Upon first installation, do:
-```console
-[root@nixos:~]# mount -t tmpfs none /mnt --mkdir
-[root@nixos:~]# mount /dev/boot_device /mnt/boot --mkdir
-[root@nixos:~]# mount /dev/nix_device /mnt/nix --mkdir
-[root@nixos:~]# nixos-generate-config --root /mnt
-```
+## Information
 
-If you're already running a NixOS system, you can add the following snippet in-place:
-```nix
-fileSystems = {
-    "/" = {
-        device = "none";
-        fsType = "tmpfs";
-        options = [ "defaults" "size=1G" "mode=755" ]; # won't ever need more than 1G usually
-    };
-    "/boot" = {
-        device = "/dev/boot_device";
-        fsType = "fsType"; # probably vfat
-    };
-    "/nix" = {
-        device = "/dev/nix_device";
-        fsType = "fsType";
-    };
-};
-```
+1. These dotfiles are designed with impermanence in mind, therefore I heavily recommend you set it up or change the dotfiles accordingly.
+2. Please don't contribute anything without having detailed explanations and being willing to explain your changes, because I'm still very much learning and understanding what I'm doing is infinitely more valuable than anything else.
