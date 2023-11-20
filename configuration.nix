@@ -2,10 +2,10 @@
     impermanence = builtins.fetchGit { url = "https://github.com/nix-community/impermanence.git"; };
 in {
     imports = [
-        ./hardware-configuration.nix
         "${impermanence}/nixos.nix"
 
         ./system
+        ./hosts/laptop
     ];
 
     services.printing.enable = true;
