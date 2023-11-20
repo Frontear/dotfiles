@@ -1,8 +1,17 @@
 { lib, pkgs, ... }: let
-    impermanence = builtins.fetchGit { url = "https://github.com/nix-community/impermanence.git"; };
+    _impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
+    _home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
 in {
+    _module.args = {
+        username = "frontear";
+        hostname = "frontear-net";
+        impermanence = _impermanence;
+        home-manager = _home-manager;
+    };
+
     imports = [
-        "${impermanence}/nixos.nix"
+        "${_impermanence}/nixos.nix"
+        "${_home-manager}/nixos"
 
         ./system
         ./hosts/laptop

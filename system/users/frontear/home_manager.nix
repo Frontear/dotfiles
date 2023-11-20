@@ -1,11 +1,6 @@
-{ pkgs, ... }: let
-    home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-in {
-    imports = [
-        "${home-manager}/nixos"
-    ];
-
-    home-manager.users."frontear" = {
+{ pkgs, username, home-manager, ... }:
+{
+    home-manager.users."${username}" = {
         home.packages = with pkgs; [
             armcord
             fastfetch
