@@ -2,7 +2,7 @@
 {
     imports = [
         ./dns.nix
-        ./power_saving.nix
+        #./powersave.nix
         ./stevenblack.nix
     ];
 

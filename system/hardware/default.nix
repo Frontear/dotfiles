@@ -1,5 +1,9 @@
 { ... }:
 {
+    imports = [
+        #./powersave.nix
+    ];
+
     # allow "non-free" firmware
     nixpkgs.config.allowUnfree = true;
     
