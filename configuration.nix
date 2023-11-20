@@ -8,6 +8,13 @@ in {
         ./system
     ];
 
+    services.printing.enable = true;
+    services.pipewire.enable = true;
+
+    networking.firewall.enable = true;
+    #networking.firewall.allowedTCPPorts = [];
+    #networking.firewall.allowedUDPPorts = [];
+
     # TODO: environment.etc
     # TODO: environment.localBinInPath
 
