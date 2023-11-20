@@ -6,6 +6,7 @@
         ./network
         ./programs
         ./users
+        ./zram
     ];
 
     # sets system locale

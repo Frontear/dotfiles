@@ -40,7 +40,7 @@ in {
             gpg-agent = {
                 enable = true;
                 enableSshSupport = true;
-                pinentryFlavor = null;
+                pinentryFlavor = "curses";
             };
         };
 

@@ -97,10 +97,4 @@ in {
     # TODO: systemd
 
     # TODO: xdg.portal
-
-    # use a zram device for swapping TODO: set swappiness
-    zramSwap = {
-        enable = true;
-        priority = 100;
-    };
 }
