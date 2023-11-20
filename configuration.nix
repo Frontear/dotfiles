@@ -1,8 +1,11 @@
-{ lib, pkgs, ... }:
-{
+{ lib, pkgs, ... }: let
+    impermanence = builtins.fetchGit { url = "https://github.com/nix-community/impermanence.git"; };
+    home-manager = builtins.fetchGit { url = "https://github.com/nix-community/home-manager.git"; };
+in {
     imports = [
         ./hardware-configuration.nix
-        "${builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz"}/nixos.nix"
+        "${impermanence}/nixos.nix"
+	"${home-manager}/nixos"
     ];
 
     # silent boot
@@ -34,8 +37,6 @@
     # set some files to persist from impermanence
     environment.persistence."/nix/persist" = {
         directories = [
-            { directory = "/home/frontear"; user = "frontear"; mode = "0700"; }
-
             "/etc/NetworkManager/system-connections"
             "/etc/nixos"
 
@@ -53,13 +54,60 @@
         khelpcenter
     ];
 
-    users.extraUsers."frontear".packages = with pkgs; [
-        armcord
-        fastfetch
-        google-chrome
-        gparted
-        vscode
-    ];
+    home-manager.users."frontear" = {
+        home.packages = with pkgs; [
+            armcord
+            fastfetch
+            google-chrome
+            gparted
+            vscode
+        ];
+
+        programs = {
+            git = {
+                enable = true;
+                extraConfig = {
+                    init.defaultBranch = "main";
+                };
+                signing = {
+                    key = "BCB5CEFDE22282F5";
+                    signByDefault = true;
+                };
+                userEmail = "perm-iterate-0b@icloud.com";
+                userName = "Ali Rizvi";
+            };
+            gpg = {
+                enable = true;
+            };
+            zsh = {
+                enable = true;
+                enableAutosuggestions = true;
+                initExtra =
+                ''
+                autoload -U promptinit && promptinit && prompt redhat && setopt prompt_sp
+                '';
+                syntaxHighlighting.enable = true;
+            };
+        };
+
+        services = {
+            gpg-agent = {
+                enable = true;
+                enableSshSupport = true;
+		pinentryFlavor = null;
+            };
+        };
+
+        home.stateVersion = "23.11";
+    };
+
+    #users.extraUsers."frontear".packages = with pkgs; [
+    #    armcord
+    #    fastfetch
+    #    google-chrome
+    #    gparted
+    #    vscode
+    #];
 
     services.xserver = {
         enable = true;
@@ -150,26 +198,26 @@
     # TODO: programs
 
     # setup git and gnupg
-    programs = {
-        git = {
-            enable = true;
-            config = {
-                commit.gpgSign = true;
-                init.defaultBranch = "main";
-                user = {
-                    email = "perm-iterate-0b@icloud.com";
-                    name = "Ali Rizvi";
-                    signingKey = "BCB5CEFDE22282F5";
-                };
-            };
-        };
-        gnupg.agent = {
-            enable = true;
-            enableBrowserSocket = true;
-            enableExtraSocket = true;
-            enableSSHSupport = true;
-        };
-    };
+    #programs = {
+    #    git = {
+    #        enable = true;
+    #        config = {
+    #            commit.gpgSign = true;
+    #            init.defaultBranch = "main";
+    #            user = {
+    #                email = "perm-iterate-0b@icloud.com";
+    #                name = "Ali Rizvi";
+    #                signingKey = "BCB5CEFDE22282F5";
+    #            };
+    #        };
+    #    };
+    #    gnupg.agent = {
+    #        enable = true;
+    #        enableBrowserSocket = true;
+    #        enableExtraSocket = true;
+    #        enableSSHSupport = true;
+    #    };
+    #};
 
     # TODO: qt
 
@@ -200,14 +248,14 @@
     time.timeZone = "America/Toronto";
 
     # add my user and disable any user mutating (part of impermanence), plus configure zsh
-    programs.zsh = {
-        enable = true;
-        enableBashCompletion = true;
-        autosuggestions.enable = true;
-        promptInit = "autoload -U promptinit && promptinit && prompt redhat && setopt prompt_sp";
-        syntaxHighlighting.enable = true;
-    };
-
+    #programs.zsh = {
+    #    enable = true;
+    #    enableBashCompletion = true;
+    #    autosuggestions.enable = true;
+    #    promptInit = "autoload -U promptinit && promptinit && prompt redhat && setopt prompt_sp";
+    #    syntaxHighlighting.enable = true;
+    #};
+    programs.zsh.enable = true;
     users.extraUsers."frontear" = {
         extraGroups = [ "wheel" "networkmanager" ];
         initialHashedPassword = "$y$j9T$egLJSMMd/l4M3n8BuZ3W7/$AOR0P9FLDq5vh6oVJ48TaijmMWP519MyurNmR041UJ3";
