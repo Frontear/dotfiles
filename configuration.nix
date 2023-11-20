@@ -5,7 +5,7 @@ in {
     imports = [
         ./hardware-configuration.nix
         "${impermanence}/nixos.nix"
-	"${home-manager}/nixos"
+        "${home-manager}/nixos"
     ];
 
     # silent boot
@@ -118,13 +118,18 @@ in {
         };
     };
 
-    # install neovim across the system (TODO: programs.neovim)
-    environment = {
-        systemPackages = [ pkgs.neovim ];
-        variables = {
-            EDITOR = "nvim";
-            VISUAL = "nvim";
+    # install neovim across the system
+    programs.neovim = {
+        enable = true;
+        configure = {
+            customRC =
+            ''
+            set tabstop=4
+            set shiftwidth=4
+            set expandtab
+            '';
         };
+        defaultEditor = true;
     };
 
     # TODO: fonts
