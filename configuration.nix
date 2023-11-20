@@ -48,12 +48,22 @@ in {
         ];
     };
 
-    # setup plasma5 on system, grab some packages for sanity, remove some packages
+    # setup plasma5 on system and remove some extra packages
     environment.plasma5.excludePackages = with pkgs.libsForQt5; [
         elisa
         khelpcenter
     ];
 
+    services.xserver = {
+        enable = true;
+        desktopManager.plasma5.enable = true;
+        displayManager = {
+            defaultSession = "plasmawayland";
+            sddm.enable = true;
+        };
+    };
+
+    # configure user via home-manager with apps and app settings
     home-manager.users."frontear" = {
         home.packages = with pkgs; [
             armcord
@@ -62,7 +72,6 @@ in {
             gparted
             vscode
         ];
-
         programs = {
             git = {
                 enable = true;
@@ -89,35 +98,17 @@ in {
                 syntaxHighlighting.enable = true;
             };
         };
-
         services = {
             gpg-agent = {
                 enable = true;
                 enableSshSupport = true;
-		pinentryFlavor = null;
+                pinentryFlavor = null;
             };
         };
 
         home.stateVersion = "23.11";
     };
-
-    #users.extraUsers."frontear".packages = with pkgs; [
-    #    armcord
-    #    fastfetch
-    #    google-chrome
-    #    gparted
-    #    vscode
-    #];
-
-    services.xserver = {
-        enable = true;
-        desktopManager.plasma5.enable = true;
-        displayManager = {
-            defaultSession = "plasmawayland";
-            sddm.enable = true;
-        };
-    };
-
+ 
     # install neovim across the system
     programs.neovim = {
         enable = true;
@@ -202,28 +193,6 @@ in {
 
     # TODO: programs
 
-    # setup git and gnupg
-    #programs = {
-    #    git = {
-    #        enable = true;
-    #        config = {
-    #            commit.gpgSign = true;
-    #            init.defaultBranch = "main";
-    #            user = {
-    #                email = "perm-iterate-0b@icloud.com";
-    #                name = "Ali Rizvi";
-    #                signingKey = "BCB5CEFDE22282F5";
-    #            };
-    #        };
-    #    };
-    #    gnupg.agent = {
-    #        enable = true;
-    #        enableBrowserSocket = true;
-    #        enableExtraSocket = true;
-    #        enableSSHSupport = true;
-    #    };
-    #};
-
     # TODO: qt
 
     # TODO: security.pam
@@ -252,14 +221,7 @@ in {
     # sets timezone
     time.timeZone = "America/Toronto";
 
-    # add my user and disable any user mutating (part of impermanence), plus configure zsh
-    #programs.zsh = {
-    #    enable = true;
-    #    enableBashCompletion = true;
-    #    autosuggestions.enable = true;
-    #    promptInit = "autoload -U promptinit && promptinit && prompt redhat && setopt prompt_sp";
-    #    syntaxHighlighting.enable = true;
-    #};
+    # add my user and disable any user mutating (part of impermanence), and add zsh (configuration done in home-manager)
     programs.zsh.enable = true;
     users.extraUsers."frontear" = {
         extraGroups = [ "wheel" "networkmanager" ];
