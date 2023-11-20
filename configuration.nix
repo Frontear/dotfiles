@@ -1,11 +1,9 @@
 { lib, pkgs, ... }: let
     impermanence = builtins.fetchGit { url = "https://github.com/nix-community/impermanence.git"; };
-    home-manager = builtins.fetchGit { url = "https://github.com/nix-community/home-manager.git"; };
 in {
     imports = [
         ./hardware-configuration.nix
         "${impermanence}/nixos.nix"
-        "${home-manager}/nixos"
 
         ./system
     ];
