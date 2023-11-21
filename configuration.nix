@@ -2,7 +2,6 @@
 {
     imports = [
         ./hosts/laptop
-        ./system
     ];
 
     services.printing.enable = true;

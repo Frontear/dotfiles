@@ -1,6 +1,6 @@
 { ... }:
 {
     imports = [
-        ./compositor.nix
+        ./programs
     ];
 }
