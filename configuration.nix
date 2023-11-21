@@ -43,15 +43,6 @@ in {
 
     # TODO: fonts
 
-    # adds va-api/vdapu drivers for OpenGL
-    hardware.opengl.extraPackages = with pkgs; [ intel-media-driver intel-ocl ];
-
-    # hdd/ssd temp sensors?
-    hardware.sensor.hddtemp = {
-        enable = true;
-        drives = [ "/dev/nvme0n1" ];
-    };
-
     # TODO: location
 
     # TODO: networking
