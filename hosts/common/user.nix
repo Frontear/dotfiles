@@ -5,6 +5,16 @@ in {
         "${home-manager}/nixos"
     ];
 
+    users.mutableUsers = false; # TODO: move to laptop
+
+    programs.zsh.enable = true;
+    users.extraUsers."${username}" = {
+        extraGroups = [ "wheel" "networkmanager" ];
+        initialHashedPassword = "$y$j9T$aoCkwuoV8kY7LgGIwvAwp.$JKK6dzP8IoyLSiOHxtBVpX0mqyI3TOQKJSHIBJx8gc2";
+        isNormalUser = true;
+        shell = pkgs.zsh;
+    };
+
     home-manager.users."${username}" = {
         home.packages = with pkgs; [
             armcord
@@ -14,6 +24,7 @@ in {
             vscode
         ];
 
+        # TODO: split into modules?
         programs = {
             git = {
                 enable = true;
@@ -27,14 +38,11 @@ in {
                 userEmail = "perm-iterate-0b@icloud.com";
                 userName = "Ali Rizvi";
             };
-            gpg = {
-                enable = true;
-            };
+            gpg.enable = true;
             zsh = {
                 enable = true;
                 enableAutosuggestions = true;
-                initExtra =
-                ''
+                initExtra = ''
                 autoload -U promptinit && promptinit && prompt redhat && setopt prompt_sp
                 '';
                 syntaxHighlighting.enable = true;

@@ -1,10 +1,5 @@
 { lib, pkgs, ... }:
 {
-    _module.args = {
-        username = "frontear";
-        hostname = "frontear-net";
-    };
-
     imports = [
         ./hosts/laptop
         ./system
