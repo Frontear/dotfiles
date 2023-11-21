@@ -1,10 +1,35 @@
-{ ... }: let
+{ pkgs, ... }: let
     impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
 in {
     imports = [
         "${impermanence}/nixos.nix"
+
+        "${builtins.fetchTarball "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz"}/dell/inspiron/14-5420"
+        ./hardware-configuration.nix
     ];
 
+    # cpu
+    hardware.cpu.intel.updateMicrocode = true;
+
+    # gpu
+    hardware.opengl.extraPackages = with pkgs; [
+        intel-media-driver
+        libvdpau-va-gl
+        intel-ocl
+    ];
+
+    # firmware
+    nixpkgs.config.allowUnfree = true;
+    hardware.enableAllFirmware = true;
+
+    # drive health
+    services.fstrim.enable = true;
+    services.btrfs.autoScrub = {
+        enable = true;
+        fileSystems = [ "/archive" ];
+    };
+
+    # mounts
     fileSystems = {
         "/" = {
             device = "none";
@@ -19,13 +44,8 @@ in {
         "/boot" = {
             device = "/dev/nvme0n1p1";
             fsType = "vfat";
-            options = [ "defaults" "fmask=0077" "dmask=0077" ]; # permission fix for world-readible bootctl seed
+            options = [ "defaults" "fmask=0077" "dmask=0077" ];
         };
-        #"/home" = {
-        #    device = "none";
-        #    fsType = "tmpfs";
-        #    options = [ "defaults" "size=1G" "mode=755" ];
-        #};
         "/nix" = {
             device = "/dev/nvme0n1p2";
             fsType = "ext4";
@@ -33,17 +53,17 @@ in {
         };
     };
 
-    # setup persistence for impermanence
+    # impermanence
     environment.persistence."/nix/persist" = {
         directories = [
-            "/etc/NetworkManager/system-connections" # only works with unencrypted passwords
+            "/etc/NetworkManager/system-connections"
             "/etc/nixos"
 
             "/var/db/sudo/lectured"
             "/var/log"
         ];
         files = [
-            "/etc/machine-id" # for /var/log entries
+            "/etc/machine-id"
         ];
     };
 }
