@@ -1,14 +1,11 @@
-{ lib, pkgs, ... }: let
-    impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
-in {
+{ lib, pkgs, ... }:
+{
     _module.args = {
         username = "frontear";
         hostname = "frontear-net";
     };
 
     imports = [
-        "${impermanence}/nixos.nix"
-
         ./system
         ./hosts/laptop
     ];
@@ -22,20 +19,6 @@ in {
 
     # TODO: environment.etc
     # TODO: environment.localBinInPath
-
-    # set some files to persist from impermanence
-    environment.persistence."/nix/persist" = {
-        directories = [
-            "/etc/NetworkManager/system-connections"
-            "/etc/nixos"
-
-            "/var/db/sudo/lectured"
-            "/var/log"
-        ];
-        files = [
-            "/etc/machine-id" # needed for /var/log, as it keeps files based on machine-id
-        ];
-    };
 
     # TODO: fonts
 

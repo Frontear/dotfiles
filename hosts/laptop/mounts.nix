@@ -1,5 +1,10 @@
-{ ... }:
-{
+{ ... }: let
+    impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
+in {
+    imports = [
+        "${impermanence}/nixos.nix"
+    ];
+
     fileSystems = {
         "/" = {
             device = "none";
@@ -26,5 +31,19 @@
             fsType = "ext4";
             options = [ "rw" "noatime" ];
         };
+    };
+
+    # setup persistence for impermanence
+    environment.persistence."/nix/persist" = {
+        directories = [
+            "/etc/NetworkManager/system-connections" # only works with unencrypted passwords
+            "/etc/nixos"
+
+            "/var/db/sudo/lectured"
+            "/var/log"
+        ];
+        files = [
+            "/etc/machine-id" # for /var/log entries
+        ];
     };
 }
