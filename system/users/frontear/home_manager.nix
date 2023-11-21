@@ -1,5 +1,10 @@
-{ pkgs, username, home-manager, ... }:
-{
+{ pkgs, username, ... }: let
+    home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+in {
+    imports = [
+        "${home-manager}/nixos"
+    ];
+
     home-manager.users."${username}" = {
         home.packages = with pkgs; [
             armcord
