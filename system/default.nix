@@ -1,12 +1,8 @@
 { hostname, ... }:
 {
     imports = [
-        ./boot
         ./desktop
-        ./network
-        ./programs
         ./users
-        ./zram
     ];
 
     # sets system locale

@@ -5,6 +5,8 @@
         ./hardware-configuration.nix
         ./mounts.nix
 
+        ../common
+
         ./cpu.nix
         ./gpu.nix
         ./hardware.nix
