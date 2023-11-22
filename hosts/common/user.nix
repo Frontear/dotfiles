@@ -1,10 +1,5 @@
-{ pkgs, username, ... }: let
-    home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-in {
-    imports = [
-        "${home-manager}/nixos"
-    ];
-
+{ pkgs, username, ... }:
+{
     users.mutableUsers = false; # TODO: move to laptop
 
     programs.zsh.enable = true;

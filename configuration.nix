@@ -1,8 +1,14 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, home-manager, impermanence, nixos-hardware, ... }:
 {
     imports = [
         ./hosts/laptop
+
+        home-manager.nixosModules.home-manager
+        impermanence.nixosModules.impermanence
+        nixos-hardware.nixosModules.dell-inspiron-14-5420
     ];
+
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
     fonts = {
         enableDefaultPackages = true;

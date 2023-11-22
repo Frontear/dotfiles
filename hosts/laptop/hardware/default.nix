@@ -1,10 +1,6 @@
-{ pkgs, ... }: let
-    impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
-in {
+{ pkgs, ... }:
+{
     imports = [
-        "${impermanence}/nixos.nix"
-
-        "${builtins.fetchTarball "https://github.com/NixOS/nixos-hardware/archive/master.tar.gz"}/dell/inspiron/14-5420"
         ./hardware-configuration.nix
     ];
 
