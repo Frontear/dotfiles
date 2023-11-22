@@ -20,7 +20,10 @@
     outputs = { self, nixpkgs, ... }@inputs: {
         nixosConfigurations."frontear-net" = nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
-            specialArgs = inputs;
+            specialArgs = inputs // {
+                username = "frontear";
+                hostname = "frontear-net";
+            };
             modules = [
                 ./configuration.nix
             ];
