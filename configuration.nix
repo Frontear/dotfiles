@@ -4,60 +4,50 @@
         ./hosts/laptop
     ];
 
-    services.printing.enable = true;
-    services.pipewire.enable = true;
+    fonts = {
+        enableDefaultPackages = true;
+        packages = with pkgs; [
+            meslo-lgs-nf
+        ];
+        fontDir.enable = true;
+    };
 
-    networking.firewall.enable = true;
-    #networking.firewall.allowedTCPPorts = [];
-    #networking.firewall.allowedUDPPorts = [];
+    location.provider = "geoclue2";
 
-    # TODO: environment.etc
-    # TODO: environment.localBinInPath
-
-    # TODO: fonts
-
-    # TODO: location
-
-    # TODO: networking
-
-    # TODO: networking.firewall
-
-    # clean up nix store and optimise it
     nix = {
         gc.automatic = true;
         optimise.automatic = true;
     };
 
-    # TODO: nix.settings
-
-    # TODO powerManagement
+    powerManagement = {
+        enable = true;
+        cpuFreqGovernor = "powersave";
+        cpufreq.max = 3000000;
+    };
 
     # TODO: programs
 
     # TODO: qt
 
     # TODO: security.pam
+    # TODO: security.pam.services.??.gnupg
 
     # TODO: security.polkit
 
-    # prevent non-wheel users from even running sudo
+    # TODO: security.wrappers ?
+
     security.sudo.execWheelOnly = true;
 
     # TODO: services
 
-    # enable sound TODO: add pipewire
-    sound.enable = true;
-
-    # TODO: swapDevices
-
-    # TODO: system.autoUpgrade?
-
-    # TODO: system.copySystemConfiguration?
-
     # Set system state version, never change this
     system.stateVersion = "23.11";
 
-    # TODO: systemd
+    systemd.services."NetworkManager-wait-online".enable = false;
 
-    # TODO: xdg.portal
+    # TODO: systemd.tmpfiles
+
+    xdg.portal = {
+        enable = true;
+    };
 }
