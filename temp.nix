@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ ... }:
 {
-    # plasma5
+    # KDE Plasma5 configuration
     services.xserver = {
         enable = true;
         desktopManager.plasma5.enable = true;
@@ -9,9 +9,4 @@
             sddm.enable = true;
         };
     };
-
-    environment.plasma5.excludePackages = with pkgs.libsForQt5; [
-        elisa
-        khelpcenter
-    ];
 }

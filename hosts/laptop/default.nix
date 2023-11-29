@@ -1,8 +1,0 @@
-{ ... }:
-{
-    imports = [
-        ../common
-        ./hardware
-        ./modules
-    ];
-}
