@@ -17,6 +17,7 @@
             specialArgs = {
                 username = "frontear";
                 hostname = "frontear-net";
+                ags = inputs.ags;
             };
             modules = [
                 inputs.home-manager.nixosModules.default
