@@ -2,8 +2,6 @@
 {
     imports = [
         ./hardware-configuration.nix
-
-        ./temp.nix
     ];
 
     boot.blacklistedKernelModules = [ "bluetooth" "snd_hda_codec_hdmi" ];
@@ -67,12 +65,17 @@
                 
                 ".config/google-chrome"
                 { directory = ".gnupg"; mode = "0700"; }
+                { directory = ".ssh"; mode = "0700"; }
             ];
             files = [
                 ".zsh_history"
             ];
         };
     };
+
+    environment.plasma5.excludePackages = with pkgs.libsForQt5; [
+        elisa
+    ];
 
     environment.systemPackages = with pkgs; [
         # powerdevil
@@ -239,9 +242,9 @@
     #programs.nix-index.enable = true;
     programs.xwayland.enable = true;
 
-    #qt.enable = true;
-    #qt.platformTheme = "qt6ct";
-    #qt.style = "kvantum";
+    qt.enable = true;
+    qt.platformTheme = "kde";
+    # qt.style = "kvantum";
 
     # TODO: security.pam.services
     security.polkit.enable = true;
@@ -316,6 +319,12 @@
     # TODO: services.upower
     # TODO: services.usbguard
     # TODO: services.usbmuxd
+    services.xserver.enable = true;
+    services.xserver.desktopManager.plasma5.enable = true;
+    services.xserver.desktopManager.plasma5.useQtScaling = true;
+    services.xserver.displayManager.defaultSession = "plasmawayland";
+    services.xserver.displayManager.sddm.enable = true;
+    services.xserver.displayManager.sddm.wayland.enable = true;
 
     sound.enable = true;
 
