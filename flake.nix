@@ -23,7 +23,7 @@
                 inputs.impermanence.nixosModules.impermanence
                 inputs.nixos-hardware.nixosModules.dell-inspiron-14-5420
 
-                ./configuration.nix
+                ./hosts/laptop
             ];
         };
     };

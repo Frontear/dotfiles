@@ -1,9 +1,4 @@
-{ config, pkgs, username, hostname, ... }:
-{
-    imports = [
-        ./hardware-configuration.nix
-    ];
-
+{ config, pkgs, username, hostname, ... }: {
     boot.blacklistedKernelModules = [ "bluetooth" "snd_hda_codec_hdmi" ];
     boot.consoleLogLevel = 0; # was 3
     boot.extraModprobeConfig = ''
@@ -72,14 +67,13 @@
             ];
         };
     };
-
     environment.plasma5.excludePackages = with pkgs.libsForQt5; [
         elisa
     ];
-
     environment.systemPackages = with pkgs; [
         # powerdevil
     ];
+    environment.wordlist.enable = false; # TODO: wtf is wrong with the encoding
 
     fileSystems = {
         "/" = {
