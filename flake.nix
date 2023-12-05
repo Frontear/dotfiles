@@ -14,15 +14,11 @@
 
     outputs = { self, nixpkgs, ... } @ inputs: {
         nixosConfigurations."frontear-net" = nixpkgs.lib.nixosSystem {
-            specialArgs = {
-                username = "frontear";
+            specialArgs = inputs // {
                 hostname = "frontear-net";
+                username = "frontear";
             };
             modules = [
-                inputs.home-manager.nixosModules.default
-                inputs.impermanence.nixosModules.impermanence
-                inputs.nixos-hardware.nixosModules.dell-inspiron-14-5420
-
                 ./hosts/laptop
             ];
         };
