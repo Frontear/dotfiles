@@ -19,11 +19,6 @@
                 username = "frontear";
             };
             modules = [
-                {
-                    # https://ayats.org/blog/channels-to-flakes/
-                    nix.nixPath = [ "nixpkgs=flake:nixpkgs" ];
-                    nix.registry.nixpkgs.flake = nixpkgs;
-                }
                 ./hosts/laptop
             ];
         };

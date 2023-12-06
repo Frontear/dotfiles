@@ -1,4 +1,4 @@
-{ home-manager, impermanence, nixos-hardware, ... }:
+{ nixpkgs, home-manager, impermanence, nixos-hardware, ... }:
 {
     imports = [
         home-manager.nixosModules.default
@@ -8,4 +8,9 @@
         ./hardware-configuration.nix
         ./configuration.nix
     ];
+
+    nix.nixPath = [ "nixpkgs=flake:nixpkgs" ];
+    nix.registry = {
+        nixpkgs.flake = nixpkgs;
+    };
 }
