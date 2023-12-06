@@ -1,6 +1,6 @@
 { config, pkgs, username, hostname, ... }: {
     boot.blacklistedKernelModules = [ "bluetooth" "snd_hda_codec_hdmi" ];
-    boot.consoleLogLevel = 0; # was 3
+    boot.consoleLogLevel = 0;
     boot.extraModprobeConfig = ''
     options i915 enable_fbc=1 enable_psr=2 fastboot=1 enable_guc=3
     options iwlwifi uapsd_disable=0 power_save=1 power_level=3
@@ -9,12 +9,6 @@
     '';
     boot.initrd.compressor = "lz4";
     boot.initrd.compressorArgs = [ "-l" "-9" ];
-    # TODO: services.udev.extraRules?
-    boot.initrd.services.udev.rules = ''
-    SUBSYSTEM=="pci", ATTR{power/control}="auto"
-    SUBSYSTEM=="scsi", ATTR{power/control}="auto"
-    ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
-    '';
     boot.initrd.verbose = false;
     boot.kernel.sysctl = {
         "kernel.printk" = "3 3 3 3";
@@ -34,7 +28,7 @@
     boot.loader.efi.canTouchEfiVariables = true;
     boot.loader.systemd-boot.enable = true;
     boot.loader.timeout = 0;
-    boot.plymouth.enable = true; # NEW
+    boot.plymouth.enable = true;
 
     console.keyMap = "us";
 
@@ -51,16 +45,16 @@
         ];
         users."${username}" = {
             directories = [
+                ".config/google-chrome"
+                { directory = ".gnupg"; mode = "0700"; }
+                { directory = ".ssh"; mode = "0700"; }
+
                 "Desktop"
                 "Documents"
                 "Downloads"
                 "Music"
                 "Pictures"
                 "Videos"
-                
-                ".config/google-chrome"
-                { directory = ".gnupg"; mode = "0700"; }
-                { directory = ".ssh"; mode = "0700"; }
             ];
             files = [
                 ".zsh_history"
@@ -151,7 +145,7 @@
         programs.git.userName = "Ali Rizvi";
         programs.gpg.enable = true;
         programs.home-manager.enable = true;
-        programs.info.enable = true;
+        # programs.info.enable = true;
         # TODO: programs.java
         programs.jq.enable = true;
         programs.less.enable = true;
@@ -162,7 +156,7 @@
         programs.zsh.enable = true;
         programs.zsh.enableAutosuggestions = true;
         programs.zsh.initExtra = ''
-        autoload -U promptinit && promptinit && prompt redhat && setopt prompt_sp
+        export PS1="%B%F{green}[%n@%m %1~]%(#.#.$)%F{white}%b "
         '';
         programs.zsh.syntaxHighlighting.enable = true;
 
@@ -308,6 +302,11 @@
     # TODO: services.throttled
     services.timesyncd.enable = true;
     # TODO: services.tlp
+    services.udev.extraRules = ''
+    SUBSYSTEM=="pci", ATTR{power/control}="auto"
+    SUBSYSTEM=="scsi", ATTR{power/control}="auto"
+    ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
+    '';
     # TODO: services.udisks2
     # TODO: services.unclutter
     # TODO: services.upower
@@ -315,10 +314,10 @@
     # TODO: services.usbmuxd
     services.xserver.enable = true;
     services.xserver.desktopManager.plasma5.enable = true;
-    services.xserver.desktopManager.plasma5.useQtScaling = true;
+    #services.xserver.desktopManager.plasma5.useQtScaling = true;
     services.xserver.displayManager.defaultSession = "plasmawayland";
     services.xserver.displayManager.sddm.enable = true;
-    services.xserver.displayManager.sddm.wayland.enable = true;
+    #services.xserver.displayManager.sddm.wayland.enable = true;
 
     sound.enable = true;
 
