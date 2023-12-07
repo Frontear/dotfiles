@@ -1,4 +1,4 @@
-{ config, pkgs, username, hostname, ... }: {
+{ pkgs, ... }: {
     boot.blacklistedKernelModules = [ "bluetooth" "snd_hda_codec_hdmi" ];
     boot.extraModprobeConfig = ''
     options i915 enable_fbc=1 enable_psr=2 fastboot=1 enable_guc=3

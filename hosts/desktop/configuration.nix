@@ -1,4 +1,4 @@
-{ config, pkgs, username, hostname, ... }: {
+{ config, pkgs, ... }: {
     boot.loader.grub.enable = true;
     boot.loader.grub.device = "/dev/nvme0n1";
     boot.loader.grub.efiSupport = true;

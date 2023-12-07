@@ -1,5 +1,5 @@
 {
-    description = ""; # TODO
+    description = "Flake for my systems, imports all the default things";
 
     inputs = {
         nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -12,14 +12,26 @@
         nixos-hardware.url = "github:NixOS/nixos-hardware";
     };
 
-    outputs = { self, nixpkgs, ... } @ inputs: {
+    outputs = { self, nixpkgs, nixos-hardware, ... } @ inputs: {
         nixosConfigurations."frontear-net" = nixpkgs.lib.nixosSystem {
-            specialArgs = inputs // {
+            specialArgs = {
+                inherit nixos-hardware;
                 hostname = "frontear-net";
                 username = "frontear";
             };
             modules = [
+                inputs.home-manager.nixosModules.default
+                inputs.impermanence.nixosModules.impermanence
+
                 ./hosts/laptop
+
+                {
+                    # https://ayats.org/blog/channels-to-flakes
+                    nix.nixPath = [ "nixpkgs=flake:nixpkgs" ];
+                    nix.registry = {
+                        nixpkgs.flake = nixpkgs;
+                    };
+                }
             ];
         };
     };
