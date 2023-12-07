@@ -109,6 +109,7 @@
         intel-ocl
         intel-vaapi-driver
         libvdpau-va-gl
+        vaapiVdpau
     ];
 
     home-manager.users."${username}" = {
@@ -133,6 +134,12 @@
         programs.chromium.commandLineArgs = [ "--disk-cache-dir=/tmp/chrome-cache" ];
         programs.chromium.dictionaries = with pkgs.hunspellDictsChromium; [ en_US ];
         # TODO: programs.dircolors
+        programs.direnv.enable = true;
+        programs.direnv.config = {
+            whitelist = {
+                prefix = [ "${config.users.extraUsers.${username}.home}/Documents/projects" ];
+            };
+        };
         programs.eza.enable = true;
         programs.eza.enableAliases = true;
         programs.eza.extraOptions = [ "--group-directories-first" "--header" ];

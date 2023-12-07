@@ -27,7 +27,7 @@
     boot.kernelParams = [ "quiet" "systemd.show_status=auto" "udev.log_level=0" ];
     boot.loader.efi.canTouchEfiVariables = true;
     boot.loader.grub.enable = true;
-    boot.loader.grub.device = "/dev/nvme0n1"; # TODO
+    boot.loader.grub.device = "/dev/nvme0n1";
     boot.loader.grub.efiSupport = true;
     boot.loader.grub.memtest86.enable = true;
     boot.loader.grub.timeoutStyle = "hidden";
@@ -108,12 +108,13 @@
     hardware.enableAllFirmware = true;
     hardware.bluetooth.enable = true;
     hardware.cpu.amd.updateMicrocode = true;
+    hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+    hardware.nvidia.modesetting.enable = true;
     hardware.opengl.enable = true;
-    #hardware.opengl.extraPackages = with pkgs; [
-    #    intel-media-driver
-    #    intel-ocl
-    #    intel-vaapi-driver
-    #    libvdpau-va-gl
+    hardware.opengl.extraPackages = with pkgs; [
+        libvdpau-va-gl
+        nvidia-vaapi-driver
+        vaapiVdpau
     #];
 
     home-manager.users."${username}" = {
@@ -138,6 +139,12 @@
         programs.chromium.commandLineArgs = [ "--disk-cache-dir=/tmp/chrome-cache" ];
         programs.chromium.dictionaries = with pkgs.hunspellDictsChromium; [ en_US ];
         # TODO: programs.dircolors
+        programs.direnv.enable = true;
+        programs.direnv.config = {
+            whitelist = {
+                prefix = [ "${config.users.extraUsers.${username}.home}/Documents/projects"];
+            };
+        };
         programs.eza.enable = true;
         programs.eza.enableAliases = true;
         programs.eza.extraOptions = [ "--group-directories-first" "--header" ];
@@ -186,7 +193,7 @@
 
     i18n.defaultLocale = "en_US.UTF-8";
 
-    location.provider = "geoclue2";
+    # location.provider = "geoclue2";
 
     networking.dhcpcd.enable = false;
     networking.firewall.enable = true;
@@ -248,7 +255,7 @@
 
     # TODO: services.acpid
     # services.auto-cpufreq.enable = true;
-    services.automatic-timezoned.enable = true;
+    #services.automatic-timezoned.enable = true;
     services.avahi.enable = true;
     services.avahi.nssmdns = true;
     services.avahi.openFirewall = true;
@@ -262,7 +269,7 @@
     # TODO: services.fractalart
     services.fstrim.enable = true;
     services.fwupd.enable = true;
-    services.geoclue2.enable = true;
+    #services.geoclue2.enable = true;
     # TODO: services.getty
     # TODO: services.github-runner
     # TODO: services.gpm
@@ -303,7 +310,7 @@
     # TODO: services.redshift
     # TODO: services.smartd
     # TODO: services.system-config-printer
-    services.thermald.enable = true;
+    #services.thermald.enable = true;
     # TODO: services.throttled
     services.timesyncd.enable = true;
     # TODO: services.tlp
@@ -323,6 +330,7 @@
     services.xserver.displayManager.defaultSession = "plasmawayland";
     services.xserver.displayManager.sddm.enable = true;
     #services.xserver.displayManager.sddm.wayland.enable = true;
+    services.xserver.videoDrivers = [ "nvidia" ];
 
     sound.enable = true;
 
