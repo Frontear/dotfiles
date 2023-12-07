@@ -47,6 +47,7 @@
             "/etc/NetworkManager/system-connections"
             "/etc/nixos"
             "/var/db/sudo"
+            "/var/lib/systemd/timers"
         ];
         users."${username}" = {
             directories = [
