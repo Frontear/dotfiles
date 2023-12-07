@@ -141,6 +141,7 @@
                 prefix = [ "${config.users.extraUsers.${username}.home}/Documents/projects" ];
             };
         };
+        programs.direnv.nix-direnv.enable = true;
         programs.eza.enable = true;
         programs.eza.enableAliases = true;
         programs.eza.extraOptions = [ "--group-directories-first" "--header" ];
