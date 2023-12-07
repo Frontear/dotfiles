@@ -10,6 +10,7 @@
         nixos-hardware.nixosModules.common-pc-ssd
 
         ./hardware-configuration.nix
+        ../common/configuration.nix
         ./configuration.nix
     ];
 
