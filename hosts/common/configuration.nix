@@ -32,8 +32,10 @@
         users."${username}" = {
             directories = [
                 ".config/google-chrome"
+                ".config/ArmCord"
                 { directory = ".gnupg"; mode = "0700"; }
                 { directory = ".ssh"; mode = "0700"; }
+                ".local/state/zsh"
 
                 "Desktop"
                 "Documents"
@@ -41,9 +43,6 @@
                 "Music"
                 "Pictures"
                 "Videos"
-            ];
-            files = [
-                ".zsh_history"
             ];
         };
     };
@@ -96,6 +95,7 @@
 
         # TODO: home
         home.packages = with pkgs; [
+            armcord
             fastfetch
         ];
         home.shellAliases = {
@@ -140,9 +140,43 @@
         programs.obs-studio.enable = true;
         programs.zsh.enable = true;
         programs.zsh.enableAutosuggestions = true;
-        programs.zsh.initExtra = ''
-        export PS1="%B%F{green}[%n@%m %1~]%(#.#.$)%F{white}%b "
+        programs.zsh.completionInit = ''
+        autoload -U compinit && compinit
+        compinit -D $HOME/.local/state/zsh/compdump
         '';
+        programs.zsh.dotDir = ".config/zsh";
+        programs.zsh.envExtra = ''
+        '';
+        programs.zsh.history.path = ".local/state/zsh/history";
+        programs.zsh.initExtra = ''
+        PS1="%B%F{green}[%n@%m %1~]%(#.#.$)%F{white}%b "
+        RPS1="%B%(?.%F{green}.%F{red})%?%f%b" # https://unix.stackexchange.com/a/375730
+
+        bindkey "$(echoti khome)"   beginning-of-line
+        bindkey "$(echoti kend)"    end-of-line
+        bindkey "$(echoti kich1)"   overwrite-mode
+        bindkey "$(echoti kbs)"     backward-delete-char
+        bindkey "$(echoti kdch1)"   delete-char
+        bindkey "$(echoti kcuu1)"   up-line-or-history
+        bindkey "$(echoti kcud1)"   down-line-or-history
+        bindkey "$(echoti kcub1)"   backward-char
+        bindkey "$(echoti kcuf1)"   forward-char
+        bindkey "$(echoti kpp)"     beginning-of-buffer-or-history
+        bindkey "$(echoti knp)"     end-of-buffer-or-history
+        bindkey "$(echoti kcbt)"    reverse-menu-complete
+
+        if echoti smkx && echoti rmkx; then
+            autoload -Uz add-zle-hook-widget
+            function zle_application_mode_start { echoti smkx }
+            function zle_application_mode_stop { echoti rmkx }
+            add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
+            add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
+        fi
+        '';
+        programs.zsh.shellAliases = {
+            diff = "diff --color=auto";
+            grep = "grep --color=auto";
+        };
         programs.zsh.syntaxHighlighting.enable = true;
 
         # TODO: qt
