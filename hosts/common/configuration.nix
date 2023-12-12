@@ -1,4 +1,4 @@
-{ config, pkgs, username, hostname, ... }: {
+{ config, lib, pkgs, username, hostname, ... }: {
     boot.consoleLogLevel = 0;
     boot.initrd.compressor = "lz4";
     boot.initrd.compressorArgs = [ "-l" "-9" ];
@@ -247,6 +247,7 @@
 
     # TODO: security.pam.services
     security.polkit.enable = true;
+    security.rtkit.enable = true;
     security.sudo.enable = true;
     security.sudo.execWheelOnly = true;
     # TODO: security.sudo.extraRules
@@ -321,7 +322,7 @@
     services.xserver.displayManager.sddm.enable = true;
     #services.xserver.displayManager.sddm.wayland.enable = true;
 
-    sound.enable = true;
+    sound.enable = lib.mkForce false;
 
     system.stateVersion = "24.05";
 

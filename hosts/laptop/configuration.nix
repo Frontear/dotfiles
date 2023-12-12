@@ -1,10 +1,9 @@
 { pkgs, ... }: {
-    boot.blacklistedKernelModules = [ "bluetooth" "snd_hda_codec_hdmi" ];
+    boot.blacklistedKernelModules = [ "bluetooth" ];
     boot.extraModprobeConfig = ''
     options i915 enable_fbc=1 enable_psr=2 fastboot=1 enable_guc=3
     options iwlwifi uapsd_disable=0 power_save=1 power_level=3
     options iwlmvm power_scheme=3
-    options snd_hda_intel power_save=1 power_save_controller=y
     '';
     boot.kernel.sysctl = {
         "kernel.nmi_watchdog" = 0;
