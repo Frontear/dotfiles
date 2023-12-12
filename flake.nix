@@ -17,13 +17,6 @@
     };
 
     outputs = { self, nixpkgs, ... } @ inputs: {
-        nixosConfigurations."frontear-net" = nixpkgs.lib.nixosSystem {
-            specialArgs = {
-                inherit inputs nixpkgs;
-            };
-            modules = [
-                ./hosts/laptop
-            ];
-        };
+        nixosConfigurations = import ./hosts { inherit inputs nixpkgs; };
     };
 }
