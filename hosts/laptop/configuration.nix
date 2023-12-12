@@ -41,17 +41,13 @@
     environment.persistence."/nix/persist" = {
         directories = [
             "/etc/NetworkManager"
-            "/etc/nixos"
             "/var/db/sudo"
             "/var/lib/systemd/timers"
         ];
         users."${username}" = {
             directories = [
-                ".config/google-chrome"
-                ".config/ArmCord"
                 { directory = ".gnupg"; mode = "0700"; }
                 { directory = ".ssh"; mode = "0700"; }
-                ".local/state/zsh"
 
                 "Desktop"
                 "Documents"
