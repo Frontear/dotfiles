@@ -23,7 +23,8 @@
                 inputs.home-manager.nixosModules.default
                 inputs.impermanence.nixosModules.impermanence
 
-                ./hosts/laptop
+                ./hosts/laptop/hardware-configuration.nix
+                ./hosts/laptop/configuration.nix
 
                 {
                     # https://ayats.org/blog/channels-to-flakes
