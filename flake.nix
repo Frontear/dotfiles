@@ -1,38 +1,28 @@
 {
-    description = "Flake for my systems, imports all the default things";
-
     inputs = {
         nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-        home-manager.url = "github:nix-community/home-manager";
-        home-manager.inputs.nixpkgs.follows = "nixpkgs";
+        home-manager = {
+            url = "github:nix-community/home-manager";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
 
-        impermanence.url = "github:nix-community/impermanence";
+        impermanence = {
+            url = "github:nix-community/impermanence";
+        };
 
-        nixos-hardware.url = "github:NixOS/nixos-hardware";
+        nixos-hardware = {
+            url = "github:NixOS/nixos-hardware";
+        };
     };
 
-    outputs = { self, nixpkgs, nixos-hardware, ... } @ inputs: {
+    outputs = { self, nixpkgs, ... } @ inputs: {
         nixosConfigurations."frontear-net" = nixpkgs.lib.nixosSystem {
             specialArgs = {
-                inherit nixos-hardware;
-                hostname = "frontear-net";
-                username = "frontear";
+                inherit inputs nixpkgs;
             };
             modules = [
-                inputs.home-manager.nixosModules.default
-                inputs.impermanence.nixosModules.impermanence
-
-                ./hosts/laptop/hardware-configuration.nix
-                ./hosts/laptop/configuration.nix
-
-                {
-                    # https://ayats.org/blog/channels-to-flakes
-                    nix.nixPath = [ "nixpkgs=flake:nixpkgs" ];
-                    nix.registry = {
-                        nixpkgs.flake = nixpkgs;
-                    };
-                }
+                ./hosts/laptop
             ];
         };
     };
