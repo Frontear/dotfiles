@@ -5,6 +5,7 @@
         };
         modules = [
             ./laptop
+            ../modules
         ];
     };
 }
