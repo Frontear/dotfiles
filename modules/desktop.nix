@@ -4,8 +4,10 @@
     ];
 
     # TODO: evaluate necessity
-    qt.enable = true;
-    qt.platformTheme = "kde";
+    qt = {
+        enable = true;
+        platformTheme = "kde";
+    };
 
     services.xserver = {
         enable = true;
@@ -16,4 +18,10 @@
             sddm.enable = true;
         };
     };
+
+    xdg.portal.enable = true;
+    # xdg.portal.config = {};
+    # xdg.portal.extraPortals = with pkgs; [
+    #     xdg-desktop-portal-hyprland
+    # ];
 }

@@ -44,11 +44,6 @@
     environment.wordlist.enable = false; # TODO: wtf is wrong with the encoding
 
     fileSystems = {
-        "/" = {
-            device = "none";
-            fsType = "tmpfs";
-            options = [ "defaults" "mode=755" "noatime" "size=1G" ];
-        };
         "/archive" = {
             device = "/dev/disk/by-label/archive";
             fsType = "btrfs";
@@ -58,11 +53,6 @@
             device = "/dev/disk/by-label/EFI";
             fsType = "vfat";
             options = [ "defaults" "noatime" ];
-        };
-        "/nix" = {
-            device = "/dev/disk/by-label/nix";
-            fsType = "btrfs";
-            options = [ "defaults" "compress=zstd" "noatime" ];
         };
     };
 
@@ -218,10 +208,4 @@
     time.timeZone = "America/Toronto";
 
     # TODO: users
-
-    xdg.portal.enable = true;
-    # xdg.portal.config = {};
-    # xdg.portal.extraPortals = with pkgs; [
-    #     xdg-desktop-portal-hyprland
-    # ];
 }

@@ -6,6 +6,8 @@
         "vm.page-cluster" = 0;
     };
 
-    zramSwap.enable = true;
-    zramSwap.priority = 100;
+    zramSwap = {
+        enable = true;
+        priority = 100;
+    };
 }

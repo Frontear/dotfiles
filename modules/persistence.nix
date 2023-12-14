@@ -2,6 +2,20 @@
 let
     path = "/nix/persist";
 in {
+    # TODO: isolate?
+    fileSystems = {
+        "/" = {
+            device = "none";
+            fsType = "tmpfs";
+            options = [ "defaults" "mode=755" "noatime" "size=1G" ];
+        };
+        "/nix" = {
+            device = "/dev/disk/by-label/nix";
+            fsType = "btrfs";
+            options = [ "defaults" "compress=zstd" "noatime" ];
+        };
+    };
+
     environment.persistence."${path}" = {
         directories = lib.mkBefore [
             "/etc/NetworkManager"

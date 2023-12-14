@@ -1,21 +1,25 @@
 { config, lib, hostname, ... }: {
-    networking.dhcpcd.enable = false;
-    networking.firewall.enable = true;
-    networking.hostName = "${hostname}";
-    networking.nameservers = [
-        "1.1.1.1"
-        "1.0.0.1"
-        "2606:4700:4700::1111"
-        "2606:4700:4700::1001"
-    ];
-    networking.networkmanager.enable = true;
-    networking.networkmanager.dhcp = "internal";
-    networking.networkmanager.dns = "none";
-    networking.networkmanager.wifi = lib.mkIf config.powerManagement.enable {
-        powersave = true;
+    networking = {
+        dhcpcd.enable = false; # NetworkManager has its own resolver
+        firewall.enable = true;
+        hostName = "${hostname}";
+        nameservers = [
+            "1.1.1.1"
+            "1.0.0.1"
+            "2606:4700:4700::1111"
+            "2606:4700:4700::1001"
+        ];
+        networkmanager = {
+            enable = true;
+            dhcp = "internal";
+            dns = "none"; # forces the use of our defined nameservers
+            wifi.powersave = config.powerManagement.enable;
+        };
+        stevenblack = {
+            enable = true;
+            block = [ "fakenews" "gambling" "porn" ];
+        };
     };
-    networking.stevenblack.enable = true;
-    networking.stevenblack.block = [ "fakenews" "gambling" "porn" ];
 
-    systemd.services."NetworkManager-wait-online".enable = false;
+    systemd.services."NetworkManager-wait-online".enable = false; # eats up 3+ seconds at boot time
 }
