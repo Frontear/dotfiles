@@ -6,8 +6,11 @@
     username,
     ...
 }: {
+    imports = [
+        ../../modules/silent-boot
+    ];
+
     boot.blacklistedKernelModules = [ "bluetooth" ];
-    boot.consoleLogLevel = 0;
     boot.extraModprobeConfig = ''
     options i915 enable_fbc=1 enable_psr=2 fastboot=1 enable_guc=3
     options iwlwifi uapsd_disable=0 power_save=1 power_level=3
@@ -15,10 +18,7 @@
     '';
     boot.initrd.compressor = "lz4";
     boot.initrd.compressorArgs = [ "-l" "-9" ];
-    boot.initrd.verbose = false;
     boot.kernel.sysctl = {
-        "kernel.printk" = "3 3 3 3";
-        
         "vm.swappiness" = 180;
         "vm.watermark_boost_factor" = 0;
         "vm.watermark_scale_factor" = 125;
@@ -32,11 +32,8 @@
         "vm.vfs_cache_pressure" = 50;
     };
     boot.kernelPackages = pkgs.linuxKernel.packages.linux_lqx;
-    boot.kernelParams = [ "quiet" "systemd.show_status=auto" "udev.log_level=0" ];
     boot.loader.efi.canTouchEfiVariables = true; # TODO: windows?
     boot.loader.systemd-boot.enable = true;
-    boot.loader.timeout = 0;
-    boot.plymouth.enable = true;
 
     console.keyMap = "us";
 
@@ -71,6 +68,7 @@
     ];
     environment.systemPackages = with pkgs; [
         # powerdevil
+        powertop
     ];
     environment.wordlist.enable = false; # TODO: wtf is wrong with the encoding
 
@@ -287,7 +285,19 @@
     security.rtkit.enable = true;
     security.sudo.enable = true;
     security.sudo.execWheelOnly = true;
-    # TODO: security.sudo.extraRules
+    security.sudo.extraRules = [
+        {
+            commands = [
+                {
+                    command = "${pkgs.powertop}/bin/powertop";
+                    options = [ "NOPASSWD" ];
+                }
+            ];
+            users = [
+                "${username}"
+            ];
+        }
+    ];
     security.sudo.wheelNeedsPassword = true;
 
     # TODO: services.acpid
