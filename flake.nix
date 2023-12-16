@@ -16,7 +16,16 @@
         };
     };
 
-    outputs = { self, nixpkgs, ... } @ inputs: {
-        nixosConfigurations = import ./hosts { inherit inputs nixpkgs; };
+    outputs = {
+        self,
+        nixpkgs,
+        ...
+    } @ inputs: {
+        nixosConfigurations."frontear-net" = nixpkgs.lib.nixosSystem {
+            specialArgs = { inherit inputs nixpkgs; };
+            modules = [
+                ./configuration.nix
+            ];
+        };
     };
 }
