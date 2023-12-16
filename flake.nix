@@ -21,11 +21,6 @@
         nixpkgs,
         ...
     } @ inputs: {
-        nixosConfigurations."frontear-net" = nixpkgs.lib.nixosSystem {
-            specialArgs = { inherit inputs nixpkgs; };
-            modules = [
-                ./configuration.nix
-            ];
-        };
+        nixosConfigurations = import ./hosts { inherit inputs nixpkgs; };
     };
 }

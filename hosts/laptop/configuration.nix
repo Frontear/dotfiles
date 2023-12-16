@@ -1,37 +1,11 @@
 {
     config,
-    inputs,
+    hostname,
     lib,
-    nixpkgs,
     pkgs,
+    username,
     ...
-}:
-let
-    hostname = "frontear-net";
-    username = "frontear";
-    nix-hw = inputs.nixos-hardware.nixosModules;
-in {
-    imports = [
-        ./hardware-configuration.nix
-
-        nix-hw.dell-inspiron-14-5420
-        nix-hw.common-cpu-intel
-        nix-hw.common-hidpi
-        nix-hw.common-pc-laptop
-        nix-hw.common-pc-ssd
-
-        inputs.home-manager.nixosModules.default
-        inputs.impermanence.nixosModules.impermanence
-    ];
-
-    # https://ayats.org/blog/channels-to-flakes
-    nix = {
-        nixPath = [ "nixpkgs=flake:nixpkgs" ];
-        registry = {
-            nixpkgs.flake = nixpkgs;
-        };
-    };
-
+}: {
     boot.blacklistedKernelModules = [ "bluetooth" ];
     boot.consoleLogLevel = 0;
     boot.extraModprobeConfig = ''
