@@ -7,35 +7,17 @@
     ...
 }: {
     imports = [
-        ../../modules/silent-boot
+        ../../modules/boot/fastboot.nix
+        ../../modules/boot/silentboot.nix
+        ../../modules/hardware/intel/cpu.nix
+        ../../modules/hardware/intel/gpu.nix
+        ../../modules/power-saving
+        ../../modules/sound/pipewire.nix
+        ../../modules/swap/zram.nix
     ];
 
-    boot.blacklistedKernelModules = [ "bluetooth" ];
-    boot.extraModprobeConfig = ''
-    options i915 enable_fbc=1 enable_psr=2 fastboot=1 enable_guc=3
-    options iwlwifi uapsd_disable=0 power_save=1 power_level=3
-    options iwlmvm power_scheme=3
-    '';
-    boot.initrd.compressor = "lz4";
-    boot.initrd.compressorArgs = [ "-l" "-9" ];
-    boot.kernel.sysctl = {
-        "vm.swappiness" = 180;
-        "vm.watermark_boost_factor" = 0;
-        "vm.watermark_scale_factor" = 125;
-        "vm.page-cluster" = 0;
-        
-        "kernel.nmi_watchdog" = 0;
-        "vm.dirty_writeback_centisecs" = 6000;
-        "vm.dirty_ratio" = 3;
-        "vm.dirty_background_ratio" = 1;
-        "vm.laptop_mode" = 5;
-        "vm.vfs_cache_pressure" = 50;
-    };
-    boot.kernelPackages = pkgs.linuxKernel.packages.linux_lqx;
     boot.loader.efi.canTouchEfiVariables = true; # TODO: windows?
     boot.loader.systemd-boot.enable = true;
-
-    console.keyMap = "us";
 
     documentation.dev.enable = true;
     documentation.nixos.includeAllModules = true;
@@ -65,10 +47,6 @@
 
     environment.plasma5.excludePackages = with pkgs.libsForQt5; [
         elisa
-    ];
-    environment.systemPackages = with pkgs; [
-        # powerdevil
-        powertop
     ];
     environment.wordlist.enable = false; # TODO: wtf is wrong with the encoding
 
@@ -104,16 +82,6 @@
 
     hardware.enableAllFirmware = true;
     hardware.bluetooth.enable = false;
-    hardware.cpu.intel.updateMicrocode = true;
-    hardware.opengl.enable = true;
-    hardware.opengl.extraPackages = with pkgs; [
-        intel-media-driver
-        intel-ocl
-        intel-vaapi-driver
-        libvdpau-va-gl
-        vaapiVdpau
-    ];
-
 
     home-manager.users."${username}" = {
         # TODO: dconf.settings
@@ -241,7 +209,6 @@
     networking.networkmanager.enable = true;
     networking.networkmanager.dhcp = "internal";
     networking.networkmanager.dns = "none";
-    networking.networkmanager.wifi.powersave = true;
     networking.stevenblack.enable = true;
     networking.stevenblack.block = [ "fakenews" "gambling" "porn" ];
 
@@ -252,11 +219,6 @@
 
     # TODO: nixpkgs
     nixpkgs.config.allowUnfree = true;
-
-    powerManagement.enable = true;
-    powerManagement.cpuFreqGovernor = "powersave";
-    powerManagement.cpufreq.max = 3000000;
-    powerManagement.scsiLinkPolicy = "med_power_with_dipm";
 
     #programs.command-not-found.enable = false;
     programs.nano.enable = false;
@@ -301,7 +263,6 @@
     security.sudo.wheelNeedsPassword = true;
 
     # TODO: services.acpid
-    # services.auto-cpufreq.enable = true;
     services.automatic-timezoned.enable = true;
     services.avahi.enable = true;
     services.avahi.nssmdns4 = true;
@@ -326,7 +287,6 @@
     # TODO: services.httpd
     # TODO: services.infnoise
     # TODO: services.iptsd
-    # TODO: services.irqbalance
     # TODO: services.jmusicbot
     # TODO: services.languagetool
     # TODO: services.localtimed
@@ -336,12 +296,6 @@
     # TODO: services.ntfy-sh
     # TODO: services.openssh
     # TODO: services.physlock
-    services.pipewire.enable = true;
-    services.pipewire.alsa.enable = true;
-    services.pipewire.audio.enable = true;
-    services.pipewire.jack.enable = true;
-    services.pipewire.pulse.enable = true;
-    services.pipewire.wireplumber.enable = true;
     services.printing.enable = true;
     services.printing.cups-pdf.enable = true;
     services.printing.drivers = with pkgs; [
@@ -357,18 +311,9 @@
     # TODO: services.redshift
     # TODO: services.smartd
     # TODO: services.system-config-printer
-    services.thermald.enable = true;
-    # TODO: services.throttled
     services.timesyncd.enable = true;
-    # TODO: services.tlp
-    services.udev.extraRules = ''
-    SUBSYSTEM=="pci", ATTR{power/control}="auto"
-    SUBSYSTEM=="scsi", ATTR{power/control}="auto"
-    ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
-    '';
     # TODO: services.udisks2
     # TODO: services.unclutter
-    # TODO: services.upower
     # TODO: services.usbguard
     # TODO: services.usbmuxd
     services.xserver.enable = true;
@@ -378,17 +323,9 @@
     services.xserver.displayManager.sddm.enable = true;
     #services.xserver.displayManager.sddm.wayland.enable = true;
 
-    sound.enable = lib.mkForce false;
-
     system.stateVersion = "24.05";
 
     systemd.services."NetworkManager-wait-online".enable = false;
-    systemd.tmpfiles.rules = [
-        "z /sys/class/backlight/*/brightness 0644 - wheel - -"
-        "w /sys/devices/system/cpu/cpu*/power/energy_perf_bias - - - - 8"
-        "w /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference - - - - balance_power"
-        "w /sys/module/pcie_aspm/parameters/policy - - - - powersupersave"
-    ];
 
     time.timeZone = "America/Toronto";
 
@@ -408,7 +345,4 @@
     # xdg.portal.extraPortals = with pkgs; [
     #     xdg-desktop-portal-hyprland
     # ];
-
-    zramSwap.enable = true;
-    zramSwap.priority = 100;
 }
