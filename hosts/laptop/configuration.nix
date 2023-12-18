@@ -42,24 +42,10 @@
     # TODO: environment.etc
 
     environment.persistence."/nix/persist" = {
-        directories = [
-            "/etc/NetworkManager"
-            "/var/db/sudo"
-            "/var/lib/systemd/timers"
-        ];
         users."${username}" = {
             directories = [
                 { directory = ".config/google-chrome"; mode = "0700"; }
-                { directory = ".gnupg"; mode = "0700"; }
                 ".local/share/kwalletd" # google chrome passwords
-                { directory = ".ssh"; mode = "0700"; }
-
-                "Desktop"
-                "Documents"
-                "Downloads"
-                "Music"
-                "Pictures"
-                "Videos"
             ];
         };
     };
@@ -222,6 +208,11 @@
     };
 
     i18n.defaultLocale = "en_US.UTF-8";
+
+    impermanence = {
+        enable = true;
+        persistPath = "/nix/persist";
+    };
 
     location.provider = "geoclue2";
 
