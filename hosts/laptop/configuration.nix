@@ -31,27 +31,16 @@
     boot.loader.systemd-boot.enable = true;
     boot.silent = true;
 
-    environment.systemPackages = with pkgs; [
-    #    powerdevil
-        powertop
-    ];
-
     documentation.dev.enable = true;
     documentation.nixos.includeAllModules = true;
 
     # TODO: environment.etc
-
-    environment.persistence."/nix/persist" = {
-        users."${username}" = {
-            directories = [
-                { directory = ".config/google-chrome"; mode = "0700"; }
-                ".local/share/kwalletd" # google chrome passwords
-            ];
-        };
-    };
-
     environment.plasma5.excludePackages = with pkgs.libsForQt5; [
         elisa
+    ];
+    environment.systemPackages = with pkgs; [
+    #    powerdevil
+        powertop
     ];
     environment.wordlist.enable = false; # TODO: wtf is wrong with the encoding
 
@@ -211,7 +200,24 @@
 
     impermanence = {
         enable = true;
-        persistPath = "/nix/persist";
+        directories = [
+            "/etc/NetworkManager"
+            "/var/db/sudo"
+            "/var/lib/systemd/timers"
+        ];
+        user_directories = [
+            { directory = ".config/google-chrome"; mode = "0700"; }
+            { directory = ".gnupg"; mode = "0700"; }
+            ".local/share/kwalletd"
+            { directory = ".ssh"; mode = "0700"; }
+
+            "Desktop"
+            "Documents"
+            "Downloads"
+            "Music"
+            "Pictures"
+            "Videos"
+        ];
     };
 
     location.provider = "geoclue2";
