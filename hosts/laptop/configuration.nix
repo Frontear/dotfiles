@@ -95,6 +95,7 @@
         home.packages = with pkgs; [
             armcord
             fastfetch
+            microsoft-edge
         ];
         home.shellAliases = {
             l = "eza -lah --group-directories-first";
@@ -104,10 +105,6 @@
         manual.manpages.enable = true;
 
         # TODO: programs.command-not-found (system has this too)
-        programs.chromium.enable = true;
-        programs.chromium.package = pkgs.google-chrome;
-        programs.chromium.commandLineArgs = [ "--disk-cache-dir=/tmp/chrome-cache" ];
-        programs.chromium.dictionaries = with pkgs.hunspellDictsChromium; [ en_US ];
         # TODO: programs.dircolors
         programs.direnv.enable = true;
         programs.direnv.config = {
@@ -206,7 +203,7 @@
             "/var/lib/systemd/timers"
         ];
         user_directories = [
-            { directory = ".config/google-chrome"; mode = "0700"; }
+            { directory = ".config/microsoft-edge"; mode = "0700"; }
             { directory = ".gnupg"; mode = "0700"; }
             ".local/share/kwalletd"
             { directory = ".ssh"; mode = "0700"; }
