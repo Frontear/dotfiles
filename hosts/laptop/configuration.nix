@@ -135,14 +135,9 @@
         programs.obs-studio.enable = true;
         programs.zsh.enable = true;
         programs.zsh.enableAutosuggestions = true;
-        programs.zsh.completionInit = ''
-        autoload -U compinit && compinit
-        compinit -D $HOME/.local/state/zsh/compdump
-        '';
         programs.zsh.dotDir = ".config/zsh";
         programs.zsh.envExtra = ''
         '';
-        programs.zsh.history.path = ".local/state/zsh/history";
         programs.zsh.initExtra = ''
         PS1="%B%F{green}[%n@%m %1~]%(#.#.$)%F{white}%b "
         RPS1="%B%(?.%F{green}.%F{red})%?%f%b" # https://unix.stackexchange.com/a/375730
@@ -214,6 +209,9 @@
             "Music"
             "Pictures"
             "Videos"
+        ];
+        user_files = [
+            ".zsh_history"
         ];
     };
 
