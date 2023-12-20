@@ -14,7 +14,8 @@ in {
             '';
 
             directories = mkOption {
-                type = types.listOf types.path;
+                #type = types.listOf types.path;
+                default = [];
                 description = mdDoc ''
                 The directories to persist, written in the style
                 from nix-community/impermanence.
@@ -22,7 +23,8 @@ in {
             };
 
             files = mkOption {
-                type = types.listOf types.path;
+                #type = types.listOf types.path;
+                default = [];
                 description = mdDoc ''
                 The files to persist, written in the style from
                 nix-community/impermanence.
@@ -41,7 +43,8 @@ in {
 
             # TODO: rename
             user_directories = mkOption {
-                type = types.listOf types.path;
+                #type = types.listOf types.path;
+                default = [];
                 description = mdDoc ''
                 The user directories to persist, written in the
                 style from nix-community/impermanence.
@@ -49,7 +52,8 @@ in {
             };
 
             user_files = mkOption {
-                type = types.listOf types.path;
+                #type = types.listOf types.path;
+                default = [];
                 description = mdDoc ''
                 The user files to persist, written in the style
                 from nix-community/impermanence.
