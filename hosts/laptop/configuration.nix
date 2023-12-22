@@ -256,6 +256,10 @@
 
     set number
     highlight LineNr ctermfg=grey
+
+    map 1 :b1<CR>
+    map 2 :b2<CR>
+    map 3 :b3<CR>
     '';
     programs.neovim.configure.packages.myVimPackage = with pkgs.vimPlugins; {
         start = [ nvim-treesitter.withAllGrammars ];
