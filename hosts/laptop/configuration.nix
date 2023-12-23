@@ -32,6 +32,7 @@
     boot.silent = true;
 
     documentation.dev.enable = true;
+    documentation.man.generateCaches = true;
     documentation.nixos.includeAllModules = true;
 
     # TODO: environment.etc
