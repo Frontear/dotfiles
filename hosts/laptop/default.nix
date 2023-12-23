@@ -16,6 +16,7 @@ in {
 
         inputs.home-manager.nixosModules.default
         inputs.impermanence.nixosModules.impermanence
+        inputs.nix-index-database.nixosModules.nix-index
 
         ./configuration.nix
     ];

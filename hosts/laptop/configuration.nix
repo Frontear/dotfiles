@@ -104,7 +104,6 @@
 
         manual.manpages.enable = true;
 
-        # TODO: programs.command-not-found (system has this too)
         # TODO: programs.dircolors
         programs.direnv.enable = true;
         programs.direnv.config = {
@@ -131,7 +130,6 @@
         programs.less.enable = true;
         programs.man.enable = true;
         programs.man.generateCaches = true;
-        # TODO: programs.nix-index
         programs.obs-studio.enable = true;
         programs.zsh.enable = true;
         programs.zsh.enableAutosuggestions = true;
@@ -246,7 +244,7 @@
     powerManagement.cpufreq.max = 3000000;
     powerManagement.scsiLinkPolicy = "med_power_with_dipm";
 
-    #programs.command-not-found.enable = false;
+    programs.command-not-found.enable = false;
     programs.nano.enable = false;
     programs.neovim.enable = true;
     programs.neovim.configure.customRC = ''
@@ -256,16 +254,11 @@
 
     set number
     highlight LineNr ctermfg=grey
-
-    map 1 :b1<CR>
-    map 2 :b2<CR>
-    map 3 :b3<CR>
     '';
     programs.neovim.configure.packages.myVimPackage = with pkgs.vimPlugins; {
         start = [ nvim-treesitter.withAllGrammars ];
     };
     programs.neovim.defaultEditor = true;
-    #programs.nix-index.enable = true;
     programs.xwayland.enable = true;
 
     qt.enable = true;
