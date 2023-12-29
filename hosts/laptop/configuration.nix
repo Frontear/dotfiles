@@ -97,6 +97,7 @@
             armcord
             fastfetch
             microsoft-edge
+            vscode
         ];
         home.shellAliases = {
             l = "eza -lah --group-directories-first";
@@ -201,6 +202,9 @@
             { directory = ".gnupg"; mode = "0700"; }
             ".local/share/kwalletd"
             { directory = ".ssh"; mode = "0700"; }
+
+            { directory = ".config/Code"; mode = "0700"; }
+            ".vscode"
 
             "Desktop"
             "Documents"
