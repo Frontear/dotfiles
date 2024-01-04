@@ -42,7 +42,20 @@
     users.frontear = {
       directories = [
         { directory = ".local/share/gnupg"; mode = "0700"; }
+        { directory = ".ssh"; mode = "0700"; }
+      ] ++ [ # xdg-user dirs
+        "Desktop"
         "Documents"
+        "Downloads"
+        "Music"
+        "Pictures"
+        #"Public"
+        #"Templates"
+        "Videos"
+      ];
+
+      files = [
+        ".local/state/zsh/history"
       ];
     };
   };
