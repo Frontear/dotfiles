@@ -105,7 +105,6 @@
 
   environment.systemPackages = with pkgs; [
     atool
-    vscode
     cliphist
     eza
     git
@@ -113,6 +112,7 @@
     inotify-tools
     kitty
     microsoft-edge
+    fastfetch
     neovim
     sassc
     swaybg
@@ -125,6 +125,9 @@
   };
 
   programs.hyprland.enable = true;
+
+  zramSwap.enable = true;
+  zramSwap.priority = 100;
 
   system.stateVersion = "24.05";
 }

@@ -2,6 +2,6 @@
   ...
 }: {
   imports = [
-    ./zram.nix
+    #./zram.nix
   ];
 }
