@@ -1,0 +1,95 @@
+#!/bin/sh
+
+audio() {
+    case $1 in
+        -m | --monitor)
+            DEVICE_ID=$(wpctl inspect @DEFAULT_AUDIO_SINK@ | awk -F"\"" "/device.id/{print \$2}")
+            pw-mon -oa | awk "/id: $DEVICE_ID/{print; fflush()}" | while read; do
+                awk "{print \$2 * 100\":\"\$3}" <(wpctl get-volume @DEFAULT_AUDIO_SINK@)
+            done
+            ;;
+        -M | --mute)
+            wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+            ;;
+        -i | --increase)
+            wpctl set-volume @DEFAULT_AUDIO_SINK@ "${2:-5}%+" --limit 1.0
+            ;;
+        -d | --decrease)
+            wpctl set-volume @DEFAULT_AUDIO_SINK@ "${2:-5}%-"
+            ;;
+    esac
+}
+
+backlight() {
+    DEVICES="/sys/class/backlight"
+
+    case $1 in
+        # TODO: custom monitor format output
+        -m | --monitor)
+            # TODO: ignore first few lines from udevadm monitor
+            udevadm monitor -ks backlight | while read; do
+                find $DEVICES -type l | while read BACKLIGHT; do
+                    CUR_LEVEL="$(cat $BACKLIGHT/brightness)"
+                    MAX_LEVEL="$(cat $BACKLIGHT/max_brightness)"
+
+                    awk "BEGIN {print ($CUR_LEVEL / $MAX_LEVEL) * 100}"
+                done
+            done
+            ;;
+        -i | --increase)
+            find $DEVICES -type l | while read BACKLIGHT; do
+                CUR_LEVEL="$(cat $BACKLIGHT/brightness)"
+                MAX_LEVEL="$(cat $BACKLIGHT/max_brightness)"
+
+                NEW_LEVEL=$(awk "BEGIN {print $CUR_LEVEL + ($MAX_LEVEL * ${2:-0.05})}")
+                if [ $NEW_LEVEL -lt $MAX_LEVEL ]; then
+                    echo $NEW_LEVEL > $BACKLIGHT/brightness
+                else
+                    echo $MAX_LEVEL > $BACKLIGHT/brightness
+                fi
+            done
+            ;;
+        -d | --decrease)
+            find $DEVICES -type l | while read BACKLIGHT; do
+                CUR_LEVEL="$(cat $BACKLIGHT/brightness)"
+                MAX_LEVEL="$(cat $BACKLIGHT/max_brightness)"
+
+                NEW_LEVEL=$(awk "BEGIN {print $CUR_LEVEL - ($MAX_LEVEL * ${2:-0.05})}")
+                if [ $NEW_LEVEL -gt 0 ]; then
+                    echo $NEW_LEVEL > $BACKLIGHT/brightness
+                else
+                    echo 0 > $BACKLIGHT/brightness
+                fi
+            done
+            ;;
+    esac
+}
+
+battery() {
+    BATTERY_DEVICES=$(find /sys/class/power_supply/*/ -maxdepth 1 -type f -name "capacity" -exec dirname {} \;)
+
+    case $1 in
+        -m | --monitor)
+            # Done this way to avoid event firing from "cat"
+            while true; do
+                for DEVICE in "${BATTERY_DEVICES[@]}"; do
+                    # percent:Charging|Discharging|Full
+                    echo "$(cat $DEVICE/capacity):$(cat $DEVICE/status)"
+                done
+                inotifywait -qqe close "${BATTERY_DEVICES[@]}"
+            done
+            ;;
+    esac
+}
+
+case $1 in
+    audio)
+        audio "${@:2}"
+        ;;
+    backlight)
+        backlight "${@:2}"
+        ;;
+    battery)
+        battery "${@:2}"
+        ;;
+esac

@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Backing up pacman database...
+Exec = /home/frontear/.local/bin/backup database
+When = PostTransaction

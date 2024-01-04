@@ -1,0 +1,4 @@
+%wheel ALL=(ALL:ALL) ALL
+
+%wheel ALL=NOPASSWD: /usr/bin/su
+%wheel ALL=NOPASSWD: /usr/bin/powertop

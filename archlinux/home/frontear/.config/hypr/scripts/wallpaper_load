@@ -1,0 +1,3 @@
+#!/bin/sh
+
+swaybg -m fit -i ~/.config/hypr/wallpapers/wallpaper_light.jpg

@@ -1,0 +1,16 @@
+#!/bin/sh
+
+if [ $EUID -ne 0 ]; then
+    echo "Please run as root."
+    exit 1
+fi
+
+URL="https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn/hosts"
+
+if ! curl $URL -o /tmp/hosts; then
+    echo "Failed to download hosts file"
+    exit 1
+fi
+
+cat /tmp/hosts > /etc/hosts # preserve /etc/hosts permissions
+rm /tmp/hosts

@@ -1,0 +1,26 @@
+#!/bin/sh
+
+FILE="keys.tar.gz"
+
+# TODO(?): https://unix.stackexchange.com/a/271870/323486
+
+mkdir -p /tmp/_gpgkeys
+sudo mount -t ramfs -o size=1024M ramfs /tmp/_gpgkeys
+sudo chown $UID -R /tmp/_gpgkeys
+
+pushd /tmp/_gpgkeys >> /dev/null
+
+gpg --export --armor > public.key
+gpg --export-secret-key --armor > private.key
+gpg --export-ownertrust --armor > trust.db
+
+atool -a $FILE public.key private.key trust.db >> /dev/null
+gpg -c $FILE
+
+mv $FILE.gpg /tmp/$FILE.gpg # move to tmpfs and hold there until user or shutdown
+echo "Key extraction saved in /tmp/$FILE.gpg"
+
+popd >> /dev/null
+
+sudo umount /tmp/_gpgkeys
+rm -rf /tmp/_gpgkeys

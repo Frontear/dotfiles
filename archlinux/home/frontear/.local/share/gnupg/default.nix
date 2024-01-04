@@ -1,0 +1,7 @@
+{
+  ...
+}: {
+  imports = [
+    ./sshcontrol.nix
+  ];
+}

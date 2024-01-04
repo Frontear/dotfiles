@@ -1,0 +1,7 @@
+{
+  ...
+}: {
+  imports = [
+    ./override.nix
+  ];
+}

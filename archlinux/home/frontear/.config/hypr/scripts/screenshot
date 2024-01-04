@@ -1,0 +1,21 @@
+#!/bin/sh
+
+SS_DIR="$HOME/Pictures/Screenshots"
+SS_NAME="$(date "+%FT%H:%M:%S").png"
+
+SHADER_LAST=$(hyprctl -j getoption decoration:screen_shader | jq -r ".str")
+SHADER_NULL="[[EMPTY]]"
+
+if [ ! -d "$SS_DIR" ]; then
+    mkdir -p $SS_DIR
+fi
+
+if [ "$SHADER_LAST" != "$SHADER_NULL" ]; then
+    hyprctl keyword decoration:screen_shader "$SHADER_NULL"
+fi
+
+grimblast --notify --cursor --freeze copysave area $SS_DIR/$SS_NAME
+
+if [ "$SHADER_LAST" != "$SHADER_NULL" ]; then
+    hyprctl keyword decoration:screen_shader $SHADER_LAST
+fi

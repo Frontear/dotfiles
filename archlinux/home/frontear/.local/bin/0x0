@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Examples:
+#   0x0 file.ext                Upload (file) file.ext
+#   0x0 "Hi there"              Upload (text) "Hi there"
+
+if [ ${#@} -eq 1 ]; then
+    # Allow files and all other text, but not directories
+    if [ -r "$1" ]; then
+        curl -F 'file=@-' 0x0.st < $1
+    elif [ ! -d "$1" ] && [ ! -z "$1" ]; then
+        curl -F 'file=@-' 0x0.st <<< $(echo "$CONTENT")
+    fi
+fi

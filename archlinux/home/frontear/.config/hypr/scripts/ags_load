@@ -1,0 +1,11 @@
+#!/bin/sh
+
+DIRECTORY="$HOME/.config/ags"
+
+while true; do
+    ags &
+    inotifywait -rqe close_write $DIRECTORY
+    ags --quit
+
+    wait $!
+done

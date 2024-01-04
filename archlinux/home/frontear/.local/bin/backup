@@ -1,0 +1,53 @@
+#!/bin/sh
+
+BASE_DIRECTORY="/home/frontear/Documents/archive/backups/pacman"
+DATE_NAME="$(date +"%F-%s")"
+
+if [ ! -d "$BASE_DIRECTORY" ]; then
+    exit 1
+fi
+
+case $1 in
+    database)
+        BAK_PATH="$BASE_DIRECTORY/database"
+
+        NAME_DB="$BAK_PATH/database-$DATE_NAME.tar.bz2"
+
+        if [ ! -d "$BAK_PATH" ]; then
+            exit 1
+        fi
+
+        find $BAK_PATH -type f -mtime +5 -exec rm {} \; # wipes older than 5 days old
+
+        tar -cjf $NAME_DB /var/lib/pacman/local &> /dev/null # suppress output
+
+        if [ -f "$NAME_DB" ]; then
+            exit 0
+        else
+            exit 1
+        fi
+        ;;
+    pkglist)
+        BAK_PATH="$BASE_DIRECTORY/pkglists"
+
+        NAME_ALL="$BAK_PATH/all-$DATE_NAME.txt"
+        NAME_AUR="$BAK_PATH/aur-$DATE_NAME.txt"
+
+        if [ ! -d "$BAK_PATH" ]; then
+            exit 1
+        fi
+
+        find $BAK_PATH -type f -mtime +5 -exec rm {} \; # wipes older than 5 days old
+
+        pacman -Qq > $NAME_ALL
+        pacman -Qqe > $NAME_AUR
+
+        if [ -f "$NAME_ALL" ] && [ -f "$NAME_AUR" ]; then
+            exit 0
+        else
+            exit 1
+        fi
+        ;;
+    **)
+        exit 1
+esac
