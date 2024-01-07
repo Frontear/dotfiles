@@ -39,8 +39,13 @@
       { directory = "/etc/NetworkManager/system-connections"; mode = "0700"; }
     ];
 
+    files = [
+      "/var/lib/power-profiles-daemon/state.ini"
+    ];
+
     users.frontear = {
       directories = [
+        { directory = ".config/microsoft-edge"; mode = "0700"; }
         { directory = ".local/share/gnupg"; mode = "0700"; }
         { directory = ".ssh"; mode = "0700"; }
       ] ++ [ # xdg-user dirs
@@ -146,8 +151,9 @@
 
   powerManagement.enable = true;
   services = {
+    power-profiles-daemon.enable = true;
     thermald.enable = true;
-    tlp.enable = true;
+    #tlp.enable = true;
   };
 
   services.upower.enable = true;
