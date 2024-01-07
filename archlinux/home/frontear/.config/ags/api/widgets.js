@@ -262,7 +262,7 @@ export const Window = ({child, name, anchor, exclusive, ...rest}) => Widget.Wind
     child: child,
     name: name,
     anchor: anchor,
-    exclusive: exclusive,
+    exclusivity: exclusive ? "exclusive" : "ignore",
     focusable: false,
     layer: "top",
     margins: [],
