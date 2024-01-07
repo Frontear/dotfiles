@@ -132,6 +132,22 @@
     wl-clip-persist
   ];
 
+  fonts.packages = with pkgs; [
+    (nerdfonts.override {
+      fonts = [ "NerdFontsSymbolsOnly" ];
+    })
+  ];
+
+  services.upower.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    audio.enable = true;
+    jack.enable = true;
+    pulse.enable = true;
+    wireplumber.enable = true;
+  };
+
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
