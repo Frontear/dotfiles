@@ -4,10 +4,10 @@ import { exec, execAsync } from "../api/utils.js";
 
 const os_logo = Button({
     className: "os_logo",
-    css: "color: rgb(73, 214, 255);",
+    css: "color: rgb(126, 164, 226);",
     child: Label({
         className: "icon",
-        label: "󰣇"
+        label: ""
     })
 });
 

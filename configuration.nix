@@ -144,6 +144,12 @@
     })
   ];
 
+  powerManagement.enable = true;
+  services = {
+    thermald.enable = true;
+    tlp.enable = true;
+  };
+
   services.upower.enable = true;
   services.pipewire = {
     enable = true;
