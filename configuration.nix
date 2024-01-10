@@ -11,6 +11,7 @@
 
     ./hardware-configuration.nix
     ./archlinux
+    ./nixos
   ];
 
   nixpkgs.config.allowUnfree = true;
