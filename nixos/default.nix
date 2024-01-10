@@ -16,5 +16,8 @@
 
   boot.loader.timeout = 0;
 
-  # --- ETC
+  # --- ROOT
+  environment.variables = {
+    EDITOR = "nvim";
+  };
 }
