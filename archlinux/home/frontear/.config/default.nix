@@ -3,18 +3,18 @@
 }: {
   imports = [
     ./ags
-    ./chrome-flags.nix
-    ./fastfetch
-    ./git
+    #./chrome-flags.nix
+    #./fastfetch
+    #./git
     ./hypr
-    ./kitty
+    #./kitty
     ./npm
-    ./nvim
-    ./psd
+    #./nvim
+    #./psd
     ./python
     ./ranger
-    ./systemd
-    ./yay
-    ./zsh
+    #./systemd
+    #./yay
+    #./zsh
   ];
 }

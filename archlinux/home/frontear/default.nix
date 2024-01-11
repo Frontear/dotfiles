@@ -4,6 +4,6 @@
   imports = [
     ./.config
     ./.local
-    ./.zshenv.nix
+    #./.zshenv.nix
   ];
 }
