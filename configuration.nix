@@ -157,6 +157,8 @@
     #tlp.enable = true;
   };
 
+  systemd.services."NetworkManager-wait-online".enable = false;
+
   services.upower.enable = true;
   services.pipewire = {
     enable = true;

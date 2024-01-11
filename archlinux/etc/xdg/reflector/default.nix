@@ -1,7 +1,0 @@
-{
-  ...
-}: {
-  imports = [
-    ./reflector.nix
-  ];
-}

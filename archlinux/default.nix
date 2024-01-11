@@ -1,10 +1,6 @@
 {
   ...
 }: {
-  imports = [
-    ./etc
-  ];
-
   home-manager.users.frontear =
   {
     ...
