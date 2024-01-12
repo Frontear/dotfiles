@@ -1,4 +1,5 @@
 {
+  inputs,
   ...
 }: {
   networking.nameservers = [
@@ -61,7 +62,7 @@
 
     "w /sys/devices/system/cpu/cpu*/power/energy_perf_bias - - - - 8"
 
-    "w /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference - - - - balance_power"
+    #"w /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference - - - - balance_power"
 
     "w /sys/module/pcie_aspm/parameters/policy - - - - powersupersave"
 
@@ -74,8 +75,10 @@
   ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
   '';
 
-  networking.stevenblack = {
-    enable = true;
-    block = [ "fakenews" "gambling" "porn" ];
-  };
+  #networking.stevenblack = {
+  #  enable = true;
+  #  block = [ "fakenews" "gambling" "porn" ];
+  #};
+
+  networking.extraHosts = builtins.readFile "${inputs.stevenblack.outPath}/hosts";
 }

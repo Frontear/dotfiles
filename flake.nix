@@ -19,6 +19,11 @@
     impermanence = {
       url = "github:nix-community/impermanence";
     };
+
+    stevenblack = {
+      url = "github:StevenBlack/hosts";
+      flake = false;
+    };
   };
 
   outputs = {
