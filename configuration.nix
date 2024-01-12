@@ -6,8 +6,8 @@
   ...
 }: {
   imports = [
-    inputs.impermanence.nixosModules.impermanence
     inputs.home-manager.nixosModules.default
+    inputs.impermanence.nixosModules.impermanence
 
     ./hardware-configuration.nix
     ./archlinux
