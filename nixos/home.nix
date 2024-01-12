@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   ...
 }: {
@@ -74,7 +75,7 @@
     enableAutosuggestions = true;
     enableCompletion = true; # TODO: environment.pathsToLink = [ "/share/zsh" ];
     completionInit = ''
-    autoload -U compinit && compinit -d $XDG_STATE_HOME/zsh/compdump
+    autoload -U compinit && compinit -d ${config.xdg.stateHome}/zsh/compdump
     '';
     defaultKeymap = "emacs";
     dotDir = ".config/zsh";
@@ -82,7 +83,7 @@
     export PATH="$HOME/.local/bin:$PATH:$CARGO_HOME/bin"
     '';
     history = {
-      path = ".local/share/zsh/history";
+      path = "${config.xdg.stateHome}/zsh/history";
     };
 
     initExtra = ''
@@ -110,7 +111,7 @@
     bindkey -- "$(echoti knp)"     end-of-buffer-or-history
     bindkey -- "$(echoti kcbt)"    reverse-menu-complete
     
-    if echoti smkx && echoti rmkx; then
+    if echoti smkx 2&>1 >> /dev/null && echoti rmkx 2&>1 >> /dev/null; then
         autoload -Uz add-zle-hook-widget
         function zle_application_mode_start { echoti smkx }
         function zle_application_mode_stop { echoti rmkx }
@@ -129,55 +130,29 @@
     setopt alwaystoend autolist appendhistory
     '';
 
-    profileExtra = ''
-    # Security focused umask
-    # umask 077
-    
-    # https://wiki.archlinux.org/title/GnuPG#Home_directory
-    
-    if [ ! -d "$GNUPGHOME" ]; then
-        mkdir -p $GNUPGHOME
-    fi
-    
-    find $GNUPGHOME -type d -exec chmod 0700 {} \;
-    find $GNUPGHOME -type f -exec chmod 0600 {} \;
-    '';
-
-    sessionVariables =
-    let
-      # https://wiki.archlinux.org/title/XDG_Base_Directory#User_directories
-      XDG_CONFIG_HOME = "$HOME/.config";
-      XDG_CACHE_HOME = "$HOME/.cache";
-      XDG_DATA_HOME = "$HOME/.local/share";
-      XDG_STATE_HOME = "$HOME/.local/state";
-    in {
-      inherit XDG_CONFIG_HOME XDG_CACHE_HOME XDG_DATA_HOME XDG_STATE_HOME;
-
+    sessionVariables = {
       # https://wiki.archlinux.org/title/XDG_Base_Directory#Support
-      CARGO_HOME = "${XDG_DATA_HOME}/cargo";
-      # export DISCORD_USER_DATA_DIR="${XDG_DATA_HOME}/discord" # officially undocumented, but used
-      FFMPEG_DATADIR = "${XDG_CONFIG_HOME}/ffmpeg";
-      GNUPGHOME = "${XDG_DATA_HOME}/gnupg";
-      GOPATH = "${XDG_DATA_HOME}/go";
-      GOMODCACHE = "${XDG_CACHE_HOME}/go/mod";
-      GRADLE_USER_HOME = "${XDG_DATA_HOME}/gradle";
-      GTK_RC_FILES = "${XDG_CONFIG_HOME}/gtk-1.0/gtkrc";
-      GTK2_RC_FILES = "${XDG_CONFIG_HOME}/gtk-2.0/gtkrc";
-      _JAVA_OPTIONS = "-Djava.util.prefs.userRoot=${XDG_CONFIG_HOME}/java";
-      NODE_REPL_HISTORY = "${XDG_DATA_HOME}/node_repl_history";
-      NPM_CONFIG_USERCONFIG = "${XDG_CONFIG_HOME}/npm/npmrc";
-      NUGET_PACKAGES = "${XDG_CACHE_HOME}/NuGetPackages";
-      PASSWORD_STORE_DIR = "${XDG_DATA_HOME}/pass";
-      RUSTUP_HOME = "${XDG_DATA_HOME}/rustup";
-      # export VSCODE_PORTABLE="$XDG_DATA_HOME/vscode" # undocumented and unreliable
-      WGETRC = "${XDG_CONFIG_HOME}/wgetrc";
-      PYTHONSTARTUP = "${XDG_CONFIG_HOME}/python/pythonrc";
-      PYTHONPYCACHEPREFIX = "${XDG_CACHE_HOME}/python";
-      PYTHONUSERBASE = "${XDG_DATA_HOME}/python";
+      CARGO_HOME = "${config.xdg.dataHome}/cargo";
+      FFMPEG_DATADIR = "${config.xdg.configHome}/ffmpeg";
+      GOPATH = "${config.xdg.dataHome}/go";
+      GOMODCACHE = "${config.xdg.cacheHome}/go/mod";
+      GRADLE_USER_HOME = "${config.xdg.dataHome}/gradle";
+      GTK_RC_FILES = "${config.xdg.configHome}/gtk-1.0/gtkrc";
+      GTK2_RC_FILES = "${config.xdg.configHome}/gtk-2.0/gtkrc";
+      _JAVA_OPTIONS = "-Djava.util.prefs.userRoot=${config.xdg.configHome}/java";
+      NODE_REPL_HISTORY = "${config.xdg.dataHome}/node_repl_history";
+      NPM_CONFIG_USERCONFIG = "${config.xdg.configHome}/npm/npmrc";
+      NUGET_PACKAGES = "${config.xdg.cacheHome}/NuGetPackages";
+      PASSWORD_STORE_DIR = "${config.xdg.dataHome}/pass";
+      RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
+      WGETRC = "${config.xdg.configHome}/wgetrc";
+      PYTHONSTARTUP = "${config.xdg.configHome}/python/pythonrc";
+      PYTHONPYCACHEPREFIX = "${config.xdg.cacheHome}/python";
+      PYTHONUSERBASE = "${config.xdg.dataHome}/python";
       # TODO: sbcl support
       
       # ranger --copy-config=rc
-      RANGER_LOAD_DEFAULT_RC="FALSE";
+      RANGER_LOAD_DEFAULT_RC = "FALSE";
     };
 
     shellAliases = {
@@ -196,6 +171,7 @@
 
   programs.gpg = {
     enable = true;
+    homedir = "${config.xdg.dataHome}/gnupg";
   };
   services.gpg-agent = {
     enable = true;

@@ -122,11 +122,10 @@
   users.users.frontear = {
     initialHashedPassword = "$y$j9T$UdbhMx5bVd6gnI86Gjh3L.$TAdn8keK0ljg9fOVzApsEimx9wgZ9V116yLAsU2GgE3";
     isNormalUser = true;
+    ignoreShellProgramCheck = true; # home-manager got this
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
   };
-
-  programs.zsh.enable = true;
 
   environment.systemPackages = with pkgs; [
     atool
@@ -167,11 +166,6 @@
     jack.enable = true;
     pulse.enable = true;
     wireplumber.enable = true;
-  };
-
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
   };
 
   programs.hyprland.enable = true;
