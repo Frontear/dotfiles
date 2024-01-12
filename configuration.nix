@@ -76,10 +76,6 @@
       inputs.ags.homeManagerModules.default
     ];
 
-    programs.ags = {
-      enable = true;
-    };
-
     # Misterio77/nix-starter-configs
     programs.home-manager.enable = true;
     systemd.user.startServices = "sd-switch";

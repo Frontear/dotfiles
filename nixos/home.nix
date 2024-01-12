@@ -5,13 +5,16 @@
 }: {
   imports = [
     ./programs
+    ./scripts
   ];
 
   home.packages = with pkgs; [
     fastfetch
   ];
 
-  # ags
+  programs.ags = {
+    enable = true;
+  };
 
   programs.git = {
     enable = true;
@@ -64,15 +67,9 @@
     ];
   };
 
-  # psd (do i need this?)
-
   # python
 
   # ranger
-
-  # systemd (i definitely dont need this)
-
-  # yay (lol)
 
   programs.zsh = {
     enable = true;
