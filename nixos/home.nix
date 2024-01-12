@@ -115,7 +115,7 @@
     bindkey -- "$(echoti knp)"     end-of-buffer-or-history
     bindkey -- "$(echoti kcbt)"    reverse-menu-complete
     
-    if echoti smkx 2&>1 >> /dev/null && echoti rmkx 2&>1 >> /dev/null; then
+    if echoti smkx > /dev/null 2>&1 && echoti rmkx > /dev/null 2>&1; then
         autoload -Uz add-zle-hook-widget
         function zle_application_mode_start { echoti smkx }
         function zle_application_mode_stop { echoti rmkx }
