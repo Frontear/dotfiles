@@ -2,6 +2,7 @@
   ...
 }: {
   imports = [
-    ./nightlight.nix
+    ./ags
+    ./hypr
   ];
 }
