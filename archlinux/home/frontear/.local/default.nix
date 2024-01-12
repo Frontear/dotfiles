@@ -3,6 +3,5 @@
 }: {
   imports = [
     ./bin
-    ./share
   ];
 }
