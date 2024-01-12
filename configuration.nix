@@ -32,6 +32,8 @@
     experimental-features = "nix-command flakes";
   };
 
+  environment.pathsToLink = [ "/share/zsh" ]; # for completion
+
   # Frontear/dotfiles
   environment.persistence."/nix/persist" = {
     hideMounts = true;
