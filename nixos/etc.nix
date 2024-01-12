@@ -80,5 +80,5 @@
   #  block = [ "fakenews" "gambling" "porn" ];
   #};
 
-  networking.extraHosts = builtins.readFile "${inputs.stevenblack.outPath}/hosts";
+  networking.hostFiles = [ "${inputs.stevenblack.outPath}/hosts" ];
 }
