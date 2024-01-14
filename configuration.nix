@@ -8,6 +8,7 @@
   imports = [
     inputs.home-manager.nixosModules.default
     inputs.impermanence.nixosModules.impermanence
+    inputs.nix-index-database.nixosModules.nix-index
 
     ./hardware-configuration.nix
     ./nixos
@@ -167,6 +168,7 @@
     wireplumber.enable = true;
   };
 
+  programs.command-not-found.enable = false; 
   programs.hyprland.enable = true;
 
   zramSwap.enable = true;

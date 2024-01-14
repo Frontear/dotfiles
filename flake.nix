@@ -20,6 +20,13 @@
       url = "github:nix-community/impermanence";
     };
 
+    nix-index-database = {
+      url = "github:Mic92/nix-index-database";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
     stevenblack = {
       url = "github:StevenBlack/hosts";
       flake = false;
