@@ -1,0 +1,5 @@
+{
+  ...
+}: {
+  xdg.configFile."npm".source = ./.;
+}

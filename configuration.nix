@@ -10,7 +10,6 @@
     inputs.impermanence.nixosModules.impermanence
 
     ./hardware-configuration.nix
-    ./archlinux
     ./nixos
   ];
 
@@ -48,6 +47,7 @@
 
     users.frontear = {
       directories = [
+        { directory = ".config/ArmCord"; mode = "0700"; }
         { directory = ".config/microsoft-edge"; mode = "0700"; }
         { directory = ".local/share/gnupg"; mode = "0700"; }
         { directory = ".ssh"; mode = "0700"; }
@@ -126,6 +126,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    armcord
     atool
     cliphist
     eza

@@ -4,6 +4,7 @@
   ...
 }: {
   imports = [
+    ./legacy
     ./programs
     ./scripts
   ];
