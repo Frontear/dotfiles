@@ -27,6 +27,13 @@
       };
     };
 
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
     stevenblack = {
       url = "github:StevenBlack/hosts";
       flake = false;

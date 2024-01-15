@@ -77,7 +77,18 @@
   }: {
     imports = [
       inputs.ags.homeManagerModules.default
+      inputs.nixvim.homeManagerModules.nixvim
     ];
+
+    programs.direnv = {
+      enable = true;
+      config = {
+        whitelist = {
+          prefix = [ "/home/frontear/Documents/projects" ];
+        };
+      };
+      nix-direnv.enable = true;
+    };
 
     # Misterio77/nix-starter-configs
     programs.home-manager.enable = true;
@@ -140,6 +151,7 @@
     microsoft-edge
     fastfetch
     neovim
+    prismlauncher
     sassc
     swaybg
     wl-clip-persist
