@@ -2,19 +2,6 @@
   inputs,
   ...
 }: {
-  networking.nameservers = [
-    "1.1.1.1"
-    "1.0.0.1"
-    "2606:4700:4700::1111"
-    "2606:4700:4700::1001"
-  ];
-  networking.networkmanager.dns = "none";
-  # We don't need wake on lan, because all interfaces have wakeonlan disabled
-  # see networking.interfces.<name>.wakeOnLan.enable
-
-  boot.initrd.compressor = "lz4";
-  boot.initrd.compressorArgs = [ "-l" "-9" ];
-
   boot.blacklistedKernelModules = [
     "bluetooth"
     "snd_hda_codec_hdmi"
@@ -38,13 +25,6 @@
   #'';
 
   boot.kernel.sysctl = {
-    "kernel.printk" = "3 3 3 3";
-
-    "vm.swappiness" = 180;
-    "vm.watermark_boost_factor" = 0;
-    "vm.watermark_scale_factor" = 125;
-    "vm.page-cluster" = 0;
-
     "kernel.nmi_watchdog" = 0;
 
     "vm.dirty_writeback_centisecs" = 6000;
@@ -74,11 +54,4 @@
   SUBSYSTEM=="scsi", ATTR{power/control}="auto"
   ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
   '';
-
-  #networking.stevenblack = {
-  #  enable = true;
-  #  block = [ "fakenews" "gambling" "porn" ];
-  #};
-
-  networking.hostFiles = [ "${inputs.stevenblack.outPath}/hosts" ];
 }

@@ -10,23 +10,11 @@
     inputs.impermanence.nixosModules.impermanence
     inputs.nix-index-database.nixosModules.nix-index
 
-    ./hardware-configuration.nix
+    ./nixos
     ./noxis
   ];
 
   nixpkgs.config.allowUnfree = true;
-
-  # Misterio77/nix-starter-configs
-  nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
-
-  nix.nixPath = [ "/etc/nix/path" ]; # ?
-  environment.etc =
-    lib.mapAttrs'
-    (name: value: {
-      name = "/nix/path/${name}";
-      value.source = value.flake;
-    })
-    config.nix.registry;
 
   nix.settings = {
     experimental-features = "nix-command flakes";
@@ -35,17 +23,8 @@
   environment.pathsToLink = [ "/share/zsh" ]; # for completion
 
   # Frontear/dotfiles
+  # TODO: move this persistence stuff to ./nixos/impermanence.nix
   environment.persistence."/nix/persist" = {
-    hideMounts = true;
-    
-    directories = [
-      { directory = "/etc/NetworkManager/system-connections"; mode = "0700"; }
-    ];
-
-    files = [
-      "/var/lib/power-profiles-daemon/state.ini"
-    ];
-
     users.frontear = {
       directories = [
         { directory = ".config/ArmCord"; mode = "0700"; }
@@ -94,37 +73,12 @@
     programs.home-manager.enable = true;
     systemd.user.startServices = "sd-switch";
 
+    xdg.enable = true;
+
     home.stateVersion = "24.05";
   };
 
-  fileSystems = {
-    "/" = {
-      device = "none";
-      fsType = "tmpfs";
-      options = [ "mode=755" "noatime" "size=1G" ];
-    };
-    "/archive" = {
-      device = "/dev/disk/by-label/archive";
-      fsType = "btrfs";
-      options = [ "compress=zstd:15" ];
-    };
-    "/boot" = {
-      device = "/dev/disk/by-label/EFI";
-      fsType = "vfat";
-      options = [ "noatime" ];
-    };
-    "/nix" = {
-      device = "/dev/disk/by-label/nix";
-      fsType = "btrfs";
-      options = [ "compress=zstd" "noatime" ];
-    };
-  };
-
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
   networking.hostName = "LAPTOP-3DT4F02";
-  networking.networkmanager.enable = true;
 
   time.timeZone = "America/Toronto";
 
@@ -170,8 +124,6 @@
     #tlp.enable = true;
   };
 
-  systemd.services."NetworkManager-wait-online".enable = false;
-
   services.upower.enable = true;
   services.pipewire = {
     enable = true;
@@ -184,9 +136,6 @@
 
   programs.command-not-found.enable = false; 
   programs.hyprland.enable = true;
-
-  zramSwap.enable = true;
-  zramSwap.priority = 100;
 
   system.stateVersion = "24.05";
 }
