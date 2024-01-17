@@ -55,8 +55,6 @@
   programs.nixvim = {
     enable = true;
 
-    colorschemes.onedark.enable = true;
-
     extraConfigLua = ''
     vim.opt.tabstop = 4
     vim.opt.shiftwidth = 4

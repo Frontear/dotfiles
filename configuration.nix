@@ -11,7 +11,7 @@
     inputs.nix-index-database.nixosModules.nix-index
 
     ./hardware-configuration.nix
-    ./nixos
+    ./noxis
   ];
 
   nixpkgs.config.allowUnfree = true;
