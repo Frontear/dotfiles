@@ -134,8 +134,25 @@
     wireplumber.enable = true;
   };
 
-  programs.command-not-found.enable = false; 
+  services.mysql = {
+    enable = true;
+    package = pkgs.mariadb;
+  };
+
+  programs.command-not-found.enable = false;
+
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --cmd Hyprland --greeting \"Welcome to NixOS!\" --time --remember --asterisks";
+      };
+    };
+  };
   programs.hyprland.enable = true;
+  xdg.portal.extraPortals = with pkgs; [
+    xdg-desktop-portal-gtk
+  ];
 
   system.stateVersion = "24.05";
 }
