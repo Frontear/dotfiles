@@ -151,9 +151,6 @@
     enable = true;
     enableAutosuggestions = true;
     enableCompletion = true; # TODO: environment.pathsToLink = [ "/share/zsh" ];
-    completionInit = ''
-    autoload -U compinit && compinit -d ${config.xdg.stateHome}/zsh/compdump
-    '';
     defaultKeymap = "emacs";
     dotDir = ".config/zsh";
     envExtra = ''
@@ -172,29 +169,6 @@
 
     PS1='%B%F{green}[%n@%m %1~]%(#.#.$)%F{white}%b '
     RPS1='%B%(?.%F{green}.%F{red})%?%f%b' # https://unix.stackexchange.com/a/375730
-    
-    # https://wiki.archlinux.org/title/Zsh#Key_bindings
-    
-    bindkey -- "$(echoti khome)"   beginning-of-line
-    bindkey -- "$(echoti kend)"    end-of-line
-    bindkey -- "$(echoti kich1)"   overwrite-mode
-    bindkey -- "$(echoti kbs)"     backward-delete-char
-    bindkey -- "$(echoti kdch1)"   delete-char
-    bindkey -- "$(echoti kcuu1)"   up-line-or-history
-    bindkey -- "$(echoti kcud1)"   down-line-or-history
-    bindkey -- "$(echoti kcub1)"   backward-char
-    bindkey -- "$(echoti kcuf1)"   forward-char
-    bindkey -- "$(echoti kpp)"     beginning-of-buffer-or-history
-    bindkey -- "$(echoti knp)"     end-of-buffer-or-history
-    bindkey -- "$(echoti kcbt)"    reverse-menu-complete
-    
-    if echoti smkx > /dev/null 2>&1 && echoti rmkx > /dev/null 2>&1; then
-        autoload -Uz add-zle-hook-widget
-        function zle_application_mode_start { echoti smkx }
-        function zle_application_mode_stop { echoti rmkx }
-        add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
-        add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
-    fi
     '';
 
     initExtraBeforeCompInit = ''

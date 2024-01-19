@@ -88,9 +88,15 @@
   users.users.frontear = {
     initialHashedPassword = "$y$j9T$UdbhMx5bVd6gnI86Gjh3L.$TAdn8keK0ljg9fOVzApsEimx9wgZ9V116yLAsU2GgE3";
     isNormalUser = true;
-    ignoreShellProgramCheck = true; # home-manager got this
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
+  };
+
+  programs.zsh = {
+    enable = true;
+    enableBashCompletion = true;
+    enableCompletion = true;
+    # TODO: promptInit conflicts with prompts defined in HM.
   };
 
   environment.systemPackages = with pkgs; [
