@@ -5,8 +5,6 @@
   ...
 }: {
   imports = [
-    ./hardware-configuration.nix
-
     ./boot.nix
     ./impermanence.nix
     ./mounts.nix

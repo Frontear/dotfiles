@@ -6,6 +6,8 @@
   ...
 }: {
   imports = [
+    ./hosts/laptop
+
     inputs.home-manager.nixosModules.default
     inputs.impermanence.nixosModules.impermanence
     inputs.nix-index-database.nixosModules.nix-index
@@ -120,13 +122,6 @@
       fonts = [ "NerdFontsSymbolsOnly" ];
     })
   ];
-
-  powerManagement.enable = true;
-  services = {
-    power-profiles-daemon.enable = true;
-    thermald.enable = true;
-    #tlp.enable = true;
-  };
 
   services.upower.enable = true;
   services.pipewire = {
