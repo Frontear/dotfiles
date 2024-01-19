@@ -20,8 +20,6 @@
     experimental-features = "nix-command flakes";
   };
 
-  environment.pathsToLink = [ "/share/zsh" ]; # for completion
-
   # Frontear/dotfiles
   # TODO: move this persistence stuff to ./nixos/impermanence.nix
   environment.persistence."/nix/persist" = {
