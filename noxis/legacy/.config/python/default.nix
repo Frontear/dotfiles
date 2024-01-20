@@ -1,5 +1,0 @@
-{
-  ...
-}: {
-  xdg.configFile."python".source = ./.;
-}

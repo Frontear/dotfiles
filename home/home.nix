@@ -3,12 +3,6 @@
   pkgs,
   ...
 }: {
-  imports = [
-    ./legacy
-    ./programs
-    ./scripts
-  ];
-
   home.packages = with pkgs; [
     fastfetch
   ];

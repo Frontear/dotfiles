@@ -1,5 +1,0 @@
-{
-  ...
-}: {
-  xdg.configFile."ags".source = ./.;
-}

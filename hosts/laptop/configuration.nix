@@ -11,7 +11,6 @@
     inputs.nix-index-database.nixosModules.nix-index
 
     ../../nixos
-    ../../noxis
   ];
 
   # Frontear/dotfiles
@@ -49,6 +48,8 @@
     imports = [
       inputs.ags.homeManagerModules.default
       inputs.nixvim.homeManagerModules.nixvim
+
+      ../../home
     ];
 
     programs.direnv = {

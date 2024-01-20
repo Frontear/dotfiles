@@ -1,9 +1,0 @@
-{
-  ...
-}: {
-  imports = [
-    ./npm
-    ./python
-    ./ranger
-  ];
-}
