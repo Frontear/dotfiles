@@ -6,21 +6,13 @@
   ...
 }: {
   imports = [
-    ./hosts/laptop
-
     inputs.home-manager.nixosModules.default
     inputs.impermanence.nixosModules.impermanence
     inputs.nix-index-database.nixosModules.nix-index
 
-    ./nixos
-    ./noxis
+    ../../nixos
+    ../../noxis
   ];
-
-  nixpkgs.config.allowUnfree = true;
-
-  nix.settings = {
-    experimental-features = "nix-command flakes";
-  };
 
   # Frontear/dotfiles
   # TODO: move this persistence stuff to ./nixos/impermanence.nix

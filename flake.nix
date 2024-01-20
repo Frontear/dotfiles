@@ -45,14 +45,6 @@
     nixpkgs,
     ...
   } @ inputs: {
-    nixosConfigurations."LAPTOP-3DT4F02" = nixpkgs.lib.nixosSystem {
-      specialArgs = {
-        inherit inputs;
-      };
-
-      modules = [
-        ./configuration.nix
-      ];
-    };
+    nixosConfigurations = import ./hosts { inherit nixpkgs inputs; };
   };
 }
