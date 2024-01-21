@@ -7,16 +7,17 @@
 }: {
   imports = [
     inputs.home-manager.nixosModules.default
-    inputs.impermanence.nixosModules.impermanence
     inputs.nix-index-database.nixosModules.nix-index
 
+    ../../modules
     ../../nixos
   ];
 
   # Frontear/dotfiles
-  # TODO: move this persistence stuff to ./nixos/impermanence.nix
-  environment.persistence."/nix/persist" = {
-    users.frontear = {
+  impermanence = {
+    enable = true;
+
+    user = {
       directories = [
         { directory = ".config/ArmCord"; mode = "0700"; }
         { directory = ".config/microsoft-edge"; mode = "0700"; }
