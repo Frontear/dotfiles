@@ -9,6 +9,5 @@
     ./impermanence.nix
     ./mounts.nix
     ./network.nix
-    ./swap.nix
   ];
 }

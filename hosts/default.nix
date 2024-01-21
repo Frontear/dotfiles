@@ -8,7 +8,7 @@
     };
 
     modules = [
-      ./common.nix
+      ./common
       ./laptop
     ];
   };
