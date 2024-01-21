@@ -5,9 +5,7 @@
   ...
 }: {
   imports = [
-    ./boot.nix
     ./impermanence.nix
     ./mounts.nix
-    ./network.nix
   ];
 }
