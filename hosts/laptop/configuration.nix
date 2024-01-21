@@ -10,7 +10,6 @@
     inputs.nix-index-database.nixosModules.nix-index
 
     ../../modules
-    ../../nixos
   ];
 
   # Frontear/dotfiles
