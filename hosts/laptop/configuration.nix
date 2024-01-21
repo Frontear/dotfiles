@@ -142,7 +142,7 @@
       };
     };
   };
-  impermanence.root.directory = [
+  impermanence.root.directories = [
     "/var/cache/tuigreet"
   ];
 
