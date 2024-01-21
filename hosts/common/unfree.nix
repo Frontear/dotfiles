@@ -3,5 +3,5 @@
   nixpkgs.config.allowUnfree = true;
 
   # TODO: add overlay or something so that nix-shell -p OR nix shell nixpkgs# can work with
-  # unfree packages w/o needing that env variable.
+  #       unfree packages w/o needing that env variable.
 }

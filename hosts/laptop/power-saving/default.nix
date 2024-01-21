@@ -89,4 +89,9 @@
     thermald.enable = true;
     #tlp.enable = true;
   };
+
+  # Persist the state.ini file from power-profiles.
+  impermanence.root.files = [
+    "/var/lib/power-profiles-daemon/state.ini"
+  ];
 }
