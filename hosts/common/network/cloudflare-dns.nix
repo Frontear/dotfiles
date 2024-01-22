@@ -1,7 +1,6 @@
 { ... }: {
   networking = {
     # Setup the usage of Cloudflare's 1.1.1.1 DNS servers.
-    # TODO: test using networking.networkmanager.insertNameservers
     nameservers = [
       "1.1.1.1"
       "1.0.0.1"

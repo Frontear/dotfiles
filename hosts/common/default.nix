@@ -1,10 +1,10 @@
 { ... }: {
   imports = [
-    ./mounts.nix
     ./unfree.nix
 
     ./boot
     ./flakes
+    ./mounts
     ./network
     ./zram
   ];

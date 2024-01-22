@@ -8,6 +8,8 @@
     };
 
     modules = [
+      ../modules
+
       ./common
       ./laptop
     ];
