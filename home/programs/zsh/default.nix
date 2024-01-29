@@ -61,11 +61,11 @@
       RANGER_LOAD_DEFAULT_RC = "FALSE";
     };
 
-    shellAliases = {
+    shellAliases = rec {
       diff = "diff --color=auto";
       grep = "grep --color=auto";
       ls = "eza --color=auto --icons=auto";
-      l = "eza --color=auto --icons=auto --all --group-directories-first --long --group --header --total-size --octal-permissions --git";
+      l = "${ls} --all --group-directories-first --long --group --header --total-size --octal-permissions --git";
     };
 
     syntaxHighlighting = {
