@@ -1,8 +1,34 @@
 {
   config,
+  inputs,
   pkgs,
   ...
 }: {
+  imports = [
+    inputs.ags.homeManagerModules.default
+    inputs.nixvim.homeManagerModules.nixvim
+  ];
+
+  ## REORGANIZE
+  programs.direnv = {
+    enable = true;
+    config = {
+      whitelist = {
+        prefix = [ "/home/frontear/Documents/projects" ];
+      };
+    };
+    nix-direnv.enable = true;
+  };
+
+  # Misterio77/nix-starter-configs
+  programs.home-manager.enable = true;
+  systemd.user.startServices = "sd-switch";
+
+  xdg.enable = true;
+
+  home.stateVersion = "24.05";
+  ## END
+
   home.packages = with pkgs; [
     fastfetch
   ];

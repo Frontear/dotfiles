@@ -39,34 +39,9 @@
     };
   };
 
-  home-manager.users.frontear =
-  {
-    ...
-  }: {
-    imports = [
-      inputs.ags.homeManagerModules.default
-      inputs.nixvim.homeManagerModules.nixvim
-
-      ../../home
-    ];
-
-    programs.direnv = {
-      enable = true;
-      config = {
-        whitelist = {
-          prefix = [ "/home/frontear/Documents/projects" ];
-        };
-      };
-      nix-direnv.enable = true;
-    };
-
-    # Misterio77/nix-starter-configs
-    programs.home-manager.enable = true;
-    systemd.user.startServices = "sd-switch";
-
-    xdg.enable = true;
-
-    home.stateVersion = "24.05";
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users.frontear = import ../../home;
   };
 
   networking.hostName = "LAPTOP-3DT4F02";
