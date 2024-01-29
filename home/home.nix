@@ -203,8 +203,8 @@
     shellAliases = {
       diff = "diff --color=auto";
       grep = "grep --color=auto";
-      ls = "eza --git --git-ignore";
-      l = "ls -lah --group-directories-first";
+      ls = "eza --color=auto --icons=auto";
+      l = "eza --color=auto --icons=auto --all --group-directories-first --long --group --header --total-size --octal-permissions --git";
     };
 
     syntaxHighlighting = {
