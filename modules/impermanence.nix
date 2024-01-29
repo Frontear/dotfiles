@@ -5,9 +5,27 @@
   ...
 }:
 let
-  inherit (lib) mdDoc mkIf mkOption types;
+  inherit (lib) mdDoc mkEnableOption mkIf mkOption types;
 
   cfg = config.impermanence;
+
+  mkImpermanenceOption = name: {
+    directories = lib.mkOption {
+      type = types.listOf types.anything;
+      default = [];
+      description = mdDoc ''
+      Directories from the ${name} to persist.
+      '';
+    };
+
+    files = mkOption {
+      type = types.listOf types.anything;
+      default = [];
+      description = mdDoc ''
+      Files from the ${name} to persist.
+      '';
+    };
+  };
 in {
   imports = [
     inputs.impermanence.nixosModules.impermanence
@@ -15,50 +33,10 @@ in {
 
   options = {
     impermanence = {
-      enable = mkOption {
-        type = types.bool;
-        default = false;
-        description = mdDoc ''
-        Enables the usage of impermanence, a nix-community module designed
-        to achieve an ephemeral running root system.
-        '';
-      };
+      enable = mkEnableOption "the usage of impermanence, a nix-community module designed to achieve an ephemeral running root system";
 
-      root = {
-        directories = mkOption {
-          type = types.listOf types.anything;
-          default = [];
-          description = mdDoc ''
-          Directories from the system to persist.
-          '';
-        };
-
-        files = mkOption {
-          type = types.listOf types.anything;
-          default = [];
-          description = mdDoc ''
-          Files from the system to persist.
-          '';
-        };
-      };
-
-      user = {
-        directories = mkOption {
-          type = types.listOf types.anything;
-          default = [];
-          description = mdDoc ''
-          Directories from the user to persist.
-          '';
-        };
-
-        files = mkOption {
-          type = types.listOf types.anything;
-          default = [];
-          description = mdDoc ''
-          Files from the user to persist.
-          '';
-        };
-      };
+      root = mkImpermanenceOption "system";
+      user = mkImpermanenceOption "user";
     };
   };
 
