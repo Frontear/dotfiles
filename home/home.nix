@@ -203,7 +203,7 @@
     shellAliases = {
       diff = "diff --color=auto";
       grep = "grep --color=auto";
-      ls = "eza";
+      ls = "eza --git --git-ignore";
       l = "ls -lah --group-directories-first";
     };
 
