@@ -39,26 +39,12 @@
     };
   };
 
-  home-manager = {
-    extraSpecialArgs = { inherit inputs; };
-    users."${config.main-user.name}" = import ../../home;
-  };
-
   networking.hostName = "LAPTOP-3DT4F02";
 
   time.timeZone = "America/Toronto";
 
   i18n.defaultLocale = "en_US.UTF-8";
   console.keyMap = "us";
-
-  main-user = {
-    name = "frontear";
-    extraConfig = {
-      initialHashedPassword = "$y$j9T$UdbhMx5bVd6gnI86Gjh3L.$TAdn8keK0ljg9fOVzApsEimx9wgZ9V116yLAsU2GgE3";
-      extraGroups = [ "networkmanager" "wheel" ];
-      shell = pkgs.zsh;
-    };
-  };
 
   programs.zsh = {
     enable = true;

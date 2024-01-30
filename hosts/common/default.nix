@@ -5,5 +5,6 @@
     ./network
     ./nix
     ./swap
+    ./users
   ];
 }
