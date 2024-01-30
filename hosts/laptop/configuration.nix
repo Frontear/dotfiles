@@ -99,11 +99,6 @@
     wireplumber.enable = true;
   };
 
-  services.mysql = {
-    enable = true;
-    package = pkgs.mariadb;
-  };
-
   programs.command-not-found.enable = false;
 
   services.greetd = {
