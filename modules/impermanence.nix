@@ -47,7 +47,7 @@ in {
       directories = [] ++ cfg.root.directories;
       files = [] ++ cfg.root.files;
 
-      users."${config.main-user.username}" = {
+      users."${config.main-user.name}" = {
         directories = [] ++ cfg.user.directories;
         files = [] ++ cfg.user.files;
       };

@@ -10,7 +10,7 @@ let
 in {
   options = {
     main-user = {
-      username = mkOption {
+      name = mkOption {
         type = types.str;
         description = mdDoc ''
         Username of the main user on this system.
@@ -27,6 +27,8 @@ in {
   };
 
   config = {
-    users.extraUsers."${cfg.username}" = {} // cfg.extraConfig;
+    users.extraUsers."${cfg.name}" = {
+      isNormalUser = true;
+    } // cfg.extraConfig;
   };
 }
