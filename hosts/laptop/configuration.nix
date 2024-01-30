@@ -41,7 +41,7 @@
 
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
-    users.frontear = import ../../home;
+    users."${config.main-user.username}" = import ../../home;
   };
 
   networking.hostName = "LAPTOP-3DT4F02";
@@ -51,11 +51,14 @@
   i18n.defaultLocale = "en_US.UTF-8";
   console.keyMap = "us";
 
-  users.users.frontear = {
-    initialHashedPassword = "$y$j9T$UdbhMx5bVd6gnI86Gjh3L.$TAdn8keK0ljg9fOVzApsEimx9wgZ9V116yLAsU2GgE3";
-    isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" ];
-    shell = pkgs.zsh;
+  main-user = {
+    username = "frontear";
+    extraConfig = {
+      initialHashedPassword = "$y$j9T$UdbhMx5bVd6gnI86Gjh3L.$TAdn8keK0ljg9fOVzApsEimx9wgZ9V116yLAsU2GgE3";
+      isNormalUser = true;
+      extraGroups = [ "networkmanager" "wheel" ];
+      shell = pkgs.zsh;
+    };
   };
 
   programs.zsh = {

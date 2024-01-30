@@ -47,8 +47,7 @@ in {
       directories = [] ++ cfg.root.directories;
       files = [] ++ cfg.root.files;
 
-      # TODO: change
-      users.frontear = {
+      users."${config.main-user.username}" = {
         directories = [] ++ cfg.user.directories;
         files = [] ++ cfg.user.files;
       };
