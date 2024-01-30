@@ -3,9 +3,8 @@
     ./hardware-configuration.nix
     ./configuration.nix
 
-    ./firewall-ports.nix
-
     ./boot
+    ./network
     ./power-saving
   ];
 }
