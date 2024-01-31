@@ -66,6 +66,7 @@
       grep = "grep --color=auto";
       ls = "eza --color=auto --icons=auto";
       l = "${ls} --all --group-directories-first --long --group --header --total-size --octal-permissions --git";
+      tree = "${ls} --tree";
     };
 
     syntaxHighlighting = {
