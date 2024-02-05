@@ -6,7 +6,7 @@
     enable = true;
     config = {
       whitelist = {
-        prefix = [ "${config.home.homeDirectory}/Documents/projects" ];
+        prefix = [ "${config.home.homeDirectory}/Documents/projects" "${config.home.homeDirectory}/Documents/school" ];
       };
     };
 
