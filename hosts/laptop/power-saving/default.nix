@@ -75,8 +75,7 @@
   services.udev.extraRules = ''
   SUBSYSTEM=="pci", ATTR{power/control}="auto"
   SUBSYSTEM=="scsi", ATTR{power/control}="auto"
-  ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
-  '';
+  '';#ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
 
   # I've enabled powerManagement because I _think_ there are
   # other modules that enable personalized power saving
