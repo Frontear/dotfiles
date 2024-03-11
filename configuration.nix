@@ -23,7 +23,7 @@
   users.users.frontear = {
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel" ];
-    initialPassword = "$y$j9T$oYpEIjpqe22y.WBZsVSeS0$90SjyotOGGTEttwCe/bmh/A01v/U3D78YXnSM6ukZl8";
+    initialHashedPassword = "$y$j9T$gsXwh6NJa62APePZ.7xR00$lLYi86UgQdN1yjOIgqcegfTKsnqkXI4ufQHWdOTiKr6";
   };
 
   environment.systemPackages = with pkgs; [
