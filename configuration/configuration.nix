@@ -1,4 +1,8 @@
 { config, lib, pkgs, ... }: {
+  imports = [
+    ./programs/zsh
+  ];
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -27,9 +31,34 @@
   };
 
   environment.systemPackages = with pkgs; [
-    git
+    # C
+    gcc
+    gdb
     gnumake
+    man-pages
+    valgrind
+
+    # Nix
+    nil
+    nixpkgs-fmt
+
+    # Rust
+    cargo
+    rustc
+    rustfmt
+
+    # Other
+    firefox
+    git
     neovim
+    (vscode-with-extensions.override {
+      vscodeExtensions = with vscode-extensions; [
+        bbenoist.nix
+        jnoortheen.nix-ide
+        ms-vscode.cpptools
+        ms-vscode.makefile-tools
+      ];
+    })
   ];
 
   programs.gnupg.agent = {
@@ -40,6 +69,21 @@
   system.stateVersion = "24.05";
 
   # ---
+
+  nix.settings.experimental-features = [ "flakes" "nix-command" ];
+  nixpkgs.config.allowUnfree = true;
+
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+
+    users.frontear.home.stateVersion = "24.05";
+  };
+
+  documentation = {
+    dev.enable = true;
+    man.generateCaches = true;
+  };
 
   environment.persistence."/nix/persist" = {
     hideMounts = true;
@@ -62,22 +106,22 @@
   };
 
   fileSystems = {
-      "/" = {
-        device = "none";
-        fsType = "tmpfs";
-        options = [ "mode=755" "noatime" "size=2G" ];
-      };
-
-      "/boot" = {
-        device = "/dev/disk/by-label/EFI";
-        fsType = "vfat";
-        options = [ "noatime" ];
-      };
-
-      "/nix" = {
-        device = "/dev/disk/by-label/store";
-        fsType = "ext4";
-        options = [ "noatime" ];
-      };
+    "/" = {
+      device = "none";
+      fsType = "tmpfs";
+      options = [ "mode=755" "noatime" "size=2G" ];
     };
+
+    "/boot" = {
+      device = "/dev/disk/by-label/EFI";
+      fsType = "vfat";
+      options = [ "noatime" ];
+    };
+
+    "/nix" = {
+      device = "/dev/disk/by-label/store";
+      fsType = "ext4";
+      options = [ "noatime" ];
+    };
+  };
 }
