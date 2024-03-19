@@ -1,4 +1,4 @@
-{ config, inputs, ... }:
+{ inputs, ... }:
 let
   vscode-extensions = inputs.nix-vscode-extensions.extensions."x86_64-linux".vscode-marketplace;
 in {
