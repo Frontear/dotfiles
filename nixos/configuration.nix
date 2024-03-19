@@ -6,6 +6,7 @@
     inputs.impermanence.nixosModules.impermanence
 
     ../programs/git
+    ../programs/gpg
     ../programs/vscode
     ../programs/zsh
   ];
@@ -33,8 +34,6 @@
 
     users.frontear = {
       directories = [
-        ".gnupg"
-
         "Documents"
       ];
     };
