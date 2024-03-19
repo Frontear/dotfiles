@@ -6,7 +6,8 @@
   # System
   environment.persistence."/nix/persist".users.frontear = {
     files = [
-      "${config.home-manager.users.frontear.programs.zsh.history.path}"
+      # TODO: turbo bugged, pls fix
+      #"${config.home-manager.users.frontear.programs.zsh.history.path}"
     ];
   };
 

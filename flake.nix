@@ -10,6 +10,11 @@
     impermanence = {
       url = "github:nix-community/impermanence";
     };
+
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, ... }:
@@ -17,10 +22,11 @@
     inherit (self) inputs;
   in {
     nixosConfigurations."LAPTOP-3DT4F02" = inputs.nixpkgs.lib.nixosSystem {
-      modules = [
-        inputs.home-manager.nixosModules.home-manager
-        inputs.impermanence.nixosModules.impermanence
+      specialArgs = {
+        inherit inputs;
+      };
 
+      modules = [
         ./nixos/configuration.nix
       ];
     };

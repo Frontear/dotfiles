@@ -1,7 +1,11 @@
-{ config, lib, pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
 
+    inputs.home-manager.nixosModules.home-manager
+    inputs.impermanence.nixosModules.impermanence
+
+    ../programs/vscode
     ../programs/zsh
   ];
 
@@ -99,17 +103,9 @@
     rustfmt
 
     # Other
-    firefox
     git
     neovim
-    (vscode-with-extensions.override {
-      vscodeExtensions = with vscode-extensions; [
-        bbenoist.nix
-        jnoortheen.nix-ide
-        ms-vscode.cpptools
-        ms-vscode.makefile-tools
-      ];
-    })
+    microsoft-edge
   ];
 
   programs.gnupg.agent = {
