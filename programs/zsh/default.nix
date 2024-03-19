@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
   imports = [
     ../eza
   ];
@@ -21,7 +21,7 @@
     enableGlobalCompInit = false;
     promptInit = "";
   };
-  
+
   users.users.frontear.shell = pkgs.zsh;
 
   # User
@@ -38,7 +38,7 @@
         # TODO: these things are ??
         extended = true;
         ignoreDups = false;
-        
+
         path = ".local/state/zsh/zsh_history";
       };
 

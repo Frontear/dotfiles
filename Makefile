@@ -11,6 +11,7 @@ apply:
 
 # Doing it twice wipes the boot entries as well.
 clean:
+	@${CC} boot ${CFLAGS}
 	@sudo nix-collect-garbage -d
 	@${CC} boot ${CFLAGS}
 	@sudo nix-collect-garbage -d
