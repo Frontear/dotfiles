@@ -53,7 +53,7 @@
         extended = true;
         ignoreDups = false;
 
-        path = ".local/state/zsh/zsh_history";
+        # path = ".local/state/zsh/zsh_history";
       };
 
       historySubstringSearch.enable = true;
