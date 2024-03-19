@@ -82,7 +82,7 @@ in {
         "workbench.iconTheme" = "material-icon-theme";
         "workbench.layoutControl.enabled" = false;
         "workbench.list.smoothScrolling" = true;
-        "workbench.productIconTheme" = "material-product-icons";
+        #"workbench.productIconTheme" = "material-product-icons";
         "workbench.startupEditor" = "newUntitledFile";
 
         # Extensions
