@@ -1,10 +1,10 @@
 CC := nixos-rebuild
-CFLAGS := --use-remote-sudo --flake . --max-jobs 4
+CFLAGS := --flake . --use-remote-sudo --max-jobs 4
 
 .PHONY: all switch
 
 all:
-	@${CC} test ${CFLAGS}
+	@${CC} test --fast ${CFLAGS}
 
-boot:
+apply:
 	@${CC} boot ${CFLAGS}

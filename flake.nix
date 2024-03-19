@@ -16,6 +16,13 @@
   let
     inherit (self) inputs;
   in {
-    nixosConfigurations = import ./configuration { inherit inputs; };
+    nixosConfigurations."LAPTOP-3DT4F02" = inputs.nixpkgs.lib.nixosSystem {
+      modules = [
+        inputs.home-manager.nixosModules.home-manager
+        inputs.impermanence.nixosModules.impermanence
+
+        ./nixos/configuration.nix
+      ];
+    };
   };
 }
