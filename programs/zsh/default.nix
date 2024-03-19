@@ -1,8 +1,4 @@
 { pkgs, ... }: {
-  imports = [
-    ../eza
-  ];
-
   # System
   environment.persistence."/nix/persist".users.frontear = {
     files = [

@@ -5,6 +5,7 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.impermanence.nixosModules.impermanence
 
+    ../programs/git
     ../programs/vscode
     ../programs/zsh
   ];
@@ -35,10 +36,6 @@
         ".gnupg"
 
         "Documents"
-      ];
-
-      files = [
-        ".gitconfig"
       ];
     };
   };
