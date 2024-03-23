@@ -72,13 +72,16 @@
     networkmanager.enable = true;
   };
 
-  services.xserver = {
-    enable = true;
-
+  services = {
     desktopManager.plasma6.enable = true;
-    displayManager.sddm.enable = true;
 
-    libinput.enable = true;
+    xserver = {
+      enable = true;
+
+      displayManager.sddm.enable = true;
+
+      libinput.enable = true;
+    };
   };
 
   environment.systemPackages = with pkgs; [
