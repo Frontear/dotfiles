@@ -6,6 +6,8 @@
     ];
   };
 
+  programs.gnupg.agent.enable = true; # This sets pinentry automatically
+
   # User
   home-manager.users.frontear = {
     programs.gpg = {

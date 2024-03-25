@@ -103,14 +103,8 @@
     rustfmt
 
     # Other
-    git
     neovim
   ];
-
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
 
   home-manager = {
     useGlobalPkgs = true;
