@@ -9,11 +9,7 @@ all:
 apply:
 	@${CC} boot ${CFLAGS}
 
-# Doing it twice wipes the boot entries as well.
+# TODO: switch to nix3 commands
 clean:
-	@${CC} boot ${CFLAGS}
-	@sudo nix-collect-garbage -d
-	@sudo nix-store --optimise
-	@${CC} boot ${CFLAGS}
 	@sudo nix-collect-garbage -d
 	@sudo nix-store --optimise
