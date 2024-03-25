@@ -22,8 +22,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # System Configuration
   console.keyMap = "us";
   i18n.defaultLocale = "en_CA.UTF-8";
+  networking.hostName = "LAPTOP-3DT4F02";
   time.timeZone = "America/Toronto";
 
   environment.persistence."/nix/persist" = {
@@ -69,7 +71,6 @@
   # Everything else (for now)
 
   networking = {
-    hostName = "LAPTOP-3DT4F02";
     networkmanager.enable = true;
   };
 
@@ -116,5 +117,6 @@
   documentation = {
     dev.enable = true;
     man.generateCaches = true;
+    nixos.includeAllModules = true;
   };
 }
