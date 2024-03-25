@@ -7,6 +7,7 @@
 
     ../programs/git
     ../programs/gpg
+    ../programs/microsoft-edge
     ../programs/vscode
     ../programs/zsh
   ];
@@ -104,7 +105,6 @@
     # Other
     git
     neovim
-    microsoft-edge
   ];
 
   programs.gnupg.agent = {

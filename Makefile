@@ -13,5 +13,7 @@ apply:
 clean:
 	@${CC} boot ${CFLAGS}
 	@sudo nix-collect-garbage -d
+	@sudo nix-store --optimise
 	@${CC} boot ${CFLAGS}
 	@sudo nix-collect-garbage -d
+	@sudo nix-store --optimise
