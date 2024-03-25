@@ -8,6 +8,7 @@
     ../programs/git
     ../programs/gpg
     ../programs/microsoft-edge
+    ../programs/neovim
     ../programs/vscode
     ../programs/zsh
   ];
@@ -102,9 +103,6 @@
     cargo
     rustc
     rustfmt
-
-    # Other
-    neovim
   ];
 
   home-manager = {
