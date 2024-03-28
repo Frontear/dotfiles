@@ -20,6 +20,11 @@
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    stevenblack = {
+      url = "github:StevenBlack/hosts";
+      flake = false;
+    };
   };
 
   outputs = { self, ... }:

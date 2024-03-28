@@ -340,7 +340,24 @@
         "impermanence": "impermanence",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs",
-        "nixvim": "nixvim"
+        "nixvim": "nixvim",
+        "stevenblack": "stevenblack"
+      }
+    },
+    "stevenblack": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1711246132,
+        "narHash": "sha256-0keQEhEe2OWbjmkXODM2NxB/AHimD6MjxIr8n8gj+Qw=",
+        "owner": "StevenBlack",
+        "repo": "hosts",
+        "rev": "3e12f3989b1ddaa846bf895f64e6978e7183f9bc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "StevenBlack",
+        "repo": "hosts",
+        "type": "github"
       }
     },
     "systems": {

@@ -9,19 +9,29 @@
     ../programs/gpg
     ../programs/microsoft-edge
     ../programs/neovim
+    ../programs/network-manager
+    ../programs/systemd-boot
     ../programs/vscode
     ../programs/zsh
   ];
 
   # Nix required
-  nix.settings.experimental-features = [ "flakes" "nix-command" ];
+  nix = {
+    channel.enable = false;
+
+    nixPath = [
+      "nixpkgs=${inputs.nixpkgs}"
+
+    ];
+    settings = {
+      auto-optimise-store = true;
+
+      experimental-features = [ "flakes" "nix-command" ];
+    };
+  };
   nixpkgs.config.allowUnfree = true;
 
   system.stateVersion = "24.05";
-
-  # Necessary for booting the system
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
 
   # System Configuration
   console.keyMap = "us";
@@ -31,10 +41,6 @@
 
   environment.persistence."/nix/persist" = {
     hideMounts = true;
-
-    directories = [
-      "/etc/NetworkManager"
-    ];
 
     users.frontear = {
       directories = [
@@ -71,10 +77,6 @@
 
   # Everything else (for now)
 
-  networking = {
-    networkmanager.enable = true;
-  };
-
   services = {
     desktopManager.plasma6.enable = true;
 
@@ -109,7 +111,9 @@
     useGlobalPkgs = true;
     useUserPackages = true;
 
-    users.frontear.home.stateVersion = "24.05";
+    users.frontear = {
+      home.stateVersion = "24.05";
+    };
   };
 
   documentation = {
