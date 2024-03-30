@@ -15,6 +15,14 @@
     ../programs/zsh
   ];
 
+  # See: CVE-2024-3094
+  system.replaceRuntimeDependencies = [
+    {
+      original = pkgs.xz;
+      replacement = inputs.nixpkgs-staging.legacyPackages.${pkgs.system}.xz;
+    }
+  ];
+
   # Nix required
   nix = {
     channel.enable = false;

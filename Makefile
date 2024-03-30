@@ -1,5 +1,5 @@
 CC := nixos-rebuild
-CFLAGS := --flake . --use-remote-sudo --max-jobs 4
+CFLAGS := --flake . --use-remote-sudo --max-jobs 4 --impure
 
 .PHONY: all apply clean
 
