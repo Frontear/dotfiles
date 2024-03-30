@@ -24,19 +24,7 @@
   ];
 
   # Nix required
-  nix = {
-    channel.enable = false;
-
-    nixPath = [
-      "nixpkgs=${inputs.nixpkgs}"
-
-    ];
-    settings = {
-      auto-optimise-store = true;
-
-      experimental-features = [ "flakes" "nix-command" ];
-    };
-  };
+  nix.settings.experimental-features = [ "flakes" "nix-command" ];
   nixpkgs.config.allowUnfree = true;
 
   system.stateVersion = "24.05";
