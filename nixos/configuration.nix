@@ -16,11 +16,19 @@
   ];
 
   # See: CVE-2024-3094
-  system.replaceRuntimeDependencies = [
-    {
-      original = pkgs.xz;
-      replacement = inputs.nixpkgs-staging.legacyPackages.${pkgs.system}.xz;
-    }
+  nixpkgs.overlays = [
+    (final: prev: {
+      xz = prev.xz.overrideAttrs (finalAttrs: prevAttrs: {
+        version = "5.4.6";
+
+        src = final.fetchurl {
+          url = with finalAttrs;
+            # "https://github.com/tukaani-project/xz/releases/download/v${version}/xz-${version}.tar.bz2";
+            "mirror://sourceforge/lzmautils/xz-${version}.tar.bz2";
+          hash = "sha256-kThRsnTo4dMXgeyUnxwj6NvPDs9uc6JDbcIXad0+b0k=";
+        };
+      });
+    })
   ];
 
   # Nix required

@@ -280,22 +280,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-staging": {
-      "locked": {
-        "lastModified": 1711821677,
-        "narHash": "sha256-l1jeDIBTipVxapdTgxpvunXj4/U/Ymn0nM6EE3pBqX4=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "50812f5204a09e54cf305890ba4e1a0ff53ee879",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "50812f5204a09e54cf305890ba4e1a0ff53ee879",
-        "type": "github"
-      }
-    },
     "nixvim": {
       "inputs": {
         "devshell": "devshell",
@@ -356,7 +340,6 @@
         "impermanence": "impermanence",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-staging": "nixpkgs-staging",
         "nixvim": "nixvim",
         "stevenblack": "stevenblack"
       }
