@@ -4,6 +4,12 @@
   ];
 
   # System
+  environment.persistence."/nix/persist" = {
+    directories = [
+      { directory = "/var/cache/tuigreet"; user = "greeter"; group = "greeter"; mode = "0755"; }
+    ];
+  };
+
   environment.systemPackages = with pkgs; [
     kitty
     libinput
@@ -17,7 +23,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${lib.getExe pkgs.greetd.tuigreet} --cmd ${lib.getExe config.programs.hyprland.package} --issue --time --remember --remember-session --asterisks";
+        command = "${lib.getExe pkgs.greetd.tuigreet} --cmd ${lib.getExe config.programs.hyprland.package} --time --remember --remember-session --asterisks";
       };
     };
   };
