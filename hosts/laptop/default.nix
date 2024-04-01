@@ -1,18 +1,18 @@
-{ inputs, pkgs, ... }: {
+{ inputs, outputs, config, lib, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
 
     inputs.home-manager.nixosModules.home-manager
     inputs.impermanence.nixosModules.impermanence
 
-    ../../programs/git
-    ../../programs/gpg
-    ../../programs/microsoft-edge
-    ../../programs/neovim
-    ../../programs/network-manager
-    ../../programs/systemd-boot
-    ../../programs/vscode
-    ../../programs/zsh
+    outputs.programs.git
+    outputs.programs.gpg
+    outputs.programs.microsoft-edge
+    outputs.programs.neovim
+    outputs.programs.network-manager
+    outputs.programs.systemd-boot
+    outputs.programs.vscode
+    outputs.programs.zsh
   ];
 
   # See: CVE-2024-3094
@@ -34,6 +34,15 @@
   ];
 
   # Nix required
+  nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
+  nix.nixPath = ["/etc/nix/path"];
+  environment.etc =
+    lib.mapAttrs'
+    (name: value: {
+      name = "nix/path/${name}";
+      value.source = value.flake;
+    })
+    config.nix.registry;
   nix.settings.experimental-features = [ "flakes" "nix-command" ];
   nixpkgs.config.allowUnfree = true;
 

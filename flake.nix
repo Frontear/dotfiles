@@ -29,13 +29,12 @@
 
   outputs = { self, ... }:
   let
-    inherit (self) inputs;
+    inherit (self) inputs outputs;
   in {
-    nixosConfigurations."LAPTOP-3DT4F02" = inputs.nixpkgs.lib.nixosSystem {
-      specialArgs = {
-        inherit inputs;
-      };
+    programs = import ./programs;
 
+    nixosConfigurations."LAPTOP-3DT4F02" = inputs.nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit inputs outputs; };
       modules = [
         ./hosts/laptop
       ];
