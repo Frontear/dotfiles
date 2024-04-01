@@ -37,7 +37,7 @@
       };
 
       modules = [
-        ./nixos/configuration.nix
+        ./hosts/laptop
       ];
     };
   };

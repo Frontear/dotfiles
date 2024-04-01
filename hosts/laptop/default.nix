@@ -5,14 +5,14 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.impermanence.nixosModules.impermanence
 
-    ../programs/git
-    ../programs/gpg
-    ../programs/microsoft-edge
-    ../programs/neovim
-    ../programs/network-manager
-    ../programs/systemd-boot
-    ../programs/vscode
-    ../programs/zsh
+    ../../programs/git
+    ../../programs/gpg
+    ../../programs/microsoft-edge
+    ../../programs/neovim
+    ../../programs/network-manager
+    ../../programs/systemd-boot
+    ../../programs/vscode
+    ../../programs/zsh
   ];
 
   # See: CVE-2024-3094
@@ -124,7 +124,9 @@
 
   documentation = {
     dev.enable = true;
+
     man.generateCaches = true;
+
     nixos.includeAllModules = true;
   };
 }
