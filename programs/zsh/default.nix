@@ -1,9 +1,15 @@
-{ pkgs, ... }: {
+{ config, lib, pkgs, ... }:
+let
+  home = config.users.users.frontear.home;
+  dataHome = config.home-manager.users.frontear.xdg.dataHome;
+
+  histPath = "${dataHome}/zsh/zsh_history";
+  histPathPersist = lib.removePrefix "${home}/" histPath;
+in {
   # System
   environment.persistence."/nix/persist".users.frontear = {
     files = [
-      # TODO: turbo bugged, pls fix
-      #"${config.home-manager.users.frontear.programs.zsh.history.path}"
+      histPathPersist
     ];
   };
 
@@ -50,7 +56,7 @@
         extended = true;
         ignoreDups = false;
 
-        # path = ".local/state/zsh/zsh_history";
+        path = histPath;
       };
 
       historySubstringSearch.enable = true;
