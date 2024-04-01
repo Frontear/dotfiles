@@ -5,6 +5,7 @@ CFLAGS := --flake . --use-remote-sudo --impure
 
 all:
 	@${CC} test --fast ${CFLAGS}
+	@hyprctl reload > /dev/null
 
 apply:
 	@${CC} boot ${CFLAGS}
