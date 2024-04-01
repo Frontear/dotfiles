@@ -7,6 +7,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     impermanence = {
       url = "github:nix-community/impermanence";
     };

@@ -2,6 +2,8 @@
   git = ./git;
   gpg = ./gpg;
 
+  hyprland = ./hyprland;
+
   microsoft-edge = ./microsoft-edge;
 
   neovim = ./neovim;

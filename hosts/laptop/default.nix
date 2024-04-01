@@ -7,6 +7,7 @@
 
     outputs.programs.git
     outputs.programs.gpg
+    outputs.programs.hyprland
     outputs.programs.microsoft-edge
     outputs.programs.neovim
     outputs.programs.network-manager
@@ -91,18 +92,6 @@
   };
 
   # Everything else (for now)
-
-  services = {
-    desktopManager.plasma6.enable = true;
-
-    xserver = {
-      enable = true;
-
-      displayManager.sddm.enable = true;
-
-      libinput.enable = true;
-    };
-  };
 
   environment.systemPackages = with pkgs; [
     # C
