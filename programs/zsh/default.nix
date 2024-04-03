@@ -6,6 +6,10 @@ let
   histPath = "${dataHome}/zsh/zsh_history";
   histPathPersist = lib.removePrefix "${home}/" histPath;
 in {
+  imports = [
+    ./eza.nix
+  ];
+
   # System
   environment.persistence."/nix/persist".users.frontear = {
     files = [
@@ -28,20 +32,6 @@ in {
 
   # User
   home-manager.users.frontear = { config, ... }: {
-    programs.eza = {
-      enable = true;
-
-      extraOptions = [
-        "--group"
-        "--group-directories-first"
-        "--header"
-        "--octal-permissions"
-      ];
-
-      git = true;
-      icons = true;
-    };
-
     programs.zsh = {
       enable = true;
 

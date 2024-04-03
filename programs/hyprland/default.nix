@@ -1,6 +1,10 @@
 { inputs, config, pkgs, lib, ... }: {
   imports = [
     inputs.hyprland.nixosModules.default
+
+    ./armcord.nix
+    ./greetd.nix
+    ./pipewire.nix
   ];
 
   # System
@@ -16,14 +20,7 @@
 
   programs.hyprland.enable = true;
 
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --cmd ${config.programs.hyprland.package}/bin/Hyprland --time --remember --remember-session --asterisks";
-      };
-    };
-  };
+  security.rtkit.enable = true;
 
   # User
   home-manager.users.frontear = { config, ... }:
@@ -242,7 +239,8 @@
         # error_limit
       }
 
-      windowrulev2 = opacity 0.1,class: $(kitty)^
+      # For those right-click context menus
+      windowrulev2 = opacity 1.0 override, floating:1
 
       bind = ${mainMod}, Return, exec, ${pkgs.kitty}/bin/kitty
       bind = ${mainMod}, BackSpace, killactive
