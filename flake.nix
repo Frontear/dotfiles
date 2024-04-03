@@ -32,9 +32,9 @@
     };
   };
 
-  outputs = { self, ... }:
+  outputs = { self, ... } @ inputs:
   let
-    inherit (self) inputs outputs;
+    inherit (self) outputs;
   in {
     programs = import ./programs;
 
