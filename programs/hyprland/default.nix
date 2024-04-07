@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, lib, ... }: {
+{ inputs, pkgs, lib, ... }: {
   imports = [
     inputs.hyprland.nixosModules.default
 
@@ -16,6 +16,12 @@
 
   environment.systemPackages = with pkgs; [
     libinput
+  ];
+
+  fonts.packages = with pkgs; [
+    (nerdfonts.override {
+      fonts = [ "NerdFontsSymbolsOnly" ];
+    })
   ];
 
   programs.hyprland.enable = true;
@@ -42,6 +48,8 @@
       # env = QT_QPA_PLATFORMTHEME,qt6ct
 
       env = _JAVA_AWT_WM_NONREPARENTING,1
+
+      exec-once = ${pkgs.waybar}/bin/waybar
 
       general {
         sensitivity = 1.0
