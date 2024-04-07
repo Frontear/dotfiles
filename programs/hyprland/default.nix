@@ -4,6 +4,7 @@
 
     ./armcord.nix
     ./greetd.nix
+    ./light.nix
     ./pipewire.nix
   ];
 
@@ -25,8 +26,6 @@
   ];
 
   programs.hyprland.enable = true;
-
-  security.rtkit.enable = true;
 
   # User
   home-manager.users.frontear = { config, ... }:
@@ -253,6 +252,12 @@
       bind = ${mainMod}, Return, exec, ${pkgs.kitty}/bin/kitty
       bind = ${mainMod}, BackSpace, killactive
       bind = Control Alt, Delete, exit
+
+      bind = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_SINK@ toggle
+      bind = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_SINK@ 0.05- --limit 1.0
+      bind = , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_SINK@ 0.05+ --limit 1.0
+      bind = , XF86MonBrightnessDown, exec, light -U 5
+      bind = , XF86MonBrightnessUp, exec, light -A 5
 
       bind = SUPER, E, exec, ${pkgs.wofi}/bin/wofi --show drun
 

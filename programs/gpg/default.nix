@@ -6,10 +6,8 @@
     ];
   };
 
-  programs.gnupg.agent.enable = true; # This sets pinentry automatically
-
   # User
-  home-manager.users.frontear = {
+  home-manager.users.frontear = { pkgs, ... }: {
     programs.gpg = {
       enable = true;
 
@@ -23,6 +21,8 @@
       enable = true;
 
       enableSshSupport = true;
+
+      pinentryPackage = pkgs.pinentry-tty;
 
       sshKeys = [
         "AF4BF6EE3E68FD7576667BE7D8A7CFA50BC8E9F2"
