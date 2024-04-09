@@ -6,6 +6,7 @@
     ./greetd.nix
     ./light.nix
     ./pipewire.nix
+    ./waybar.nix
   ];
 
   # System
@@ -17,12 +18,6 @@
 
   environment.systemPackages = with pkgs; [
     libinput
-  ];
-
-  fonts.packages = with pkgs; [
-    (nerdfonts.override {
-      fonts = [ "NerdFontsSymbolsOnly" ];
-    })
   ];
 
   programs.hyprland.enable = true;

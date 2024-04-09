@@ -1,4 +1,5 @@
 { ... }: {
+  # System
   programs.light = {
     enable = true;
   };
