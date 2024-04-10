@@ -31,7 +31,7 @@
         "ipc": false,
         // id
         // include
-        "reload_style_on_change": false,
+        "reload_style_on_change": true,
 
         "modules-left": [
           "hyprland/workspaces"
@@ -182,5 +182,27 @@
       #${pkgs.waybar}/bin/waybar
       #'';
     };
+
+    #xdg.configFile."waybar/style.css" =
+    #let
+    #  drv = pkgs.stdenv.mkDerivation {
+    #    name = "style-css";
+
+    #    src = ./.;
+
+    #    buildInputs = with pkgs; [ sassc ];
+
+    #    buildPhase = ''
+    #    sassc $src/style.scss style.css
+    #    '';
+
+    #    installPhase = ''
+    #    mkdir -p $out
+    #    cp style.css $out
+    #    '';
+    #  };
+    #in {
+    #  #source = "${drv}/style.css";
+    #};
   };
 }

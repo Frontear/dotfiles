@@ -2,11 +2,11 @@
   imports = [
     inputs.hyprland.nixosModules.default
 
-    ./armcord.nix
-    ./greetd.nix
-    ./light.nix
-    ./pipewire.nix
-    ./waybar.nix
+    ./programs/armcord.nix
+    ./programs/light.nix
+    ./programs/waybar
+    ./services/greetd.nix
+    ./services/pipewire.nix
   ];
 
   # System
