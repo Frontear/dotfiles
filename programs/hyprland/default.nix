@@ -1,4 +1,7 @@
-{ inputs, pkgs, lib, ... }: {
+{ config, inputs, pkgs, ... }:
+let
+  hyprland-pkg = config.programs.hyprland.package;
+in {
   imports = [
     inputs.hyprland.nixosModules.default
 
@@ -23,12 +26,23 @@
   programs.hyprland.enable = true;
 
   # User
-  home-manager.users.frontear = { config, ... }:
+  home-manager.users.frontear = { config, lib, ... }:
   let
     mainMod = "SUPER";
     workspaces = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ];
     directions = { l = "Left"; r = "Right"; u = "Up"; d = "Down"; };
   in {
+    home.activation = {
+      hyprlandLinks = lib.hm.dag.entryAfter [ "onFilesChange" ] ''
+      run cd ${config.xdg.configHome}/hypr
+      run cp hyprland.conf hyprland.conf.bak
+      run mv hyprland.conf.bak hyprland.conf
+      run chmod +w hyprland.conf
+
+      HYPRLAND_INSTANCE_SIGNATURE=$(${hyprland-pkg}/bin/hyprctl instances | grep "instance" | sed 's/://g' | cut -d' ' -f2) run --quiet ${hyprland-pkg}/bin/hyprctl reload
+      '';
+    };
+
     xdg.configFile."hypr/hyprland.conf" = {
       text = ''
       monitor =, preferred, auto, 1.5
@@ -266,11 +280,6 @@
       ${builtins.concatStringsSep "\n" (map (n: "bind = ${mainMod} Shift, ${n}, movetoworkspace, ${n}") workspaces)}
       bind = ${mainMod} Shift, 0, movetoworkspace, 10
       '';
-
-      # TODO: make workie
-      #onChange = ''
-      #[ -z "''${HYPRLAND_INSTANCE_SIGNATURE-_}" ] && ${config.programs.hyprland.package}/bin/hyprctl reload
-      #'';
     };
   };
 }

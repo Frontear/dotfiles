@@ -1,18 +1,10 @@
 CC := nixos-rebuild
-CFLAGS := --flake . --use-remote-sudo
+CFLAGS := --flake . --use-remote-sudo --verbose
 
 .PHONY: all apply clean
 
 all:
-	@rm -f ~/.config/hypr/hyprland.conf
-
 	@${CC} test --fast ${CFLAGS}
-
-	@cp ~/.config/hypr/hyprland.conf ~/.config/hypr/hyprland.conf.bak
-	@mv ~/.config/hypr/hyprland.conf.bak ~/.config/hypr/hyprland.conf
-	@chmod +w ~/.config/hypr/hyprland.conf
-
-	@hyprctl reload > /dev/null
 
 apply:
 	@${CC} boot ${CFLAGS}

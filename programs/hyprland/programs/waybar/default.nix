@@ -1,4 +1,7 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }:
+let
+  hyprland-pkg = config.programs.hyprland.package;
+in {
   # System
   fonts.packages = with pkgs; [
     (nerdfonts.override {
@@ -7,7 +10,19 @@
   ];
 
   # User
-  home-manager.users.frontear = { ... }: {
+  home-manager.users.frontear = { config, lib, ... }: {
+    home.activation = {
+      waybarLinks = lib.hm.dag.entryAfter [ "onFilesChange" ] ''
+      run cd ${config.xdg.configHome}/waybar
+      run cp config config.bak
+      run mv config.bak config
+      run chmod +w config
+
+      run ${pkgs.util-linux}/bin/kill $(${pkgs.procps}/bin/pidof waybar)
+      HYPRLAND_INSTANCE_SIGNATURE=$(${hyprland-pkg}/bin/hyprctl instances | grep "instance" | sed 's/://g' | cut -d' ' -f2) run ${config.programs.waybar.package}/bin/waybar &
+      '';
+    };
+
     programs.waybar.enable = true;
 
     xdg.configFile."waybar/config" = {
@@ -175,12 +190,6 @@
         }
       }
       '';
-
-      # TODO: workie?
-      #onChange = ''
-      #${pkgs.util-linux}/bin/kill -SIGTERM $(${pkgs.procps}/bin/pidof waybar)
-      #${pkgs.waybar}/bin/waybar
-      #'';
     };
 
     #xdg.configFile."waybar/style.css" =
