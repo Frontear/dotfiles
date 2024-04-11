@@ -44,5 +44,9 @@
         ./hosts/laptop
       ];
     };
+
+    templates = {
+      "flake".path = ./templates/flake;
+    };
   };
 }

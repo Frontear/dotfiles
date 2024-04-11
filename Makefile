@@ -13,3 +13,7 @@ apply:
 clean:
 	@sudo nix-collect-garbage -d
 	@sudo nix-store --optimise
+
+update:
+	@nix flake update
+	@cd templates/flake && nix flake update
