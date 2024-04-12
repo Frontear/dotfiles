@@ -1,4 +1,6 @@
 {
+  direnv = ./direnv;
+
   git = ./git;
   gpg = ./gpg;
 

@@ -5,6 +5,7 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.impermanence.nixosModules.impermanence
 
+    outputs.programs.direnv
     outputs.programs.git
     outputs.programs.gpg
     outputs.programs.hyprland
