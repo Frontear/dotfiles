@@ -1,0 +1,3 @@
+{
+  impermanence = ./impermanence;
+}

@@ -1,9 +1,10 @@
-{ config, inputs, pkgs, ... }:
+{ inputs, outputs, config, pkgs, ... }:
 let
   hyprland-pkg = config.programs.hyprland.package;
 in {
   imports = [
     inputs.hyprland.nixosModules.default
+    outputs.nixosModules.impermanence
 
     ./programs/armcord.nix
     ./programs/light.nix
@@ -13,8 +14,8 @@ in {
   ];
 
   # System
-  environment.persistence."/nix/persist" = {
-    directories = [
+  impermanence = {
+    system.directories = [
       { directory = "/var/cache/tuigreet"; user = "greeter"; group = "greeter"; mode = "0755"; }
     ];
   };

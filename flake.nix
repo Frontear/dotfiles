@@ -42,6 +42,7 @@
   let
     inherit (self) outputs;
   in {
+    nixosModules = import ./modules/nixos;
     programs = import ./programs;
 
     nixosConfigurations = {
@@ -58,6 +59,7 @@
         ];
       };
     };
+
 
     templates = {
       "flake".path = ./templates/flake;

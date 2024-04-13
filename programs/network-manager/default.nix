@@ -1,6 +1,11 @@
-{ inputs, ... }: {
-  environment.persistence."/nix/persist" = {
-    directories = [
+{ inputs, outputs, ... }: {
+  imports = [
+    outputs.nixosModules.impermanence
+  ];
+
+  # System
+  impermanence = {
+    system.directories = [
       "/etc/NetworkManager"
     ];
   };

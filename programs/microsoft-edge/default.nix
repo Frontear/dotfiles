@@ -1,7 +1,11 @@
-{ pkgs, ... }: {
+{ outputs, pkgs, ... }: {
+  imports = [
+    outputs.nixosModules.impermanence
+  ];
+
   # System
-  environment.persistence."/nix/persist".users.frontear = {
-    directories = [
+  impermanence = {
+    user.directories = [
       ".config/microsoft-edge"
       # TODO: persist sync somehow
     ];

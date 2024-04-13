@@ -1,7 +1,11 @@
-{ ... }: {
+{ outputs, ... }: {
+  imports = [
+    outputs.nixosModules.impermanence
+  ];
+
   # System
-  environment.persistence."/nix/persist".users.frontear = {
-    directories = [
+  impermanence = {
+    user.directories = [
       ".gnupg"
     ];
   };

@@ -3,7 +3,8 @@
     ./hardware-configuration.nix
 
     inputs.home-manager.nixosModules.home-manager
-    inputs.impermanence.nixosModules.impermanence
+
+    outputs.nixosModules.impermanence
 
     outputs.programs.direnv
     outputs.programs.git
@@ -38,14 +39,12 @@
   networking.hostName = "LAPTOP-3DT4F02";
   time.timeZone = "America/Toronto";
 
-  environment.persistence."/nix/persist" = {
-    hideMounts = true;
+  impermanence = {
+    enable = true;
 
-    users.frontear = {
-      directories = [
-        "Documents"
-      ];
-    };
+    user.directories = [
+      "Documents"
+    ];
   };
 
   fileSystems = {

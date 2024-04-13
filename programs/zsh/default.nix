@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ outputs, config, lib, pkgs, ... }:
 let
   home = config.users.users.frontear.home;
   dataHome = config.home-manager.users.frontear.xdg.dataHome;
@@ -7,12 +7,14 @@ let
   histPathPersist = lib.removePrefix "${home}/" histPath;
 in {
   imports = [
+    outputs.nixosModules.impermanence
+
     ./eza.nix
   ];
 
   # System
-  environment.persistence."/nix/persist".users.frontear = {
-    files = [
+  impermanence = {
+    user.files = [
       histPathPersist
     ];
   };
