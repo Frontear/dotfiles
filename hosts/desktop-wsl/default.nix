@@ -4,6 +4,9 @@
 
     inputs.home-manager.nixosModules.home-manager
     inputs.nixos-wsl.nixosModules.default
+    outputs.nixosModules.main-user
+
+    outputs.programs.neovim
   ];
 
   # Nix required
@@ -44,6 +47,19 @@
     defaultUser = "nixos";
     nativeSystemd = true;
     useWindowsDriver = true;
+  };
+
+  main-user = {
+    name = "nixos";
+  };
+
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+
+    users.${config.main-user.name} = {
+      home.stateVersion = "24.05";
+    };
   };
 
   environment.systemPackages = with pkgs; [

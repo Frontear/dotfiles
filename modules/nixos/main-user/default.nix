@@ -22,6 +22,7 @@ in {
 
     extraConfig = mkOption {
       type = types.anything;
+      default = {};
       description = ''
       Extra configuration passed directly to config.users.users.''${config.main-user.name}.
       '';
