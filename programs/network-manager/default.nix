@@ -11,6 +11,7 @@
   };
 
   networking = {
+    useDHCP = false; # WARN: pretty sure this isn't needed but marking in-case it causes an issue.
     dhcpcd.enable = false; # NetworkManager uses its own
 
     hostFiles = [
