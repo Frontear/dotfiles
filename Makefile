@@ -7,7 +7,7 @@ all:
 	@${CC} test --fast ${CFLAGS}
 
 apply:
-	@${CC} boot ${CFLAGS}
+	@${CC} switch ${CFLAGS}
 
 # TODO: switch to nix3 commands
 clean:
