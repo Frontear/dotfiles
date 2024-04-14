@@ -6,7 +6,12 @@
     inputs.nixos-wsl.nixosModules.default
     outputs.nixosModules.main-user
 
+    outputs.programs.direnv
+    outputs.programs.git
+    outputs.programs.gpg
     outputs.programs.neovim
+    outputs.programs.vscode # ? maybe not
+    outputs.programs.zsh
   ];
 
   # Nix required
