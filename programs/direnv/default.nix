@@ -1,6 +1,10 @@
-{ ... }: {
+{ outputs, config, ... }: {
+  imports = [
+    outputs.nixosModules.main-user
+  ];
+
   # User
-  home-manager.users.frontear = { config, ... }: {
+  home-manager.users.${config.main-user.name} = { config, ... }: {
     programs.direnv = {
       enable = true;
 

@@ -1,6 +1,7 @@
-{ outputs, ... }: {
+{ outputs, config, ... }: {
   imports = [
     outputs.nixosModules.impermanence
+    outputs.nixosModules.main-user
   ];
 
   # System
@@ -11,7 +12,7 @@
   };
 
   # User
-  home-manager.users.frontear = { pkgs, ... }: {
+  home-manager.users.${config.main-user.name} = { pkgs, ... }: {
     programs.gpg = {
       enable = true;
 

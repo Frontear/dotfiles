@@ -1,4 +1,4 @@
-{ inputs, config, lib, ... }:
+{ inputs, outputs, config, lib, ... }:
 with lib;
 let
   cfg = config.impermanence;
@@ -23,6 +23,7 @@ let
 in {
   imports = [
     inputs.impermanence.nixosModules.impermanence
+    outputs.nixosModules.main-user
   ];
 
   options.impermanence = {
@@ -40,7 +41,7 @@ in {
       files = [] ++ cfg.system.files;
 
       # TODO: needs changing
-      users.frontear = {
+      users.${config.main-user.name} = {
         directories = [] ++ cfg.user.directories;
         files = [] ++ cfg.user.files;
       };

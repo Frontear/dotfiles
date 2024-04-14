@@ -1,8 +1,12 @@
-{ inputs, ... }: {
+{ inputs, outputs, config, ... }: {
+  imports = [
+    outputs.nixosModules.main-user
+  ];
+
   # System
 
   # User
-  home-manager.users.frontear = {
+  home-manager.users.${config.main-user.name} = {
     imports = [
       inputs.nixvim.homeManagerModules.nixvim
     ];

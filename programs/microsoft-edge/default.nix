@@ -1,6 +1,7 @@
-{ outputs, pkgs, ... }: {
+{ outputs, config, pkgs, ... }: {
   imports = [
     outputs.nixosModules.impermanence
+    outputs.nixosModules.main-user
   ];
 
   # System
@@ -12,7 +13,7 @@
   };
 
   # User
-  home-manager.users.frontear = {
+  home-manager.users.${config.main-user.name} = {
     programs.chromium = {
       enable = true;
       package = pkgs.microsoft-edge;

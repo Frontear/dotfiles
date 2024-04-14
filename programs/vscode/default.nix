@@ -1,9 +1,13 @@
-{ inputs, ... }:
+{ inputs, outputs, config, ... }:
 let
   vscode-extensions = inputs.nix-vscode-extensions.extensions."x86_64-linux".vscode-marketplace;
 in {
+  imports = [
+    outputs.nixosModules.main-user
+  ];
+
   # User
-  home-manager.users.frontear = {
+  home-manager.users.${config.main-user.name} = {
     programs.vscode = {
       enable = true;
 

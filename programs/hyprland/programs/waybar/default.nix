@@ -1,7 +1,11 @@
-{ config, pkgs, ... }:
+{ outputs, config, pkgs, ... }:
 let
   hyprland-pkg = config.programs.hyprland.package;
 in {
+  imports = [
+    outputs.nixosModules.main-user
+  ];
+
   # System
   fonts.packages = with pkgs; [
     (nerdfonts.override {
@@ -10,7 +14,7 @@ in {
   ];
 
   # User
-  home-manager.users.frontear = { config, lib, ... }: {
+  home-manager.users.${config.main-user.name} = { config, lib, ... }: {
     home.activation = {
       waybarLinks = lib.hm.dag.entryAfter [ "onFilesChange" ] ''
       run cd ${config.xdg.configHome}/waybar

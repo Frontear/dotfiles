@@ -1,13 +1,15 @@
 { outputs, config, lib, pkgs, ... }:
+# TODO: race conditions b/w import and let
 let
-  home = config.users.users.frontear.home;
-  dataHome = config.home-manager.users.frontear.xdg.dataHome;
+  home = config.users.users.${config.main-user.name}.home;
+  dataHome = config.home-manager.users.${config.main-user.name}.xdg.dataHome;
 
   histPath = "${dataHome}/zsh/zsh_history";
   histPathPersist = lib.removePrefix "${home}/" histPath;
 in {
   imports = [
     outputs.nixosModules.impermanence
+    outputs.nixosModules.main-user
 
     ./eza.nix
   ];
@@ -30,10 +32,10 @@ in {
     promptInit = "";
   };
 
-  users.users.frontear.shell = pkgs.zsh;
+  users.users.${config.main-user.name}.shell = pkgs.zsh;
 
   # User
-  home-manager.users.frontear = { config, ... }: {
+  home-manager.users.${config.main-user.name} = { config, ... }: {
     programs.zsh = {
       enable = true;
 

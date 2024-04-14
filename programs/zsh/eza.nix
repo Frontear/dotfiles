@@ -1,5 +1,9 @@
-{ ... }: {
-  home-manager.users.frontear = { config, ... }: {
+{ outputs, config, ... }: {
+  imports = [
+    outputs.nixosModules.main-user
+  ];
+
+  home-manager.users.${config.main-user.name} = { config, ... }: {
     programs.eza = {
       enable = true;
 

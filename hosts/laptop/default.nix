@@ -5,6 +5,7 @@
     inputs.home-manager.nixosModules.home-manager
 
     outputs.nixosModules.impermanence
+    outputs.nixosModules.main-user
 
     outputs.programs.direnv
     outputs.programs.git
@@ -67,10 +68,13 @@
     };
   };
 
-  users.users.frontear = {
-    isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" ];
-    initialHashedPassword = "$y$j9T$gsXwh6NJa62APePZ.7xR00$lLYi86UgQdN1yjOIgqcegfTKsnqkXI4ufQHWdOTiKr6";
+  main-user = {
+    name = "frontear";
+
+    extraConfig = {
+      extraGroups = [ "networkmanager" "wheel" ];
+      initialHashedPassword = "$y$j9T$gsXwh6NJa62APePZ.7xR00$lLYi86UgQdN1yjOIgqcegfTKsnqkXI4ufQHWdOTiKr6";
+    };
   };
 
   # Everything else (for now)
@@ -97,7 +101,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
 
-    users.frontear = {
+    users.${config.main-user.name} = {
       home.stateVersion = "24.05";
     };
   };

@@ -1,4 +1,8 @@
-{ ... }: {
+{ outputs, config, ... }: {
+  imports = [
+    outputs.nixosModules.main-user
+  ];
+
   # System
   programs.git = {
     enable = true;
@@ -9,7 +13,7 @@
   };
 
   # User
-  home-manager.users.frontear = {
+  home-manager.users.${config.main-user.name} = {
     programs.git = {
       enable = true;
 

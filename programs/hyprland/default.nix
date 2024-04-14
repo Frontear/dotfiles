@@ -5,6 +5,7 @@ in {
   imports = [
     inputs.hyprland.nixosModules.default
     outputs.nixosModules.impermanence
+    outputs.nixosModules.main-user
 
     ./programs/armcord.nix
     ./programs/light.nix
@@ -27,7 +28,7 @@ in {
   programs.hyprland.enable = true;
 
   # User
-  home-manager.users.frontear = { config, lib, ... }:
+  home-manager.users.${config.main-user.name} = { config, lib, ... }:
   let
     mainMod = "SUPER";
     workspaces = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ];
