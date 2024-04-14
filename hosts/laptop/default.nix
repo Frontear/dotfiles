@@ -1,5 +1,6 @@
 { inputs, outputs, config, lib, pkgs, ... }: {
   imports = [
+    ../common
     ./hardware-configuration.nix
 
     inputs.home-manager.nixosModules.home-manager
@@ -18,21 +19,6 @@
     outputs.programs.vscode
     outputs.programs.zsh
   ];
-
-  # Nix required
-  nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
-  nix.nixPath = ["/etc/nix/path"];
-  environment.etc =
-    lib.mapAttrs'
-    (name: value: {
-      name = "nix/path/${name}";
-      value.source = value.flake;
-    })
-    config.nix.registry;
-  nix.settings.experimental-features = [ "flakes" "nix-command" ];
-  nixpkgs.config.allowUnfree = true;
-
-  system.stateVersion = "24.05";
 
   # System Configuration
   console.keyMap = "us";
@@ -96,21 +82,4 @@
     rustc
     rustfmt
   ];
-
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-
-    users.${config.main-user.name} = {
-      home.stateVersion = "24.05";
-    };
-  };
-
-  documentation = {
-    dev.enable = true;
-
-    man.generateCaches = true;
-
-    nixos.includeAllModules = true;
-  };
 }
