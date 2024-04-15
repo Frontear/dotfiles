@@ -29,6 +29,10 @@
   impermanence = {
     enable = true;
 
+    system.directories = [
+      "/var/lib/systemd/backlight"
+    ];
+
     user.directories = [
       "Documents"
     ];
