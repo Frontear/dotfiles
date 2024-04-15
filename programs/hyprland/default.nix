@@ -183,7 +183,7 @@ in {
         # workspace_swipe_direction_lock
         # workspace_swipe_direction_lock_threshold
         workspace_swipe_forever = false
-        workspace_swipe_numbered = false
+        # workspace_swipe_numbered
         # workspace_swipe_use_r
       }
 
