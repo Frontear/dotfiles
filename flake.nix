@@ -61,8 +61,6 @@
     };
 
 
-    templates = {
-      "flake".path = ./templates/flake;
-    };
+    templates = import ./templates;
   };
 }

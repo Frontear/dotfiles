@@ -1,5 +1,5 @@
 CC := nixos-rebuild
-CFLAGS := --flake . --use-remote-sudo --verbose
+CFLAGS := --flake . --use-remote-sudo --verbose --option eval-cache false
 
 .PHONY: all apply clean
 

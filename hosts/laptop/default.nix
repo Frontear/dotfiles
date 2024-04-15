@@ -66,13 +66,6 @@
   # Everything else (for now)
 
   environment.systemPackages = with pkgs; [
-    # C
-    gcc
-    gdb
-    gnumake
-    man-pages
-    valgrind
-
     # Nix
     nil
     nixpkgs-fmt
