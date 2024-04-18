@@ -1,6 +1,7 @@
 { config, lib, ... }:
-with lib;
 let
+  inherit (lib) mkOption types mkMerge;
+
   cfg = config.main-user;
 in {
   options.main-user = {

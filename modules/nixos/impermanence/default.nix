@@ -1,6 +1,7 @@
 { inputs, outputs, config, lib, ... }:
-with lib;
 let
+  inherit (lib) mkOption types mkEnableOption mkIf;
+
   cfg = config.impermanence;
 
   mkImpermanenceOptions = type: {
