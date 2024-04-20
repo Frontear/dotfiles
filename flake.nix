@@ -43,7 +43,10 @@
     inherit (self) outputs;
   in {
     nixosModules = import ./modules/nixos;
+
     programs = import ./programs;
+
+    templates = import ./templates;
 
     nixosConfigurations = {
       "LAPTOP-3DT4F02" = inputs.nixpkgs.lib.nixosSystem {
@@ -61,6 +64,5 @@
     };
 
 
-    templates = import ./templates;
   };
 }

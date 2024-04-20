@@ -31,6 +31,7 @@
 
     system.directories = [
       "/var/lib/systemd/backlight"
+      "/var/lib/mysql"
     ];
 
     user.directories = [
@@ -79,4 +80,10 @@
     rustc
     rustfmt
   ];
+
+  # TODO: possible to put in a devshell?
+  services.mysql = {
+    enable = true;
+    package = pkgs.mysql80;
+  };
 }

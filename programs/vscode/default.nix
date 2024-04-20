@@ -36,6 +36,8 @@ in {
         rafamel.subtle-brackets
         qcz.text-power-tools
         jgclark.vscode-todo-highlight
+
+        ms-vsliveshare.vsliveshare
       ];
 
       mutableExtensionsDir = false;
