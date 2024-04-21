@@ -1,6 +1,7 @@
-{ inputs, outputs, config, lib, pkgs, ... }: {
+{ inputs, outputs, config, lib, ... }: {
   imports = [
     inputs.home-manager.nixosModules.home-manager
+    outputs.nixosModules.impermanence
     outputs.nixosModules.main-user
   ];
 
@@ -46,4 +47,16 @@
     #man.generateCaches = true;
     nixos.includeAllModules = true;
   };
+
+  # /tmp is where nix builds occur, and they require
+  # a LOT of space at times. We will persist the /tmp
+  # directory and ensure its cleaned up to alleviate
+  # this problem.
+  boot.tmp = {
+    cleanOnBoot = true;
+    useTmpfs = lib.mkForce false;
+  };
+  impermanence.system.directories = [
+    "/tmp"
+  ];
 }
