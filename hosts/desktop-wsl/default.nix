@@ -47,5 +47,6 @@
   environment.systemPackages = with pkgs; [
     gnumake
     neovim
+    yt-dlp
   ];
 }
