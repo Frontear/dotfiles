@@ -56,7 +56,5 @@
     cleanOnBoot = true;
     useTmpfs = lib.mkForce false;
   };
-  impermanence.system.directories = [
-    "/tmp"
-  ];
+  impermanence.system.directories = [ "/tmp" ];
 }
