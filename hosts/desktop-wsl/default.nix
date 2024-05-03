@@ -11,27 +11,8 @@
     outputs.programs.git
     outputs.programs.gpg
     outputs.programs.neovim
-    outputs.programs.vscode # ? maybe not
     outputs.programs.zsh
   ];
-
-  programs.git = {
-    enable = true;
-
-    config = {
-      commit.gpgSign = true;
-      init.defaultBranch = "main";
-      tag.gpgSign = true;
-      user.email = "perm-iterate-0b@icloud.com";
-      user.name = "Ali Rizvi";
-      user.signingKey = "BCB5CEFDE22282F5";
-    };
-  };
-
-  programs.gnupg = {
-    agent.enable = true;
-    agent.enableSSHSupport = true;
-  };
 
   wsl = {
     enable = true;
