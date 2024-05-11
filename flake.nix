@@ -40,6 +40,11 @@
       url = "github:StevenBlack/hosts";
       flake = false;
     };
+
+    waybar = {
+      url = "github:Alexays/waybar";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, ... } @ inputs:

@@ -1,4 +1,4 @@
-{ outputs, config, pkgs, ... }:
+{ inputs, outputs, config, pkgs, ... }:
 let
   hyprland-pkg = config.programs.hyprland.package;
 in {
@@ -7,6 +7,10 @@ in {
   ];
 
   # System
+  nixpkgs.overlays = [
+    inputs.waybar.overlays.default
+  ];
+
   fonts.packages = with pkgs; [
     (nerdfonts.override {
       fonts = [ "CascadiaCode" ];
