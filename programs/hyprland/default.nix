@@ -77,9 +77,7 @@ in {
         col.active_border = rgba(00000000) rgba(ff574eff) rgba(ffbecdff) rgba(ff574eff) rgba(00000000) 30deg
         # col.nogroup_border
         # col.nogroup_border_active
-        cursor_inactive_timeout = 15
         layout = dwindle
-        no_cursor_warps = false
         no_focus_fallback = false
         apply_sens_to_raw = false
         resize_on_border = false
@@ -214,16 +212,11 @@ in {
         # swallow_exception_regex
         focus_on_activate = false
         # no_direct_scanout
-        hide_cursor_on_touch = true
-        hide_cursor_on_key_press = true
         mouse_move_focuses_monitor = truebind = SUPER, F, togglefloating
-        cursor_zoom_factor = 1.0
-        # cursor_zoom_rigid
         # allow_session_lock_restore
         # background_color
         # close_special_on_empty
         new_window_takes_over_fullscreen = 2
-        enable_hyprcursor = true
       }
 
       binds {
@@ -246,6 +239,19 @@ in {
       opengl {
         nvidia_anti_flicker = true
         force_introspection = 1
+      }
+
+      cursor {
+        no_hardware_cursors = false
+        # hotspot_padding
+        inactive_timeout = 15
+        no_warps = false
+        # default_monitor
+        zoom_factor = 1.0
+        # zoom_rigid
+        # enable_hyprcursor
+        hide_on_key_press = true
+        hide_on_touch = true
       }
 
       debug {
