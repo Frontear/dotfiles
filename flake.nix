@@ -12,9 +12,13 @@
       #inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    impermanence = { url = "github:nix-community/impermanence"; };
+    impermanence = {
+      url = "github:nix-community/impermanence";
+    };
 
-    nixos-hardware = { url = "github:NixOS/nixos-hardware"; };
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware";
+    };
 
     nixvim = {
       url = "github:nix-community/nixvim";
@@ -43,8 +47,23 @@
     };
   };
 
-  outputs = { self, ... }@inputs:
-    let inherit (self) outputs;
+  outputs = { self, ... } @ inputs:
+    let
+      inherit (self) outputs;
+
+      # https://ayats.org/blog/no-flake-utils
+      eachSystem = function:
+        inputs.nixpkgs.lib.genAttrs [
+          "x86_64-linux"
+          "x86_64-darwin"
+          "aarch64-linux"
+          "aarch64-darwin"
+        ] (system:
+          function (import inputs.nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          })
+        );
     in {
       nixosModules = import ./modules/nixos;
 
@@ -54,13 +73,31 @@
 
       nixosConfigurations = {
         "LAPTOP-3DT4F02" = inputs.nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/laptop ];
+          specialArgs = {
+            inherit inputs outputs;
+          };
+          modules = [
+            ./hosts/laptop
+          ];
         };
         "nixos" = inputs.nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/desktop-wsl ];
+          specialArgs = {
+            inherit inputs outputs;
+          };
+          modules = [
+            ./hosts/desktop-wsl
+          ];
         };
       };
+
+      devShells = eachSystem (pkgs: {
+        default = pkgs.mkShell {
+          packages = with pkgs; [
+            (writeShellScriptBin "nixos-rebuild" ''
+              ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake ${./.} --use-remote-sudo --verbose --option eval-cache false
+            '')
+          ];
+        };
+      });
     };
 }
