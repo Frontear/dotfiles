@@ -1,25 +1,20 @@
 { outputs, config, lib, pkgs, ... }:
 # TODO: race conditions b/w import and let
 let
-  home = config.users.users.${config.main-user.name}.home;
-  dataHome = config.home-manager.users.${config.main-user.name}.xdg.dataHome;
+  home = config.users.extraUsers.frontear.home;
+  dataHome = config.home-manager.users.frontear.xdg.dataHome;
 
   histPath = "${dataHome}/zsh/zsh_history";
   histPathPersist = lib.removePrefix "${home}/" histPath;
 in {
   imports = [
     outputs.nixosModules.impermanence
-    outputs.nixosModules.main-user
 
     ./eza.nix
   ];
 
   # System
-  impermanence = {
-    user.files = [
-      histPathPersist
-    ];
-  };
+  impermanence = { user.files = [ histPathPersist ]; };
 
   programs.zsh = {
     enable = true;
@@ -32,10 +27,10 @@ in {
     promptInit = "";
   };
 
-  users.users.${config.main-user.name}.shell = pkgs.zsh;
+  users.extraUsers.frontear.shell = pkgs.zsh;
 
   # User
-  home-manager.users.${config.main-user.name} = { config, ... }: {
+  home-manager.users.frontear = { config, ... }: {
     programs.zsh = {
       enable = true;
 
@@ -58,14 +53,12 @@ in {
       # RPS1 from https://unix.stackexchange.com/a/375730
       initExtra = ''
 
-      PS1='%B%F{green}[%n@%m %1~]%(#.#.$)%F{white}%b '
-      RPS1='%B%(?.%F{green}.%F{red})%?%f%b'
+        PS1='%B%F{green}[%n@%m %1~]%(#.#.$)%F{white}%b '
+        RPS1='%B%(?.%F{green}.%F{red})%?%f%b'
       '';
 
       # TODO: plugins.{*}?, shellAliases, shellGlobalAliases
-      sessionVariables = {
-        EDITOR = "nvim";
-      };
+      sessionVariables = { EDITOR = "nvim"; };
 
       syntaxHighlighting = {
         enable = true;

@@ -1,15 +1,7 @@
-{ inputs, outputs, config, ... }: {
-  imports = [
-    outputs.nixosModules.main-user
-  ];
-
-  # System
-
+{ inputs, ... }: {
   # User
-  home-manager.users.${config.main-user.name} = {
-    imports = [
-      inputs.nixvim.homeManagerModules.nixvim
-    ];
+  home-manager.users.frontear = {
+    imports = [ inputs.nixvim.homeManagerModules.nixvim ];
 
     programs.nixvim = {
       enable = true;
@@ -17,12 +9,12 @@
       colorschemes.onedark.enable = true;
 
       extraConfigLua = ''
-      vim.opt.tabstop = 4
-      vim.opt.shiftwidth = 4
-      vim.opt.expandtab = true
+        vim.opt.tabstop = 4
+        vim.opt.shiftwidth = 4
+        vim.opt.expandtab = true
 
-      vim.opt.number = true
-      vim.cmd("highlight LineNr ctermfg=grey")
+        vim.opt.number = true
+        vim.cmd("highlight LineNr ctermfg=grey")
       '';
 
       plugins = {

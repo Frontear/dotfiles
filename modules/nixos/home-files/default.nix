@@ -8,14 +8,12 @@ in {
     file = mkOption {
       # TODO: proper attr definition
       type = types.anything;
-      default = {};
+      default = { };
       description = ''
-      Attribute set of files to link into the user home.
+        Attribute set of files to link into the user home.
       '';
     };
   };
 
-  config = {
-    home-manager.users.frontear.home.file = mkMerge [ cfg.file ];
-  };
+  config = { home-manager.users.frontear.home.file = mkMerge [ cfg.file ]; };
 }

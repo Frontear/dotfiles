@@ -1,11 +1,10 @@
-{ inputs, outputs, config, lib, pkgs, ... }: {
+{ inputs, outputs, pkgs, ... }: {
   imports = [
     ../common
     ./hardware-configuration.nix
 
     inputs.home-manager.nixosModules.home-manager
     inputs.nixos-wsl.nixosModules.default
-    outputs.nixosModules.main-user
 
     outputs.programs.direnv
     outputs.programs.git
@@ -21,13 +20,5 @@
     useWindowsDriver = true;
   };
 
-  main-user = {
-    name = "nixos";
-  };
-
-  environment.systemPackages = with pkgs; [
-    gnumake
-    neovim
-    yt-dlp
-  ];
+  environment.systemPackages = with pkgs; [ gnumake neovim yt-dlp ];
 }

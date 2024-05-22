@@ -1,4 +1,4 @@
-{ inputs, outputs, config, lib, pkgs, ... }: {
+{ inputs, outputs, pkgs, ... }: {
   imports = [
     ../common
     ./hardware-configuration.nix
@@ -12,7 +12,6 @@
     inputs.home-manager.nixosModules.home-manager
 
     outputs.nixosModules.impermanence
-    outputs.nixosModules.main-user
 
     outputs.programs.direnv
     outputs.programs.git
@@ -35,14 +34,9 @@
   impermanence = {
     enable = true;
 
-    system.directories = [
-      "/var/lib/systemd/backlight"
-      "/var/lib/mysql"
-    ];
+    system.directories = [ "/var/lib/systemd/backlight" "/var/lib/mysql" ];
 
-    user.directories = [
-      "Documents"
-    ];
+    user.directories = [ "Documents" ];
   };
 
   fileSystems = {
@@ -65,13 +59,11 @@
     };
   };
 
-  main-user = {
-    name = "frontear";
-
-    extraConfig = {
-      extraGroups = [ "networkmanager" "wheel" ];
-      initialHashedPassword = "$y$j9T$gsXwh6NJa62APePZ.7xR00$lLYi86UgQdN1yjOIgqcegfTKsnqkXI4ufQHWdOTiKr6";
-    };
+  users.extraUsers.frontear = {
+    isNormalUser = true;
+    extraGroups = [ "networkmanager" "wheel" ];
+    initialHashedPassword =
+      "$y$j9T$gsXwh6NJa62APePZ.7xR00$lLYi86UgQdN1yjOIgqcegfTKsnqkXI4ufQHWdOTiKr6";
   };
 
   # Everything else (for now)
@@ -80,11 +72,6 @@
     # Nix
     nil
     nixpkgs-fmt
-
-    # Rust
-    cargo
-    rustc
-    rustfmt
   ];
 
   # TODO: possible to put in a devshell?

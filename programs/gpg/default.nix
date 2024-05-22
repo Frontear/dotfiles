@@ -1,18 +1,11 @@
-{ outputs, config, ... }: {
-  imports = [
-    outputs.nixosModules.impermanence
-    outputs.nixosModules.main-user
-  ];
+{ outputs, ... }: {
+  imports = [ outputs.nixosModules.impermanence ];
 
   # System
-  impermanence = {
-    user.directories = [
-      ".gnupg"
-    ];
-  };
+  impermanence = { user.directories = [ ".gnupg" ]; };
 
   # User
-  home-manager.users.${config.main-user.name} = { pkgs, ... }: {
+  home-manager.users.frontear = { pkgs, ... }: {
     programs.gpg = {
       enable = true;
 
@@ -29,9 +22,7 @@
 
       pinentryPackage = pkgs.pinentry-tty;
 
-      sshKeys = [
-        "AF4BF6EE3E68FD7576667BE7D8A7CFA50BC8E9F2"
-      ];
+      sshKeys = [ "AF4BF6EE3E68FD7576667BE7D8A7CFA50BC8E9F2" ];
     };
   };
 }

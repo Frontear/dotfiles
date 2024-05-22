@@ -12,13 +12,9 @@
       #inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    impermanence = {
-      url = "github:nix-community/impermanence";
-    };
+    impermanence = { url = "github:nix-community/impermanence"; };
 
-    nixos-hardware = {
-      url = "github:NixOS/nixos-hardware";
-    };
+    nixos-hardware = { url = "github:NixOS/nixos-hardware"; };
 
     nixvim = {
       url = "github:nix-community/nixvim";
@@ -47,29 +43,24 @@
     };
   };
 
-  outputs = { self, ... } @ inputs:
-  let
-    inherit (self) outputs;
-  in {
-    nixosModules = import ./modules/nixos;
+  outputs = { self, ... }@inputs:
+    let inherit (self) outputs;
+    in {
+      nixosModules = import ./modules/nixos;
 
-    programs = import ./programs;
+      programs = import ./programs;
 
-    templates = import ./templates;
+      templates = import ./templates;
 
-    nixosConfigurations = {
-      "LAPTOP-3DT4F02" = inputs.nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs; };
-        modules = [
-          ./hosts/laptop
-        ];
-      };
-      "nixos" = inputs.nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs; };
-        modules = [
-          ./hosts/desktop-wsl
-        ];
+      nixosConfigurations = {
+        "LAPTOP-3DT4F02" = inputs.nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [ ./hosts/laptop ];
+        };
+        "nixos" = inputs.nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [ ./hosts/desktop-wsl ];
+        };
       };
     };
-  };
 }
