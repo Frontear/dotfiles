@@ -7,21 +7,8 @@
   # Sets system stateVersion, do not change.
   system.stateVersion = "24.05";
 
-  # Enables the nix3 commands as well as flakes,
-  # setup compatibility between nix-legacy and nix3
-  # commands/interfaces, and finally enables non-free
-  # packages.
-  #
-  # Most of this snippet was stolen from Misterio77
-  # See: https://github.com/Misterio77/nix-starter-configs
+  # Enables flakes and unfree packages.
   nix.settings.experimental-features = [ "flakes" "nix-command" ];
-  nix.registry = (lib.mapAttrs (_: flake: { inherit flake; }))
-    ((lib.filterAttrs (_: lib.isType "flake")) inputs);
-  nix.nixPath = [ "/etc/nix/path" ];
-  environment.etc = lib.mapAttrs' (name: value: {
-    name = "nix/path/${name}";
-    value.source = value.flake;
-  }) config.nix.registry;
   nixpkgs.config.allowUnfree = true;
 
   # Tells home-manager to use the system pkgs instance,
