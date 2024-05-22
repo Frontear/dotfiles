@@ -1,9 +1,0 @@
-# Darwin nonsense
-**/.DS_Store
-
-# nix build outputs
-result/
-
-# direnv things
-.direnv/
-.envrc

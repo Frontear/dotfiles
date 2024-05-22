@@ -69,8 +69,6 @@
 
       programs = import ./programs;
 
-      templates = import ./templates;
-
       nixosConfigurations = {
         "LAPTOP-3DT4F02" = inputs.nixpkgs.lib.nixosSystem {
           specialArgs = {
@@ -94,7 +92,14 @@
         default = pkgs.mkShell {
           packages = with pkgs; [
             (writeShellScriptBin "nixos-rebuild" ''
-              ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake ${./.} --use-remote-sudo --verbose --option eval-cache false
+              case $1 in
+                boot)
+                  ${pkgs.nixos-rebuild}/bin/nixos-rebuild boot --flake ${./.} --use-remote-sudo --verbose --option eval-cache false
+                  reboot
+                  ;;
+                *)
+                  ${pkgs.nixos-rebuild}/bin/nixos-rebuild test --flake ${./.} --use-remote-sudo --verbose --option eval-cache false
+              esac
             '')
           ];
         };
