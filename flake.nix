@@ -65,7 +65,7 @@
           })
         );
     in {
-      nixosModules = import ./modules/nixos;
+      nixosModules = import ./modules;
 
       programs = import ./programs;
 

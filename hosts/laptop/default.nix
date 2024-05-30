@@ -11,7 +11,7 @@
 
     inputs.home-manager.nixosModules.home-manager
 
-    outputs.nixosModules.impermanence
+    outputs.nixosModules.default
 
     outputs.programs.direnv
     outputs.programs.git
@@ -24,6 +24,10 @@
     outputs.programs.vscode
     outputs.programs.zsh
   ];
+
+  frontear = {
+    zram.enable = true;
+  };
 
   # System Configuration
   console.keyMap = "us";

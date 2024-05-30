@@ -1,3 +1,13 @@
-abort ''
-  Do not import this folder, import a specific folder pertaining to the module category
-''
+rec {
+  default = { ... }: {
+    imports = [
+      ./home-files
+      ./impermanence
+      ./zram
+    ];
+  };
+
+  home-files = default;
+
+  impermanence = default;
+}
