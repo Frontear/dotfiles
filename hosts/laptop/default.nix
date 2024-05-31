@@ -26,7 +26,9 @@
   ];
 
   frontear = {
-    zram.enable = true;
+    system = {
+      zram.enable = true;
+    };
   };
 
   # System Configuration

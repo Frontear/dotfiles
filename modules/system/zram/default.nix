@@ -2,9 +2,9 @@
 let
   inherit (lib) mkEnableOption mkIf;
 
-  cfg = config.frontear.zram;
+  cfg = config.frontear.system.zram;
 in {
-  options.frontear.zram = {
+  options.frontear.system.zram = {
     enable = mkEnableOption "opinionated zram module.";
   };
 

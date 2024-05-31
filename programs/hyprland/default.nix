@@ -1,6 +1,4 @@
-{ inputs, outputs, config, pkgs, ... }:
-let hyprland-pkg = config.programs.hyprland.package;
-in {
+{ inputs, outputs, config, pkgs, ... }: {
   nix.settings = {
     substituters = [ "https://hyprland.cachix.org" ];
     trusted-public-keys =
@@ -44,17 +42,6 @@ in {
         d = "Down";
       };
     in {
-      home.activation = {
-        hyprlandLinks = lib.hm.dag.entryAfter [ "onFilesChange" ] ''
-          run cd ${config.xdg.configHome}/hypr
-          run cp hyprland.conf hyprland.conf.bak
-          run mv hyprland.conf.bak hyprland.conf
-          run chmod +w hyprland.conf
-
-          HYPRLAND_INSTANCE_SIGNATURE=$(${hyprland-pkg}/bin/hyprctl instances | grep "instance" | sed 's/://g' | cut -d' ' -f2) run --quiet ${hyprland-pkg}/bin/hyprctl reload
-        '';
-      };
-
       xdg.configFile."hypr/hyprland.conf" = {
         text = ''
           monitor =, preferred, auto, 1.5

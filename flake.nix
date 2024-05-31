@@ -100,6 +100,11 @@
                 *)
                   ${pkgs.nixos-rebuild}/bin/nixos-rebuild test --flake . --use-remote-sudo --verbose --option eval-cache false
               esac
+
+              hyprctl reload
+              pkill waybar
+              unset GDK_BACKEND && waybar &
+              disown
             '')
           ];
         };
