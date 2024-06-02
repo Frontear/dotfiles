@@ -65,6 +65,7 @@ in {
           rafamel.subtle-brackets
           rebornix.prolog
           redhat.java
+          rust-lang.rust-analyzer
           scala-lang.scala
           shopify.ruby-lsp
           sidneys1.gitconfig
