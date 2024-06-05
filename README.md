@@ -1,0 +1,57 @@
+# Frontear's Dotfiles
+Massively WIP!
+
+## TODO List (from: https://github.com/Frontear/legacy-dotfiles/tree/archlinux-legacy)
+- [x] boot loader timeout = 0
+- [ ] kernel to linux-zen (?)
+- [ ] kernel params = rw quiet loglevel=3 systemd.show_status=auto rd.udev.log_level=3 vt.global_cursor_default=0
+- [x] dns servers to cloudflare
+- [ ] disable wake-on-lan
+- [ ] switch to ly (?)
+- [ ] kernel compression to lz4 with -9
+- [ ] mkinitcpio.conf.d HOOKS=(systemd autodetect modconf kms block keyboard sd-vconsole filesystems fsck) (?)
+- [x] zram kernel module (modules-load.d, in mkinitcpio)
+- [ ] blacklist bluetooth, snd_hda_codec_hdmi
+- [ ] module options i915 = enable_fbc=1 enable_psr=2 fastboot=1 enable_guc=3
+- [ ] module options iwlwifi = uapsd_disable=0 power_save=1 power_level=3, iwlmvm power_scheme=3
+- [ ] module options snd_hda_intel power_save=1 power_save_controller=1
+- [ ] polkit nopasswd_global.rules (?)
+- [ ] %wheel ALL=NOPASSWD: /usr/bin/{su,powertop}
+- [ ] kernel.printk = 3 3 3 3
+- [x] vm-zram.conf
+- [ ] kernel.nmi_watchdog = 0
+- [ ] vm.dirty_writeback_centisecs = 6000
+- [ ] vm.dirty_ratio = 3, vm.dirty_background_ratio = 1
+- [ ] vm.laptop_mode = 5
+- [ ] vm.vfs_cache_pressure = 50
+- [ ] ly.service.d/override.conf
+- [ ] systemd-fsck-root.service.d/override.conf
+- [ ] systemd-fsck@.service.d/override.conf
+- [ ] tmp.mount.d/override.conf (?)
+- [ ] z /sys/class/backlight/*/brightness 0664 - wheel - - (?)
+- [ ] w /sys/devices/system/cpu/cpu*/power/energy_perf_bias - - - - 8 (?)
+- [ ] w /sys/devices/system/cpu/cpufreq/policy*/energy_performance_preference - - - - balance_power (?)
+- [ ] w /sys/module/pcie_aspm/parameters/policy - - - - powersupersave (?)
+- [ ] w /sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq - - - - 3000000 (?)
+- [?] w /sys/module/zswap/parameters/enabled - - - - 0
+- [?] ACTION=="add", KERNEL=="zram0", ATTR{comp_algorithm}="zstd", ATTR{disksize}="6G", RUN="/usr/bin/mkswap -U clear /dev/%k", TAG+="systemd"
+- [ ] SUBSYSTEM=="pci", ATTR{power/control}="auto"
+- [ ] SUBSYSTEM=="scci", ATTR{power/control}="auto"
+- [ ] ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
+- [x] stevenblack hosts
+- [ ] /etc/issue thing from silent-boot (?)
+- [ ] mke2fs fast_commit default (?)
+- [ ] updatedb.conf (?)
+- [ ] [home/frontear](https://github.com/Frontear/legacy-dotfiles/tree/archlinux-legacy/home/frontear) stuff (...)
+- [ ] export EDITOR="nvim" in root
+- [ ] packages: apple-fonts aylurs-gtk-shell-git cliphist devtools eza ffmpeg ffmpegthumbnailer firewalld git google-chrome grimblast-git hyprland-git imagemagick inotify-tools kitty linux-zen ly mlocate neofetch neovim networkmanager openssh perl-image-exiftool pipewire pipewire-alsa pipewire-audio pipewire-jack pipewire-pulse profile-sync-daemon python-pillow qt5-wayland ranger reflector sassc swaybg ttf-nerd-fonts-symbols wireplumber wl-clip-persist-git xdg-desktop-portal-gtk xdg-desktop-portal-hyprland-git zsh zsh-completions
+- [x] priority=100 zram
+- [ ] assuming ly: disable getty@tty{number}.service, enable ly.service
+- [ ] firewalld.service (?)
+- [ ] systemd-boot-update.service (?)
+- [ ] timedatectl set-ntp true (?)
+- [ ] fstrim.timer (?)
+- [ ] e2scrub_all.timer (?)
+- [ ] btrfs-scrub@{mountpoint}.timer (?)
+- [ ] --user psd.service (?)
+- [ ] --user stevenblack.timer
