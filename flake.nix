@@ -68,6 +68,9 @@
                 ${pkgs.nixos-rebuild}/bin/nixos-rebuild boot --flake . --use-remote-sudo --verbose --option eval-cache false --show-trace
                 reboot
                 ;;
+              switch)
+                ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake . --use-remote-sudo --verbose --option eval-cache false --show-trace
+                ;;
               *)
                 ${pkgs.nixos-rebuild}/bin/nixos-rebuild test --flake . --use-remote-sudo --verbose --option eval-cache false --show-trace
             esac
