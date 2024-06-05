@@ -1,6 +1,6 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) getExe mkEnableOption mkIf;
 
   cfg = config.frontear.programs.git;
 in {
@@ -12,27 +12,49 @@ in {
     programs.git = {
       enable = true;
 
-      config = { init.defaultBranch = "main"; };
+      #config = mkMerge [
+      #  {
+      #    init.defaultBranch = "main";
+      #  }
+      #  {
+      #    core.pager = "${getExe pkgs.delta}";
+      #    delta = {
+      #      line-numbers = true;
+      #    };
+      #    interactive.diffFilter = "${getExe pkgs.delta} --color-only";
+      #  }
+      #  {
+      #    commit.gpgSign = true;
+      #    tag.gpgSign = true;
+      #  }
+      #  {
+      #    user.email = "perm-iterate-0b@icloud.com";
+      #    user.name = "Ali Rizvi";
+      #    user.signingKey = "BCB5CEFDE22282F5";
+      #  }
+      #];
     };
 
-    home-manager.users.frontear = {
-      programs.git = {
-        enable = true;
+    home.file.".config/git/config".text = ''
+      [init]
+          defaultBranch = "main"
 
-        delta = {
-          enable = true;
+      [core]
+          pager = "${getExe pkgs.delta}"
+      [delta]
+          line-numbers = true
+      [interactive]
+          diffFilter = "${getExe pkgs.delta} --color-only"
 
-          options = { line-numbers = true; };
-        };
+      [commit]
+          gpgSign = true
+      [tag]
+          gpgSign = true
 
-        signing = {
-          key = "BCB5CEFDE22282F5";
-          signByDefault = true;
-        };
-
-        userEmail = "perm-iterate-0b@icloud.com";
-        userName = "Ali Rizvi";
-      };
-    };
+      [user]
+          email = "perm-iterate-0b@icloud.com"
+          name = "Ali Rizvi"
+          signingKey = "BCB5CEFDE22282F5"
+    '';
   };
 }
