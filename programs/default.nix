@@ -1,7 +1,4 @@
 {
-  direnv = ./direnv;
-
-  git = ./git;
   gpg = ./gpg;
 
   hyprland = ./hyprland;

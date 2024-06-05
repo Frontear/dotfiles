@@ -65,11 +65,11 @@
           (writeShellScriptBin "nixos-rebuild" ''
             case $1 in
               boot)
-                ${pkgs.nixos-rebuild}/bin/nixos-rebuild boot --flake . --use-remote-sudo --verbose --option eval-cache false
+                ${pkgs.nixos-rebuild}/bin/nixos-rebuild boot --flake . --use-remote-sudo --verbose --option eval-cache false --show-trace
                 reboot
                 ;;
               *)
-                ${pkgs.nixos-rebuild}/bin/nixos-rebuild test --flake . --use-remote-sudo --verbose --option eval-cache false
+                ${pkgs.nixos-rebuild}/bin/nixos-rebuild test --flake . --use-remote-sudo --verbose --option eval-cache false --show-trace
             esac
 
             if [ $? -eq 0 ]; then

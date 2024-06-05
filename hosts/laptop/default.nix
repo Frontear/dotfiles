@@ -13,8 +13,6 @@
 
     outputs.nixosModules.default
 
-    outputs.programs.direnv
-    outputs.programs.git
     outputs.programs.gpg
     outputs.programs.hyprland
     outputs.programs.neovim
@@ -24,6 +22,8 @@
 
   frontear = {
     programs = {
+      direnv.enable = true;
+      git.enable = true;
       microsoft-edge.enable = true;
       vscode.enable = true;
     };
