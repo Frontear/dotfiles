@@ -101,10 +101,13 @@
                   ${pkgs.nixos-rebuild}/bin/nixos-rebuild test --flake . --use-remote-sudo --verbose --option eval-cache false
               esac
 
-              hyprctl reload
-              pkill waybar
-              unset GDK_BACKEND && waybar &
-              disown
+              if [ $? -eq 0 ]; then
+                hyprctl reload
+                pkill waybar
+                unset GDK_BACKEND && waybar > /dev/null 2>&1 &
+                disown
+                ${pkgs.coreutils}/bin/kill -INT $$ # simulates ^C
+              fi
             '')
           ];
         };
