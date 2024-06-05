@@ -13,7 +13,5 @@
 
   systemd-boot = ./systemd-boot;
 
-  vscode = ./vscode;
-
   zsh = ./zsh;
 }

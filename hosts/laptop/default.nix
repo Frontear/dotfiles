@@ -21,11 +21,13 @@
     outputs.programs.neovim
     outputs.programs.network-manager
     outputs.programs.systemd-boot
-    outputs.programs.vscode
     outputs.programs.zsh
   ];
 
   frontear = {
+    programs = {
+      vscode.enable = true;
+    };
     system = {
       zram.enable = true;
     };
