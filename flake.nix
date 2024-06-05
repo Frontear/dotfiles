@@ -1,5 +1,6 @@
 {
   inputs = {
+    flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
@@ -47,70 +48,65 @@
     };
   };
 
-  outputs = { self, ... } @ inputs:
-    let
-      inherit (self) outputs;
+  outputs = inputs@{ self, flake-parts, nixpkgs, ... }: flake-parts.lib.mkFlake { inherit inputs; } {
+    imports = [
+      # To import a flake module
+      # 1. Add foo to inputs
+      # 2. Add foo as a parameter to the outputs function
+      # 3. Add here: foo.flakeModule
+    ];
+    systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
+    perSystem = { config, self', inputs', pkgs, system, ... }: {
+      devShells.default = pkgs.mkShell {
+        packages = with pkgs; [
+          (writeShellScriptBin "nixos-rebuild" ''
+            case $1 in
+              boot)
+                ${pkgs.nixos-rebuild}/bin/nixos-rebuild boot --flake . --use-remote-sudo --verbose --option eval-cache false
+                reboot
+                ;;
+              *)
+                ${pkgs.nixos-rebuild}/bin/nixos-rebuild test --flake . --use-remote-sudo --verbose --option eval-cache false
+            esac
 
-      # https://ayats.org/blog/no-flake-utils
-      eachSystem = function:
-        inputs.nixpkgs.lib.genAttrs [
-          "x86_64-linux"
-          "x86_64-darwin"
-          "aarch64-linux"
-          "aarch64-darwin"
-        ] (system:
-          function (import inputs.nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-          })
-        );
-    in {
-      nixosModules = import ./modules;
-
-      programs = import ./programs;
-
+            if [ $? -eq 0 ]; then
+              hyprctl reload
+              pkill waybar
+              unset GDK_BACKEND && waybar > /dev/null 2>&1 &
+              disown
+              ${pkgs.coreutils}/bin/kill -INT $$ # simulates ^C
+            fi
+          '')
+        ];
+      };
+    };
+    flake = {
       nixosConfigurations = {
-        "LAPTOP-3DT4F02" = inputs.nixpkgs.lib.nixosSystem {
+        "LAPTOP-3DT4F02" = nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs outputs;
+            inherit inputs;
+            inherit (self) outputs;
           };
+
           modules = [
             ./hosts/laptop
           ];
         };
-        "nixos" = inputs.nixpkgs.lib.nixosSystem {
+
+        "nixos" = nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs outputs;
+            inherit inputs;
+            inherit (self) outputs;
           };
+
           modules = [
             ./hosts/desktop-wsl
           ];
         };
       };
 
-      devShells = eachSystem (pkgs: {
-        default = pkgs.mkShell {
-          packages = with pkgs; [
-            (writeShellScriptBin "nixos-rebuild" ''
-              case $1 in
-                boot)
-                  ${pkgs.nixos-rebuild}/bin/nixos-rebuild boot --flake . --use-remote-sudo --verbose --option eval-cache false
-                  reboot
-                  ;;
-                *)
-                  ${pkgs.nixos-rebuild}/bin/nixos-rebuild test --flake . --use-remote-sudo --verbose --option eval-cache false
-              esac
-
-              if [ $? -eq 0 ]; then
-                hyprctl reload
-                pkill waybar
-                unset GDK_BACKEND && waybar > /dev/null 2>&1 &
-                disown
-                ${pkgs.coreutils}/bin/kill -INT $$ # simulates ^C
-              fi
-            '')
-          ];
-        };
-      });
+      nixosModules = import ./modules;
+      programs = import ./programs;
     };
+  };
 }
