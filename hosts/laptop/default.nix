@@ -76,12 +76,6 @@
 
   # Everything else (for now)
 
-  environment.systemPackages = with pkgs; [
-    # Nix
-    nil
-    nixpkgs-fmt
-  ];
-
   # TODO: possible to put in a devshell?
   services.mysql = {
     enable = true;

@@ -59,6 +59,9 @@
     perSystem = { config, self', inputs', pkgs, system, ... }: {
       devShells.default = pkgs.mkShell {
         packages = with pkgs; [
+          nil
+          nixpkgs-fmt
+
           (writeShellScriptBin "nixos-rebuild" ''
             case $1 in
               boot)
