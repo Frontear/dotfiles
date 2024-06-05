@@ -17,18 +17,18 @@
     outputs.programs.git
     outputs.programs.gpg
     outputs.programs.hyprland
-    outputs.programs.microsoft-edge
     outputs.programs.neovim
     outputs.programs.network-manager
-    outputs.programs.systemd-boot
     outputs.programs.zsh
   ];
 
   frontear = {
     programs = {
+      microsoft-edge.enable = true;
       vscode.enable = true;
     };
     system = {
+      boot.enable = true;
       zram.enable = true;
     };
   };
