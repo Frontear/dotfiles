@@ -27,7 +27,7 @@
     };
     system = {
       boot.enable = true;
-      zram.enable = true;
+      swap.enable = true;
       network.enable = true;
     };
   };
