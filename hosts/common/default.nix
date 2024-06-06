@@ -1,7 +1,7 @@
 { inputs, outputs, config, lib, ... }: {
   imports = [
     inputs.home-manager.nixosModules.home-manager
-    outputs.nixosModules.impermanence
+    outputs.nixosModules.default
   ];
 
   # Sets system stateVersion, do not change.
