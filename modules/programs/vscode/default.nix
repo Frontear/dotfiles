@@ -5,112 +5,114 @@ let
   cfg = config.frontear.programs.vscode;
 
   extensions = inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace;
-  toJSON = (pkgs.formats.json {}).generate;
 in {
   options.frontear.programs.vscode = {
     enable = mkEnableOption "opinionated vscode module.";
   };
 
   config = mkIf cfg.enable {
-    users.extraUsers.frontear.packages = with pkgs; [
-      (vscode-with-extensions.override {
-        vscodeExtensions = import ./extensions.nix extensions;
-      })
-    ];
+    home-manager.users.frontear = { ... }: {
+      programs.vscode = {
+        enable = true;
+        enableExtensionUpdateCheck = true;
+        enableUpdateCheck = true;
 
-    home.file.".config/Code/User/settings.json".source = toJSON "settings" ({
-      "update.mode" = "none";
-      "extensions.autoCheckUpdates" = false;
+        extensions = import ./extensions.nix extensions;
 
-      "editor.accessibilitySupport" = "off";
-      "editor.cursorBlinking" = "phase";
-      "editor.cursorSmoothCaretAnimation" = "on";
-      "editor.folding" = false;
-      "editor.fontFamily" = "monospace, Symbols Nerd Font";
-      "editor.guides.bracketPairs" = true;
-      "editor.matchBrackets" = "never";
-      "editor.minimap.enabled" = false;
-      "editor.smoothScrolling" = true;
-      "editor.wordWrap" = "on";
+        mutableExtensionsDir = false;
 
-      "explorer.excludeGitIgnore" = true;
+        userSettings = {
+          "editor.accessibilitySupport" = "off";
+          "editor.cursorBlinking" = "phase";
+          "editor.cursorSmoothCaretAnimation" = "on";
+          "editor.folding" = false;
+          "editor.fontFamily" = "monospace, Symbols Nerd Font";
+          "editor.guides.bracketPairs" = true;
+          "editor.matchBrackets" = "never";
+          "editor.minimap.enabled" = false;
+          "editor.smoothScrolling" = true;
+          "editor.wordWrap" = "on";
 
-      "files.autoSave" = "onFocusChange";
-      "files.eol" = "\n";
-      "files.insertFinalNewline" = false;
-      "files.trimFinalNewlines" = true;
-      "files.trimTrailingWhitespace" = true;
+          "explorer.excludeGitIgnore" = true;
 
-      "security.workspace.trust.enabled" = false;
+          "files.autoSave" = "onFocusChange";
+          "files.eol" = "\n";
+          "files.insertFinalNewline" = false;
+          "files.trimFinalNewlines" = true;
+          "files.trimTrailingWhitespace" = true;
 
-      #"security.workspace.trust.banner" = "never";
-      #"security.workspace.trust.untrustedFiles" = "newWindow";
+          "security.workspace.trust.enabled" = false;
 
-      "terminal.integrated.cursorBlinking" = true;
-      "terminal.integrated.persistentSessionReviveProcess" = "never";
-      "terminal.integrated.rightClickBehavior" = "default";
-      "terminal.integrated.smoothScrolling" = true;
+          #"security.workspace.trust.banner" = "never";
+          #"security.workspace.trust.untrustedFiles" = "newWindow";
 
-      "window.commandCenter" = false;
-      "window.confirmBeforeClose" = "keyboardOnly";
-      "window.openFoldersInNewWindow" = "on";
+          "terminal.integrated.cursorBlinking" = true;
+          "terminal.integrated.persistentSessionReviveProcess" = "never";
+          "terminal.integrated.rightClickBehavior" = "default";
+          "terminal.integrated.smoothScrolling" = true;
 
-      "workbench.colorCustomizations" = {
-        "editorBracketHighlight.foreground1" = "#5caeef";
-        "editorBracketHighlight.foreground2" = "#dfb976";
-        "editorBracketHighlight.foreground3" = "#c172d9";
-        "editorBracketHighlight.foreground4" = "#4fb1bc";
-        "editorBracketHighlight.foreground5" = "#97c26c";
-        "editorBracketHighlight.foreground6" = "#abb2c0";
-        "editorBracketHighlight.unexpectedBracket.foreground" = "#db6165";
+          "window.commandCenter" = false;
+          "window.confirmBeforeClose" = "keyboardOnly";
+          "window.openFoldersInNewWindow" = "on";
+
+          "workbench.colorCustomizations" = {
+            "editorBracketHighlight.foreground1" = "#5caeef";
+            "editorBracketHighlight.foreground2" = "#dfb976";
+            "editorBracketHighlight.foreground3" = "#c172d9";
+            "editorBracketHighlight.foreground4" = "#4fb1bc";
+            "editorBracketHighlight.foreground5" = "#97c26c";
+            "editorBracketHighlight.foreground6" = "#abb2c0";
+            "editorBracketHighlight.unexpectedBracket.foreground" = "#db6165";
+          };
+          "workbench.colorTheme" = "Atomize";
+          "workbench.iconTheme" = "material-icon-theme";
+          "workbench.layoutControl.enabled" = false;
+          "workbench.list.smoothScrolling" = true;
+          "workbench.productIconTheme" = "material-product-icons";
+          "workbench.startupEditor" = "newUntitledFile";
+
+          # Extensions
+
+          "nix.enableLanguageServer" = true;
+          "nix.serverPath" = "nil";
+
+          "subtleBrackets.disableNative" = false; # we handle it ourselves
+
+          "todohighlight.include" = [
+            "**/*.c"
+            "**/*.cpp"
+            "**/*.css"
+            "**/*.html"
+            "**/*.java"
+            "**/*.js"
+            "**/*.nix"
+            "**/*.py"
+            "**/*.rs"
+          ];
+
+          # colors generated via "Developer: Generate Color Theme From Current Settings"
+          "todohighlight.keywords" = [
+            {
+              "text" = "FIXME";
+              "regex" = { "pattern" = ''(?<=^|"|\s)FIXME[:]?(?!\w)''; };
+              "color" = "white";
+              "backgroundColor" = "#e05561";
+            }
+            {
+              "text" = "TODO";
+              "regex" = { "pattern" = ''(?<=^|"|\s)TODO[:]?(?!\w)''; };
+              "color" = "white";
+              "backgroundColor" = "#42b3c2";
+            }
+            {
+              "text" = "WARN";
+              "regex" = { "pattern" = ''(?<=^|"|\s)WARN[:]?(?!\w)''; };
+              "color" = "white";
+              "backgroundColor" = "#d18f52";
+            }
+          ];
+        };
       };
-      "workbench.colorTheme" = "Atomize";
-      "workbench.iconTheme" = "material-icon-theme";
-      "workbench.layoutControl.enabled" = false;
-      "workbench.list.smoothScrolling" = true;
-      "workbench.productIconTheme" = "material-product-icons";
-      "workbench.startupEditor" = "newUntitledFile";
-
-      # Extensions
-
-      "nix.enableLanguageServer" = true;
-      "nix.serverPath" = "nil";
-
-      "subtleBrackets.disableNative" = false; # we handle it ourselves
-
-      "todohighlight.include" = [
-        "**/*.c"
-        "**/*.cpp"
-        "**/*.css"
-        "**/*.html"
-        "**/*.java"
-        "**/*.js"
-        "**/*.nix"
-        "**/*.py"
-        "**/*.rs"
-      ];
-
-      # colors generated via "Developer: Generate Color Theme From Current Settings"
-      "todohighlight.keywords" = [
-        {
-          "text" = "FIXME";
-          "regex" = { "pattern" = ''(?<=^|"|\s)FIXME[:]?(?!\w)''; };
-          "color" = "white";
-          "backgroundColor" = "#e05561";
-        }
-        {
-          "text" = "TODO";
-          "regex" = { "pattern" = ''(?<=^|"|\s)TODO[:]?(?!\w)''; };
-          "color" = "white";
-          "backgroundColor" = "#42b3c2";
-        }
-        {
-          "text" = "WARN";
-          "regex" = { "pattern" = ''(?<=^|"|\s)WARN[:]?(?!\w)''; };
-          "color" = "white";
-          "backgroundColor" = "#d18f52";
-        }
-      ];
-    });
+    };
   };
 }

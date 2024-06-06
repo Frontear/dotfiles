@@ -13,7 +13,7 @@ Massively WIP!
 - [x] zram kernel module (modules-load.d, in mkinitcpio)
 - [ ] blacklist bluetooth, snd_hda_codec_hdmi
 - [ ] module options i915 = enable_fbc=1 enable_psr=2 fastboot=1 enable_guc=3
-- [ ] module options iwlwifi = uapsd_disable=0 power_save=1 power_level=3, iwlmvm power_scheme=3
+- [x] module options iwlwifi = uapsd_disable=0 power_save=1 power_level=3, iwlmvm power_scheme=3
 - [ ] module options snd_hda_intel power_save=1 power_save_controller=1
 - [ ] polkit nopasswd_global.rules (?)
 - [ ] %wheel ALL=NOPASSWD: /usr/bin/{su,powertop}

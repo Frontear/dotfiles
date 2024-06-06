@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 let
   inherit (lib) mkEnableOption mkIf;
 
@@ -13,10 +13,12 @@ in {
   config = mkIf cfg.enable {
     impermanence.user.directories = [ user-data-dir ];
 
-    users.extraUsers.frontear.packages = with pkgs; [
-      (microsoft-edge.override {
-        commandLineArgs = "--user-data-dir=${user-data-dir}";
-      })
-    ];
+    home-manager.users.frontear = { pkgs, ... }: {
+      home.packages = with pkgs; [
+        (microsoft-edge.override {
+          commandLineArgs = "--user-data-dir=${user-data-dir}";
+        })
+      ];
+    };
   };
 }

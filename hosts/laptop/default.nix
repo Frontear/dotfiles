@@ -13,10 +13,8 @@
 
     outputs.nixosModules.default
 
-    outputs.programs.gpg
     outputs.programs.hyprland
     outputs.programs.neovim
-    outputs.programs.network-manager
     outputs.programs.zsh
   ];
 
@@ -24,12 +22,14 @@
     programs = {
       direnv.enable = true;
       git.enable = true;
+      gpg.enable = true;
       microsoft-edge.enable = true;
       vscode.enable = true;
     };
     system = {
       boot.enable = true;
       zram.enable = true;
+      network.enable = true;
     };
   };
 
