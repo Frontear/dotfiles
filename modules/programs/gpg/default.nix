@@ -9,7 +9,10 @@ in {
   };
 
   config = mkIf cfg.enable {
-    impermanence.user.directories = [ ".local/share/gnupg" ];
+    impermanence.user.directories = [
+      ".local/share/gnupg"
+      ".ssh"
+    ];
 
     home-manager.users.frontear = { config, pkgs, ... }: {
       programs.gpg = {
