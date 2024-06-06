@@ -11,6 +11,7 @@ in {
     ./greetd.nix
     ./light.nix
     ./pipewire.nix
+    ./tlp.nix
     ./waybar.nix
   ];
 
