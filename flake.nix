@@ -125,7 +125,6 @@
       };
 
       nixosModules = import ./modules;
-      programs = import ./programs;
     };
   };
 }

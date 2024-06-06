@@ -1,49 +1,49 @@
-{ inputs, outputs, config, pkgs, ... }: {
-  nix.settings = {
-    substituters = [ "https://hyprland.cachix.org" ];
-    trusted-public-keys =
-      [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
-  };
-} // {
+{ inputs, config, lib, ... }:
+let
+  inherit (lib) mkEnableOption mkIf;
+
+  cfg = config.frontear.programs.hyprland;
+in {
   imports = [
     inputs.hyprland.nixosModules.default
-    outputs.nixosModules.impermanence
 
-    ./programs/armcord.nix
-    ./programs/light.nix
-    ./programs/waybar
-    ./services/greetd.nix
-    ./services/pipewire.nix
+    ./armcord.nix
+    ./greetd.nix
+    ./light.nix
+    ./pipewire.nix
+    ./waybar.nix
   ];
 
-  # System
-  impermanence = {
-    system.directories = [{
-      directory = "/var/cache/tuigreet";
-      user = "greeter";
-      group = "greeter";
-      mode = "0755";
-    }];
+  options.frontear.programs.hyprland = {
+    enable = mkEnableOption "opinionated hyprland module.";
   };
 
-  environment.systemPackages = with pkgs; [ libinput ];
+  config = mkIf cfg.enable {
+    nix.settings = {
+      substituters = [ "https://hyprland.cachix.org" ];
+      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+    };
 
-  programs.hyprland.enable = true;
+    programs.hyprland.enable = true;
 
-  # User
-  home-manager.users.frontear = { config, lib, ... }:
-    let
-      mainMod = "SUPER";
-      workspaces = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ];
-      directions = {
-        l = "Left";
-        r = "Right";
-        u = "Up";
-        d = "Down";
-      };
-    in {
-      xdg.configFile."hypr/hyprland.conf" = {
-        text = ''
+    home-manager.users.frontear = { pkgs, ... }: {
+      imports = [
+        inputs.hyprland.homeManagerModules.default
+      ];
+      wayland.windowManager.hyprland = {
+        enable = true;
+
+        extraConfig =
+        let
+          mainMod = "SUPER";
+          workspaces = [ "1" "2" "3" "4" "5" "6" "7" "8" "9" ];
+          directions = {
+            l = "Left";
+            r = "Right";
+            u = "Up";
+            d = "Down";
+          };
+        in ''
           monitor =, preferred, auto, 1.5
 
           env = GDK_BACKEND,wayland,x11
@@ -294,4 +294,5 @@
         '';
       };
     };
+  };
 }

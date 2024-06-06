@@ -12,10 +12,6 @@
     inputs.home-manager.nixosModules.home-manager
 
     outputs.nixosModules.default
-
-    outputs.programs.hyprland
-    outputs.programs.neovim
-    outputs.programs.zsh
   ];
 
   frontear = {
@@ -23,8 +19,11 @@
       direnv.enable = true;
       git.enable = true;
       gpg.enable = true;
+      hyprland.enable = true;
       microsoft-edge.enable = true;
+      neovim.enable = true;
       vscode.enable = true;
+      zsh.enable = true;
     };
     system = {
       boot.enable = true;
