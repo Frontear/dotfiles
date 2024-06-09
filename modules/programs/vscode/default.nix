@@ -14,8 +14,8 @@ in {
     home-manager.users.frontear = { ... }: {
       programs.vscode = {
         enable = true;
-        enableExtensionUpdateCheck = true;
-        enableUpdateCheck = true;
+        enableExtensionUpdateCheck = false;
+        enableUpdateCheck = false;
 
         extensions = import ./extensions.nix extensions;
 
