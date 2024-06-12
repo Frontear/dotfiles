@@ -46,8 +46,8 @@ in {
         CPU_DRIVER_OPMODE_ON_BAT = "active";
         CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
         CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-        CPU_MIN_PERF_ON_BAT = 8;
-        CPU_MAX_PERF_ON_BAT = 50;
+        #CPU_MIN_PERF_ON_BAT = 8;
+        CPU_MAX_PERF_ON_BAT = 100;
         CPU_BOOST_ON_BAT = 1;
         CPU_HWP_DYN_BOOST_ON_BAT = 1;
 
