@@ -1,4 +1,4 @@
-{ inputs, outputs, pkgs, ... }: {
+{ inputs, outputs, lib, pkgs, ... }: {
   imports = [
     ../common
     ./hardware-configuration.nix
@@ -19,7 +19,7 @@
       direnv.enable = true;
       git.enable = true;
       gpg.enable = true;
-      hyprland.enable = true;
+      # hyprland.enable = true;
       microsoft-edge.enable = true;
       neovim.enable = true;
       vscode.enable = true;
@@ -31,6 +31,12 @@
       network.enable = true;
     };
   };
+
+  frontear.programs.hyprland.enable = lib.mkForce false;
+  services.xserver.enable = true;
+  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.wayland.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
   # System Configuration
   console.keyMap = "us";
