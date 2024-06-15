@@ -2,9 +2,9 @@
 let
   inherit (lib) mkEnableOption mkIf;
 
-  cfg = config.frontear.programs.neovim;
+  cfg = config.frontear.programs.editors.neovim;
 in {
-  options.frontear.programs.neovim = {
+  options.frontear.programs.editors.neovim = {
     enable = mkEnableOption "opinionated neovim module.";
   };
 

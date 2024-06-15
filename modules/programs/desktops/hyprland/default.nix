@@ -2,7 +2,7 @@
 let
   inherit (lib) mkEnableOption mkIf;
 
-  cfg = config.frontear.programs.hyprland;
+  cfg = config.frontear.programs.desktops.hyprland;
 in {
   imports = [
     inputs.hyprland.nixosModules.default
@@ -15,7 +15,7 @@ in {
     ./waybar.nix
   ];
 
-  options.frontear.programs.hyprland = {
+  options.frontear.programs.desktops.hyprland = {
     enable = mkEnableOption "opinionated hyprland module.";
   };
 

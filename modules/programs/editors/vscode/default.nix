@@ -2,11 +2,11 @@
 let
   inherit (lib) mkEnableOption mkIf;
 
-  cfg = config.frontear.programs.vscode;
+  cfg = config.frontear.programs.editors.vscode;
 
   extensions = inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace;
 in {
-  options.frontear.programs.vscode = {
+  options.frontear.programs.editors.vscode = {
     enable = mkEnableOption "opinionated vscode module.";
   };
 

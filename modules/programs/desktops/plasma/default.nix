@@ -2,9 +2,13 @@
 let
   inherit (lib) mkEnableOption mkIf;
 
-  cfg = config.frontear.programs.plasma;
+  cfg = config.frontear.programs.desktops.plasma;
 in {
-  options.frontear.programs.plasma = {
+  imports = [
+    ./pipewire.nix
+  ];
+
+  options.frontear.programs.desktops.plasma = {
     enable = mkEnableOption "opinionated plasma module.";
   };
 
@@ -16,12 +20,11 @@ in {
 
     programs.dconf.enable = true;
 
-    services.xserver = {
-      enable = true;
+    services = {
+      desktopManager.plasma6.enable = true;
 
       displayManager.sddm.enable = true;
       displayManager.sddm.wayland.enable = true;
-      desktopManager.plasma6.enable = true;
     };
   };
 }

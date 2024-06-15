@@ -2,11 +2,11 @@
 let
   inherit (lib) mkEnableOption mkIf;
 
-  cfg = config.frontear.programs.microsoft-edge;
+  cfg = config.frontear.programs.browsers.microsoft-edge;
 
   user-data-dir = ".config/microsoft-edge";
 in {
-  options.frontear.programs.microsoft-edge = {
+  options.frontear.programs.browsers.microsoft-edge = {
     enable = mkEnableOption "opinionated microsoft-edge module.";
   };
 

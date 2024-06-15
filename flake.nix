@@ -81,13 +81,6 @@
                 ${pkgs.nixos-rebuild}/bin/nixos-rebuild test --flake . --use-remote-sudo --verbose --option eval-cache false --show-trace
             esac
 
-            if [ $? -eq 0 -a $HOSTNAME != "nixos" ]; then
-              hyprctl reload
-              pkill waybar
-              unset GDK_BACKEND && waybar > /dev/null 2>&1 &
-              disown
-            fi
-
             ${pkgs.coreutils}/bin/kill -INT $$ # simulates ^C
           '')
         ];
