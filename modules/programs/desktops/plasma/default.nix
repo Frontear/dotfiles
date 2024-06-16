@@ -1,6 +1,6 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkDefault mkEnableOption mkIf;
 
   cfg = config.frontear.programs.desktops.plasma;
 in {
@@ -13,6 +13,10 @@ in {
   };
 
   config = mkIf cfg.enable {
+    frontear.programs.browsers.microsoft-edge.enable = mkDefault true;
+    frontear.programs.editors.vscode.enable = mkDefault true;
+    frontear.programs.socials.armcord.enable = mkDefault true;
+
     impermanence.user.directories = [
       ".config"
       ".local"

@@ -71,12 +71,6 @@
               switch)
                 ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake . --use-remote-sudo --verbose --option eval-cache false --show-trace
                 ;;
-              vm)
-                ${pkgs.nixos-rebuild}/bin/nixos-rebuild build-vm --flake .#minimal --use-remote-sudo --verbose --option eval-cache false --show-trace
-                ./result/bin/run-minimal-vm
-                rm -r ./result ./minimal.qcow2
-                exit 0
-                ;;
               *)
                 ${pkgs.nixos-rebuild}/bin/nixos-rebuild test --flake . --use-remote-sudo --verbose --option eval-cache false --show-trace
             esac
@@ -107,12 +101,6 @@
 
           modules = [
             ./hosts/desktop-wsl
-          ];
-        };
-
-        "minimal" = nixpkgs.lib.nixosSystem {
-          modules = [
-            ./hosts/minimal
           ];
         };
       };

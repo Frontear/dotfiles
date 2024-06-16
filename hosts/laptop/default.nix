@@ -16,14 +16,11 @@
 
   frontear = {
     programs = {
-      browsers.microsoft-edge.enable = true;
       desktops.plasma.enable = true;
       direnv.enable = true;
       editors.neovim.enable = true;
-      editors.vscode.enable = true;
       git.enable = true;
       gpg.enable = true;
-      socials.armcord.enable = true;
       zsh.enable = true;
     };
     system = {
