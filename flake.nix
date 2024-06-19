@@ -7,12 +7,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    hyprland = {
-      url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-      #inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     impermanence = {
       url = "github:nix-community/impermanence";
     };
@@ -40,11 +34,6 @@
     stevenblack = {
       url = "github:StevenBlack/hosts";
       flake = false;
-    };
-
-    waybar = {
-      url = "github:Alexays/waybar";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 

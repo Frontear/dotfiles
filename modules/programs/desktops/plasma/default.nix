@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   inherit (lib) mkDefault mkEnableOption mkIf;
 
@@ -20,6 +20,10 @@ in {
     impermanence.user.directories = [
       ".config"
       ".local"
+    ];
+
+    fonts.packages = with pkgs; [
+      (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
     ];
 
     programs.dconf.enable = true;
