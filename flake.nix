@@ -64,7 +64,16 @@
                 ${pkgs.nixos-rebuild}/bin/nixos-rebuild test --flake . --use-remote-sudo --verbose --option eval-cache false --show-trace
             esac
 
-            ${pkgs.coreutils}/bin/kill -INT $$ # simulates ^C
+            kill -INT $$ # simulates ^C
+          '')
+
+          (writeShellScriptBin "nix-collect-garbage" ''
+            if [ "$EUID" -ne 0 ]; then
+              echo "Please run this script with root privileges"
+              exit
+            fi
+
+            ${pkgs.nix}/bin/nix-collect-garbage -d && nix-store --optimise && /run/current-system/bin/switch-to-configuration switch
           '')
         ];
       };
