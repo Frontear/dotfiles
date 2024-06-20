@@ -3,6 +3,8 @@
     ../common
     ./hardware-configuration.nix
 
+    outputs.nixosModules.default
+
     inputs.home-manager.nixosModules.home-manager
     inputs.nixos-wsl.nixosModules.default
   ];
@@ -11,16 +13,16 @@
     direnv.enable = true;
     git.enable = true;
     gpg.enable = true;
-    neovim.enable = true;
+    editors.neovim.enable = true;
     zsh.enable = true;
   };
 
   wsl = {
     enable = true;
-    defaultUser = "nixos";
+    defaultUser = "frontear";
     nativeSystemd = true;
     useWindowsDriver = true;
   };
 
-  environment.systemPackages = with pkgs; [ gnumake neovim yt-dlp ];
+  environment.systemPackages = with pkgs; [ yt-dlp ];
 }
