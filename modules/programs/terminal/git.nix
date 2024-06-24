@@ -1,13 +1,9 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkIf;
 
-  cfg = config.frontear.programs.git;
+  cfg = config.frontear.programs.terminal;
 in {
-  options.frontear.programs.git = {
-    enable = mkEnableOption "opinionated git module.";
-  };
-
   config = mkIf cfg.enable {
     home-manager.users.frontear = { ... }: {
       programs.git = {

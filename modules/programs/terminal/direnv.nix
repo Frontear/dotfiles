@@ -1,13 +1,9 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkIf;
 
-  cfg = config.frontear.programs.direnv;
+  cfg = config.frontear.programs.terminal;
 in {
-  options.frontear.programs.direnv = {
-    enable = mkEnableOption "opinionated direnv module.";
-  };
-
   config = mkIf cfg.enable {
     home-manager.users.frontear = { config, ... }: {
       programs.direnv = {

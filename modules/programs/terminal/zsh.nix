@@ -1,13 +1,9 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkIf;
 
-  cfg = config.frontear.programs.zsh;
+  cfg = config.frontear.programs.terminal;
 in {
-  options.frontear.programs.zsh = {
-    enable = mkEnableOption "opinionated zsh module.";
-  };
-
   config = mkIf cfg.enable {
     impermanence.user.files = [ ".local/share/zsh/zsh_history" ];
 

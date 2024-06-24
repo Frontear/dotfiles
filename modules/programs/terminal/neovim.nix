@@ -1,13 +1,9 @@
 { inputs, config, lib, ... }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkIf;
 
-  cfg = config.frontear.programs.editors.neovim;
+  cfg = config.frontear.programs.terminal;
 in {
-  options.frontear.programs.editors.neovim = {
-    enable = mkEnableOption "opinionated neovim module.";
-  };
-
   config = mkIf cfg.enable {
     home-manager.users.frontear = { ... }: {
       imports = [

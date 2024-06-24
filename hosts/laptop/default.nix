@@ -14,21 +14,13 @@
     outputs.nixosModules.default
   ];
 
-  frontear = {
-    programs = {
-      desktops.plasma.enable = true;
-      direnv.enable = true;
-      editors.neovim.enable = true;
-      git.enable = true;
-      gpg.enable = true;
-      zsh.enable = true;
-    };
-    system = {
-      boot.enable = true;
-      swap.enable = true;
-      network.enable = true;
-    };
-  };
+  frontear.programs.desktops.plasma.enable = true;
+  frontear.programs.graphical.enable = true;
+  frontear.programs.terminal.enable = true;
+
+  frontear.system.boot.enable = true;
+  frontear.system.swap.enable = true;
+  frontear.system.network.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 

@@ -9,9 +9,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    frontear.programs.browsers.microsoft-edge.enable = mkDefault true;
-    frontear.programs.editors.vscode.enable = mkDefault true;
-    frontear.programs.socials.armcord.enable = mkDefault true;
+    frontear.programs.graphical.enable = mkDefault true;
     frontear.system.sound.enable = mkDefault true;
 
     impermanence.user.directories = [

@@ -1,13 +1,9 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkIf;
 
-  cfg = config.frontear.programs.gpg;
+  cfg = config.frontear.programs.terminal;
 in {
-  options.frontear.programs.gpg = {
-    enable = mkEnableOption "opinionated gpg module.";
-  };
-
   config = mkIf cfg.enable {
     impermanence.user.directories = [
       ".local/share/gnupg"

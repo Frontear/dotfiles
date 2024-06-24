@@ -1,15 +1,11 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkIf;
 
-  cfg = config.frontear.programs.browsers.microsoft-edge;
+  cfg = config.frontear.programs.graphical;
 
   user-data-dir = ".config/microsoft-edge";
 in {
-  options.frontear.programs.browsers.microsoft-edge = {
-    enable = mkEnableOption "opinionated microsoft-edge module.";
-  };
-
   config = mkIf cfg.enable {
     impermanence.user.directories = [ user-data-dir ];
 

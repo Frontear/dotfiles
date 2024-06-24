@@ -9,13 +9,7 @@
     inputs.nixos-wsl.nixosModules.default
   ];
 
-  frontear.programs = {
-    direnv.enable = true;
-    git.enable = true;
-    gpg.enable = true;
-    editors.neovim.enable = true;
-    zsh.enable = true;
-  };
+  frontear.programs.terminal.enable = true;
 
   wsl = {
     enable = true;
