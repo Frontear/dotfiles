@@ -30,6 +30,8 @@
     };
   };
 
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   # System Configuration
   console.keyMap = "us";
   i18n.defaultLocale = "en_CA.UTF-8";
