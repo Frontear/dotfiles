@@ -30,11 +30,6 @@
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    stevenblack = {
-      url = "github:StevenBlack/hosts";
-      flake = false;
-    };
   };
 
   outputs = inputs@{ self, flake-parts, nixpkgs, ... }: flake-parts.lib.mkFlake { inherit inputs; } {

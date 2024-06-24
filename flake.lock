@@ -426,24 +426,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs",
-        "nixvim": "nixvim",
-        "stevenblack": "stevenblack"
-      }
-    },
-    "stevenblack": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1718832246,
-        "narHash": "sha256-MfQGu+Y4/A0GKIu9d//U+yiP0fN/7cWhEo2dut4UvcE=",
-        "owner": "StevenBlack",
-        "repo": "hosts",
-        "rev": "560c37e5ae2b82008ea568d75e63b93a14a0b8a6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "StevenBlack",
-        "repo": "hosts",
-        "type": "github"
+        "nixvim": "nixvim"
       }
     },
     "systems": {

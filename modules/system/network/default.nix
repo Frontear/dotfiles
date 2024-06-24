@@ -15,7 +15,8 @@ in {
       networkmanager.enable = true;
 
       networkmanager.dns = "none";
-      hostFiles = [ "${inputs.stevenblack}/hosts" ];
+      stevenblack.enable = true;
+      stevenblack.block = [ "fakenews" "gambling" "porn" ];
 
       useDHCP = false;
       dhcpcd.enable = false;
