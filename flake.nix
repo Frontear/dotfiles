@@ -77,24 +77,20 @@
     flake = {
       nixosConfigurations = {
         "LAPTOP-3DT4F02" = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-            inherit (self) outputs;
-          };
-
           modules = [
-            ./hosts/laptop
+            self.nixosModules.default
+
+            (import ./hosts/common { inherit (inputs) home-manager; })
+            (import ./hosts/laptop { inherit (inputs) nixos-hardware; })
           ];
         };
 
         "nixos" = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit inputs;
-            inherit (self) outputs;
-          };
-
           modules = [
-            ./hosts/desktop-wsl
+            self.nixosModules.default
+
+            (import ./hosts/common { inherit (inputs) home-manager; })
+            (import ./hosts/desktop-wsl { inherit (inputs) nixos-wsl; })
           ];
         };
       };

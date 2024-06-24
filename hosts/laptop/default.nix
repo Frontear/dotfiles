@@ -1,17 +1,12 @@
-{ inputs, outputs, lib, pkgs, ... }: {
+{ nixos-hardware, ... }: ({ lib, pkgs, ... }: {
   imports = [
-    ../common
     ./hardware-configuration.nix
 
-    inputs.nixos-hardware.nixosModules.dell-inspiron-14-5420
-    inputs.nixos-hardware.nixosModules.common-cpu-intel # pulls common-gpu-intel
-    inputs.nixos-hardware.nixosModules.common-hidpi
-    inputs.nixos-hardware.nixosModules.common-pc-laptop
-    inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
-
-    inputs.home-manager.nixosModules.home-manager
-
-    outputs.nixosModules.default
+    nixos-hardware.nixosModules.dell-inspiron-14-5420
+    nixos-hardware.nixosModules.common-cpu-intel # pulls common-gpu-intel
+    nixos-hardware.nixosModules.common-hidpi
+    nixos-hardware.nixosModules.common-pc-laptop
+    nixos-hardware.nixosModules.common-pc-laptop-ssd
   ];
 
   frontear.programs.desktops.plasma.enable = true;
@@ -72,4 +67,4 @@
     enable = true;
     package = pkgs.mysql80;
   };
-}
+})

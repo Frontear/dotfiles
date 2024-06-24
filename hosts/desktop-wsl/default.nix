@@ -1,12 +1,8 @@
-{ inputs, outputs, pkgs, ... }: {
+{ nixos-wsl, ... }: ({ pkgs, ... }: {
   imports = [
-    ../common
     ./hardware-configuration.nix
 
-    outputs.nixosModules.default
-
-    inputs.home-manager.nixosModules.home-manager
-    inputs.nixos-wsl.nixosModules.default
+    nixos-wsl.nixosModules.default
   ];
 
   frontear.programs.terminal.enable = true;
@@ -19,4 +15,4 @@
   };
 
   environment.systemPackages = with pkgs; [ yt-dlp ];
-}
+})

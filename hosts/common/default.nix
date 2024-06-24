@@ -1,7 +1,6 @@
-{ inputs, outputs, config, lib, ... }: {
+{ home-manager, ... }: ({ config, lib, ... }: {
   imports = [
-    inputs.home-manager.nixosModules.home-manager
-    outputs.nixosModules.default
+    home-manager.nixosModules.home-manager
   ];
 
   # Sets system stateVersion, do not change.
@@ -39,4 +38,4 @@
     useTmpfs = lib.mkForce false;
   };
   impermanence.system.directories = [ "/tmp" ];
-}
+})
