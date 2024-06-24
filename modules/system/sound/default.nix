@@ -1,9 +1,13 @@
 { config, lib, ... }:
 let
-  inherit (lib) mkForce mkIf;
+  inherit (lib) mkEnableOption mkForce mkIf;
 
-  cfg = config.frontear.programs.desktops.plasma;
+  cfg = config.frontear.system.sound;
 in {
+  options.frontear.system.sound = {
+    enable = mkEnableOption "opinionated sound module";
+  };
+
   config = mkIf cfg.enable {
     hardware.pulseaudio.enable = mkForce false;
     sound.enable = mkForce false;

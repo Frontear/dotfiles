@@ -4,10 +4,6 @@ let
 
   cfg = config.frontear.programs.desktops.plasma;
 in {
-  imports = [
-    ./pipewire.nix
-  ];
-
   options.frontear.programs.desktops.plasma = {
     enable = mkEnableOption "opinionated plasma module.";
   };
@@ -16,6 +12,7 @@ in {
     frontear.programs.browsers.microsoft-edge.enable = mkDefault true;
     frontear.programs.editors.vscode.enable = mkDefault true;
     frontear.programs.socials.armcord.enable = mkDefault true;
+    frontear.system.sound.enable = mkDefault true;
 
     impermanence.user.directories = [
       ".config"
