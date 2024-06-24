@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ ... }: ({ config, lib, ... }:
 let
   inherit (lib) mkEnableOption mkIf;
 
@@ -23,4 +23,4 @@ in {
     # Use memtest86
     boot.loader.systemd-boot.memtest86.enable = true;
   };
-}
+})

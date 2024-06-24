@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ ... }: ({ config, lib, pkgs, ... }:
 let
   inherit (lib) mkIf;
 
@@ -9,4 +9,4 @@ in {
 
     users.extraUsers.frontear.packages = with pkgs; [ armcord ];
   };
-}
+})

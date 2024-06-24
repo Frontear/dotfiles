@@ -1,4 +1,4 @@
-{ inputs, config, lib, ... }:
+{ impermanence, ... }: ({ config, lib, ... }:
 let
   inherit (lib) mkOption types mkEnableOption mkIf;
 
@@ -22,7 +22,7 @@ let
     };
   };
 in {
-  imports = [ inputs.impermanence.nixosModules.impermanence ];
+  imports = [ impermanence.nixosModules.impermanence ];
 
   options.impermanence = {
     enable = mkEnableOption "impermanence support";
@@ -45,4 +45,4 @@ in {
       };
     };
   };
-}
+})

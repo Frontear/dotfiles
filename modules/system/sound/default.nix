@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ ... }: ({ config, lib, ... }:
 let
   inherit (lib) mkEnableOption mkForce mkIf;
 
@@ -21,4 +21,4 @@ in {
     services.pipewire.jack.enable = true;
     services.pipewire.wireplumber.enable = true;
   };
-}
+})

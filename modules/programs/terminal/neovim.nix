@@ -1,4 +1,4 @@
-{ inputs, config, lib, ... }:
+{ nixvim, ... }: ({ config, lib, ... }:
 let
   inherit (lib) mkIf;
 
@@ -7,7 +7,7 @@ in {
   config = mkIf cfg.enable {
     home-manager.users.frontear = { ... }: {
       imports = [
-        inputs.nixvim.homeManagerModules.nixvim
+        nixvim.homeManagerModules.nixvim
       ];
 
       programs.nixvim = {
@@ -30,4 +30,4 @@ in {
       };
     };
   };
-}
+})

@@ -7,6 +7,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     impermanence = {
       url = "github:nix-community/impermanence";
     };
@@ -98,7 +99,7 @@
         };
       };
 
-      nixosModules = import ./modules;
+      nixosModules.default = import ./modules { inherit (inputs) impermanence nixvim nix-vscode-extensions; };
     };
   };
 }

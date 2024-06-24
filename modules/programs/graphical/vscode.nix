@@ -1,10 +1,10 @@
-{ inputs, config, lib, pkgs, ... }:
+{ nix-vscode-extensions, ... }: ({ config, lib, pkgs, ... }:
 let
   inherit (lib) mkIf;
 
   cfg = config.frontear.programs.graphical;
 
-  extensions = inputs.nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace;
+  extensions = nix-vscode-extensions.extensions.${pkgs.system}.vscode-marketplace;
 in {
   config = mkIf cfg.enable {
     home-manager.users.frontear = { ... }: {
@@ -177,4 +177,4 @@ in {
       };
     };
   };
-}
+})

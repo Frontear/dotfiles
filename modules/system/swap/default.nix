@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ ... }: ({ config, lib, ... }:
 let
   inherit (lib) mkEnableOption mkIf;
 
@@ -26,4 +26,4 @@ in {
       # TODO: writebackDevice
     };
   };
-}
+})

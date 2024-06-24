@@ -1,9 +1,3 @@
-{
-  default = { lib, ... }:
-  let
-    inherit (lib) filter hasSuffix;
-    inherit (lib.filesystem) listFilesRecursive;
-  in {
-    imports = filter (path: path != ./default.nix && hasSuffix "default.nix" path) (listFilesRecursive ./.);
-  };
-}
+{ impermanence, nixvim, nix-vscode-extensions, ... }: ({ lib, ... }: {
+  imports = lib.forEach (lib.filter (path: path != ./default.nix && lib.hasSuffix "default.nix" path) (lib.filesystem.listFilesRecursive ./.)) (f: (import f { inherit impermanence nixvim nix-vscode-extensions; }));
+})
