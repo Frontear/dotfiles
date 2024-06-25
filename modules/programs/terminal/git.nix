@@ -17,6 +17,14 @@ in {
           };
         };
 
+        extraConfig = {
+          init.defaultBranch = "main";
+        };
+
+        ignores = [
+          ".envrc"
+        ];
+
         signing = {
           key = "BCB5CEFDE22282F5";
           signByDefault = true;
