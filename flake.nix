@@ -48,19 +48,19 @@
           nixpkgs-fmt
 
           (writeShellScriptBin "nixos-rebuild" ''
-            case $1 in
-              boot)
-                ${pkgs.nixos-rebuild}/bin/nixos-rebuild boot --flake . --use-remote-sudo --verbose --option eval-cache false --show-trace
-                reboot
-                ;;
-              switch)
-                ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake . --use-remote-sudo --verbose --option eval-cache false --show-trace
-                ;;
-              *)
-                ${pkgs.nixos-rebuild}/bin/nixos-rebuild test --flake . --use-remote-sudo --verbose --option eval-cache false --show-trace
-            esac
+            MODE="$1"
 
-            kill -INT $$ # simulates ^C
+            if [ -z "$MODE" ]; then
+              MODE="test"
+            fi
+
+            ${pkgs.nixos-rebuild}/bin/nixos-rebuild "$MODE" --flake . --use-remote-sudo --verbose --option eval-cache false --show-trace "''${@:2}"
+
+            if [ "$MODE" = "boot" ]; then
+              reboot
+            else
+              kill -INT $$ # simulates ^C
+            fi
           '')
 
           (writeShellScriptBin "nix-collect-garbage" ''
@@ -69,6 +69,7 @@
               exit
             fi
 
+            # Clears `bootctl list` with the switch
             ${pkgs.nix}/bin/nix-collect-garbage -d && nix-store --optimise && /run/current-system/bin/switch-to-configuration switch
           '')
         ];
