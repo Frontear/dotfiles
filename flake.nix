@@ -47,30 +47,28 @@
           nil
           nixpkgs-fmt
 
-          (writeShellScriptBin "nixos-rebuild" ''
+          (writeShellScriptBin "os-rebuild" ''
             MODE="$1"
 
             if [ -z "$MODE" ]; then
               MODE="test"
             fi
 
-            ${pkgs.nixos-rebuild}/bin/nixos-rebuild "$MODE" --flake . --use-remote-sudo --verbose --option eval-cache false --show-trace "''${@:2}"
+            nixos-rebuild "$MODE" --flake . --use-remote-sudo --verbose --show-trace --max-jobs auto --option eval-cache false "''${@:2}"
 
-            if [ "$MODE" = "boot" ]; then
+            if [ $? -eq 0 -a "$MODE" = "boot" ]; then
               reboot
-            else
-              kill -INT $$ # simulates ^C
-            fi
+            fi  
           '')
 
-          (writeShellScriptBin "nix-collect-garbage" ''
+          (writeShellScriptBin "os-gc" ''
             if [ "$EUID" -ne 0 ]; then
               echo "Please run this script with root privileges"
               exit
             fi
 
             # Clears `bootctl list` with the switch
-            ${pkgs.nix}/bin/nix-collect-garbage -d && nix-store --optimise && /run/current-system/bin/switch-to-configuration switch
+            nix-collect-garbage -d && nix-store --optimise && /run/current-system/bin/switch-to-configuration switch
           '')
         ];
       };

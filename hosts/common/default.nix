@@ -1,4 +1,4 @@
-{ home-manager, ... }: ({ config, lib, ... }: {
+{ home-manager, ... }: ({ config, lib, pkgs, ... }: {
   imports = [
     home-manager.nixosModules.home-manager
   ];
@@ -6,7 +6,9 @@
   # Sets system stateVersion, do not change.
   system.stateVersion = "24.05";
 
-  # Enables flakes and unfree packages.
+  # Uses the most bleeding-edge nix cli.
+  # Also enables flakes and unfree packages.
+  nix.package = pkgs.nixVersions.git;
   nix.settings.experimental-features = [ "flakes" "nix-command" ];
   nixpkgs.config.allowUnfree = true;
 
