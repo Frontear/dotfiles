@@ -54,21 +54,16 @@
               MODE="test"
             fi
 
-            nixos-rebuild "$MODE" --flake . --use-remote-sudo --verbose --show-trace --max-jobs auto --option eval-cache false "''${@:2}"
+            nh os "$MODE" . --verbose --show-trace --max-jobs auto --option eval-cache false "''${@:2}"
 
             if [ $? -eq 0 -a "$MODE" = "boot" ]; then
               reboot
-            fi  
+            fi
           '')
 
           (writeShellScriptBin "os-gc" ''
-            if [ "$EUID" -ne 0 ]; then
-              echo "Please run this script with root privileges"
-              exit
-            fi
-
             # Clears `bootctl list` with the switch
-            nix-collect-garbage -d && nix-store --optimise && /run/current-system/bin/switch-to-configuration switch
+            nh clean all && sudo nix-store --optimise && sudo /run/current-system/bin/switch-to-configuration switch
           '')
         ];
       };
