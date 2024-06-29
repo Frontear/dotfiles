@@ -12,6 +12,9 @@
   nix.settings.experimental-features = [ "flakes" "nix-command" ];
   nixpkgs.config.allowUnfree = true;
 
+  # Use nh (nix helper)
+  programs.nh.enable = true;
+
   # Tells home-manager to use the system pkgs instance,
   # to install packages via users.extraUsers.<name>.packages,
   # and to set the main user's stateVersion to the system
