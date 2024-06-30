@@ -54,7 +54,7 @@
               MODE="test"
             fi
 
-            nh os "$MODE" . --verbose --show-trace --max-jobs auto --option eval-cache false "''${@:2}"
+            nh os "$MODE" --verbose . -- --show-trace --max-jobs auto --option eval-cache false "''${@:2}"
 
             if [ $? -eq 0 -a "$MODE" = "boot" ]; then
               reboot
