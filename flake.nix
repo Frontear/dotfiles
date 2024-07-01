@@ -21,7 +21,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Maybe flake-parts would be good for this :p
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,39 +34,9 @@
 
   outputs = inputs@{ self, flake-parts, nixpkgs, ... }: flake-parts.lib.mkFlake { inherit inputs; } {
     imports = [
-      # To import a flake module
-      # 1. Add foo to inputs
-      # 2. Add foo as a parameter to the outputs function
-      # 3. Add here: foo.flakeModule
+      ./nix
     ];
     systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
-    perSystem = { config, self', inputs', pkgs, system, ... }: {
-      devShells.default = pkgs.mkShell {
-        packages = with pkgs; [
-          nil
-          nixpkgs-fmt
-
-          (writeShellScriptBin "os-rebuild" ''
-            MODE="$1"
-
-            if [ -z "$MODE" ]; then
-              MODE="test"
-            fi
-
-            nh os "$MODE" --verbose . -- --show-trace --max-jobs auto --option eval-cache false "''${@:2}"
-
-            if [ $? -eq 0 -a "$MODE" = "boot" ]; then
-              reboot
-            fi
-          '')
-
-          (writeShellScriptBin "os-gc" ''
-            # Clears `bootctl list` with the switch
-            nh clean all && sudo nix-store --optimise && sudo /run/current-system/bin/switch-to-configuration switch
-          '')
-        ];
-      };
-    };
     flake = {
       nixosConfigurations = {
         "LAPTOP-3DT4F02" = nixpkgs.lib.nixosSystem {
