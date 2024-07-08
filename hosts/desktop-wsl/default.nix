@@ -7,6 +7,11 @@
 
   frontear.programs.terminal.enable = true;
 
+  programs.nix-ld = {
+    enable = true;
+    package = pkgs.nix-ld-rs;
+  };
+
   wsl = {
     enable = true;
     defaultUser = "frontear";
