@@ -28,7 +28,7 @@
   impermanence = {
     enable = true;
 
-    system.directories = [ "/var/lib/systemd/backlight" "/var/lib/mysql" ];
+    system.directories = [ "/var/lib/systemd/backlight" ];
 
     user.directories = [ "Documents" ];
   };
@@ -58,13 +58,5 @@
     extraGroups = [ "networkmanager" "wheel" ];
     initialHashedPassword =
       "$y$j9T$gsXwh6NJa62APePZ.7xR00$lLYi86UgQdN1yjOIgqcegfTKsnqkXI4ufQHWdOTiKr6";
-  };
-
-  # Everything else (for now)
-
-  # TODO: possible to put in a devshell?
-  services.mysql = {
-    enable = true;
-    package = pkgs.mysql80;
   };
 })
