@@ -11,7 +11,7 @@
 }:
 {
   perSystem = { pkgs, ... }: {
-    devShells.default = pkgs.callPackage ./shell.nix { };
+    devShells.default = import ./shell.nix { inherit pkgs; };
   };
 
   flake = {
