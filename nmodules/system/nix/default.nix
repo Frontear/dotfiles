@@ -1,4 +1,3 @@
-inputs:
 {
   config,
   lib,
@@ -9,7 +8,7 @@ let
   inherit (lib) mkIf;
 in {
   imports = [
-    (import ./channel-compat.nix inputs)
+    ./channel-compat.nix
     ./nix-settings.nix
     ./nixpkgs-config.nix
   ];

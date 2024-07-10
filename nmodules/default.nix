@@ -1,4 +1,4 @@
-inputs: # TODO: abuse __functor and __functionArgs
+inputs: # TODO: abuse __functor and __functionArgs?
 {
   config,
   lib,
@@ -7,8 +7,10 @@ inputs: # TODO: abuse __functor and __functionArgs
 }:
 {
   imports = [
-    (import ./system inputs)
+    ./system
   ];
 
-  config = {};
+  config = {
+    _module.args = { inherit inputs; };
+  };
 }

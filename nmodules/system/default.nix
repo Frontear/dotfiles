@@ -1,4 +1,3 @@
-inputs:
 {
   config,
   lib,
@@ -7,6 +6,6 @@ inputs:
 }:
 {
   imports = [
-    (import ./nix inputs)
+    ./nix
   ];
 }
