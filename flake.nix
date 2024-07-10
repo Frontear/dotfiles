@@ -32,7 +32,7 @@
     };
   };
 
-  outputs = inputs@{ self, flake-parts, nixpkgs, ... }: flake-parts.lib.mkFlake { inherit inputs; specialArgs = { inherit (inputs) nixpkgs home-manager impermanence nix-vscode-extensions nixos-hardware nixos-wsl nixvim; }; } {
+  outputs = inputs@{ self, flake-parts, nixpkgs, ... }: flake-parts.lib.mkFlake { inherit inputs; } {
     imports = [
       ./nix
     ];

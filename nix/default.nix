@@ -1,15 +1,19 @@
 {
   self,
-  nixpkgs,
-  home-manager,
-  impermanence,
-  nix-vscode-extensions,
-  nixos-hardware,
-  nixos-wsl,
-  nixvim,
+  inputs,
   ...
 }:
-{
+let
+  inherit (inputs)
+    home-manager
+    impermanence
+    nix-vscode-extensions
+    nixos-hardware
+    nixos-wsl
+    nixpkgs
+    nixvim
+    ;
+in {
   perSystem = { pkgs, ... }: {
     devShells.default = import ./shell.nix { inherit pkgs; };
   };
