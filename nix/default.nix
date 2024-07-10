@@ -32,6 +32,7 @@ in {
       "nixos" = nixpkgs.lib.nixosSystem {
         modules = [
           self.nixosModules.default
+          self.nixosModules.new
 
           (import ../hosts/common { inherit home-manager; })
           (import ../hosts/desktop-wsl { inherit nixos-wsl; })
@@ -40,5 +41,7 @@ in {
     };
 
     nixosModules.default = import ../modules { inherit impermanence nix-vscode-extensions nixvim; };
+
+    nixosModules.new = import ../nmodules inputs;
   };
 }

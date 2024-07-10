@@ -25,7 +25,7 @@ in {
       flake-registry = "";
       http-connections = 0;
       max-jobs = "auto";
-      # nix-path = config.nix.nixPath;
+      nix-path = config.nix.nixPath;
       preallocate-contents = true;
       pure-eval = true;
       require-sigs = true;

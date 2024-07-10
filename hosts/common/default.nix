@@ -8,7 +8,7 @@
 
   # Uses the most bleeding-edge nix cli.
   # Also enables flakes and unfree packages.
-  nix.package = pkgs.nixVersions.git;
+  nix.package = lib.mkDefault pkgs.nixVersions.git;
   nix.settings.experimental-features = [ "flakes" "nix-command" ];
   nixpkgs.config.allowUnfree = true;
 
