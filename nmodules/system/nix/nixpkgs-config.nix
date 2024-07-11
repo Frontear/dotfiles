@@ -12,9 +12,6 @@ in {
       allowAliases = true; # TODO: pkgs.system no worky
       allowUnfree = true;
       checkMeta = true;
-      showDerivationWarnings = [
-        "maintainerless"
-      ];
       warnUndeclaredOptions = true;
     };
   };
