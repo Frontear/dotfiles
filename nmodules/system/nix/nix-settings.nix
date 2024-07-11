@@ -1,12 +1,16 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
   inherit (lib) mkIf;
 in {
   config = mkIf config.nix.enable {
+    # see: https://gist.github.com/Frontear/f88e27b0a5c2841c849a1a21e6b70793
+    nix.package = pkgs.lix;
+
     # https://nix.dev/manual/nix/development/command-ref/conf-file.html
     nix.settings = {
       allow-import-from-derivation = false;
