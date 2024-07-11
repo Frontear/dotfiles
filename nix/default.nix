@@ -23,6 +23,7 @@ in {
       "LAPTOP-3DT4F02" = nixpkgs.lib.nixosSystem {
         modules = [
           self.nixosModules.default
+          self.nixosModules.new
 
           (import ../hosts/common { inherit home-manager; })
           (import ../hosts/laptop { inherit nixos-hardware; })

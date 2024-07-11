@@ -9,7 +9,7 @@ in {
   config = mkIf config.nix.enable {
     # https://nixos.org/manual/nixpkgs/unstable/#chap-packageconfig
     nixpkgs.config = {
-      allowAliases = false;
+      allowAliases = true; # TODO: pkgs.system no worky
       allowUnfree = true;
       checkMeta = true;
       showDerivationWarnings = [

@@ -13,9 +13,9 @@
   frontear.programs.graphical.enable = true;
   frontear.programs.terminal.enable = true;
 
-  frontear.system.boot.enable = true;
-  frontear.system.swap.enable = true;
-  frontear.system.network.enable = true;
+  boot.loader.systemd-boot.enable = true;
+  zramSwap.enable = true;
+  networking.networkmanager.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
@@ -28,7 +28,7 @@
   impermanence = {
     enable = true;
 
-    system.directories = [ "/var/lib/systemd/backlight" ];
+    system.directories = [ "/etc/NetworkManager" "/var/lib/systemd/backlight" ];
 
     user.directories = [ "Documents" ];
   };

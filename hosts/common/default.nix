@@ -6,12 +6,6 @@
   # Sets system stateVersion, do not change.
   system.stateVersion = "24.05";
 
-  # Uses the most bleeding-edge nix cli.
-  # Also enables flakes and unfree packages.
-  nix.package = lib.mkDefault pkgs.nixVersions.git;
-  nix.settings.experimental-features = [ "flakes" "nix-command" ];
-  nixpkgs.config.allowUnfree = true;
-
   # Use nh (nix helper)
   programs.nh.enable = true;
 
