@@ -31,7 +31,7 @@ in {
       max-jobs = "auto";
       nix-path = config.nix.nixPath;
       preallocate-contents = true;
-      pure-eval = true;
+      pure-eval = false; # more trouble than its worth
       require-sigs = true;
       sandbox = true;
       sandbox-fallback = false;
