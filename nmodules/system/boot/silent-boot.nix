@@ -1,14 +1,15 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
   inherit (builtins) toString;
   inherit (lib) mkIf;
+
+  cfg = config.my.system.boot;
 in {
-  config = mkIf config.boot.loader.systemd-boot.enable {
+  config = mkIf cfg.enable {
     # https://wiki.archlinux.org/title/Silent_boot
     boot.consoleLogLevel = 3;
     boot.initrd.verbose = false;

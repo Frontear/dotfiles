@@ -1,13 +1,14 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
-  inherit (lib) mkIf mkForce;
+  inherit (lib) mkForce mkIf;
+
+  cfg = config.my.system.audio;
 in {
-  config = mkIf config.services.pipewire.enable {
+  config = mkIf cfg.enable {
     hardware.pulseaudio.enable = mkForce false;
     sound.enable = mkForce false;
 

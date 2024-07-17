@@ -1,13 +1,14 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
   inherit (lib) mkIf;
+
+  cfg = config.my.system.mounts;
 in {
-  config = mkIf config.zramSwap.enable {
+  config = mkIf cfg.enable {
     # https://wiki.archlinux.org/title/Zram#Optimizing_swap_on_zram
     boot.kernel.sysctl = {
       "vm.swappiness" = 180;

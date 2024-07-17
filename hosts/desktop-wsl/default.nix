@@ -16,6 +16,8 @@
     '';
   };
 
+  my.system.nix.enable = true;
+
   frontear.programs.terminal.enable = true;
 
   programs.nix-ld = {

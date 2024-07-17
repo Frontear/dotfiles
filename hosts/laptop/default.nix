@@ -13,9 +13,10 @@
   frontear.programs.graphical.enable = true;
   frontear.programs.terminal.enable = true;
 
-  boot.loader.systemd-boot.enable = true;
-  zramSwap.enable = true;
-  networking.networkmanager.enable = true;
+  my.system.boot.enable = true;
+  my.system.mounts.enable = true;
+  my.system.network.enable = true;
+  my.system.nix.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
@@ -53,10 +54,6 @@
     };
   };
 
-  users.extraUsers.frontear = {
-    isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" ];
-    initialHashedPassword =
-      "$y$j9T$gsXwh6NJa62APePZ.7xR00$lLYi86UgQdN1yjOIgqcegfTKsnqkXI4ufQHWdOTiKr6";
-  };
+  users.users."frontear".extraGroups = [ "networkmanager" "wheel" ];
+  my.users."frontear".initialHashedPassword = "$y$j9T$gsXwh6NJa62APePZ.7xR00$lLYi86UgQdN1yjOIgqcegfTKsnqkXI4ufQHWdOTiKr6";
 })

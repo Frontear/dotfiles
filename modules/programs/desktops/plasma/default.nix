@@ -10,7 +10,7 @@ in {
 
   config = mkIf cfg.enable {
     frontear.programs.graphical.enable = mkDefault true;
-    services.pipewire.enable = true;
+    my.system.audio.enable = true;
 
     impermanence.user.directories = [
       ".config"

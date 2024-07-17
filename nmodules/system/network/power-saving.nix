@@ -1,13 +1,14 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
   inherit (lib) mkIf;
+
+  cfg = config.my.system.network;
 in {
-  config = mkIf (config.networking.networkmanager.enable && config.powerManagement.enable) {
+  config = mkIf (cfg.enable && config.powerManagement.enable) {
     # WARN: impure!!
     boot.extraModprobeConfig = ''
       options iwlwifi power_level=3 power_save=1 uapsd_disable=0

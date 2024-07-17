@@ -8,6 +8,7 @@ inputs: # TODO: abuse __functor and __functionArgs?
 {
   imports = [
     ./system
+    ./users
   ];
 
   config = {

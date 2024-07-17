@@ -6,8 +6,10 @@
 }:
 let
   inherit (lib) mkIf;
+
+  cfg = config.my.system.nix;
 in {
-  config = mkIf config.nix.enable {
+  config = mkIf cfg.enable {
     # see: https://gist.github.com/Frontear/f88e27b0a5c2841c849a1a21e6b70793
     nix.package = pkgs.lix;
 

@@ -1,13 +1,14 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
   inherit (lib) mkIf;
+
+  cfg = config.my.system.boot;
 in {
-  config = mkIf config.boot.loader.systemd-boot.enable {
+  config = mkIf cfg.enable {
     boot.loader.efi.canTouchEfiVariables = true;
     boot.loader.systemd-boot.editor = false;
   };
