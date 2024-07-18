@@ -8,10 +8,7 @@ let
 
   cfg = config.my.system.boot;
 in {
-  imports = [
-    ./boot-loader.nix
-    ./silent-boot.nix
-  ];
+  imports = lib.importsRecursive ./. (x: x != "default.nix");
 
   options.my.system.boot.enable = mkEnableOption "boot";
 

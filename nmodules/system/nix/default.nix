@@ -8,11 +8,7 @@ let
 
   cfg = config.my.system.nix;
 in {
-  imports = [
-    ./channel-compat.nix
-    ./nix-settings.nix
-    ./nixpkgs-config.nix
-  ];
+  imports = lib.importsRecursive ./. (x: x != "default.nix");
 
   options.my.system.nix.enable = mkEnableOption "nix";
 

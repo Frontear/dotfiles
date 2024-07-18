@@ -13,6 +13,8 @@ let
     nixpkgs
     nixvim
     ;
+
+  extLib = nixpkgs.lib.extend (final: prev: import ../lib prev);
 in {
   perSystem = { pkgs, ... }: {
     devShells.default = import ./shell.nix { inherit pkgs; };
@@ -20,7 +22,7 @@ in {
 
   flake = {
     nixosConfigurations = {
-      "LAPTOP-3DT4F02" = nixpkgs.lib.nixosSystem {
+      "LAPTOP-3DT4F02" = extLib.nixosSystem {
         modules = [
           self.nixosModules.default
           self.nixosModules.new
@@ -30,7 +32,7 @@ in {
         ];
       };
 
-      "nixos" = nixpkgs.lib.nixosSystem {
+      "nixos" = extLib.nixosSystem {
         modules = [
           self.nixosModules.default
           self.nixosModules.new

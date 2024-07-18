@@ -8,9 +8,7 @@ let
 
   cfg = config.my.system.audio;
 in {
-  imports = [
-    ./pipewire.nix
-  ];
+  imports = lib.importsRecursive ./. (x: x != "default.nix");
 
   options.my.system.audio.enable = mkEnableOption "audio";
 

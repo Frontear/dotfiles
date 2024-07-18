@@ -8,9 +8,7 @@ let
 
   cfg = config.my.system.mounts;
 in {
-  imports = [
-    ./zram-swap.nix
-  ];
+  imports = lib.importsRecursive ./. (x: x != "default.nix");
 
   options.my.system.mounts.enable = mkEnableOption "mounts";
 

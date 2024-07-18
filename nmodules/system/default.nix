@@ -1,12 +1,7 @@
 {
+  lib,
   ...
 }:
 {
-  imports = [
-    ./audio
-    ./boot
-    ./mounts
-    ./network
-    ./nix
-  ];
+  imports = lib.importsRecursive ./. (x: x == "default.nix");
 }

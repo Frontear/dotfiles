@@ -8,11 +8,7 @@ let
 
   cfg = config.my.system.network;
 in {
-  imports = [
-    ./cloudflare-dns.nix
-    ./hosts-list.nix
-    ./power-saving.nix
-  ];
+  imports = lib.importsRecursive ./. (x: x != "default.nix");
 
   options.my.system.network.enable = mkEnableOption "network";
 
