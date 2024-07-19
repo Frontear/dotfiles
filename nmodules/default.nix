@@ -7,6 +7,7 @@ inputs: # TODO: abuse __functor and __functionArgs?
 }:
 {
   imports = [
+    ./common
     ./system
     ./users
   ];
