@@ -137,7 +137,7 @@ in {
         # $6 - Whether the file is placed with the possibility to impurely modify it
         #
         # File exists:
-        # - Impure: Update permissions only.
+        # - Impure: if symlink to /nix/store then replace, else update permissions only.
         # - Pure: if symlink to /nix/store then replace, else error
         #
         # File not exists:
@@ -155,6 +155,10 @@ in {
                 echo "File exists at "$2", will not replace." >> /dev/stderr
               fi
             else
+              if [[ "$(readlink -f "$2")" =~ ^/nix/store/* ]]; then
+                rm -f "$2"
+                cat "$1" > "$2"
+              fi
               chown "$3:$4" "$2"
               chmod "$5" "$2"
             fi
