@@ -6,10 +6,10 @@
 }:
 let
   inherit (builtins) concatStringsSep isString replaceStrings;
-  inherit (lib) attrValues elemAt forEach mapAttrsToList mkOption types;
+  inherit (lib) attrValues concatLists elemAt forEach mapAttrsToList mkOption types;
 
   system-files = attrValues config.my.system.file;
-  user-files = mapAttrsToList (_: v: elemAt (attrValues v.file) 0) config.my.users;
+  user-files = concatLists (mapAttrsToList (_: v: attrValues v.file) config.my.users);
   all-files = system-files ++ user-files;
 
   # I do not like the attr -> attr thing, but idk how else to work it.
