@@ -41,5 +41,17 @@ pkgs.mkShell {
         nh clean all && sudo nix-store --optimise && sudo /run/current-system/bin/switch-to-configuration switch
       '';
     })
+
+    (writeShellApplication {
+      name = "flake-update";
+      runtimeInputs = [
+        cachix
+        jq
+      ];
+      text = ''
+        nix flake update
+        nix flake archive --json | jq -r '.path,(.inputs|to_entries[].value.path)' | cachix push frontear
+      '';
+    })
   ];
 }

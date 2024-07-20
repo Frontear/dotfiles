@@ -20,6 +20,12 @@ in {
       auto-optimise-store = true;
       cores = 0;
       eval-cache = false;
+      extra-substituters = [
+        "https://frontear.cachix.org"
+      ];
+      extra-trusted-public-keys = [
+        "frontear.cachix.org-1:rrVt1C9dFaJf9QpG1Vu6sHqEUy0Q8ezLCCaxz7oZPOM="
+      ];
       experimental-features = [
         "auto-allocate-uids"
         "cgroups"
