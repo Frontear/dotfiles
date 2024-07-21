@@ -10,7 +10,7 @@ let
 in {
   config = mkIf cfg.enable {
     hardware.pulseaudio.enable = mkForce false;
-    sound.enable = mkForce false;
+    hardware.alsa.enablePersistence = mkForce false;
 
     security.rtkit.enable = true;
 
