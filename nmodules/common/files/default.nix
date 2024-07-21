@@ -6,7 +6,7 @@
 }:
 let
   inherit (builtins) concatStringsSep isString replaceStrings;
-  inherit (lib) attrValues concatLists elemAt forEach mapAttrsToList mkOption types;
+  inherit (lib) attrValues concatLists forEach mapAttrsToList mkOption types;
 
   system-files = attrValues config.my.system.file;
   user-files = concatLists (mapAttrsToList (_: v: attrValues v.file) config.my.users);
@@ -85,7 +85,7 @@ let
     type = with types; attrsOf (submodule (fileOpts { inherit user group from to; }));
   };
 
-  userOpts = { name, config, ... }: {
+  userOpts = { config, ... }: {
     options = {
       file = mkFileOption {
         user = config.username;
@@ -152,7 +152,7 @@ in {
               if [[ "$(readlink -f "$2")" =~ ^/nix/store/* ]]; then
                 ln -Tsf "$1" "$2"
               else
-                echo "File exists at "$2", will not replace." >> /dev/stderr
+                echo "File exists at $2, will not replace." >> /dev/stderr
               fi
             else
               if [[ "$(readlink -f "$2")" =~ ^/nix/store/* ]]; then
