@@ -1,8 +1,8 @@
-{ nix-vscode-extensions, ... }: ({ lib, ... }:
+{ ... }: ({ lib, ... }:
 let
   inherit (lib) mkEnableOption;
 in {
-  imports = lib.forEach (lib.filter (p: p != ./default.nix) (lib.filesystem.listFilesRecursive ./.)) (f: (import f { inherit nix-vscode-extensions; }));
+  imports = lib.forEach (lib.filter (p: p != ./default.nix) (lib.filesystem.listFilesRecursive ./.)) (f: (import f { }));
 
   options.frontear.programs.graphical = {
     enable = mkEnableOption "opinionated graphical programs.";

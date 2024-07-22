@@ -6,7 +6,6 @@
 let
   inherit (inputs)
     home-manager
-    nix-vscode-extensions
     nixos-hardware
     nixos-wsl
     nixpkgs
@@ -41,7 +40,7 @@ in {
       };
     };
 
-    nixosModules.default = import ../modules { inherit nix-vscode-extensions; };
+    nixosModules.default = import ../modules { };
 
     nixosModules.new = import ../nmodules inputs;
   };
