@@ -7,7 +7,7 @@ let
   user-data-dir = ".config/microsoft-edge";
 in {
   config = mkIf cfg.enable {
-    impermanence.user.directories = [ user-data-dir ];
+    my.users.frontear.persist.directories = [ ("~/" + user-data-dir) ];
 
     home-manager.users.frontear = { pkgs, ... }: {
       home.packages = with pkgs; [

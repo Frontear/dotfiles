@@ -14,5 +14,6 @@ in {
 
   config = mkIf cfg.enable {
     networking.networkmanager.enable = true;
+    my.system.persist.directories = [ "/etc/NetworkManager" ];
   };
 }

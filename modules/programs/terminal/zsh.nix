@@ -5,7 +5,7 @@ let
   cfg = config.frontear.programs.terminal;
 in {
   config = mkIf cfg.enable {
-    impermanence.user.files = [ ".local/share/zsh/zsh_history" ];
+    my.users.frontear.persist.files = [ "~/.local/share/zsh/zsh_history" ];
 
     users.extraUsers.frontear.shell = pkgs.zsh;
     programs.zsh = {

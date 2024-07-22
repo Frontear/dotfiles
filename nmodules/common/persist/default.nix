@@ -152,7 +152,8 @@ in {
 
         chown "$3:$4" "$1"
         chmod "$5" "$1"
-        ln -Tsf "$1" "$2"
+        touch "$2"
+        mount -o bind "$1" "$2"
       }
 
       # $1 - Path to file/directory written in the persisted volume
@@ -186,7 +187,8 @@ in {
 
         chown "$3:$4" "$1"
         chmod "$5" "$1"
-        mount --mkdir -o bind "$1" "$2"
+        mkdir "$2"
+        mount -o bind "$1" "$2"
       }
 
     '' + concatStringsSep "\n" all-persist);

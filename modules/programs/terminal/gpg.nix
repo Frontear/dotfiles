@@ -5,9 +5,9 @@ let
   cfg = config.frontear.programs.terminal;
 in {
   config = mkIf cfg.enable {
-    impermanence.user.directories = [
-      ".local/share/gnupg"
-      ".ssh"
+    my.users.frontear.persist.directories = [
+      "~/.local/share/gnupg"
+      "~/.ssh"
     ];
 
     home-manager.users.frontear = { config, pkgs, ... }: {

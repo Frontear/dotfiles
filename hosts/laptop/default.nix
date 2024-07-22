@@ -26,12 +26,16 @@
   networking.hostName = "LAPTOP-3DT4F02";
   time.timeZone = "America/Toronto";
 
-  impermanence = {
+  my.system.persist = {
     enable = true;
+    directories = [ "/var/lib/systemd/backlight" ];
+  };
 
-    system.directories = [ "/etc/NetworkManager" "/var/lib/systemd/backlight" ];
-
-    user.directories = [ "Documents" ];
+  my.users.frontear.persist = {
+    enable = true;
+    directories = [
+      "~/Documents"
+    ];
   };
 
   fileSystems = {

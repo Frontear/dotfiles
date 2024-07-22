@@ -12,9 +12,9 @@ in {
     frontear.programs.graphical.enable = mkDefault true;
     my.system.audio.enable = true;
 
-    impermanence.user.directories = [
-      ".config"
-      ".local"
+    my.users.frontear.persist.directories = [
+      "~/.config"
+      "~/.local"
     ];
 
     fonts.packages = with pkgs; [

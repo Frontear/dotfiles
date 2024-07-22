@@ -6,7 +6,6 @@
 let
   inherit (inputs)
     home-manager
-    impermanence
     nix-vscode-extensions
     nixos-hardware
     nixos-wsl
@@ -43,7 +42,7 @@ in {
       };
     };
 
-    nixosModules.default = import ../modules { inherit impermanence nix-vscode-extensions nixvim; };
+    nixosModules.default = import ../modules { inherit nix-vscode-extensions nixvim; };
 
     nixosModules.new = import ../nmodules inputs;
   };
