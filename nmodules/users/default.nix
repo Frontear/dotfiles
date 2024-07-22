@@ -24,6 +24,14 @@ let
         type = types.passwdEntry types.path;
       };
 
+      packages = mkOption {
+        default = [];
+        description = ''
+          List of packages to install at the user-level.
+        '';
+        type = types.listOf types.package;
+      };
+
       initialHashedPassword = mkOption {
         default = null;
         description = ''
@@ -34,6 +42,10 @@ let
     };
   };
 in {
+  imports = [
+    ./programs
+  ];
+
   options = {
     my.users = mkOption {
       default = {};
@@ -50,7 +62,7 @@ in {
       home = value.homeDirectory;
       isNormalUser = true;
 
-      inherit (value) initialHashedPassword;
+      inherit (value) packages initialHashedPassword;
     };
   }) config.my.users);
 }

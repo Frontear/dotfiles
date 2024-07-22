@@ -10,7 +10,6 @@ let
     nixos-hardware
     nixos-wsl
     nixpkgs
-    nixvim
     ;
 
   extLib = nixpkgs.lib.extend (final: prev: import ../lib prev);
@@ -42,7 +41,7 @@ in {
       };
     };
 
-    nixosModules.default = import ../modules { inherit nix-vscode-extensions nixvim; };
+    nixosModules.default = import ../modules { inherit nix-vscode-extensions; };
 
     nixosModules.new = import ../nmodules inputs;
   };

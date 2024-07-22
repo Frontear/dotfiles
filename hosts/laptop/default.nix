@@ -13,6 +13,8 @@
   frontear.programs.graphical.enable = true;
   frontear.programs.terminal.enable = true;
 
+  my.users.frontear.programs.neovim.enable = true;
+
   my.system.boot.enable = true;
   my.system.mounts.enable = true;
   my.system.network.enable = true;
