@@ -8,6 +8,7 @@
   my.system.nix.enable = true;
 
   frontear.programs.terminal.enable = true;
+  my.users.frontear.programs.neovim.enable = true;
 
   programs.nix-ld = {
     enable = true;
