@@ -13,7 +13,6 @@ let
         default = with pkgs; (vscode-with-extensions.override {
           vscodeExtensions = vscode-utils.extensionsFromVscodeMarketplace (import ./extensions.nix);
         });
-        description = '''';
         type = types.package;
         readOnly = true;
         internal = true;
