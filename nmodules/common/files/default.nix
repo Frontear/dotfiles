@@ -6,7 +6,7 @@
 }:
 let
   inherit (builtins) concatStringsSep isString replaceStrings;
-  inherit (lib) attrValues concatLists forEach mapAttrsToList mkOption types;
+  inherit (lib) attrValues concatLists forEach getExe mapAttrsToList mkOption types;
 
   system-files = attrValues config.my.system.file;
   user-files = concatLists (mapAttrsToList (_: v: attrValues v.file) config.my.users);
@@ -133,7 +133,7 @@ in {
         # $2 - Absolute path to where the file will be placed
         # $3 - User value for 'chown', ignored if impure = false
         # $4 - Group value for 'chown', ignored if impure = false
-        # $5 - Mode value for 'chown', ignored if impure = false
+        # $5 - Mode value for 'chmod', ignored if impure = false
         # $6 - Whether the file is placed with the possibility to impurely modify it
         #
         # File exists:
@@ -145,7 +145,10 @@ in {
         # - Pure: Symlink in place
         #
         function placeFile() {
-          mkdir -p "$(dirname "$2")"
+          mkdir -pv "$(dirname "$2")" | ${getExe pkgs.gnused} "s/mkdir: created directory //g" | ${getExe pkgs.gnused} "s/'//g" | while read dir; do
+            chown "$3:$4" "$dir"
+            chmod "755" "$dir"
+          done
 
           if [ -f "$2" ]; then
             if [ "$6" = "false" ]; then

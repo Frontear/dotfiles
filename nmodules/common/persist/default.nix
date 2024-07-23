@@ -1,11 +1,12 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
   inherit (builtins) concatStringsSep replaceStrings;
-  inherit (lib) concatLists forEach mapAttrsToList mkEnableOption mkOption optionals types;
+  inherit (lib) concatLists forEach getExe mapAttrsToList mkEnableOption mkOption optionals types;
 
   system-persist = let cfg = config.my.system.persist; in optionals cfg.enable ((forEach cfg.directories (d: ''persistDir "${cfg.volume + d.path}" "${d.path}" "${d.user}" "${d.group}" "${d.mode}"'')) ++ (forEach cfg.files (f: ''persistFile "${cfg.volume + f.path}" "${f.path}" "${f.user}" "${f.group}" "${f.mode}"'')));
   user-persist = concatLists (forEach (mapAttrsToList (_: v: v.persist) config.my.users) (cfg: optionals cfg.enable ((forEach cfg.directories (d: ''persistDir "${cfg.volume + d.path}" "${d.path}" "${d.user}" "${d.group}" "${d.mode}"'')) ++ (forEach cfg.files (f: ''persistFile "${cfg.volume + f.path}" "${f.path}" "${f.user}" "${f.group}" "${f.mode}"'')))));
@@ -137,7 +138,10 @@ in {
       #   - ignore
       #
       function persistFile() {
-        mkdir -p "$(dirname "$1")" "$(dirname "$2")"
+        mkdir -pv "$(dirname "$1")" "$(dirname "$2")" | ${getExe pkgs.gnused} "s/mkdir: created directory //g" | ${getExe pkgs.gnused} "s/'//g" | while read dir; do
+          chown "$3:$4" "$dir"
+          chmod "755" "$dir"
+        done
 
         if [ -f "$1" ] && [ -f "$2" ]; then
           return 0 # Exit fast, we can assume these are already linked.
@@ -172,7 +176,10 @@ in {
       #   - ignore
       #
       function persistDir() {
-        mkdir -p "$(dirname "$1")" "$(dirname "$2")"
+        mkdir -pv "$(dirname "$1")" "$(dirname "$2")" | ${getExe pkgs.gnused} "s/mkdir: created directory //g" | ${getExe pkgs.gnused} "s/'//g" | while read dir; do
+          chown "$3:$4" "$dir"
+          chmod "755" "$dir"
+        done
 
         if [ -d "$1" ] && [ -d "$2" ]; then
           return 0 # Exit fast, we can assume these are already binded.
