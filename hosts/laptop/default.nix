@@ -13,9 +13,12 @@
   frontear.programs.graphical.enable = true;
   frontear.programs.terminal.enable = true;
 
-  my.users.frontear.programs.atool.enable = true;
-  my.users.frontear.programs.neovim.enable = true;
-  my.users.frontear.programs.vscode.enable = true;
+  my.users.frontear.programs = {
+    atool.enable = true;
+    git.enable = true;
+    neovim.enable = true;
+    vscode.enable = true;
+  };
 
   my.system.boot.enable = true;
   my.system.mounts.enable = true;

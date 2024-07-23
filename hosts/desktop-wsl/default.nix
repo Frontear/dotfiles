@@ -9,8 +9,11 @@
 
   frontear.programs.terminal.enable = true;
 
-  my.users.frontear.programs.atool.enable = true;
-  my.users.frontear.programs.neovim.enable = true;
+  my.users.frontear.programs = {
+    atool.enable = true;
+    git.enable = true;
+    neovim.enable = true;
+  };
 
   programs.nix-ld = {
     enable = true;
