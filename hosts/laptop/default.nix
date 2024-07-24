@@ -15,8 +15,10 @@
 
   my.users.frontear.programs = {
     atool.enable = true;
+    armcord.enable = true;
     direnv.enable = true;
     git.enable = true;
+    microsoft-edge.enable = true;
     neovim.enable = true;
     vscode.enable = true;
   };
