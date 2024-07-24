@@ -7,11 +7,10 @@ let
   inherit (lib) mkEnableOption mkIf mkOption types;
 
   userOpts = { config, ... }: {
-    options.programs.neovim.enable = mkEnableOption "neovim";
-
-    config = mkIf config.programs.neovim.enable {
-      packages = with pkgs; [
-        (lunarvim.overrideAttrs {
+    options.programs.neovim = {
+      enable = mkEnableOption "neovim";
+      package = mkOption {
+        default = pkgs.lunarvim.overrideAttrs {
           nvimAlias = true;
           globalConfig = ''
             vim.opt.tabstop = 4
@@ -20,8 +19,16 @@ let
             vim.opt.number = true
             vim.cmd("highlight LineNr ctermfg=grey")
           '';
-        })
-      ];
+        };
+
+        type = types.package;
+        internal = true;
+        readOnly = true;
+      };
+    };
+
+    config = mkIf config.programs.neovim.enable {
+      packages = [ config.programs.neovim.package ];
     };
   };
 in {

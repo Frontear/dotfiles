@@ -9,7 +9,7 @@ let
   userOpts = { config, ... }: {
     options.programs.atool = {
       enable = mkEnableOption "atool";
-      finalPackage = mkOption {
+      package = mkOption {
         default = with pkgs; writeShellApplication {
           name = "atool";
 
@@ -39,16 +39,15 @@ let
             exec ${lib.getExe atool} "$@"
           '';
         };
+
         type = types.package;
-        readOnly = true;
         internal = true;
+        readOnly = true;
       };
     };
 
     config = mkIf config.programs.atool.enable {
-      packages = [
-        config.programs.atool.finalPackage
-      ];
+      packages = [ config.programs.atool.package ];
     };
   };
 in {

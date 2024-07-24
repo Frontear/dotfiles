@@ -12,12 +12,17 @@ let
   userOpts = { config, ... }: {
     options.programs.direnv = {
       enable = mkEnableOption "direnv";
+      package = mkOption {
+        default = pkgs.direnv;
+
+        type = types.package;
+        internal = true;
+        readOnly = true;
+      };
     };
 
     config = mkIf config.programs.direnv.enable {
-      packages = with pkgs; [
-        direnv
-      ];
+      packages = [ config.programs.direnv.package ];
 
       file."~/.config/direnv/direnv.toml".content = (pkgs.formats.toml {}).generate "direnv-config" (import ./config.nix config);
 

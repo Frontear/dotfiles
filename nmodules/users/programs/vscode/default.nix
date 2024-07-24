@@ -9,20 +9,19 @@ let
   userOpts = { config, ... }: {
     options.programs.vscode = {
       enable = mkEnableOption "vscode";
-      finalPackage = mkOption {
+      package = mkOption {
         default = with pkgs; (vscode-with-extensions.override {
           vscodeExtensions = vscode-utils.extensionsFromVscodeMarketplace (import ./extensions.nix);
         });
+
         type = types.package;
-        readOnly = true;
         internal = true;
+        readOnly = true;
       };
     };
 
     config = mkIf config.programs.vscode.enable {
-      packages = [
-        config.programs.vscode.finalPackage
-      ];
+      packages = [ config.programs.vscode.package ];
 
       file."~/.config/Code/User/settings.json".content = (pkgs.formats.json {}).generate "vscode-settings" (import ./settings.nix);
     };

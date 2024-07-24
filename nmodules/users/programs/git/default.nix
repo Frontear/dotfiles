@@ -7,12 +7,19 @@ let
   inherit (lib) mkEnableOption mkIf mkOption types;
 
   userOpts = { config, ... }: {
-    options.programs.git.enable = mkEnableOption "git";
+    options.programs.git = {
+      enable = mkEnableOption "git";
+      package = mkOption {
+        default = pkgs.git;
+
+        type = types.package;
+        internal = true;
+        readOnly = true;
+      };
+    };
 
     config = mkIf config.programs.git.enable {
-      packages = with pkgs; [
-        git
-      ];
+      packages = [ config.programs.git.package ];
 
       file."~/.config/git/config".content = lib.generators.toGitINI (import ./config.nix pkgs);
 
