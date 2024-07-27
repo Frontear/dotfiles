@@ -145,7 +145,7 @@ in {
         # - Pure: Symlink in place
         #
         function placeFile() {
-          mkdir -pv "$(dirname "$2")" | ${getExe pkgs.gnused} "s/mkdir: created directory //g" | ${getExe pkgs.gnused} "s/'//g" | while read dir; do
+          mkdir -pv "$(dirname "$2")" | ${getExe pkgs.gnused} "s|'||g;s|.* ||g" | while read dir; do
             chown "$3:$4" "$dir"
             chmod "755" "$dir"
           done
@@ -155,7 +155,7 @@ in {
               if [[ "$(readlink -f "$2")" =~ ^/nix/store/* ]]; then
                 ln -Tsf "$1" "$2"
               else
-                echo "File exists at $2, will not replace." >> /dev/stderr
+                echo "File exists at $2, will not replace."
               fi
             else
               if [[ "$(readlink -f "$2")" =~ ^/nix/store/* ]]; then

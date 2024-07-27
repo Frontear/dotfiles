@@ -138,25 +138,24 @@ in {
       #   - ignore
       #
       function persistFile() {
-        mkdir -pv "$(dirname "$1")" "$(dirname "$2")" | ${getExe pkgs.gnused} "s/mkdir: created directory //g" | ${getExe pkgs.gnused} "s/'//g" | while read dir; do
+        mkdir -pv "$(dirname "$1")" "$(dirname "$2")" | ${getExe pkgs.gnused} "s|'||g;s|.* ||g" | while read dir; do
+          echo "Creating $dir with $3:$4, $5"
           chown "$3:$4" "$dir"
           chmod "755" "$dir"
         done
 
-        if [ -f "$1" ] && [ -f "$2" ]; then
-          return 0 # Exit fast, we can assume these are already linked.
-        fi
-
-        if [ -f "$2" ]; then
-          cp "$2" "$1"
-          rm -f "$2"
-        else
+        if [ ! -f "$1" ]; then
+          echo "Need to make $1"
           touch "$1"
         fi
 
+        echo chown "$3:$4" "$1"
         chown "$3:$4" "$1"
+        echo chmod "$5" "$1"
         chmod "$5" "$1"
+        echo touch "$2"
         touch "$2"
+        echo mount -o bind "$1" "$2"
         mount -o bind "$1" "$2"
       }
 
@@ -176,25 +175,24 @@ in {
       #   - ignore
       #
       function persistDir() {
-        mkdir -pv "$(dirname "$1")" "$(dirname "$2")" | ${getExe pkgs.gnused} "s/mkdir: created directory //g" | ${getExe pkgs.gnused} "s/'//g" | while read dir; do
+        mkdir -pv "$(dirname "$1")" "$(dirname "$2")" | ${getExe pkgs.gnused} "s|'||g;s|.* ||g" | while read dir; do
+          echo "Creating $dir with $3:$4, $5"
           chown "$3:$4" "$dir"
           chmod "755" "$dir"
         done
 
-        if [ -d "$1" ] && [ -d "$2" ]; then
-          return 0 # Exit fast, we can assume these are already binded.
-        fi
-
-        if [ -d "$2" ]; then
-          cp -r "$2" "$1"
-          rm -rf "$2"
-        else
+        if [ ! -d "$1" ]; then
+          echo "Need to make $1"
           mkdir -p "$1"
         fi
 
+        echo chown "$3:$4" "$1"
         chown "$3:$4" "$1"
+        echo chmod "$5" "$1"
         chmod "$5" "$1"
-        mkdir "$2"
+        echo mkdir -p "$2"
+        mkdir -p "$2"
+        echo mount -o bind "$1" "$2"
         mount -o bind "$1" "$2"
       }
 
