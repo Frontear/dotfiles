@@ -23,7 +23,7 @@ let
     config = mkIf config.programs.vscode.enable {
       packages = [ config.programs.vscode.package ];
 
-      file."~/.config/Code/User/settings.json".content = (pkgs.formats.json {}).generate "vscode-settings" (import ./settings.nix);
+      file."~/.config/Code/User/settings.json".content = (pkgs.formats.json {}).generate "settings-json" (import ./settings.nix);
     };
   };
 in {

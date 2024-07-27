@@ -24,7 +24,7 @@ let
     config = mkIf config.programs.direnv.enable {
       packages = [ config.programs.direnv.package ];
 
-      file."~/.config/direnv/direnv.toml".content = (pkgs.formats.toml {}).generate "direnv-config" (import ./config.nix config);
+      file."~/.config/direnv/direnv.toml".content = (pkgs.formats.toml {}).generate "direnv-toml" (import ./config.nix config);
 
       file."~/.config/direnv/direnvrc".content = ''
         source ${nix-direnv}/share/nix-direnv/direnvrc

@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (builtins) concatStringsSep isString replaceStrings;
+  inherit (builtins) baseNameOf concatStringsSep isString replaceStrings;
   inherit (lib) attrValues concatLists forEach getExe mapAttrsToList mkOption types;
 
   system-files = attrValues config.my.system.file;
@@ -21,7 +21,7 @@ let
           Content that is written into the file. Can be a path or raw text.
         '';
         type = types.either types.path types.str;
-        apply = v: if isString v then pkgs.writeText "" v else v;
+        apply = v: if isString v then pkgs.writeText (replaceStrings [ "." ] [ "-" ] (baseNameOf name)) v else v;
       };
 
       user = mkOption {
