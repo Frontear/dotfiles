@@ -10,7 +10,6 @@
   ];
 
   frontear.programs.desktops.plasma.enable = true;
-  frontear.programs.graphical.enable = true;
   frontear.programs.terminal.enable = true;
 
   my.users.frontear.programs = {
@@ -18,6 +17,7 @@
     armcord.enable = true;
     direnv.enable = true;
     git.enable = true;
+    libreoffice.enable = true;
     microsoft-edge.enable = true;
     neovim.enable = true;
     vscode.enable = true;

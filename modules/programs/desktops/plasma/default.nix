@@ -9,7 +9,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    frontear.programs.graphical.enable = mkDefault true;
     my.system.audio.enable = true;
 
     my.users.frontear.persist.directories = [
