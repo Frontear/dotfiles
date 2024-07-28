@@ -144,6 +144,11 @@ in {
           chmod "755" "$dir"
         done
 
+        if [ -f "$1" ] && [ -f "$2" ] && [ "$1" -ef "$2" ]; then
+          echo "Already linked, ignoring"
+          return 0
+        fi
+
         if [ ! -f "$1" ]; then
           echo "Need to make $1"
           touch "$1"
@@ -180,6 +185,11 @@ in {
           chown "$3:$4" "$dir"
           chmod "755" "$dir"
         done
+
+        if [ -d "$1" ] && [ -d "$2" ] && [ "$1" -ef "$2" ]; then
+          echo "$1 => $2 already, ignoring"
+          return 0
+        fi
 
         if [ ! -d "$1" ]; then
           echo "Need to make $1"
