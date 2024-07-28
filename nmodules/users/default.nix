@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -24,20 +25,32 @@ let
         type = types.passwdEntry types.path;
       };
 
+      initialHashedPassword = mkOption {
+        default = null;
+        description = ''
+          See users.users.${name}.initialHashedPassword for further details.
+        '';
+        type = with types; nullOr (passwdEntry str);
+      };
+
       packages = mkOption {
         default = [];
         description = ''
-          List of packages to install at the user-level.
+          Ideally prefer user modules over adding packages here.
+
+          See users.users.${name}.packages for further details.
         '';
         type = types.listOf types.package;
       };
 
-      initialHashedPassword = mkOption {
-        default = null;
+      shell = mkOption {
+        default = pkgs.shadow;
         description = ''
-          See users.users.${name}.initialHashedPassword for details.
+          Do not set this manually unless you wish to forgo
+          the shell modules.
+
+          See users.users.${name}.shell for further details.
         '';
-        type = with types; nullOr (passwdEntry str);
       };
     };
   };
@@ -62,7 +75,7 @@ in {
       home = value.homeDirectory;
       isNormalUser = true;
 
-      inherit (value) packages initialHashedPassword;
+      inherit (value) initialHashedPassword packages shell;
     };
   }) config.my.users);
 }

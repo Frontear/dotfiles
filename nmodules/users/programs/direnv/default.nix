@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkIf mkOption types;
+  inherit (lib) getExe mkAfter mkEnableOption mkIf mkOption types;
 
   nix-direnv = pkgs.nix-direnv.override { nix = config.nix.package; };
 
@@ -23,6 +23,10 @@ let
 
     config = mkIf config.programs.direnv.enable {
       packages = [ config.programs.direnv.package ];
+
+      programs.zsh.rc = mkAfter ''
+        eval "$(${getExe config.programs.direnv.package} hook zsh)"
+      '';
 
       file."~/.config/direnv/direnv.toml".content = (pkgs.formats.toml {}).generate "direnv-toml" (import ./config.nix config);
 

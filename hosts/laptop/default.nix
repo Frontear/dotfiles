@@ -21,6 +21,7 @@
     microsoft-edge.enable = true;
     neovim.enable = true;
     vscode.enable = true;
+    zsh.enable = true;
   };
 
   my.system.boot.enable = true;

@@ -29,6 +29,10 @@ let
 
     config = mkIf config.programs.neovim.enable {
       packages = [ config.programs.neovim.package ];
+
+      programs.zsh.env = ''
+        export EDITOR="nvim"
+      '';
     };
   };
 in {
