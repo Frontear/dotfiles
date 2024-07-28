@@ -36,5 +36,5 @@
     cleanOnBoot = true;
     useTmpfs = lib.mkForce false;
   };
-  my.system.persist.directories = [ "/tmp" ];
+  my.system.persist.directories = [ { path = "/tmp"; mode = "777"; } ];
 })
