@@ -6,7 +6,8 @@
 let
   inherit (lib) mkEnableOption mkIf mkOption types;
 
-  user-directory = "~/.config/microsoft-edge";
+  user-directory = ".config/microsoft-edge";
+  persist-user-directory = "~/.config/microsoft-edge";
 
   userOpts = { config, ... }: {
     options.programs.microsoft-edge = {
@@ -25,7 +26,7 @@ let
     config = mkIf config.programs.microsoft-edge.enable {
       packages = [ config.programs.microsoft-edge.package ];
 
-      persist.directories = [ user-directory ];
+      persist.directories = [ persist-user-directory ];
     };
   };
 in {
