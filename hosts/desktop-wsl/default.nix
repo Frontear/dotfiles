@@ -12,6 +12,7 @@
   my.users.frontear.programs = {
     atool.enable = true;
     direnv.enable = true;
+    eza.enable = true;
     git.enable = true;
     neovim.enable = true;
     zsh.enable = true;

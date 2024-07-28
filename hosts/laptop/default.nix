@@ -16,6 +16,7 @@
     atool.enable = true;
     armcord.enable = true;
     direnv.enable = true;
+    eza.enable = true;
     git.enable = true;
     libreoffice.enable = true;
     microsoft-edge.enable = true;
