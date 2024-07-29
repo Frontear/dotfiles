@@ -10,7 +10,6 @@
   ];
 
   frontear.programs.desktops.plasma.enable = true;
-  frontear.programs.terminal.enable = true;
 
   my.users.frontear.programs = {
     atool.enable = true;
@@ -18,6 +17,7 @@
     direnv.enable = true;
     eza.enable = true;
     git.enable = true;
+    gpg.enable = true;
     libreoffice.enable = true;
     microsoft-edge.enable = true;
     neovim.enable = true;
