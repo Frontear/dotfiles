@@ -5,9 +5,6 @@
 let
   inherit (lib) mkForce;
 in {
-  # Sets system stateVersion, do not change.
-  system.stateVersion = "24.05";
-
   # Use nh (nix helper)
   programs.nh.enable = true;
 

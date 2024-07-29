@@ -1,9 +1,13 @@
-{ nixos-wsl, ... }: ({ pkgs, ... }: {
+{
+  pkgs,
+  ...
+}:
+{
   imports = [
     ./hardware-configuration.nix
-
-    nixos-wsl.nixosModules.default
   ];
+
+  system.stateVersion = "24.05";
 
   my.system.nix.enable = true;
 
@@ -30,4 +34,4 @@
   };
 
   environment.systemPackages = with pkgs; [ yt-dlp ];
-})
+}

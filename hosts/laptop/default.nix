@@ -1,15 +1,13 @@
-{ nixos-hardware, ... }: ({ lib, pkgs, ... }: {
+{
+  pkgs,
+  ...
+}:
+{
   imports = [
     ./hardware-configuration.nix
-
-    nixos-hardware.nixosModules.dell-inspiron-14-5420
-    nixos-hardware.nixosModules.common-cpu-intel # pulls common-gpu-intel
-    nixos-hardware.nixosModules.common-hidpi
-    nixos-hardware.nixosModules.common-pc-laptop
-    nixos-hardware.nixosModules.common-pc-laptop-ssd
   ];
 
-  frontear.programs.desktops.plasma.enable = true;
+  system.stateVersion = "24.05";
 
   my.users.frontear.programs = {
     atool.enable = true;
@@ -25,10 +23,13 @@
     zsh.enable = true;
   };
 
-  my.system.boot.enable = true;
-  my.system.mounts.enable = true;
-  my.system.network.enable = true;
-  my.system.nix.enable = true;
+  my.system = {
+    boot.enable = true;
+    desktops.plasma.enable = true;
+    mounts.enable = true;
+    network.enable = true;
+    nix.enable = true;
+  };
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
@@ -72,4 +73,4 @@
 
   users.users."frontear".extraGroups = [ "networkmanager" "wheel" ];
   my.users."frontear".initialHashedPassword = "$y$j9T$gsXwh6NJa62APePZ.7xR00$lLYi86UgQdN1yjOIgqcegfTKsnqkXI4ufQHWdOTiKr6";
-})
+}

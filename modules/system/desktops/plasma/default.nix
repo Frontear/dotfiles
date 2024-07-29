@@ -1,14 +1,15 @@
-{ ... }: ({ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
-  inherit (lib) mkDefault mkEnableOption mkIf;
-
-  cfg = config.frontear.programs.desktops.plasma;
+  inherit (lib) mkEnableOption mkIf;
 in {
-  options.frontear.programs.desktops.plasma = {
-    enable = mkEnableOption "opinionated plasma module.";
-  };
+  options.my.system.desktops.plasma.enable = mkEnableOption "plasma";
 
-  config = mkIf cfg.enable {
+  config = mkIf config.my.system.desktops.plasma.enable {
     my.system.audio.enable = true;
 
     my.users.frontear.persist.directories = [
@@ -29,4 +30,4 @@ in {
       displayManager.sddm.wayland.enable = true;
     };
   };
-})
+}

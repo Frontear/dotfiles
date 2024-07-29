@@ -10,7 +10,7 @@ let
     nixpkgs
     ;
 
-  extLib = nixpkgs.lib.extend (final: prev: import ../lib prev);
+  lib = nixpkgs.lib.extend (final: prev: import ../lib prev);
 in {
   perSystem = { pkgs, ... }: {
     devShells.default = import ./shell.nix { inherit pkgs; };
@@ -18,29 +18,31 @@ in {
 
   flake = {
     nixosConfigurations = {
-      "LAPTOP-3DT4F02" = extLib.nixosSystem {
+      "LAPTOP-3DT4F02" = lib.nixosSystem {
         modules = [
           self.nixosModules.default
-          self.nixosModules.new
+          nixos-hardware.nixosModules.dell-inspiron-14-5420
+          nixos-hardware.nixosModules.common-cpu-intel # pulls common-gpu-intel
+          nixos-hardware.nixosModules.common-hidpi
+          nixos-hardware.nixosModules.common-pc-laptop
+          nixos-hardware.nixosModules.common-pc-laptop-ssd
 
           ../hosts/common
-          (import ../hosts/laptop { inherit nixos-hardware; })
+          ../hosts/laptop
         ];
       };
 
-      "nixos" = extLib.nixosSystem {
+      "nixos" = lib.nixosSystem {
         modules = [
           self.nixosModules.default
-          self.nixosModules.new
+          nixos-wsl.nixosModules.default
 
           ../hosts/common
-          (import ../hosts/desktop-wsl { inherit nixos-wsl; })
+          ../hosts/desktop-wsl
         ];
       };
     };
 
-    nixosModules.default = import ../modules { };
-
-    nixosModules.new = import ../nmodules inputs;
+    nixosModules.default = import ../modules inputs;
   };
 }
