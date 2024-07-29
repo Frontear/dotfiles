@@ -5,7 +5,6 @@
 }:
 let
   inherit (inputs)
-    home-manager
     nixos-hardware
     nixos-wsl
     nixpkgs
@@ -24,7 +23,7 @@ in {
           self.nixosModules.default
           self.nixosModules.new
 
-          (import ../hosts/common { inherit home-manager; })
+          ../hosts/common
           (import ../hosts/laptop { inherit nixos-hardware; })
         ];
       };
@@ -34,7 +33,7 @@ in {
           self.nixosModules.default
           self.nixosModules.new
 
-          (import ../hosts/common { inherit home-manager; })
+          ../hosts/common
           (import ../hosts/desktop-wsl { inherit nixos-wsl; })
         ];
       };
