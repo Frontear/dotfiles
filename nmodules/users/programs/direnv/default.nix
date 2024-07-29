@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   pkgs,
   ...
@@ -7,7 +6,7 @@
 let
   inherit (lib) getExe mkAfter mkEnableOption mkIf mkOption types;
 
-  nix-direnv = pkgs.nix-direnv.override { nix = config.nix.package; };
+  nix-direnv = pkgs.nix-direnv;
 
   userOpts = { config, ... }: {
     options.programs.direnv = {

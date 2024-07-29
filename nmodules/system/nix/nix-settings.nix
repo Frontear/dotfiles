@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
@@ -10,8 +9,13 @@ let
   cfg = config.my.system.nix;
 in {
   config = mkIf cfg.enable {
+    # Force as an overlay to propagate to everything correctly.
     # see: https://gist.github.com/Frontear/f88e27b0a5c2841c849a1a21e6b70793
-    nix.package = pkgs.lix;
+    nixpkgs.overlays = [
+      (final: prev: {
+        nix = prev.lix;
+      })
+    ];
 
     # https://nix.dev/manual/nix/development/command-ref/conf-file.html
     nix.settings = {
