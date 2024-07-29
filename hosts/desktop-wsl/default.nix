@@ -7,13 +7,12 @@
 
   my.system.nix.enable = true;
 
-  frontear.programs.terminal.enable = true;
-
   my.users.frontear.programs = {
     atool.enable = true;
     direnv.enable = true;
     eza.enable = true;
     git.enable = true;
+    gpg.enable = true;
     neovim.enable = true;
     zsh.enable = true;
   };
