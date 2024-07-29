@@ -6,7 +6,7 @@
 }:
 let
   inherit (builtins) any replaceStrings;
-  inherit (lib) getExe' mapAttrsToList mkEnableOption mkIf mkOption types;
+  inherit (lib) getExe' mapAttrsToList mkEnableOption mkIf mkMerge mkOption types;
 
   # TODO: generate in Nix
   hash = "d.1uzwshierbzk3ym6i45au4jk";
@@ -53,12 +53,28 @@ in {
     type = with types; attrsOf (submodule userOpts);
   };
 
-  config = mkIf (any (cfg: cfg.enable) (mapAttrsToList (_: v: v.programs.gpg) config.my.users)) {
-    programs.gnupg.agent = {
+  config = {
+    programs.gnupg.agent = mkIf (any (cfg: cfg.enable) (mapAttrsToList (_: v: v.programs.gpg) config.my.users)) {
       enable = true;
       enableSSHSupport = true;
 
       pinentryPackage = pkgs.pinentry-tty;
     };
+
+    /* TODO: find out why this doesn't work.
+    systemd.user = mkMerge (mapAttrsToList (_: v: mkIf v.programs.gpg.enable {
+      services.gpg-agent.reloadTriggers = [
+        v.file."~/.config/systemd/user/gpg-agent.service.d/override.conf".content
+      ];
+
+      sockets.gpg-agent.reloadTriggers = [
+        v.file."~/.config/systemd/user/gpg-agent.socket.d/override.conf".content
+      ];
+
+      sockets.gpg-agent-ssh.reloadTriggers = [
+        v.file."~/.config/systemd/user/gpg-agent-ssh.socket.d/override.conf".content
+      ];
+    }) config.my.users);
+    */
   };
 }
