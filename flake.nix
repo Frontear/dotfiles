@@ -1,11 +1,7 @@
 {
   nixConfig = {
-    extra-substituters = [
-      "https://frontear.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "frontear.cachix.org-1:rrVt1C9dFaJf9QpG1Vu6sHqEUy0Q8ezLCCaxz7oZPOM="
-    ];
+    extra-substituters = [ "https://frontear.cachix.org" ];
+    extra-trusted-public-keys = [ "frontear.cachix.org-1:rrVt1C9dFaJf9QpG1Vu6sHqEUy0Q8ezLCCaxz7oZPOM=" ];
   };
 
   inputs = {
