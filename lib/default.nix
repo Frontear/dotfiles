@@ -1,8 +1,21 @@
 lib:
 let
-  inherit (builtins) baseNameOf;
-  inherit (lib) filter;
-  inherit (lib.filesystem) listFilesRecursive;
+  inherit (builtins)
+    baseNameOf
+    substring
+    toString
+    ;
+
+  inherit (lib)
+    filter
+    isStringLike
+    mergeEqualOption
+    mkOptionType
+    ;
+
+  inherit (lib.filesystem)
+    listFilesRecursive
+    ;
 in {
   /*
     Returns a list of files from the current directory and recursively down
@@ -25,4 +38,28 @@ in {
     )
     (listFilesRecursive path)
   );
+
+  types = {
+    systemPath = mkOptionType {
+      name = "systemPath";
+      description = "absolute path, denoted with a /";
+      descriptionClass = "nonRestrictiveClause";
+      check = (x:
+        isStringLike x &&
+        substring 0 1 (toString x) == "/"
+      );
+      merge = mergeEqualOption;
+    };
+
+    userPath = mkOptionType {
+      name = "userPath";
+      description = "relative path, denoted with a ~";
+      descriptionClass = "nonRestrictiveClause";
+      check = (x:
+        isStringLike x &&
+        substring 0 1 (toString x) == "~"
+      );
+      merge = mergeEqualOption;
+    };
+  } // lib.types;
 }

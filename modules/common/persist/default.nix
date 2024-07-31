@@ -12,14 +12,14 @@ let
   user-persist = concatLists (forEach (mapAttrsToList (_: v: v.persist) config.my.users) (cfg: optionals cfg.enable ((forEach cfg.directories (d: ''persistDir "${cfg.volume + d.path}" "${d.path}" "${d.user}" "${d.group}" "${d.mode}"'')) ++ (forEach cfg.files (f: ''persistFile "${cfg.volume + f.path}" "${f.path}" "${f.user}" "${f.group}" "${f.mode}"'')))));
   all-persist = system-persist ++ user-persist;
 
-  pathOpts = name: username: group: {
+  pathOpts = name: { username, group, type }: {
     options = {
       path = mkOption {
         default = null;
         description = ''
           Absolute path to the ${name}.
         '';
-        type = types.str;
+        inherit type;
       };
 
       user = mkOption {
@@ -48,7 +48,7 @@ let
     };
   };
 
-  mkPersistOption = ({ name, username, group, from, to, file_example, dir_example }: {
+  mkPersistOption = ({ name, username, group, type, apply, file_example, dir_example }: {
     enable = mkEnableOption "persist ${name} paths across ephemeral roots.";
     volume = mkOption {
       default = "/nix/persist";
@@ -62,8 +62,8 @@ let
       description = ''
         Directories from the ${name} to persistently store.
       '';
-      type = with types; listOf (coercedTo str (d: { path = d; }) (submodule (pathOpts "directory" username group)));
-      apply = v: map (x: x // { path = (replaceStrings from to x.path); }) v;
+      type = with types; listOf (coercedTo str (d: { path = d; }) (submodule (pathOpts "directory" { inherit username group type; })));
+      apply = v: map (x: x // { path = apply x.path; }) v;
     };
     files = mkOption {
       default = [];
@@ -71,8 +71,8 @@ let
       description = ''
         Files from the ${name} to persistently store.
       '';
-      type = with types; listOf (coercedTo str (f: { path = f; }) (submodule (pathOpts "file" username group)));
-      apply = v: map (x: x // { path = (replaceStrings from to x.path); }) v;
+      type = with types; listOf (coercedTo str (f: { path = f; }) (submodule (pathOpts "file" { inherit username group type; })));
+      apply = v: map (x: x // { path = apply x.path; }) v;
     };
   });
 
@@ -81,8 +81,8 @@ let
       name = "user";
       username = config.username;
       group = "users";
-      from = [ "~" ];
-      to = [ config.homeDirectory ];
+      type = types.userPath;
+      apply = x: replaceStrings [ "~" ] [ config.homeDirectory ] x;
 
       dir_example = [
         "~/.ssh"
@@ -101,8 +101,8 @@ in {
       name = "system";
       username = "root";
       group = "root";
-      from = [];
-      to = [];
+      type = types.systemPath;
+      apply = x: x;
 
       dir_example = [
         "/etc/NetworkManager"

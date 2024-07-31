@@ -13,7 +13,7 @@ let
   all-files = system-files ++ user-files;
 
   # I do not like the attr -> attr thing, but idk how else to work it.
-  fileOpts = { user, group, from, to }: { name, ... }: {
+  fileOpts = { user, group, type, apply }: { name, ... }: {
     options = {
       content = mkOption {
         default = null;
@@ -60,12 +60,14 @@ let
         default = name;
         internal = true;
         readOnly = true;
-        apply = x: replaceStrings from to x;
+
+        inherit type;
+        inherit apply;
       };
     };
   };
 
-  mkFileOption = { example, user, group, from, to }: mkOption {
+  mkFileOption = { example, user, group, apply, type }: mkOption {
     default = {};
     inherit example;
     description = ''
@@ -82,7 +84,7 @@ let
       is a symlink to the /nix/store, otherwise it is a one-time placement of the original
       file contents, and is not changed unless the file is deleted and a rebuild issued.
     '';
-    type = with types; attrsOf (submodule (fileOpts { inherit user group from to; }));
+    type = with types; attrsOf (submodule (fileOpts { inherit user group type apply; }));
   };
 
   userOpts = { config, ... }: {
@@ -90,8 +92,8 @@ let
       file = mkFileOption {
         user = config.username;
         group = "users";
-        from = [ "~" ];
-        to = [ config.homeDirectory ];
+        type = types.userPath;
+        apply = x: replaceStrings [ "~" ] [ config.homeDirectory ] x;
 
         example = {
           "~/.zshenv" = {
@@ -108,8 +110,8 @@ in {
     my.system.file = mkFileOption {
       user = "root";
       group = "root";
-      from = [];
-      to = [];
+      type = types.systemPath;
+      apply = x: x;
 
       example = {
         "/etc/resolv.conf" = {
