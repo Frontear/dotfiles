@@ -145,7 +145,7 @@ in {
         done
 
         if [ -f "$1" ] && [ -f "$2" ] && [ "$1" -ef "$2" ]; then
-          echo "Already linked, ignoring"
+          echo "$1 => $2 already, ignoring"
           return 0
         fi
 
