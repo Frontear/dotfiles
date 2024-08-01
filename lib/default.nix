@@ -8,6 +8,7 @@ let
 
   inherit (lib)
     filter
+    genAttrs
     isStringLike
     mergeEqualOption
     mkOptionType
@@ -39,27 +40,20 @@ in {
     (listFilesRecursive path)
   );
 
-  types = {
-    systemPath = mkOptionType {
-      name = "systemPath";
-      description = "absolute path, denoted with a /";
+  types =
+  let
+    mkPathOption = name: end: mkOptionType {
+      inherit name;
+      description = "absolute path, denoted with a ${end}";
       descriptionClass = "nonRestrictiveClause";
       check = (x:
         isStringLike x &&
-        substring 0 1 (toString x) == "/"
+        substring 0 1 (toString x) == end
       );
       merge = mergeEqualOption;
     };
-
-    userPath = mkOptionType {
-      name = "userPath";
-      description = "relative path, denoted with a ~";
-      descriptionClass = "nonRestrictiveClause";
-      check = (x:
-        isStringLike x &&
-        substring 0 1 (toString x) == "~"
-      );
-      merge = mergeEqualOption;
-    };
+  in {
+    systemPath = mkPathOption "systemPath" "/";
+    userPath = mkPathOption "userPath" "~";
   } // lib.types;
 }
