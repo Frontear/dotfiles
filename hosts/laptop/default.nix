@@ -46,9 +46,6 @@
 
   my.users.frontear.persist = {
     enable = true;
-    directories = [
-      "~/Documents"
-    ];
   };
 
   fileSystems = {

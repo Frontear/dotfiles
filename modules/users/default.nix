@@ -29,6 +29,7 @@ in {
   imports = [
     ./compat
     ./programs
+    ./standards
   ];
 
   options = {
