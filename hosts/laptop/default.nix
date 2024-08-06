@@ -36,7 +36,6 @@
   # System Configuration
   console.keyMap = "us";
   i18n.defaultLocale = "en_CA.UTF-8";
-  networking.hostName = "LAPTOP-3DT4F02";
   time.timeZone = "America/Toronto";
 
   my.system.persist = {

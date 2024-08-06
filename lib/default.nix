@@ -2,16 +2,19 @@ lib:
 let
   inherit (builtins)
     baseNameOf
+    concatLists
+    map
     substring
     toString
     ;
 
   inherit (lib)
     filter
-    genAttrs
     isStringLike
+    listToAttrs
     mergeEqualOption
     mkOptionType
+    nixosSystem
     ;
 
   inherit (lib.filesystem)
@@ -39,6 +42,50 @@ in {
     )
     (listFilesRecursive path)
   );
+
+  flake = {
+    # Exposes nixosConfigurations in a slightly
+    # more declarative manner, handling system
+    # as well as hostName, which ensures consistency
+    # across the flake and configurations.
+    #
+    # e.g.
+    # mkHostConfigurations "aarch64" [{
+    #   hostName = "LAPTOP-3DT4F02";
+    #   modules = [
+    #     ../hosts/laptop
+    #   ];
+    # }];
+    #
+    # This will result in:
+    # LAPTOP-3DT4F02 = nixosSystem {
+    #   modules = [
+    #     ../hosts/laptop
+    #   ];
+    # };
+    mkHostConfigurations = (system: configuration-list:
+      # This function expects [{ name; value; }] pairings,
+      # so we map our inputted list accordingly.
+      listToAttrs (
+        map (x:
+          {
+            name = x.hostName;
+            value = nixosSystem ({
+              modules = concatLists [
+                [{
+                  # Set these here for consistency between
+                  # flake and configurations
+                  networking.hostName = x.hostName;
+                  nixpkgs.hostPlatform = system;
+                }]
+                x.modules
+              ];
+            });
+          }
+        ) configuration-list
+      )
+    );
+  };
 
   types =
   let
