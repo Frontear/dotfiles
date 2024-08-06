@@ -1,17 +1,22 @@
-lib:
+{
+  self,
+  lib,
+}:
 let
   inherit (builtins)
     baseNameOf
     concatLists
+    filter
+    listToAttrs
     map
+    mapAttrs
+    removeAttrs
     substring
     toString
     ;
 
   inherit (lib)
-    filter
     isStringLike
-    listToAttrs
     mergeEqualOption
     mkOptionType
     nixosSystem
@@ -71,6 +76,20 @@ in {
           {
             name = x.hostName;
             value = nixosSystem ({
+              specialArgs = {
+                # Transforms system-specific flake outputs into
+                # pre-selected system outputs, akin to flake-parts.
+                # This is logically how flakes should've always been
+                # designed, where you define multi-system outputs,
+                # but at a syntax level, do not NEED to specify it.
+                # Alas...
+                #
+                # e.g.
+                # self.packages."x86_64-linux".default => self.packages.default
+                self = mapAttrs (_: value:
+                  if value ? ${system} then value.${system} else value
+                ) (removeAttrs self [ "outputs" ]); # We don't need outputs, because "outputs" are available through self.* as well, and because this won't propagate correctly into outputs anyways.
+              };
               modules = concatLists [
                 [{
                   # Set these here for consistency between

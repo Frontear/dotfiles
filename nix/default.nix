@@ -10,7 +10,10 @@ let
     nixpkgs
     ;
 
-  lib = nixpkgs.lib.extend (final: prev: import ../lib prev);
+  lib = nixpkgs.lib.extend (final: prev: import ../lib {
+    inherit self;
+    lib = prev;
+  });
 in {
   perSystem = { pkgs, ... }: {
     devShells.default = import ./shell.nix { inherit pkgs; };
