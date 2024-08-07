@@ -19,21 +19,16 @@ let
   let
     mapSystemAttrs = lib.mapAttrs (_: value: if value ? "${system}" then value."${system}" else value);
 
-    inputs' = lib.mapAttrs (_: mapSystemAttrs) (lib.filterAttrs (_: lib.isType "flake") self.inputs); # intentionally using self.inputs to avoid self being part of the inputs (as that's recursive in a weird way).
-    self' = mapSystemAttrs self;
-
     # Customized "self" reference that removes the necessity of system
     # for system-specific outputs, and leaves all other values as-is.
     # This is how flakes should've always been.
-    wrapped-self = self' // {
-      inputs = inputs';
-    };
+    self' = builtins.removeAttrs (mapSystemAttrs self) [ "inputs" "outputs" "sourceInfo" ]; # remove inputs and unnecessary outputs (their inner-attrs are available in self.*)
   in lib.listToAttrs (
     map (x: {
       name = x.hostName;
       value = lib.nixosSystem {
         specialArgs = {
-          self = wrapped-self;
+          self = self';
         };
         modules = lib.concatLists [
           [ self.nixosModules.default ]
