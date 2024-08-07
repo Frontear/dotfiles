@@ -15,31 +15,6 @@ Usage:
 }
 ```
 
-## flake.mkHostConfigurations
-Takes two arguments, a system and a list of valid `nixosSystem` attributes + a hostName attribute.
-
-Returns an attribute set that exposes NixOS Configurations in the form `${hostName} = nixosSystem { ... }`.
-
-This function attempts to expose the `nixosConfigurations` flake output in a more deterministic manner, handling the system and hostName at the flake level to avoid inconsistency within the configuration. It also exposes `self` in `specialArgs` with system-specific outputs re-mapped to not require them. This means things like `self.packages.x86_64-linux.default` is accessed via `self.packages.default`.
-
-Usage:
-```nix
-outputs = { self, nixpkgs, ... }:
-let
-  lib = nixpkgs.lib.extend (_: prev: import ./. {
-    inherit self;
-    lib = prev;
-  });
-in {
-  nixosConfigurations = lib.flake.mkHostConfigurations "x86_64-linux" [{
-    hostName = "nixos";
-    modules = [
-      ./configuration.nix
-    ];
-  }];
-}
-```
-
 ## types.systemPath
 A `type` definition for any arbitrary path that begins with `/`. Intended to be used in a `mkOption` declaration.
 

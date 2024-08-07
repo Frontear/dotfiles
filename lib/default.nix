@@ -5,12 +5,7 @@
 let
   inherit (builtins)
     baseNameOf
-    concatLists
     filter
-    listToAttrs
-    map
-    mapAttrs
-    removeAttrs
     substring
     toString
     ;
@@ -19,7 +14,6 @@ let
     isStringLike
     mergeEqualOption
     mkOptionType
-    nixosSystem
     ;
 
   inherit (lib.filesystem)
@@ -34,36 +28,6 @@ in {
     )
     (listFilesRecursive path)
   );
-
-  flake = {
-    mkHostConfigurations = (system: configuration-list:
-      listToAttrs (
-        map (x:
-          {
-            name = x.hostName;
-            value = nixosSystem ({
-              specialArgs = {
-                # TOOD: move?
-                self = mapAttrs (_: value:
-                  if value ? ${system} then value.${system} else value
-                ) (removeAttrs self [ "outputs" ]);
-              };
-              modules = concatLists [
-                [{
-                  networking.hostName = x.hostName;
-                  nixpkgs.hostPlatform = system;
-                }]
-                [
-                  self.nixosModules.default
-                ]
-                x.modules
-              ];
-            });
-          }
-        ) configuration-list
-      )
-    );
-  };
 
   types =
   let
