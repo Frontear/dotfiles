@@ -7,6 +7,8 @@
     ./hardware-configuration.nix
   ];
 
+  documentation.dev.enable = true;
+
   system.stateVersion = "24.05";
 
   my.users.frontear.programs = {

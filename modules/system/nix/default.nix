@@ -21,6 +21,9 @@ in {
       # Enable nix (duh!) and disable channels
       nix.enable = mkDefault true;
       nix.channel.enable = mkForce false;
+
+      # Use viper's nix wrapper
+      programs.nh.enable = true;
     }
     {
       # Explicitly set NIX_PATH in both locations, because they don't

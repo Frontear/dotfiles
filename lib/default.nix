@@ -53,6 +53,9 @@ in {
                   networking.hostName = x.hostName;
                   nixpkgs.hostPlatform = system;
                 }]
+                [
+                  self.nixosModules.default
+                ]
                 x.modules
               ];
             });
