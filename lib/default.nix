@@ -24,7 +24,7 @@ in {
   importsRecursive = (path: pred:
     filter (x:
       # TODO: don't assume default.nix is caller
-      x != path + /default.nix &&
+      x != path + "/default.nix" &&
       pred (baseNameOf x)
     )
     (listFilesRecursive path)

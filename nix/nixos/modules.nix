@@ -1,4 +1,5 @@
 {
+  self,
   inputs,
   ...
 }:
@@ -9,7 +10,7 @@
       ...
     }:
     {
-      imports = lib.importsRecursive ../../modules (x: x == "default.nix");
+      imports = lib.importsRecursive "${self}/modules" (x: x == "default.nix");
 
       config._module.args = { inherit inputs; };
     }

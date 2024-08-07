@@ -10,32 +10,26 @@ let
     nixpkgs
     ;
 
-  lib = nixpkgs.lib.extend (_: prev: import ../../lib {
+  lib = nixpkgs.lib.extend (_: prev: import "${self}/lib" {
     inherit self;
     lib = prev;
   });
 
-  mkNixOSConfigurations = (system: list:
-  let
-    mapSystemAttrs = lib.mapAttrs (_: value: if value ? "${system}" then value."${system}" else value);
-
-    # Customized "self" reference that removes the necessity of system
-    # for system-specific outputs, and leaves all other values as-is.
-    # This is how flakes should've always been.
-    self' = builtins.removeAttrs (mapSystemAttrs self) [ "inputs" "outputs" "sourceInfo" ]; # remove inputs and unnecessary outputs (their inner-attrs are available in self.*)
-  in lib.listToAttrs (
+  mkNixOSConfigurations = (system: list: lib.listToAttrs (
     map (x: {
       name = x.hostName;
       value = lib.nixosSystem {
         specialArgs = {
-          self = self';
+          self = lib.flake.mkSelf' system;
         };
         modules = lib.concatLists [
-          [ self.nixosModules.default ]
-          [{
-            networking.hostName = x.hostName;
-            nixpkgs.hostPlatform = system;
-          }]
+          [
+            self.nixosModules.default
+            {
+              networking.hostName = x.hostName;
+              nixpkgs.hostPlatform = system;
+            }
+          ]
           x.modules
         ];
       };
@@ -52,7 +46,7 @@ in {
         nixos-hardware.nixosModules.common-pc-laptop
         nixos-hardware.nixosModules.common-pc-laptop-ssd
 
-        ../../hosts/laptop
+        "${self}/hosts/laptop"
       ];
     }
     {
@@ -60,7 +54,7 @@ in {
       modules = [
         nixos-wsl.nixosModules.default
 
-        ../../hosts/desktop-wsl
+        "${self}/hosts/desktop-wsl"
       ];
     }
   ];

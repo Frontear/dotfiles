@@ -23,7 +23,7 @@ pkgs.mkShell {
         if [ -z "$MODE" ]; then
           MODE="test"
         fi
- 
+
         if nh os "$MODE" --verbose . -- --show-trace --max-jobs auto --option eval-cache false "''${@:2}" && [ "$MODE" = "boot" ]; then
           reboot
         fi
