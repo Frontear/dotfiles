@@ -26,12 +26,6 @@ let
     };
   };
 in {
-  imports = [
-    ./compat
-    ./programs
-    ./standards
-  ];
-
   options = {
     my.users = mkOption {
       default = {};

@@ -9,8 +9,6 @@
 
   system.stateVersion = "24.05";
 
-  my.system.nix.enable = true;
-
   my.users.frontear.programs = {
     atool.enable = true;
     direnv.enable = true;

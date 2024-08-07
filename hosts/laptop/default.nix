@@ -24,11 +24,11 @@
   };
 
   my.system = {
-    boot.enable = true;
+    audio.pipewire.enable = true;
+    boot.systemd-boot.enable = true;
     desktops.plasma.enable = true;
-    mounts.enable = true;
-    network.enable = true;
-    nix.enable = true;
+    mounts.swap.enable = true;
+    network.networkmanager.enable = true;
   };
 
   boot.kernelPackages = pkgs.linuxPackages_latest;

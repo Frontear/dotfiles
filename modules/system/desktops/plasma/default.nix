@@ -5,29 +5,32 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkDefault mkEnableOption mkIf;
 in {
   options.my.system.desktops.plasma.enable = mkEnableOption "plasma";
 
   config = mkIf config.my.system.desktops.plasma.enable {
-    my.system.audio.enable = true;
+    # Activate plasma and sddm, with explicit wayland support.
+    services.desktopManager.plasma6.enable = true;
+    services.displayManager.sddm.enable = true;
+    services.displayManager.sddm.wayland.enable = mkDefault true;
 
+    # Enable pipewire as the main audio service.
+    my.system.audio.pipewire.enable = mkDefault true;
+
+    # https://wiki.nixos.org/wiki/KDE#GTK_themes_are_not_applied_in_Wayland_applications_/_Window_Decorations_missing_/_Cursor_looks_different
+    programs.dconf.enable = true;
+
+    # Persist a handful of user directories to keep things easy.
+    # WARN: make user independent
     my.users.frontear.persist.directories = [
       "~/.config"
       "~/.local"
     ];
 
+    # Use a generic font that supports icons
     fonts.packages = with pkgs; [
       (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
     ];
-
-    programs.dconf.enable = true;
-
-    services = {
-      desktopManager.plasma6.enable = true;
-
-      displayManager.sddm.enable = true;
-      displayManager.sddm.wayland.enable = true;
-    };
   };
 }

@@ -4,11 +4,12 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-
-  cfg = config.my.system.mounts;
+  inherit (lib) mkEnableOption mkIf;
 in {
-  config = mkIf cfg.enable {
+  options.my.system.mounts.swap.enable = mkEnableOption "swap";
+
+  config = mkIf config.my.system.mounts.swap.enable {
+    # Optimizes swap-related kernel tunings for zram usage
     # https://wiki.archlinux.org/title/Zram#Optimizing_swap_on_zram
     boot.kernel.sysctl = {
       "vm.swappiness" = 180;
@@ -17,6 +18,8 @@ in {
       "vm.page-cluster" = 0;
     };
 
+    # Enables and configures zram to work higher than any other swap devices.
+    zramSwap.enable = true;
     zramSwap.algorithm = "zstd";
     zramSwap.memoryPercent = 150; # https://unix.stackexchange.com/a/596929
     zramSwap.priority = 100;
