@@ -6,6 +6,7 @@ let
   inherit (builtins)
     baseNameOf
     filter
+    mapAttrs
     substring
     toString
     ;
@@ -28,6 +29,15 @@ in {
     )
     (listFilesRecursive path)
   );
+
+  # TODO: better name?
+  flake.mkSelf' = (system:
+  let
+    removeSystemAttr = mapAttrs (_: v: if v ? ${system} then v.${system} else v);
+    outputsToRemove = [ "outputs" "sourceInfo" ];
+  in (removeSystemAttr (removeAttrs self outputsToRemove)) // {
+    inputs = mapAttrs (_: v: removeSystemAttr (removeAttrs v ([ "inputs" ] ++ outputsToRemove))) self.inputs;
+  });
 
   types =
   let

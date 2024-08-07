@@ -15,6 +15,36 @@ Usage:
 }
 ```
 
+## flake.mkSelf'
+Takes one argument, a reference to the `system` attribute on which to transform `self`.
+
+Returns a modified version of `self` (colloquially referred to as `self'`), that transforms system-dependent outputs into system-independent outputs based on the desired system. Furthermore, it transforms inputs in the same way, and removes from repeated attributes from both `self` and `inputs` that are accessible in other ways (`outputs` is removed as all values in outputs are mapped to the root attrset, `sourceInfo` for the same reason). For `self.inputs` specifically, it removes deeper `inputs` as well, as those are unlikely to be used and can be discarded safely.
+
+Usage:
+```nix
+outputs = { self, nixpkgs, ... }:
+let
+  lib = nixpkgs.lib.extend (_: prev: import ./. {
+    inherit self;
+    lib = prev;
+  });
+
+  self' = lib.flake.mkSelf' "x86_64-linux";
+in {
+  nixosConfigurations."nixos" = nixpkgs.lib.nixosSystem {
+    modules = [
+      {
+        environment.systemPackages = [
+          self'.packages.hello
+          self'.inputs.foo.packages.bar
+          self'.inputs.nixpkgs.legacyPackages.steam
+        ];
+      }
+    ];
+  };
+};
+```
+
 ## types.systemPath
 A `type` definition for any arbitrary path that begins with `/`. Intended to be used in a `mkOption` declaration.
 
