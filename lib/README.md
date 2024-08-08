@@ -4,18 +4,22 @@ Documentation for my lib extensions, because I want to keep the `default.nix` as
 ## flake.mkModules
 Takes one argument, a path to a directory tree of modules.
 
-Returns a module expression that imports all modules found within the directory tree. The assumption is that modules are defined in `default.nix`, and any other files are ignored as they are assumed to be linked by the aforementioned entrypoint.
+Returns a module expression that imports all modules found within the directory tree, joined with extra arguments from the flake in a funky combinator that does not depend on specialArgs. In doing so, true isolation is achieved as modules are determined and connected ahead-of-time and irrespective of what the system provides.
+
+This function make the assumption that modules are defined in `default.nix`, and any other files are ignored as they are assumed to be linked by the aforementioned entrypoint.
 
 Usage:
 ```nix
-outputs = { self, nixpkgs, ... }:
+outputs = { self, nixpkgs, ... } @ inputs:
 let
   lib = nixpkgs.lib.extend (_: prev: import ./. {
     inherit self;
     lib = prev;
   });
 in {
-  nixosModules.default = lib.flake.mkModules ./modules;
+  nixosModules.default = lib.flake.mkModules ./modules {
+    inherit inputs; # all modules can access inputs in their args.
+  };
 };
 ```
 

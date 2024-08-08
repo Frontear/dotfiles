@@ -1,5 +1,5 @@
 {
-  self,
+  inputs,
   config,
   lib,
   pkgs,
@@ -7,8 +7,6 @@
 }:
 let
   inherit (lib) mapAttrs' mapAttrsToList mkDefault mkEnableOption mkForce mkIf mkMerge;
-
-  inputs = self.inputs // { inherit self; }; # ensure self is available in the input-farm
 
   # thanks lychee :3
   # https://github.com/itslychee/config/blob/69290575cc0829d40b516654e19d6b789edf32d0/modules/nix/settings.nix

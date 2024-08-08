@@ -14,6 +14,7 @@ let
     ;
 
   inherit (lib)
+    functionArgs
     isStringLike
     mergeEqualOption
     mkOptionType
@@ -25,10 +26,18 @@ let
     ;
 in rec {
   flake = {
-    mkModules = (path: {
-      imports = filter (x:
+    mkModules = (path: { ... } @ extraArgs: {
+      imports = map (x:
+      let
+        imported = import x;
+      in {
+          # args by default is: config, lib, modulesPath, options, pkgs
+          __functor = _: args: imported (args // extraArgs);
+          __functionArgs = functionArgs imported;
+        }
+      ) (filter (x:
         (baseNameOf x) == "default.nix"
-      ) (listFilesRecursive path);
+      ) (listFilesRecursive path));
     });
 
     mkNixOSConfigurations = (system: list: listToAttrs (
