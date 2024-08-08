@@ -1,18 +1,47 @@
 # Lib Extension
 Documentation for my lib extensions, because I want to keep the `default.nix` as free of comments as possible.
 
-## importsRecursive
-Takes two arguments, a path and a predicate function.
+## flake.mkModules
+Takes one argument, a path to a directory tree of modules.
 
-Returns a list of `.nix` files from the specified directory and recursively down its tree that qualify with the defined predicate.
-
-This function is intended only to be used with `imports` within the context of the module system. It is also largely intended that the path be itself, although it expects other path. Given the previous assumption, it also avoids returning the calling file (assumed `default.nix`) to avoid an infrec.
+Returns a module expression that imports all modules found within the directory tree. The assumption is that modules are defined in `default.nix`, and any other files are ignored as they are assumed to be linked by the aforementioned entrypoint.
 
 Usage:
 ```nix
-{ lib, ... }: {
-  imports = lib.importsRecursive ./. (x: x == "default.nix");
-}
+outputs = { self, nixpkgs, ... }:
+let
+  lib = nixpkgs.lib.extend (_: prev: import ./. {
+    inherit self;
+    lib = prev;
+  });
+in {
+  nixosModules.default = lib.flake.mkModules ./modules;
+};
+```
+
+## flake.mkNixOSConfigurations
+Takes two arguments, a defined system and a list of valid attributes that can be passed to `lib.evalModules`, with an added `hostName` attribute.
+
+Returns an attribute set that maps the given `hostName` and other attributes to the `nixosConfigurations` flake schema. This function only expects a `hostName` and `modules` attributes in the list. This function will also implicitly add `self.nixosModules.default` to the module list, as well as set `networking.hostName` and `nixpkgs.hostPlatform`.
+
+Usage:
+```nix
+outputs = { self, nixpkgs, ... }:
+let
+  lib = nixpkgs.lib.extend (_: prev: import ./. {
+    inherit self;
+    lib = prev;
+  });
+in {
+  nixosConfigurations = lib.flake.mkNixOSConfigurations "x86_64-linux" [
+    {
+      hostName = "nixos";
+      modules = [
+        ./configuration.nix
+      ];
+    }
+  ];
+};
 ```
 
 ## flake.mkSelf'
