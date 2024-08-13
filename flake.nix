@@ -3,6 +3,11 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    lix = {
+      url = "github:lix-project/lix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware";
     };

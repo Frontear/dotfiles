@@ -55,7 +55,7 @@ in {
       # https://gist.github.com/Frontear/f88e27b0a5c2841c849a1a21e6b70793
       nixpkgs.overlays = [
         (final: _: {
-          nix = final.lix;
+          nix = inputs.lix.packages.${final.system}.default;
         })
       ];
     }
