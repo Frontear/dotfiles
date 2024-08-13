@@ -1,0 +1,8 @@
+#!/usr/bin/env nix-shell
+#! nix-shell -i bash -p cachix
+
+pushd "$(dirname $0)" >> /dev/null
+
+HOSTNAME=$(hostname) nix-build . --no-out-link | cachix push frontear
+
+popd >> /dev/null

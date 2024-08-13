@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (lib) mapAttrs' mapAttrsToList mkDefault mkEnableOption mkForce mkIf mkMerge;
+  inherit (lib) mapAttrs' mapAttrsToList mkDefault mkEnableOption mkForce mkIf mkMerge mkOption types;
 
   # thanks lychee :3
   # https://github.com/itslychee/config/blob/69290575cc0829d40b516654e19d6b789edf32d0/modules/nix/settings.nix
@@ -14,7 +14,17 @@ let
     inherit name path;
   }) inputs);
 in {
-  options.my.system.nix.enable = (mkEnableOption "nix" // { default = true; });
+  options.my.system.nix = {
+    enable = (mkEnableOption "nix" // { default = true; });
+    package = mkOption {
+      default = inputs.lix.packages.${pkgs.system}.default;
+
+      type = types.package;
+      internal = true;
+      readOnly = true;
+    };
+  };
+
 
   config = mkIf config.my.system.nix.enable (mkMerge [
     {
@@ -55,7 +65,7 @@ in {
       # https://gist.github.com/Frontear/f88e27b0a5c2841c849a1a21e6b70793
       nixpkgs.overlays = [
         (final: _: {
-          nix = inputs.lix.packages.${final.system}.default;
+          nix = config.my.system.nix.package;
         })
       ];
     }
