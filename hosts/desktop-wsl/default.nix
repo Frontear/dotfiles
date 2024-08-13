@@ -11,14 +11,19 @@
 
   system.stateVersion = "24.05";
 
-  my.users.frontear.programs = {
-    atool.enable = true;
-    direnv.enable = true;
-    eza.enable = true;
-    git.enable = true;
-    gpg.enable = true;
-    neovim.enable = true;
-    zsh.enable = true;
+  my.users.frontear = {
+    extraGroups = [ "wheel" ];
+    packages = with pkgs; [ yt-dlp ];
+
+    programs = {
+      atool.enable = true;
+      direnv.enable = true;
+      eza.enable = true;
+      git.enable = true;
+      gpg.enable = true;
+      neovim.enable = true;
+      zsh.enable = true;
+    };
   };
 
   programs.nix-ld = {
@@ -32,6 +37,4 @@
     nativeSystemd = true;
     useWindowsDriver = true;
   };
-
-  environment.systemPackages = with pkgs; [ yt-dlp ];
 }
