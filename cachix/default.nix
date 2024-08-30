@@ -1,4 +1,8 @@
-# This is intended to be impure.
+# An impure nix expression that tries to
+# parse all packages part of the various
+# programs.* nixos module options exposed
+# in my.system and my.users.<name>
+
 let
   inherit (builtins)
     attrValues
@@ -14,7 +18,8 @@ let
 
   inherit (flakeRef.lib)
     concatLists
-    pipe;
+    pipe
+    ;
 
   systemPackages = pipe flakeRef.config.my.system [
     attrValues
