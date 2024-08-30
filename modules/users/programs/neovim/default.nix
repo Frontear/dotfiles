@@ -30,6 +30,8 @@ let
     config = mkIf config.programs.neovim.enable {
       packages = [ config.programs.neovim.package ];
 
+      persist.directories = [ "~/.local/share/lvim" ];
+
       programs.zsh.env = ''
         export EDITOR="nvim"
       '';
