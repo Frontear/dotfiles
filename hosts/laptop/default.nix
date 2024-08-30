@@ -7,9 +7,18 @@
     ./hardware-configuration.nix
   ];
 
-  documentation.dev.enable = true;
-
   system.stateVersion = "24.05";
+
+  my.system = {
+    boot.systemd-boot.enable = true;
+    mounts.swap.enable = true;
+    network.networkmanager.enable = true;
+
+    persist = {
+      enable = true;
+      directories = [ "/var/lib/systemd/backlight" ];
+    };
+  };
 
   my.users.frontear = {
     extraGroups = [ "networkmanager" "wheel" ];
@@ -31,16 +40,13 @@
     };
   };
 
-  my.system = {
-    audio.pipewire.enable = true;
-    boot.systemd-boot.enable = true;
-    desktops.plasma.enable = true;
-    mounts.swap.enable = true;
-    network.networkmanager.enable = true;
+  specialisation = {
+    plasma.configuration = {
+      my.system.desktops.plasma.enable = true;
+    };
 
-    persist = {
-      enable = true;
-      directories = [ "/var/lib/systemd/backlight" ];
+    cosmic.configuration = {
+      my.system.desktops.cosmic.enable = true;
     };
   };
 
