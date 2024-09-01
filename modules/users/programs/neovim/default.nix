@@ -10,7 +10,7 @@ let
     options.programs.neovim = {
       enable = mkEnableOption "neovim";
       package = mkOption {
-        default = pkgs.lunarvim.overrideAttrs {
+        default = (pkgs.lunarvim.override {
           nvimAlias = true;
           globalConfig = ''
             vim.opt.tabstop = 4
@@ -19,7 +19,9 @@ let
             vim.opt.number = true
             vim.cmd("highlight LineNr ctermfg=grey")
           '';
-        };
+        }).overrideAttrs (prevAttrs: {
+          runtimeDeps = prevAttrs.runtimeDeps ++ [ pkgs.wl-clipboard ];
+        });
 
         type = types.package;
         internal = true;
