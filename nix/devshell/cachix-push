@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+if [ -z "$CACHIX_AUTH_TOKEN" ]; then
+    echo "Missing \$CACHIX_AUTH_TOKEN, cannot proceed." >> /dev/stderr
+    exit 1
+fi
+
+nix flake archive --json | jq -r '.path,(.inputs|to_entries[].value.path)' | cachix push frontear
+
+for host in $(nix eval ".#nixosConfigurations" --apply builtins.attrNames --json | jq -r '.[]'); do
+    nix build ".#cachixJobs.$host" --no-link --print-out-paths | cachix push frontear
+done
