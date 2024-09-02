@@ -5,10 +5,10 @@
 let
   inherit (builtins)
     baseNameOf
-    concatLists
     filter
     mapAttrs
     listToAttrs
+    removeAttrs
     substring
     toString
     ;
@@ -19,6 +19,7 @@ let
     mergeEqualOption
     mkOptionType
     nixosSystem
+    pipe
     ;
 
   inherit (lib.filesystem)
@@ -27,39 +28,39 @@ let
 in rec {
   flake = {
     mkModules = (path: { ... } @ extraArgs: {
-      imports = map (x:
-      let
-        imported = import x;
-      in {
-          # args by default is: config, lib, modulesPath, options, pkgs
+      imports = pipe path [
+        listFilesRecursive
+        (filter (x: baseNameOf x == "default.nix"))
+        (map (x:
+        let
+          imported = import x;
+        in {
+          # args = { config, lib, modulesPath, options, pkgs, ... }
           __functor = _: args: imported (args // extraArgs);
           __functionArgs = functionArgs imported;
-        }
-      ) (filter (x:
-        (baseNameOf x) == "default.nix"
-      ) (listFilesRecursive path));
+        }))
+      ];
     });
 
-    mkNixOSConfigurations = (system: list: listToAttrs (
-      map (x: {
-        name = x.hostName;
+    mkNixOSConfigurations = (system: list: pipe list [
+      (map ({ hostName, modules, ... } @ extraArgs: {
+        name = hostName;
         value = nixosSystem {
           specialArgs = {
             self = flake.mkSelf' system;
-          };
-          modules = concatLists [
-            [
-              self.nixosModules.default
-              {
-                networking.hostName = x.hostName;
-                nixpkgs.hostPlatform = system;
-              }
-            ]
-            x.modules
-          ];
-        };
-      }) list
-    ));
+          } // (if extraArgs ? specialArgs then extraArgs.specialArgs else {});
+
+          modules = [
+            self.nixosModules.default
+            {
+              networking.hostName = hostName;
+              nixpkgs.hostPlatform = system;
+            }
+          ] ++ modules;
+        } // (removeAttrs extraArgs [ "hostName" "modules" "specialArgs" ]);
+      }))
+      listToAttrs
+    ]);
 
     # TODO: better name?
     mkSelf' = (system:
