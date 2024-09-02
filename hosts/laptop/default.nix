@@ -43,6 +43,12 @@
   specialisation = {
     plasma.configuration = {
       my.system.desktops.plasma.enable = true;
+      my.users.frontear = {
+        persist.directories = [
+          "~/.config"
+          "~/.local"
+        ];
+      };
     };
 
     cosmic.configuration = {

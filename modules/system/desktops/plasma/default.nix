@@ -21,13 +21,6 @@ in {
     # https://wiki.nixos.org/wiki/KDE#GTK_themes_are_not_applied_in_Wayland_applications_/_Window_Decorations_missing_/_Cursor_looks_different
     programs.dconf.enable = true;
 
-    # Persist a handful of user directories to keep things easy.
-    # WARN: make user independent
-    my.users.frontear.persist.directories = [
-      "~/.config"
-      "~/.local"
-    ];
-
     # Use a generic font that supports icons
     fonts.packages = with pkgs; [
       (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
