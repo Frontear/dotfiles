@@ -2,7 +2,7 @@
   lib,
 
   stdenv,
-  mkShell,
+  mkShellNoCC,
   makeWrapper,
 
   nh,
@@ -56,7 +56,7 @@ let
       runHook postInstall
     '';
   };
-in mkShell {
+in mkShellNoCC {
   packages = [
     nil
     scripts
