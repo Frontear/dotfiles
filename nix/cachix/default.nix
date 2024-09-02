@@ -6,11 +6,10 @@
 }:
 {
   flake = {
-    cachixJobs = (with lib; genAttrs (attrNames self.nixosConfigurations) (host:
+    cachixJobs = (with lib; mapAttrs (name: value:
     let
-      # We want an instance of pkgs that has host-specific config and overlays applied
-      pkgs = self.nixosConfigurations.${host}.pkgs;
-    in pkgs.linkFarmFromDrvs "cachix-${host}" (
+      inherit (value) config pkgs;
+    in pkgs.linkFarmFromDrvs "cachix-${name}" (
       # for modules/system/desktops/cosmic
       #
       # We want to source these from the exact nixpkgs instance that the hosts use. This is
@@ -20,20 +19,20 @@
       (attrValues (genAttrs (attrNames inputs.nixos-cosmic.packages.${pkgs.system}) (name: pkgs.${name}))) ++
 
       # for modules/system
-      (pipe self.nixosConfigurations.${host}.config.my.system [
+      (pipe config.my.system [
         attrValues
         (filter (x: x ? package))
         (map (x: x.package))
       ]) ++
 
       # for modules/users
-      (pipe self.nixosConfigurations.${host}.config.my.users [
+      (pipe config.my.users [
         attrValues
         (map (x: attrValues x.programs))
         concatLists
         (filter (x: x ? package))
         (map (x: x.package))
       ])
-    )));
+    )) self.nixosConfigurations);
   };
 }
