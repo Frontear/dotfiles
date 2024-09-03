@@ -16,7 +16,9 @@
       # because nixos-cosmic uses an overlay, which taints nixpkgs and forces a rebuild at
       # build-time. To prevent that we use the same instance, ensuring reproducibility on
       # that specific host.
-      (attrValues (genAttrs (attrNames inputs.nixos-cosmic.packages.${pkgs.system}) (name: pkgs.${name}))) ++
+      (pipe inputs.nixos-cosmic.packages.${pkgs.system} [
+        (mapAttrsToList (name: _: pkgs.${name}))
+      ]) ++
 
       # for modules/system
       (pipe config.my.system [
