@@ -3,7 +3,10 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+    nixos-cosmic = {
+      url = "github:lilyinstarlight/nixos-cosmic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     lix = {
       url = "github:lix-project/lix";
