@@ -32,6 +32,9 @@ let
 
       extraPackages = with pkgs; [
         foot
+        rofi
+        swayidle
+        swaylock
       ];
     };
   };
