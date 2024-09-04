@@ -31,6 +31,10 @@ in {
           assertion = !config.my.system.desktops.plasma.default;
           message = "Cosmic and Plasma cannot both be default.";
         }
+        {
+          assertion = !config.my.system.desktops.sway.default;
+          message = "Cosmic and Sway cannot both be default.";
+        }
       ];
     } // attrs))
     (mkIf (!config.my.system.desktops.cosmic.default) {

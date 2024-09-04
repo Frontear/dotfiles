@@ -40,16 +40,18 @@
     };
   };
 
-  my.system.desktops.plasma = {
-    enable = true;
-    default = true;
+  my.system.desktops = {
+    plasma.enable = true;
+    plasma.default = true;
+
+    cosmic.enable = true;
+    sway.enable = true;
   };
+
   my.users.frontear.persist.directories = [
     "~/.config"
     "~/.local"
   ];
-
-  my.system.desktops.cosmic.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
