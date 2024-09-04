@@ -40,21 +40,16 @@
     };
   };
 
-  specialisation = {
-    plasma.configuration = {
-      my.system.desktops.plasma.enable = true;
-      my.users.frontear = {
-        persist.directories = [
-          "~/.config"
-          "~/.local"
-        ];
-      };
-    };
-
-    cosmic.configuration = {
-      my.system.desktops.cosmic.enable = true;
-    };
+  my.system.desktops.plasma = {
+    enable = true;
+    default = true;
   };
+  my.users.frontear.persist.directories = [
+    "~/.config"
+    "~/.local"
+  ];
+
+  my.system.desktops.cosmic.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 

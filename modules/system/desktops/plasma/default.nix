@@ -5,11 +5,9 @@
   ...
 }:
 let
-  inherit (lib) mkDefault mkEnableOption mkIf;
-in {
-  options.my.system.desktops.plasma.enable = mkEnableOption "plasma";
+  inherit (lib) mkDefault mkEnableOption mkIf mkMerge;
 
-  config = mkIf config.my.system.desktops.plasma.enable {
+  attrs = {
     # Activate plasma and sddm, with explicit wayland support.
     services.desktopManager.plasma6.enable = true;
     services.displayManager.sddm.enable = true;
@@ -26,4 +24,24 @@ in {
       (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
     ];
   };
+in {
+  options.my.system.desktops.plasma = {
+    enable = mkEnableOption "plasma";
+
+    default = mkEnableOption "make default";
+  };
+
+  config = mkIf config.my.system.desktops.plasma.enable (mkMerge [
+    (mkIf config.my.system.desktops.plasma.default ({
+      assertions = [
+        {
+          assertion = !config.my.system.desktops.cosmic.default;
+          message = "Plasma and Cosmic cannot both be default.";
+        }
+      ];
+    } // attrs))
+    (mkIf (!config.my.system.desktops.plasma.default) {
+      specialisation.plasma.configuration = attrs;
+    })
+  ]);
 }
