@@ -14,7 +14,7 @@ let
       enable = true;
 
       settings.default_session = {
-        command = "${lib.getExe pkgs.greetd.tuigreet} --time --cmd ${lib.getExe config.programs.sway.package}";
+        command = "${lib.getExe pkgs.greetd.tuigreet} --time --cmd sway";
       };
     };
 
@@ -43,18 +43,21 @@ in {
   };
 
   config = mkIf config.my.system.desktops.sway.enable (mkMerge [
-    (mkIf config.my.system.desktops.sway.default ({
-      assertions = [
-        {
-          assertion = !config.my.system.desktops.cosmic.default;
-          message = "Sway and Cosmic cannot both be default.";
-        }
-        {
-          assertion = !config.my.system.desktops.plasma.default;
-          message = "Sway and Plasma cannot both be default.";
-        }
-      ];
-    } // attrs))
+    (mkIf config.my.system.desktops.sway.default (mkMerge [
+      ({
+        assertions = [
+          {
+            assertion = !config.my.system.desktops.cosmic.default;
+            message = "Sway and Cosmic cannot both be default.";
+          }
+          {
+            assertion = !config.my.system.desktops.plasma.default;
+            message = "Sway and Plasma cannot both be default.";
+          }
+        ];
+      })
+      (mkIf (config.specialisation != {}) attrs)
+    ]))
     (mkIf (!config.my.system.desktops.sway.default) {
       specialisation.sway.configuration = attrs;
     })

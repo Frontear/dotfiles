@@ -32,18 +32,21 @@ in {
   };
 
   config = mkIf config.my.system.desktops.plasma.enable (mkMerge [
-    (mkIf config.my.system.desktops.plasma.default ({
-      assertions = [
-        {
-          assertion = !config.my.system.desktops.cosmic.default;
-          message = "Plasma and Cosmic cannot both be default.";
-        }
-        {
-          assertion = !config.my.system.desktops.sway.default;
-          message = "Plasma and Sway cannot both be default.";
-        }
-      ];
-    } // attrs))
+    (mkIf config.my.system.desktops.plasma.default (mkMerge [
+      ({
+        assertions = [
+          {
+            assertion = !config.my.system.desktops.cosmic.default;
+            message = "Plasma and Cosmic cannot both be default.";
+          }
+          {
+            assertion = !config.my.system.desktops.sway.default;
+            message = "Plasma and Sway cannot both be default.";
+          }
+        ];
+      })
+      (mkIf (config.specialisation != {}) attrs)
+    ]))
     (mkIf (!config.my.system.desktops.plasma.default) {
       specialisation.plasma.configuration = attrs;
     })
