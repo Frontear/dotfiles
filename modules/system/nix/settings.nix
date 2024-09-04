@@ -29,6 +29,7 @@
     allow-import-from-derivation = false;
     auto-optimise-store = true;
     bash-prompt-prefix = "(devshell) ";
+    connect-timeout = 5; # hanging isn't fun
     cores = 0;
     eval-cache = false; # this stinks!
     experimental-features = [
@@ -38,7 +39,10 @@
     ];
     fallback = true;
     http-connections = 0;
+    keep-outputs = true; # useful for development
     log-lines = 50;
+    min-free = 200 * 1024 * 1024; # 200 MB
+    max-free = 1 * 1024 * 1024 * 1024; # 1 GB
     max-jobs = "auto";
     preallocate-contents = true;
     pure-eval = false; # more trouble than its worth
@@ -55,5 +59,6 @@
     ];
     use-registries = true;
     use-xdg-base-directories = true;
+    warn-dirty = false; # it's just silly
   }
 ]
