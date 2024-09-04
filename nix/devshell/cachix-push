@@ -5,7 +5,8 @@ if [ -z "$CACHIX_AUTH_TOKEN" ]; then
     exit 1
 fi
 
-nix flake archive --json | jq -r 'recurse (.inputs | to_entries[].value) | del (.inputs) | .path' | cachix push frontear
+# TODO: remove self reference?
+nix flake archive --json | jq -r 'recurse (.inputs[]) | .path' | cachix push frontear
 
 for host in $(nix eval ".#nixosConfigurations" --apply builtins.attrNames --json | jq -r '.[]'); do
     nix build ".#cachixJobs.$host" --no-link --print-out-paths | cachix push frontear
