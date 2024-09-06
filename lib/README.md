@@ -2,11 +2,23 @@
 Documentation for my lib extensions, because I want to keep the `default.nix` as free of comments as possible.
 
 ## flake.mkModules
-Takes one argument, a path to a directory tree of modules.
+Takes two arguments, a path to your NixOS modules, and extra arguments you wish to append to the module's function call.
 
-Returns a module expression that imports all modules found within the directory tree, joined with extra arguments from the flake in a funky combinator that does not depend on specialArgs. In doing so, true isolation is achieved as modules are determined and connected ahead-of-time and irrespective of what the system provides.
+Returns an expression valid for the purposes of `lib.evalModules` that imports all `default.nix` files found within the provided directory tree, joined with the extra arguments from the flake using some hacky `__functor` and `__functionArgs` magic.
 
-This function make the assumption that modules are defined in `default.nix`, and any other files are ignored as they are assumed to be linked by the aforementioned entrypoint.
+The main benefit of providing this is being able to pass arbitrary arguments to the modules independent of the hosts `specialArgs` or `_module.args` value. Furthermore, no argument passed through this way leaks into the main module context, ensuring complete isolation.
+
+> [!WARNING]
+> Please note that this function will ONLY import `default.nix` files.
+> All other files will be ignored, meaning it is up to you, as the
+> module author to connect them together.
+>
+> This function will infrec if the provided modules path is `./.` and
+> a `default.nix` exists at `./.`. This is due to an internal design
+> detail that recursively processes the file tree. If `./.` is given,
+> it will continue to recurse on itself and re-trigger this module.
+> As such, execute this function call from outside the modules tree.
+> A good place is your `flake.nix`, as provided in the example below.
 
 Usage:
 ```nix
@@ -24,9 +36,11 @@ in {
 ```
 
 ## flake.mkNixOSConfigurations
-Takes two arguments, a defined system and a list of valid attributes that can be passed to `lib.evalModules`, with an added `hostName` attribute.
+Takes two arguments, a valid system, and a list of attrsets that are directly passed into `lib.nixosSystem`. Attributes `hostName` and `modules` must exist for each attrset in the list.
 
-Returns an attribute set that maps the given `hostName` and other attributes to the `nixosConfigurations` flake schema. This function only expects a `hostName` and `modules` attributes in the list. This function will also implicitly add `self.nixosModules.default` to the module list, as well as set `networking.hostName` and `nixpkgs.hostPlatform`.
+Returns an attribute set following the schema of `nixosConfigurations`, where `hostName` denotes the attribute name, and all other outputs (including `modules`) are passed into `lib.nixosSystem`, which then becomes the value.
+
+The main benefit of this function is simplifying and reducing repetition in system declarations. Since the hostname and system attributes are provided within the flake itself through this function, they can be mapped to `networking.hostName` and `nixpkgs.hostPlatform` respectively, further de-duplicating configuration. This function will also implicitly add `self.nixosModules.default` unless no such attribute exists.
 
 Usage:
 ```nix
@@ -48,29 +62,41 @@ in {
 };
 ```
 
-## flake.mkSelf'
-Takes one argument, a reference to the `system` attribute on which to transform `self`.
+## flake.stripSystem
+Takes two arguments, a valid system, and a flake-schema attrset which is transformed to remove all system-specific attrs and directly map them to their respective attributes. Attributes like `packages.x86_64-linux.default` are mapped to `packages.default`.
 
-Returns a modified version of `self` (colloquially referred to as `self'`), that transforms system-dependent outputs into system-independent outputs based on the desired system. Furthermore, it transforms inputs in the same way, and removes from repeated attributes from both `self` and `inputs` that are accessible in other ways (`outputs` is removed as all values in outputs are mapped to the root attrset, `sourceInfo` for the same reason). For `self.inputs` specifically, it removes deeper `inputs` as well, as those are unlikely to be used and can be discarded safely.
+Returns a valid flake-schema attrset which strips all system attribute names, and directly maps their values to the parent attribute, reducing duplication and easing the usage of flake outputs in given scenarios.
+
+The main benefit of this function is to reduce bothersome system attribute handling. In many cases the system can be guaranteed ahead-of-time, and in these cases needing to type things like `${pkgs.system}` or `${system}` is just repetitive. This function will completely strip off all system-specific names to make the entire output _seem_ system agnostic.
+
+> [!WARNING]
+> This will strip the flake attrset of some key attributes, specifically `inputs`,
+> `outputs`, and `sourceInfo`. outputs and sourceInfo are removed because their
+> attribute values are part of the root attrset, but inputs is removed simply
+> to avoid going deep into the inputs and mis-handling them. This is a very
+> opinionated decision, and I instead encourage passing inputs directly via
+> `input-name = lib.flake.stripSystem <SYSTEM> inputs.input-name`.
 
 Usage:
 ```nix
-outputs = { self, nixpkgs, ... }:
+outputs = { self, nixpkgs, foo, ... }:
 let
   lib = nixpkgs.lib.extend (_: prev: import ./. {
     inherit self;
     lib = prev;
   });
 
-  self' = lib.flake.mkSelf' "x86_64-linux";
+  self' = lib.flake.stripSystem "x86_64-linux" self;
+  nixpkgs' = lib.flake.stripSystem "x86_64-linux" nixpkgs;
+  foo' = lib.flake.stripSystem "x86_64-linux" foo;
 in {
   nixosConfigurations."nixos" = nixpkgs.lib.nixosSystem {
     modules = [
       {
         environment.systemPackages = [
           self'.packages.hello
-          self'.inputs.foo.packages.bar
-          self'.inputs.nixpkgs.legacyPackages.steam
+          foo.packages.bar
+          nixpkgs'.legacyPackages.steam
         ];
       }
     ];

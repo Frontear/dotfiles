@@ -1,57 +1,35 @@
 {
   self,
   lib,
+  ...
 }:
-let
-  inherit (builtins)
-    baseNameOf
-    filter
-    mapAttrs
-    listToAttrs
-    removeAttrs
-    substring
-    toString
-    ;
-
-  inherit (lib)
-    functionArgs
-    isStringLike
-    mergeEqualOption
-    mkOptionType
-    nixosSystem
-    pipe
-    ;
-
-  inherit (lib.filesystem)
-    listFilesRecursive
-    ;
-in rec {
+{
   flake = {
-    mkModules = (path: { ... } @ extraArgs: {
-      imports = pipe path [
-        listFilesRecursive
-        (filter (x: baseNameOf x == "default.nix"))
+    mkModules = (modulesPath: { ... } @ extraArgs: {
+      imports = lib.pipe modulesPath [
+        lib.filesystem.listFilesRecursive
+        (lib.filter (x: baseNameOf x == "default.nix"))
         (map (x:
         let
           imported = import x;
         in {
           # args = { config, lib, modulesPath, options, pkgs, ... }
           __functor = _: args: imported (args // extraArgs);
-          __functionArgs = functionArgs imported;
+          __functionArgs = lib.functionArgs imported;
         }))
       ];
     });
 
-    mkNixOSConfigurations = (system: list: pipe list [
+    mkNixOSConfigurations = (system: list: lib.pipe list [
       (map ({ hostName, modules, ... } @ extraArgs: {
         name = hostName;
-        value = nixosSystem {
+        value = lib.nixosSystem {
           specialArgs = {
-            self = flake.mkSelf' system;
+            # self = flake.stripSystem system self;
           } // (if extraArgs ? specialArgs then extraArgs.specialArgs else {});
 
           modules = [
-            self.nixosModules.default
+            (self.nixosModules.default or {})
             {
               networking.hostName = hostName;
               nixpkgs.hostPlatform = system;
@@ -59,33 +37,38 @@ in rec {
           ] ++ modules;
         } // (removeAttrs extraArgs [ "hostName" "modules" "specialArgs" ]);
       }))
-      listToAttrs
+      lib.listToAttrs
     ]);
 
-    # TODO: better name?
-    mkSelf' = (system:
+    stripSystem = (system: flake:
     let
-      removeSystemAttr = mapAttrs (_: v: if v ? ${system} then v.${system} else v);
-      outputsToRemove = [ "outputs" "sourceInfo" ];
-    in (removeSystemAttr (removeAttrs self outputsToRemove)) // {
-      inputs = mapAttrs (_: v: removeSystemAttr (removeAttrs v ([ "inputs" ] ++ outputsToRemove))) self.inputs;
-    });
+      removeSystemAttr = lib.mapAttrs (_: v: if v ? ${system} then v.${system} else v);
+      outputsToRemove = [ "inputs" "outputs" "sourceInfo" ];
+    in (removeSystemAttr (removeAttrs flake outputsToRemove)));
   };
 
-  types =
+  types = (
   let
-    mkPathOption = name: end: mkOptionType {
+    mkPathOption = { name, prefix }: lib.mkOptionType {
       inherit name;
-      description = "absolute path, denoted with a ${end}";
+      description = "An absolute path, prefixed with ${prefix}.";
       descriptionClass = "nonRestrictiveClause";
+
       check = (x:
-        isStringLike x &&
-        substring 0 1 (toString x) == end
+        lib.isStringLike x &&
+        lib.substring 0 1 x == prefix
       );
-      merge = mergeEqualOption;
+      merge = lib.mergeEqualOption;
     };
   in {
-    systemPath = mkPathOption "systemPath" "/";
-    userPath = mkPathOption "userPath" "~";
-  } // lib.types;
+    systemPath = mkPathOption {
+      name = "systemPath";
+      prefix = "/";
+    };
+
+    userPath = mkPathOption {
+      name = "userPath";
+      prefix = "~";
+    };
+  }) // lib.types;
 }
