@@ -7,13 +7,9 @@ let
   inherit (inputs)
     nixos-hardware
     nixos-wsl
-    nixpkgs
     ;
 
-  lib = nixpkgs.lib.extend (_: prev: import "${self}/lib" {
-    inherit self;
-    lib = prev;
-  });
+  inherit (self) lib;
 in {
   flake = {
     nixosModules.default = lib.flake.mkModules "${self}/modules" {

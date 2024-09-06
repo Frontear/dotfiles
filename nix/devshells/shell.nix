@@ -1,4 +1,11 @@
-{
+let
+  flake-lock = builtins.fromJSON (builtins.readFile ../../flake.lock);
+  nixpkgs = builtins.fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/${flake-lock.nodes.nixpkgs.locked.rev}";
+    sha256 = "${flake-lock.nodes.nixpkgs.locked.narHash}";
+  };
+in { pkgs ? import nixpkgs {} }: pkgs.callPackage
+({
   lib,
 
   stdenv,
@@ -14,20 +21,11 @@
   nil,
 }:
 let
-  fs = lib.fileset;
-
   scripts = stdenv.mkDerivation {
     pname = "scripts";
     version = "0.1.2";
 
-    src = fs.toSource {
-      root = ./.;
-      fileset = fs.unions [
-        ./cachix-push
-        ./gc
-        ./rebuild
-      ];
-    };
+    src = ./bin;
 
     nativeBuildInputs = [
       makeWrapper
@@ -54,4 +52,4 @@ in mkShellNoCC {
     nil
     scripts
   ];
-}
+}) { }

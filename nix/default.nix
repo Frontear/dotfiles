@@ -4,10 +4,8 @@
 {
   imports = [
     ./cachix
+    ./devshells
+    ./lib
     ./nixos
   ];
-
-  perSystem = { pkgs, ... }: {
-    devShells.default = pkgs.callPackage ./devshell { };
-  };
 }
