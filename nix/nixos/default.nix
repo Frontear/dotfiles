@@ -17,6 +17,8 @@ in {
       inherit inputs;
     };
 
+    homeManagerModules.default = lib.flake.mkModules "${self}/modules/home-manager" {};
+
     nixosConfigurations = lib.flake.mkNixOSConfigurations "x86_64-linux" [
       {
         hostName = "LAPTOP-3DT4F02";
@@ -25,6 +27,12 @@ in {
           nixos-hardware.nixosModules.common-hidpi
 
           home-manager.nixosModules.default
+
+          ({
+            home-manager.sharedModules = [
+              self.homeManagerModules.default
+            ];
+          })
 
           "${self}/hosts/laptop"
           "${self}/users"

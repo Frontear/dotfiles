@@ -21,12 +21,9 @@
   };
 
   my.users.frontear = {
-    extraGroups = [ "networkmanager" "wheel" ];
-    initialHashedPassword = "$y$j9T$gsXwh6NJa62APePZ.7xR00$lLYi86UgQdN1yjOIgqcegfTKsnqkXI4ufQHWdOTiKr6";
     persist.enable = true;
 
     programs = {
-      atool.enable = true;
       armcord.enable = true;
       direnv.enable = true;
       eza.enable = true;
