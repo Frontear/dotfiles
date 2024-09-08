@@ -17,7 +17,8 @@ in {
   options.my.system.nix = {
     enable = (mkEnableOption "nix" // { default = true; });
     package = mkOption {
-      default = inputs.lix.packages.${pkgs.system}.default;
+      # https://gist.github.com/Frontear/f88e27b0a5c2841c849a1a21e6b70793
+      default = pkgs.lix;
 
       type = types.package;
       internal = true;
@@ -25,12 +26,14 @@ in {
     };
   };
 
-
   config = mkIf config.my.system.nix.enable (mkMerge [
     {
       # Enable nix (duh!) and disable channels
       nix.enable = mkDefault true;
       nix.channel.enable = mkForce false;
+
+      # Use Lix!
+      nix.package = config.my.system.nix.package;
 
       # Use viper's nix wrapper
       programs.nh.enable = true;
@@ -60,14 +63,6 @@ in {
         checkMeta = true;
         warnUndeclaredOptions = true;
       };
-
-      # Overlay nixpkgs so that pkgs.nix => pkgs.lix
-      # https://gist.github.com/Frontear/f88e27b0a5c2841c849a1a21e6b70793
-      nixpkgs.overlays = [
-        (final: _: {
-          nix = config.my.system.nix.package;
-        })
-      ];
     }
     {
       # Configure nix with opinionated settings.

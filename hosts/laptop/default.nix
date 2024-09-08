@@ -44,7 +44,6 @@
     plasma.enable = true;
     plasma.default = true;
 
-    cosmic.enable = true;
     sway.enable = true;
   };
 

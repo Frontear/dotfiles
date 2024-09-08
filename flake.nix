@@ -3,14 +3,13 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    nixos-cosmic = {
-      url = "github:lilyinstarlight/nixos-cosmic";
+    home-manager = {
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    lix = {
-      url = "github:lix-project/lix";
-      inputs.nixpkgs.follows = "nixpkgs";
+    impermanence = {
+      url = "github:nix-community/impermanence";
     };
 
     nixos-hardware = {

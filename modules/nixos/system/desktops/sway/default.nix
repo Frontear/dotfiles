@@ -50,10 +50,6 @@ in {
       ({
         assertions = [
           {
-            assertion = !config.my.system.desktops.cosmic.default;
-            message = "Sway and Cosmic cannot both be default.";
-          }
-          {
             assertion = !config.my.system.desktops.plasma.default;
             message = "Sway and Plasma cannot both be default.";
           }

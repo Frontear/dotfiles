@@ -5,6 +5,7 @@
 }:
 let
   inherit (inputs)
+    home-manager
     nixos-hardware
     nixos-wsl
     ;
@@ -12,7 +13,7 @@ let
   inherit (self) lib;
 in {
   flake = {
-    nixosModules.default = lib.flake.mkModules "${self}/modules" {
+    nixosModules.default = lib.flake.mkModules "${self}/modules/nixos" {
       inherit inputs;
     };
 
@@ -23,7 +24,10 @@ in {
           nixos-hardware.nixosModules.dell-inspiron-14-5420
           nixos-hardware.nixosModules.common-hidpi
 
+          home-manager.nixosModules.default
+
           "${self}/hosts/laptop"
+          "${self}/users"
         ];
       }
       {
