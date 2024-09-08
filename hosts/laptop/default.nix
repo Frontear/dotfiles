@@ -27,7 +27,6 @@
       armcord.enable = true;
       direnv.enable = true;
       eza.enable = true;
-      git.enable = true;
       gpg.enable = true;
       libreoffice.enable = true;
       microsoft-edge.enable = true;
