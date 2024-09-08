@@ -29,7 +29,6 @@
       eza.enable = true;
       gpg.enable = true;
       microsoft-edge.enable = true;
-      neovim.enable = true;
       vscode.enable = true;
       zsh.enable = true;
     };
