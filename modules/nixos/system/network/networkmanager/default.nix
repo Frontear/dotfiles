@@ -12,7 +12,7 @@ in {
     {
       # Enable networkmanager and persist it in case of impermanence.
       networking.networkmanager.enable = true;
-      my.system.persist.directories = [ "/etc/NetworkManager" ];
+      my.persist.directories = [ "/etc/NetworkManager" ];
     }
     {
       # Disable networkmanager and nixos dns capabilities

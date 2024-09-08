@@ -19,9 +19,7 @@
   };
 
   config = lib.mkIf config.my.programs.armcord.enable {
-    warnings = [
-      "WARN: Impermanence not configured! (persist ~/.config/ArmCord)"
-    ];
+    my.persist.directories = [ "~/.config/ArmCord" ];
 
     home.packages = [ config.my.programs.armcord.package ];
   };

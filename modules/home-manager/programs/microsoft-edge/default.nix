@@ -28,9 +28,7 @@
   };
 
   config = lib.mkIf config.my.programs.microsoft-edge.enable {
-    warnings = [
-      "WARN: Impermanence not configured! (persist ~/${config.my.programs.microsoft-edge.userDataDir})"
-    ];
+    my.persist.directories = [ "~/${config.my.programs.microsoft-edge.userDataDir}" ];
 
     home.packages = [ config.my.programs.microsoft-edge.package ];
   };

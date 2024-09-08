@@ -28,6 +28,12 @@ in {
 
           home-manager.nixosModules.default
 
+          ({ ... }: {
+            imports = [
+              "${self}/modules/common/persist" # TODO: fix this
+            ];
+          })
+
           ({
             home-manager.sharedModules = [
               self.homeManagerModules.default

@@ -9,6 +9,8 @@
 
   system.stateVersion = "24.05";
 
+  my.persist.enable = true;
+
   my.system = {
     boot.systemd-boot.enable = true;
     mounts.swap.enable = true;

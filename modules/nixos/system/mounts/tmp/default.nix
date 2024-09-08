@@ -27,7 +27,7 @@ in {
 
     # Link /tmp to persistence device, so it doesn't
     # end up on the tmpfs root.
-    my.system.persist.directories = [
+    my.persist.directories = [
       { path = "/tmp"; mode = "777"; }
     ];
   };

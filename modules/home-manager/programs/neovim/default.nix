@@ -19,9 +19,7 @@
   };
 
   config = lib.mkIf config.my.programs.neovim.enable {
-    warnings = [
-      "WARN: Impermanence not configured! (persist ~/.local/share/lvim)"
-    ];
+    my.persist.directories = [ "~/.local/share/lvim" ];
 
     home.packages = [ config.my.programs.neovim.package ];
 

@@ -121,7 +121,7 @@ in {
   };
 
   config = {
-    system.activationScripts.copy-persisted = lib.stringAfter [ "users" "groups" ] (''
+    system.activationScripts.copy-persiste = lib.stringAfter [ "users" "groups" ] (''
       # $1 - Path to file/directory written in the persisted volume
       # $2 - Absolute path to where the file/directory will be placed
       # $3 - User value for 'chown'
