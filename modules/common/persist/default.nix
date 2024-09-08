@@ -5,123 +5,108 @@
   ...
 }:
 let
-  inherit (builtins) concatStringsSep replaceStrings;
-  inherit (lib) concatLists forEach getExe mapAttrsToList mkEnableOption mkOption optionals types;
-
-  system-persist = let cfg = config.my.system.persist; in optionals cfg.enable ((forEach cfg.directories (d: ''persistDir "${cfg.volume + d.path}" "${d.path}" "${d.user}" "${d.group}" "${d.mode}"'')) ++ (forEach cfg.files (f: ''persistFile "${cfg.volume + f.path}" "${f.path}" "${f.user}" "${f.group}" "${f.mode}"'')));
-  user-persist = concatLists (forEach (mapAttrsToList (_: v: v.persist) config.my.users) (cfg: optionals cfg.enable ((forEach cfg.directories (d: ''persistDir "${cfg.volume + d.path}" "${d.path}" "${d.user}" "${d.group}" "${d.mode}"'')) ++ (forEach cfg.files (f: ''persistFile "${cfg.volume + f.path}" "${f.path}" "${f.user}" "${f.group}" "${f.mode}"'')))));
-  all-persist = system-persist ++ user-persist;
-
-  pathOpts = name: { username, group, type }: {
+  pathOpts = { user, group, name, ... } @ pathAttrs: {
     options = {
-      path = mkOption {
+      path = lib.mkOption {
         default = null;
         description = ''
-          Absolute path to the ${name}.
+          Absolute path to the ${name} as it should be on the rootfs.
         '';
-        inherit type;
-      };
+      } // lib.removeAttrs pathAttrs [ "user" "group" "name" "default" "description" ];
 
-      user = mkOption {
-        default = username;
+      user = lib.mkOption {
+        default = user;
         description = ''
-          User who owns this ${name}.
+          The user who owns this ${name}.
         '';
-        type = types.str;
+
+        type = with lib.types; str;
       };
 
-      group = mkOption {
+      group = lib.mkOption {
         default = group;
         description = ''
-          Group that owns this ${name}.
+          The group who owns this ${name}.
         '';
-        type = types.str;
+
+        type = with lib.types; str;
       };
 
-      mode = mkOption {
+      mode = lib.mkOption {
         default = if name == "directory" then "755" else "644";
         description = ''
-          Modifiers applied to this ${name}.
+          The permission modifiers applied to this ${name}.
         '';
-        type = types.str;
+
+        type = with lib.types; str;
       };
     };
   };
 
-  mkPersistOption = ({ name, username, group, type, apply, file_example, dir_example }: {
-    enable = mkEnableOption "persist ${name} paths across ephemeral roots.";
-    volume = mkOption {
+  mkPersistenceModuleOpts = { user, group, optPathAttrs, dir-example, file-example }: {
+    enable = lib.mkEnableOption "persist path entries across ephemeral roots.";
+
+    volume = lib.mkOption {
       default = "/nix/persist";
       description = ''
-        The volume where persisted paths are stored and linked against.
+        The persistent volume where all entries are stored and linked to the rootfs.
       '';
+
+      type = with lib.types; path;
     };
-    directories = mkOption {
+
+    directories = lib.mkOption {
       default = [];
-      example = dir_example;
       description = ''
-        Directories from the ${name} to persistently store.
+        Directories to persistently store. These are bind mounted upon system activation.
       '';
-      type = with types; listOf (coercedTo str (d: { path = d; }) (submodule (pathOpts "directory" { inherit username group type; })));
-      apply = v: map (x: x // { path = apply x.path; }) v;
+
+      example = dir-example;
+      type = with lib.types; listOf (coercedTo str (path: { inherit path; }) (submodule (pathOpts ({
+        inherit user group;
+        name = "directory";
+      } // optPathAttrs))));
     };
-    files = mkOption {
+
+    files = lib.mkOption {
       default = [];
-      example = file_example;
       description = ''
-        Files from the ${name} to persistently store.
+        Files to persistently store. These are bind mounted upon system activation.
       '';
-      type = with types; listOf (coercedTo str (f: { path = f; }) (submodule (pathOpts "file" { inherit username group type; })));
-      apply = v: map (x: x // { path = apply x.path; }) v;
-    };
-  });
 
-  userOpts = { name, config, ... }: {
-    options.persist = mkPersistOption {
-      name = "user";
-      username = config.username;
-      group = "users";
-      type = types.userPath;
-      apply = x: replaceStrings [ "~" ] [ config.homeDirectory ] x;
-
-      dir_example = [
-        "~/.ssh"
-        { path = "~/.gnupg"; user = config.username; group = "users"; mode = "700"; }
-      ];
-
-      file_example = [
-        "~/.bash_history"
-        { path = "~/.local/share/lesshst"; user = config.username; group = "users"; mode = "600"; }
-      ];
+      example = file-example;
+      type = with lib.types; listOf (coercedTo str (path: { inherit path; }) (submodule (pathOpts ({
+        inherit user group;
+        name = "file";
+      } // optPathAttrs))));
     };
   };
 in {
-  options = {
-    my.system.persist = mkPersistOption {
-      name = "system";
-      username = "root";
-      group = "root";
-      type = types.systemPath;
-      apply = x: x;
+  options.my.persist = mkPersistenceModuleOpts {
+    user = "root";
+    group = "root";
 
-      dir_example = [
-        "/etc/NetworkManager"
-        { path = "/etc/nixos"; user = "root"; group = "wheel"; mode = "755"; }
-      ];
-
-      file_example = [
-        "/etc/machine-id"
-        { path = "/etc/shadow"; user = "root"; group = "shadow"; mode = "640"; }
-      ];
+    optPathAttrs = {
+      type = with lib.types; systemPath;
     };
 
-    my.users = mkOption {
-      type = with types; attrsOf (submodule userOpts);
-    };
+    dir-example = [
+      "/etc/NetworkManager"
+      { path = "/etc/nixos"; user = "root"; group = "wheel"; mode = "755"; }
+    ];
+
+    file-example = [
+      "/etc/machine-id"
+      { path = "/etc/shadow"; user = "root"; group = "shadow"; mode = "640"; }
+    ];
   };
 
   config = {
-    system.activationScripts.copy-persisted = lib.stringAfter [ "users" "groups" ] (''
+    my.persist.directories = lib.lists.flatten (lib.mapAttrsToList (_: value: value.my.persist.directories) config.home-manager.users);
+
+    my.persist.files = lib.lists.flatten (lib.mapAttrsToList (_: value: value.my.persist.files) config.home-manager.users);
+
+    system.activationScripts.copy-persisted = lib.stringAfter [ "users" "groups" ] ''
       # $1 - Path to file/directory written in the persisted volume
       # $2 - Absolute path to where the file/directory will be placed
       # $3 - User value for 'chown'
@@ -138,7 +123,7 @@ in {
       #   - ignore
       #
       function persistFile() {
-        mkdir -pv "$(dirname "$1")" "$(dirname "$2")" | ${getExe pkgs.gnused} "s|'||g;s|.* ||g" | while read dir; do
+        mkdir -pv "$(dirname "$1")" "$(dirname "$2")" | ${lib.getExe pkgs.gnused} "s|'||g;s|.* ||g" | while read dir; do
           echo "Creating $dir with $3:$4, $5"
           chown "$3:$4" "$dir"
           chmod "755" "$dir"
@@ -180,7 +165,7 @@ in {
       #   - ignore
       #
       function persistDir() {
-        mkdir -pv "$(dirname "$1")" "$(dirname "$2")" | ${getExe pkgs.gnused} "s|'||g;s|.* ||g" | while read dir; do
+        mkdir -pv "$(dirname "$1")" "$(dirname "$2")" | ${lib.getExe pkgs.gnused} "s|'||g;s|.* ||g" | while read dir; do
           echo "Creating $dir with $3:$4, $5"
           chown "$3:$4" "$dir"
           chmod "755" "$dir"
@@ -206,6 +191,47 @@ in {
         mount -o bind "$1" "$2"
       }
 
-    '' + concatStringsSep "\n" all-persist);
+      ${if config.my.persist.enable then (lib.pipe config.my.persist.directories [
+        (map (x: ''persistDir "${config.my.persist.volume + x.path}" "${x.path}" "${x.user}" "${x.group}" "${x.mode}"''))
+        (lib.concatStringsSep "\n")
+      ]) else "# No persistence!"}
+
+      ${if config.my.persist.enable then (lib.pipe config.my.persist.files [
+        (map (x: ''persistFile "${config.my.persist.volume + x.path}" "${x.path}" "${x.user}" "${x.group}" "${x.mode}"''))
+        (lib.concatStringsSep "\n")
+      ]) else "# No persistence!"}
+    '';
+
+    home-manager.sharedModules = [
+      (
+        {
+          osConfig,
+          config,
+          lib,
+          ...
+        }:
+        {
+          options.my.persist = lib.removeAttrs (mkPersistenceModuleOpts {
+            user = config.home.username;
+            group = osConfig.users.extraUsers.${config.home.username}.group; # TODO: dangerous assumption?
+
+            optPathAttrs = {
+              type = with lib.types; userPath;
+              apply = lib.replaceStrings [ "~" ] [ config.home.homeDirectory ];
+            };
+
+            dir-example = [
+              "~/.ssh"
+              { path = "~/.gnupg"; user = config.home.username; group = "users"; mode = "700"; }
+            ];
+
+            file-example = [
+              "~/.bash_history"
+              { path = "~/.local/share/lesshst"; user = config.home.username; group = "users"; mode = "600"; }
+            ];
+          }) [ "enable" "volume" ]; # These are system-only values
+        }
+      )
+    ];
   };
 }

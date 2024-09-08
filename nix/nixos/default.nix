@@ -12,10 +12,6 @@ let
   inherit (self) lib;
 in {
   flake = {
-    nixosModules.default = lib.flake.mkModules "${self}/modules" {
-      inherit inputs;
-    };
-
     nixosConfigurations = lib.flake.mkNixOSConfigurations "x86_64-linux" [
       {
         hostName = "LAPTOP-3DT4F02";

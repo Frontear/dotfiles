@@ -6,6 +6,7 @@
     ./cachix
     ./devshells
     ./lib
+    ./modules
     ./nixos
   ];
 }

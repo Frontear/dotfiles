@@ -9,49 +9,23 @@
 
   system.stateVersion = "24.05";
 
-  my.system = {
+  my.persist = {
+    enable = true;
+    directories = [ "/var/lib/systemd/backlight" ];
+  };
+
+  my = {
     boot.systemd-boot.enable = true;
     mounts.swap.enable = true;
     network.networkmanager.enable = true;
 
-    persist = {
-      enable = true;
-      directories = [ "/var/lib/systemd/backlight" ];
+    desktops = {
+      plasma.enable = true;
+      plasma.default = true;
+
+      sway.enable = true;
     };
   };
-
-  my.users.frontear = {
-    extraGroups = [ "networkmanager" "wheel" ];
-    initialHashedPassword = "$y$j9T$gsXwh6NJa62APePZ.7xR00$lLYi86UgQdN1yjOIgqcegfTKsnqkXI4ufQHWdOTiKr6";
-    persist.enable = true;
-
-    programs = {
-      atool.enable = true;
-      armcord.enable = true;
-      direnv.enable = true;
-      eza.enable = true;
-      git.enable = true;
-      gpg.enable = true;
-      libreoffice.enable = true;
-      microsoft-edge.enable = true;
-      neovim.enable = true;
-      vscode.enable = true;
-      zsh.enable = true;
-    };
-  };
-
-  my.system.desktops = {
-    plasma.enable = true;
-    plasma.default = true;
-
-    cosmic.enable = true;
-    sway.enable = true;
-  };
-
-  my.users.frontear.persist.directories = [
-    "~/.config"
-    "~/.local"
-  ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
