@@ -24,11 +24,9 @@
     persist.enable = true;
 
     programs = {
-      armcord.enable = true;
       direnv.enable = true;
       eza.enable = true;
       gpg.enable = true;
-      microsoft-edge.enable = true;
       vscode.enable = true;
       zsh.enable = true;
     };
