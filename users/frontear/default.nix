@@ -3,12 +3,8 @@
 }:
 {
   imports = [
-    ./programs
+    ./system
   ];
 
-  # TODO: dedup
-  home.username = "frontear";
-  home.homeDirectory = "/home/frontear";
-
-  home.stateVersion = "24.11";
+  home-manager.users.frontear = ./home;
 }

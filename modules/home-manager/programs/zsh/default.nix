@@ -110,7 +110,7 @@
       })
       ({
         # These are intended to be set at system level
-        enableCompletion = true;
+        enableCompletion = false;
         completionInit = "";
       })
       ({

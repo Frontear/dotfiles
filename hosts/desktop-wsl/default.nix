@@ -7,12 +7,10 @@
     ./hardware-configuration.nix
   ];
 
-  documentation.dev.enable = true;
-
   system.stateVersion = "24.05";
 
-  home-manager.users.frontear.home.packages = [
-    pkgs.yt-dlp
+  environment.systemPackages = with pkgs; [
+    yt-dlp
   ];
 
   programs.nix-ld = {
@@ -22,7 +20,6 @@
 
   wsl = {
     enable = true;
-    defaultUser = "frontear";
     nativeSystemd = true;
     useWindowsDriver = true;
   };
