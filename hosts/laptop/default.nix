@@ -19,17 +19,17 @@
     "~/.local"
   ];
 
-  my.system = {
+  my = {
     boot.systemd-boot.enable = true;
     mounts.swap.enable = true;
     network.networkmanager.enable = true;
-  };
 
-  my.system.desktops = {
-    plasma.enable = true;
-    plasma.default = true;
+    desktops = {
+      plasma.enable = true;
+      plasma.default = true;
 
-    sway.enable = true;
+      sway.enable = true;
+    };
   };
 
   boot.kernelPackages = pkgs.linuxPackages_latest;

@@ -6,9 +6,9 @@
 let
   inherit (lib) mkEnableOption mkIf;
 in {
-  options.my.system.mounts.swap.enable = mkEnableOption "swap";
+  options.my.mounts.swap.enable = mkEnableOption "swap";
 
-  config = mkIf config.my.system.mounts.swap.enable {
+  config = mkIf config.my.mounts.swap.enable {
     # Optimizes swap-related kernel tunings for zram usage
     # https://wiki.archlinux.org/title/Zram#Optimizing_swap_on_zram
     boot.kernel.sysctl = {

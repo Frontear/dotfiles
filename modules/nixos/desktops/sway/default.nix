@@ -8,7 +8,7 @@ let
   inherit (lib) mkDefault mkEnableOption mkIf mkMerge;
 
   attrs = {
-    my.system.audio.pipewire.enable = mkDefault true;
+    my.audio.pipewire.enable = mkDefault true;
 
     services.greetd = {
       enable = true;
@@ -39,25 +39,25 @@ let
     };
   };
 in {
-  options.my.system.desktops.sway = {
+  options.my.desktops.sway = {
     enable = mkEnableOption "sway";
 
     default = mkEnableOption "make default";
   };
 
-  config = mkIf config.my.system.desktops.sway.enable (mkMerge [
-    (mkIf config.my.system.desktops.sway.default (mkMerge [
+  config = mkIf config.my.desktops.sway.enable (mkMerge [
+    (mkIf config.my.desktops.sway.default (mkMerge [
       ({
         assertions = [
           {
-            assertion = !config.my.system.desktops.plasma.default;
+            assertion = !config.my.desktops.plasma.default;
             message = "Sway and Plasma cannot both be default.";
           }
         ];
       })
       (mkIf (config.specialisation != {}) attrs)
     ]))
-    (mkIf (!config.my.system.desktops.sway.default) {
+    (mkIf (!config.my.desktops.sway.default) {
       specialisation.sway.configuration = attrs;
     })
   ]);

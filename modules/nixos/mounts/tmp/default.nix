@@ -6,7 +6,7 @@
 let
   inherit (lib) mkEnableOption mkForce mkIf;
 in {
-  options.my.system.mounts.tmp.enable = mkEnableOption "tmp" // {
+  options.my.mounts.tmp.enable = mkEnableOption "tmp" // {
     description = ''
       Whether to enable tmp.
 
@@ -17,7 +17,7 @@ in {
     default = true;
   };
 
-  config = mkIf config.my.system.mounts.tmp.enable {
+  config = mkIf config.my.mounts.tmp.enable {
     # Ensure /tmp is cleaned on boot and that it is not mounted
     # as a tmpfs, as this can fail on large nix builds.
     boot.tmp = {

@@ -14,7 +14,7 @@ let
     inherit name path;
   }) inputs);
 in {
-  options.my.system.nix = {
+  options.my.nix = {
     enable = (mkEnableOption "nix" // { default = true; });
     package = mkOption {
       # https://gist.github.com/Frontear/f88e27b0a5c2841c849a1a21e6b70793
@@ -26,14 +26,14 @@ in {
     };
   };
 
-  config = mkIf config.my.system.nix.enable (mkMerge [
+  config = mkIf config.my.nix.enable (mkMerge [
     {
       # Enable nix (duh!) and disable channels
       nix.enable = mkDefault true;
       nix.channel.enable = mkForce false;
 
       # Use Lix!
-      nix.package = config.my.system.nix.package;
+      nix.package = config.my.nix.package;
 
       # Use viper's nix wrapper
       programs.nh.enable = true;

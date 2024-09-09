@@ -6,9 +6,9 @@
 let
   inherit (lib) mkEnableOption mkForce mkIf mkMerge;
 in {
-  options.my.system.network.networkmanager.enable = mkEnableOption "swap";
+  options.my.network.networkmanager.enable = mkEnableOption "swap";
 
-  config = mkIf config.my.system.network.networkmanager.enable (mkMerge [
+  config = mkIf config.my.network.networkmanager.enable (mkMerge [
     {
       # Enable networkmanager and persist it in case of impermanence.
       networking.networkmanager.enable = true;

@@ -6,9 +6,9 @@
 let
   inherit (lib) mkEnableOption mkForce mkIf mkMerge;
 in {
-  options.my.system.boot.systemd-boot.enable = mkEnableOption "systemd-boot";
+  options.my.boot.systemd-boot.enable = mkEnableOption "systemd-boot";
 
-  config = mkIf config.my.system.boot.systemd-boot.enable (mkMerge [
+  config = mkIf config.my.boot.systemd-boot.enable (mkMerge [
     {
       # Set systemd-boot to be the default boot loader for this system.
       boot.loader = {

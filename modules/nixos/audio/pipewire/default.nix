@@ -6,9 +6,9 @@
 let
   inherit (lib) mkEnableOption mkForce mkIf mkMerge;
 in {
-  options.my.system.audio.pipewire.enable = mkEnableOption "pipewire";
+  options.my.audio.pipewire.enable = mkEnableOption "pipewire";
 
-  config = mkIf config.my.system.audio.pipewire.enable (mkMerge [
+  config = mkIf config.my.audio.pipewire.enable (mkMerge [
     {
       # Explicitly disable pulseaudio and alsa
       hardware.pulseaudio.enable = mkForce false;

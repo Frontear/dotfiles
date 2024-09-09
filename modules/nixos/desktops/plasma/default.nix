@@ -14,7 +14,7 @@ let
     services.displayManager.sddm.wayland.enable = mkDefault true;
 
     # Enable pipewire as the main audio service.
-    my.system.audio.pipewire.enable = mkDefault true;
+    my.audio.pipewire.enable = mkDefault true;
 
     # https://wiki.nixos.org/wiki/KDE#GTK_themes_are_not_applied_in_Wayland_applications_/_Window_Decorations_missing_/_Cursor_looks_different
     programs.dconf.enable = true;
@@ -25,25 +25,25 @@ let
     ];
   };
 in {
-  options.my.system.desktops.plasma = {
+  options.my.desktops.plasma = {
     enable = mkEnableOption "plasma";
 
     default = mkEnableOption "make default";
   };
 
-  config = mkIf config.my.system.desktops.plasma.enable (mkMerge [
-    (mkIf config.my.system.desktops.plasma.default (mkMerge [
+  config = mkIf config.my.desktops.plasma.enable (mkMerge [
+    (mkIf config.my.desktops.plasma.default (mkMerge [
       ({
         assertions = [
           {
-            assertion = !config.my.system.desktops.sway.default;
+            assertion = !config.my.desktops.sway.default;
             message = "Plasma and Sway cannot both be default.";
           }
         ];
       })
       (mkIf (config.specialisation != {}) attrs)
     ]))
-    (mkIf (!config.my.system.desktops.plasma.default) {
+    (mkIf (!config.my.desktops.plasma.default) {
       specialisation.plasma.configuration = attrs;
     })
   ]);
