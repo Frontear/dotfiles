@@ -9,25 +9,15 @@
 
   system.stateVersion = "24.05";
 
-  my.persist.enable = true;
+  my.persist = {
+    enable = true;
+    directories = [ "/var/lib/systemd/backlight" ];
+  };
 
   my.system = {
     boot.systemd-boot.enable = true;
     mounts.swap.enable = true;
     network.networkmanager.enable = true;
-
-    persist = {
-      enable = true;
-      directories = [ "/var/lib/systemd/backlight" ];
-    };
-  };
-
-  my.users.frontear = {
-    persist.enable = true;
-
-    programs = {
-      vscode.enable = true;
-    };
   };
 
   my.system.desktops = {
@@ -36,11 +26,6 @@
 
     sway.enable = true;
   };
-
-  my.users.frontear.persist.directories = [
-    "~/.config"
-    "~/.local"
-  ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 

@@ -9,6 +9,15 @@
   options.my.programs.zsh = {
     enable = lib.mkEnableOption "zsh" // { default = true; };
 
+    dotDir = lib.mkOption {
+      default = "${config.xdg.configHome}/zsh";
+      description = ''
+        Sets ZDOTDIR, the directory where ZSH configuration files are expected.
+      '';
+
+      type = with lib.types; str;
+    };
+
     history = {
       file = lib.mkOption {
         default = "${config.xdg.dataHome}/zsh/zsh_history";
@@ -101,12 +110,17 @@
       })
       ({
         # These are intended to be set at system level
-        enableCompletion = false;
+        enableCompletion = true;
         completionInit = "";
       })
       ({
         # Setup prompt
         initExtra = config.my.programs.zsh.promptInit;
+      })
+      ({
+        # Need to strip home from dotDir, because hm decided to append '$HOME' here
+        # inconsistent, to say the least.
+        dotDir = lib.replaceStrings [ "${config.home.homeDirectory}/" ] [ "" ] config.my.programs.zsh.dotDir;
       })
       ({
         # Set history attributes
