@@ -88,8 +88,8 @@
     vscode = {
       enable = true;
 
-      config = import ./settings.nix;
-      extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace (import ./extensions.nix);
+      config = import ./vscode/settings.nix;
+      extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace (import ./vscode/extensions.nix);
     };
 
     zsh = {
