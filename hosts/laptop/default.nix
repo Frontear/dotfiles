@@ -26,11 +26,7 @@
     persist.enable = true;
 
     programs = {
-      direnv.enable = true;
-      eza.enable = true;
-      gpg.enable = true;
       vscode.enable = true;
-      zsh.enable = true;
     };
   };
 

@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 {
@@ -17,8 +18,21 @@
         (lib.optional config.networking.networkmanager.enable "networkmanager")
       );
 
+      # TODO: MOVE THIS ANYWHERE ELSE
+      shell = lib.mkForce pkgs.zsh;
+
       isNormalUser = true;
     };
+  };
+
+  programs.zsh = {
+    enable = true;
+
+    enableBashCompletion = true;
+    enableCompletion = true;
+    enableGlobalCompInit = true;
+
+    promptInit = "";
   };
 
   home-manager = {

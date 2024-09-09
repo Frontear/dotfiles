@@ -35,12 +35,4 @@ in {
       type = with types; attrsOf (submodule userOpts);
     };
   };
-
-  config.users.extraUsers = mkMerge (mapAttrsToList (name: value: {
-    "${name}" = {
-      name = value.username;
-      home = value.homeDirectory;
-      isNormalUser = true;
-    };
-  }) config.my.users);
 }

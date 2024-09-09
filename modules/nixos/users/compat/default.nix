@@ -18,20 +18,6 @@ let
 
   userOpts = { ... }: {
     options = {
-      extraGroups = mkCompatOption {
-        cfg = "extraGroups";
-        default = [];
-
-        type = with types; listOf str;
-      };
-
-      initialHashedPassword = mkCompatOption {
-        cfg = "initialHashedPassword";
-        default = null;
-
-        type = with types; nullOr (passwdEntry str);
-      };
-
       packages = mkCompatOption {
         cfg = "packages";
         default = [];
@@ -40,17 +26,6 @@ let
         '';
 
         type = with types; listOf package;
-      };
-
-      shell = mkCompatOption {
-        cfg = "shell";
-        default = pkgs.shadow;
-        description = ''
-          Do **not** set this manually unless you know
-          what you are doing!
-        '';
-
-        type = with types; nullOr (either shellPackage (passwdEntry path));
       };
     };
   };
@@ -63,7 +38,7 @@ in {
 
   config.users.extraUsers = mkMerge (mapAttrsToList (name: value: {
     "${name}" = {
-      inherit (value) extraGroups initialHashedPassword packages shell;
+      inherit (value) packages;
     };
   }) config.my.users);
 }

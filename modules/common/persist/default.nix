@@ -75,10 +75,10 @@ let
       '';
 
       example = file-example;
-      type = with lib.types; listOf (coercedTo str (path: { inherit path; }) (submodule (pathOpts {
+      type = with lib.types; listOf (coercedTo str (path: { inherit path; }) (submodule (pathOpts ({
         inherit user group;
         name = "file";
-      } // optPathAttrs)));
+      } // optPathAttrs))));
     };
   };
 in {
