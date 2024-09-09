@@ -53,6 +53,10 @@
 
         init.defaultBranch = "main";
       };
+
+      ignores = [
+        ".envrc"
+      ];
     };
 
     gnupg = {
