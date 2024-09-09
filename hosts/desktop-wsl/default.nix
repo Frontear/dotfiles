@@ -11,20 +11,9 @@
 
   system.stateVersion = "24.05";
 
-  my.users.frontear = {
-    extraGroups = [ "wheel" ];
-    packages = with pkgs; [ yt-dlp ];
-
-    programs = {
-      atool.enable = true;
-      direnv.enable = true;
-      eza.enable = true;
-      git.enable = true;
-      gpg.enable = true;
-      neovim.enable = true;
-      zsh.enable = true;
-    };
-  };
+  home-manager.users.frontear.home.packages = [
+    pkgs.yt-dlp
+  ];
 
   programs.nix-ld = {
     enable = true;
