@@ -9,16 +9,10 @@ lib.mkMerge [
   ({
     # Sets up user
     users.extraUsers.frontear = {
-      # TODO: dedup
-      name = "frontear";
-      home = "/home/frontear";
-
       initialHashedPassword = "$y$j9T$gsXwh6NJa62APePZ.7xR00$lLYi86UgQdN1yjOIgqcegfTKsnqkXI4ufQHWdOTiKr6";
 
       extraGroups = [ "wheel" ] ++
       (lib.optional config.networking.networkmanager.enable "networkmanager");
-
-      isNormalUser = true;
     };
   })
   # Set the default user in WSL context

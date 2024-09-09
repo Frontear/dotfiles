@@ -14,11 +14,6 @@
     directories = [ "/var/lib/systemd/backlight" ];
   };
 
-  home-manager.users.frontear.my.persist.directories = [
-    "~/.config"
-    "~/.local"
-  ];
-
   my = {
     boot.systemd-boot.enable = true;
     mounts.swap.enable = true;

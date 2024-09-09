@@ -7,9 +7,11 @@
 {
   home.stateVersion = "24.11";
 
-  # TODO: dedup
-  home.username = "frontear";
-  home.homeDirectory = "/home/frontear";
+  # TODO: remove
+  my.persist.directories = [
+    "~/.config"
+    "~/.local"
+  ];
 
   my.programs = {
     armcord.enable = true;

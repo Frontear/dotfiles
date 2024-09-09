@@ -6,7 +6,33 @@ let
   allUsers = lib.pipe ./. [
     builtins.readDir
     (lib.filterAttrs (_: type: type == "directory"))
-    (lib.mapAttrsToList (name: _: { inherit name; system = ./${name}/system; home = ./${name}/home; }))
+    (lib.mapAttrsToList (name: _: {
+      inherit name;
+
+      system = ({
+        imports = [
+          ./${name}/system
+        ];
+
+        users.extraUsers.${name} = {
+          inherit name;
+          home = "/home/${name}";
+
+          isNormalUser = true;
+        };
+      });
+
+      home = ({
+        imports = [
+          ./${name}/home
+        ];
+
+        home = {
+          username = name;
+          homeDirectory = "/home/${name}";
+        };
+      });
+    }))
   ];
 
   mkUsers = ({
