@@ -13,6 +13,27 @@
     "~/.local"
   ];
 
+  my.desktops.sway = {
+    enable = true;
+    extraPackages = with pkgs; [
+      foot
+      rofi
+      swayidle
+      swaylock
+    ];
+
+    fonts = [ (pkgs.nerdfonts.override { fonts = [ "CascadiaCode" ]; }) ];
+
+    config = import ./sway/config.nix;
+
+    programs.waybar = {
+      enable = true;
+
+      config = import ./sway/waybar/config.nix;
+      style = import ./sway/waybar/style.nix;
+    };
+  };
+
   my.programs = {
     armcord.enable = true;
 

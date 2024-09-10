@@ -29,14 +29,6 @@ let
           });
         });
       }));
-
-      extraPackages = with pkgs; [
-        foot
-        rofi
-        waybar
-        swayidle
-        swaylock
-      ];
     };
   };
 in {
