@@ -41,7 +41,7 @@ let
       install -Dm755 ./cachix-push $out/bin/cachix-push
 
       wrapProgram $out/bin/rebuild --prefix PATH : ${lib.makeBinPath [ gitMinimal nh ]}
-      wrapProgram $out/bin/gc --prefix PATH : ${lib.makeBinPath [ nh ]}
+      # wrapProgram $out/bin/gc --prefix PATH : ${lib.makeBinPath [ ]}
       wrapProgram $out/bin/cachix-push --prefix PATH : ${lib.makeBinPath [ cachix gnused jq ]}
 
       runHook postInstall
