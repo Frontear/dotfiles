@@ -4,8 +4,8 @@
   ...
 }:
 let
-  callLibs = file: import file { inherit self lib; };
+  callLibs = name: file: lib.recursiveUpdate (lib.${name} or {}) (import file { inherit self lib; });
 in {
-  flake = (callLibs ./flake.nix) // (lib.flake or {});
-  types = (callLibs ./types.nix) // (lib.types or {});
+  flake = callLibs "flake" ./flake.nix;
+  types = callLibs "types" ./types.nix;
 }
