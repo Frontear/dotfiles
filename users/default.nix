@@ -7,9 +7,9 @@ let
     builtins.readDir
     (lib.filterAttrs (_: type: type == "directory"))
     (lib.mapAttrs (name: _: {
-      system = ({
+      nixos = ({
         imports = [
-          ./${name}/system
+          ./${name}/nixos
         ];
 
         users.extraUsers.${name} = {
@@ -34,7 +34,7 @@ let
   ];
 
   mkUsers = ({
-    imports = lib.mapAttrsToList (_: value: value.system) allUsers;
+    imports = lib.mapAttrsToList (_: value: value.nixos) allUsers;
 
     home-manager = {
       useUserPackages = true;
