@@ -6,9 +6,7 @@ let
   allUsers = lib.pipe ./. [
     builtins.readDir
     (lib.filterAttrs (_: type: type == "directory"))
-    (lib.mapAttrsToList (name: _: {
-      inherit name;
-
+    (lib.mapAttrs (name: _: {
       system = ({
         imports = [
           ./${name}/system
@@ -36,13 +34,13 @@ let
   ];
 
   mkUsers = ({
-    imports = map (u: u.system) allUsers;
+    imports = lib.mapAttrsToList (_: value: value.system) allUsers;
 
     home-manager = {
       useUserPackages = true;
       useGlobalPkgs = true;
 
-      users = lib.listToAttrs (map (u: { inherit (u) name; value = u.home; }) allUsers);
+      users = lib.mapAttrs (_: value: value.home) allUsers;
     };
   });
 in mkUsers
