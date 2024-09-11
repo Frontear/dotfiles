@@ -1,4 +1,5 @@
 {
+  osConfig,
   config,
   lib,
   pkgs,
@@ -14,7 +15,7 @@
   ];
 
   my.desktops.sway = {
-    enable = true;
+    enable = osConfig.my.desktops.sway.enable;
     extraPackages = with pkgs; [
       foot
       rofi
