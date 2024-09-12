@@ -12,8 +12,6 @@
 
   "modules-center": [
     "idle_inhibitor",
-    "custom/spacer",
-    "sway/window",
   ],
 
   "modules-right": [
@@ -46,10 +44,6 @@
       "9": [],
       "10": [],
     },
-  },
-
-  "sway/window": {
-    "max-length": 30,
   },
   
   "idle_inhibitor": {
