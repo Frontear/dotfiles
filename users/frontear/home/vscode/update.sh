@@ -8,4 +8,4 @@ fi
 
 mv extensions{-new,}.nix
 git add -A
-nix build ".#nixosConfigurations.$HOSTNAME.config.my.users.$(whoami).programs.vscode.package" --no-link --print-out-paths | cachix push frontear
+nix build ".#nixosConfigurations.$(hostname).config.home-manager.users.frontear.my.programs.vscode.package" --no-link --print-out-paths | cachix push frontear

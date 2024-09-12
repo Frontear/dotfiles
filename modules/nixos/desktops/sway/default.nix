@@ -20,15 +20,7 @@ let
 
     programs.sway = {
       enable = true;
-      # https://github.com/NixOS/nixpkgs/commit/ff498279120074a4d9fdbbb7d18f7cebe57a7c9a
-      package = (pkgs.swayfx.override (prev: {
-        swayfx-unwrapped = prev.swayfx-unwrapped.override (prev: {
-          scenefx = prev.scenefx.overrideAttrs (prevAttrs: {
-            depsBuildBuild = (prevAttrs.depsBuildBuild or []) ++ [ prev.pkg-config ];
-            nativeBuildInputs = (prevAttrs.nativeBuildInputs or []) ++ [ prev.wayland-scanner ];
-          });
-        });
-      }));
+      package = pkgs.swayfx;
     };
   };
 in {
