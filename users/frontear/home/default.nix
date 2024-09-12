@@ -1,39 +1,17 @@
 {
-  osConfig,
   config,
   lib,
   pkgs,
   ...
 }:
 {
-  home.stateVersion = "24.11";
-
-  # TODO: remove
-  my.persist.directories = [
-    "~/.config"
-    "~/.local"
+  imports = [
+    ./plasma
+    ./sway
+    ./vscode
   ];
 
-  my.desktops.sway = {
-    enable = osConfig.my.desktops.sway.enable;
-    extraPackages = with pkgs; [
-      foot
-      rofi
-      swayidle
-      swaylock
-    ];
-
-    fonts = [ (pkgs.nerdfonts.override { fonts = [ "CascadiaCode" ]; }) ];
-
-    config = import ./sway/config.nix;
-
-    programs.waybar = {
-      enable = true;
-
-      config = import ./sway/waybar/config.nix;
-      style = import ./sway/waybar/style.nix;
-    };
-  };
+  home.stateVersion = "24.11";
 
   my.programs = {
     armcord.enable = true;
@@ -107,13 +85,6 @@
 
     microsoft-edge = {
       enable = true;
-    };
-
-    vscode = {
-      enable = true;
-
-      config = import ./vscode/settings.nix;
-      extensions = pkgs.vscode-utils.extensionsFromVscodeMarketplace (import ./vscode/extensions.nix);
     };
 
     zsh = {
