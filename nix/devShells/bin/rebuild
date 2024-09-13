@@ -1,3 +1,11 @@
 #!/usr/bin/env bash
 
-nh os "${1:-test}" --verbose . -- --show-trace "${@:2}"
+declare -r mode="${1:-test}"
+
+if [ "$mode" = "test" ] || [ "$mode" = "switch" ]; then
+    if [ -f /etc/specialisation ]; then
+        nh os "$mode" --verbose --specialisation "$(cat /etc/specialisation)" . -- --show-trace "${@:2}"
+    else
+        nh os "$mode" --verbose --no-specialisation . -- --show-trace "${@:2}"
+    fi
+fi
