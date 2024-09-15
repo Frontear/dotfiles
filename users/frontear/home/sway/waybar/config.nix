@@ -4,6 +4,7 @@
   "layer": "top",
   "position": "top",
   "spacing": 0,
+  "margin": "4",
   "mode": "dock",
 
   "modules-left": [
@@ -50,7 +51,7 @@
     "format": "{icon}",
     "format-icons": {
       "activated": "",
-      "deactivated": "",
+      "deactivated": "",
     },
   },
 
@@ -82,11 +83,17 @@
   },
   
   "battery": {
+    "interval": 5,
+
     "format": "{icon}",
-    "format-full": "󰁹",
     "format-icons": {
+      "full": "󱟢",
       "charging": [ "󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅", ],
       "discharging": [ "󱃍", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹", ],
+    },
+
+    "states": {
+      "critical": 10,
     },
   },
 

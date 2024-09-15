@@ -16,7 +16,7 @@
     config = import ./config.nix;
 
     fonts = with pkgs; [
-      (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
+      (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
     ];
 
     programs.waybar = {
