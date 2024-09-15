@@ -8,7 +8,7 @@
   "mode": "dock",
 
   "modules-left": [
-    "sway/workspaces",
+    "custom/os-logo",
   ],
 
   "modules-center": [
@@ -24,27 +24,12 @@
     "clock",
   ],
 
-  "custom/spacer": {
-    "format": "|",
+  "custom/os-logo": {
+    "format": "",
   },
 
-  "sway/workspaces": {
-    "format": "",
-
-    "disable-scroll": true,
-    "disable-click": true,
-    "persistent-workspaces": {
-      "1": [],
-      "2": [],
-      "3": [],
-      "4": [],
-      "5": [],
-      "6": [],
-      "7": [],
-      "8": [],
-      "9": [],
-      "10": [],
-    },
+  "custom/spacer": {
+    "format": "|",
   },
   
   "idle_inhibitor": {

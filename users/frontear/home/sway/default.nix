@@ -11,6 +11,8 @@
       rofi
       swayidle
       swaylock
+
+      perlPackages.Apppapersway
     ];
 
     config = import ./config.nix;

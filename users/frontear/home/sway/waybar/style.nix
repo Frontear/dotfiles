@@ -16,12 +16,16 @@
   padding: 0.25rem 0.5rem;
 }
 
-#workspaces button, #idle_inhibitor, #wireplumber, #network, #backlight, #battery {
+#custom-os-logo, #workspaces button, #idle_inhibitor, #wireplumber, #network, #backlight, #battery {
   @include fontStyle("Symbols Nerd Font", 1.25rem);
 }
 
 #custom-spacer, #clock {
   @include fontStyle("monospace", 1rem);
+}
+
+#custom-os-logo {
+  color: #5277c3;
 }
 
 #workspaces button {

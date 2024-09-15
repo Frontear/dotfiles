@@ -19,6 +19,10 @@ bar {
   swaybar_command waybar
 }
 
+focus_wrapping no
+workspace_layout default
+exec papersway
+
 exec swayidle -w \
   timeout '${toString (2 * 60)}' 'swaylock -fls solid_color -c 000000' \
   timeout '${toString (5 * 60)}' 'swaymsg "output * dpms off"' \
@@ -56,37 +60,15 @@ bindsym --no-repeat {
   F11 fullscreen toggle
   ${Super}+F floating toggle
 
-  ${Super}+Left focus left
-  ${Super}+Right focus right
+  ${Super}+Left exec papersway-msg focus left
+  ${Super}+Right exec papersway-msg focus right
   ${Super}+Up focus up
   ${Super}+Down focus down
 
-  ${Super}+Shift+Left move left
-  ${Super}+Shift+Right move right
+  ${Super}+Shift+Left exec papersway-msg move left
+  ${Super}+Shift+Right exec papersway-msg move right
   ${Super}+Shift+Up move up
   ${Super}+Shift+Down move down
-
-  ${Super}+1 workspace number 1
-  ${Super}+2 workspace number 2
-  ${Super}+3 workspace number 3
-  ${Super}+4 workspace number 4
-  ${Super}+5 workspace number 5
-  ${Super}+6 workspace number 6
-  ${Super}+7 workspace number 7
-  ${Super}+8 workspace number 8
-  ${Super}+9 workspace number 9
-  ${Super}+0 workspace number 10
-
-  ${Super}+Shift+1 move container to workspace number 1
-  ${Super}+Shift+2 move container to workspace number 2
-  ${Super}+Shift+3 move container to workspace number 3
-  ${Super}+Shift+4 move container to workspace number 4
-  ${Super}+Shift+5 move container to workspace number 5
-  ${Super}+Shift+6 move container to workspace number 6
-  ${Super}+Shift+7 move container to workspace number 7
-  ${Super}+Shift+8 move container to workspace number 8
-  ${Super}+Shift+9 move container to workspace number 9
-  ${Super}+Shift+0 move container to workspace number 10
 }
 
 include /etc/sway/config.d/*
