@@ -90,7 +90,7 @@
         xdg.configFile."waybar/style.css".source = pkgs.runCommandLocal "waybar-style-sccs" {
           nativeBuildInputs = [ pkgs.sassc ];
         } ''
-          echo "${config.my.desktops.sway.programs.waybar.style}" | sassc --stdin $out
+          echo '${config.my.desktops.sway.programs.waybar.style}' | sassc --stdin $out
         '';
       })
     ]))
