@@ -9,6 +9,8 @@
 
   "modules-left": [
     "custom/os-logo",
+    "custom/spacer",
+    "disk",
   ],
 
   "modules-center": [
@@ -30,6 +32,35 @@
 
   "custom/spacer": {
     "format": "|",
+  },
+
+  "disk": {
+    "format-0": "󰄰",
+    "format-1": "󰪞",
+    "format-2": "󰪟",
+    "format-3": "󰪠",
+    "format-4": "󰪡",
+    "format-5": "󰪢",
+    "format-6": "󰪣",
+    "format-7": "󰪤",
+    "format-8": "󰪥",
+
+    "states": {
+      "0": 0,
+      "1": 12,
+      "2": 25,
+      "3": 37,
+      "4": 50,
+      "5": 62,
+      "6": 75,
+      "7": 87,
+      "8": 100,
+    },
+
+    "path": "/nix/store",
+
+    "tooltip": true,
+    "tooltip-format": "{used} / {total} ({percentage_used}%)",
   },
   
   "idle_inhibitor": {

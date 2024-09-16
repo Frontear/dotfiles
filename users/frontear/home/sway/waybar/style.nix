@@ -10,13 +10,22 @@
   font-family: $family;
 }
 
+tooltip {
+  background: rgba(black, 0.4);
+  border-radius: 8px;
+
+  & * {
+    color: white;
+  }
+}
+
 .modules-left, .modules-center, .modules-right {
   background-color: rgba(black, 0.4);
   border-radius: 1.5rem;
   padding: 0.25rem 0.5rem;
 }
 
-#custom-os-logo, #workspaces button, #idle_inhibitor, #wireplumber, #network, #backlight, #battery {
+#custom-os-logo, #disk, #idle_inhibitor, #wireplumber, #network, #backlight, #battery {
   @include fontStyle("Symbols Nerd Font", 1.25rem);
 }
 
