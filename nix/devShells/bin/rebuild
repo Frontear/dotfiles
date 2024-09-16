@@ -8,4 +8,6 @@ if [ "$mode" = "test" ] || [ "$mode" = "switch" ]; then
     else
         nh os "$mode" --verbose --no-specialisation . -- --show-trace "${@:2}"
     fi
+else
+    nh os "$mode" --verbose . -- --show-trace "${@:2}"
 fi
