@@ -9,6 +9,7 @@
 
   "modules-left": [
     "custom/os-logo",
+    "sway/workspaces",
     "custom/spacer",
     "disk",
   ],
@@ -32,6 +33,12 @@
 
   "custom/spacer": {
     "format": "|",
+  },
+
+  "sway/workspaces": {
+    "disable-scroll": true,
+    "disable-click": true,
+    "current-only": true,
   },
 
   "disk": {

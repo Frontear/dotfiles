@@ -25,28 +25,24 @@ tooltip {
   padding: 0.25rem 0.5rem;
 }
 
-#custom-os-logo, #disk, #idle_inhibitor, #wireplumber, #network, #backlight, #battery {
+#custom-os-logo,
+#disk,
+#idle_inhibitor,
+#wireplumber,
+#network,
+#backlight,
+#battery {
   @include fontStyle("Symbols Nerd Font", 1.25rem);
 }
 
-#custom-spacer, #clock {
+#custom-spacer,
+#workspaces button,
+#clock {
   @include fontStyle("monospace", 1rem);
 }
 
 #custom-os-logo {
   color: #5277c3;
-}
-
-#workspaces button {
-  color: rgba(white, 0.25);
-
-  &.empty {
-    color: rgba(black, 0.25);
-  }
-
-  &.focused {
-    color: rgba(white, 0.5);
-  }
 }
 
 /*
