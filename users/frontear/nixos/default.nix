@@ -20,6 +20,10 @@ lib.mkMerge [
   (lib.optionalAttrs (options ? wsl.defaultUser) {
     wsl.defaultUser = "frontear";
   })
+  (lib.mkIf config.my.desktops.sway.enable {
+    programs.light.enable = true;
+    users.extraUsers.frontear.extraGroups = lib.singleton "video";
+  })
   ({
     # Sets shell to ZSH
     users.extraUsers.frontear.shell = pkgs.zsh;

@@ -13,6 +13,8 @@
       swaylock
 
       perlPackages.Apppapersway
+
+      wl-clip-persist
     ];
 
     config = import ./config.nix;
