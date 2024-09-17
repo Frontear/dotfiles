@@ -10,11 +10,15 @@ let
   attrs = {
     my.audio.pipewire.enable = mkDefault true;
 
+    my.persist.directories = [
+      { path = "/var/cache/tuigreet"; user = "greeter"; group = "greeter"; mode = "755"; }
+    ];
+
     services.greetd = {
       enable = true;
 
       settings.default_session = {
-        command = "${lib.getExe pkgs.greetd.tuigreet} --time --cmd sway";
+        command = ''${lib.getExe pkgs.greetd.tuigreet} --cmd sway --greeting "Welcome to NixOS (${lib.versions.majorMinor lib.version})!" --time --remember --asterisks'';
       };
     };
 
@@ -22,6 +26,8 @@ let
       enable = true;
       package = pkgs.swayfx;
     };
+
+    xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
   };
 in {
   options.my.desktops.sway = {

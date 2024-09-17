@@ -5,7 +5,9 @@
   pkgs,
   ...
 }:
-{
+let
+  cfg = config.my.desktops.sway;
+in {
   options.my.desktops.sway = {
     enable = lib.mkEnableOption "sway";
 
@@ -39,6 +41,15 @@
     programs = {
       waybar = {
         enable = lib.mkEnableOption "sway.programs.waybar" // { default = true; };
+        package = lib.mkOption {
+          default = pkgs.waybar;
+          defaultText = "pkgs.waybar";
+          description = ''
+            The waybar package to use.
+          '';
+
+          type = with lib.types; package;
+        };
 
         config = lib.mkOption {
           default = null;
@@ -61,7 +72,7 @@
     };
   };
 
-  config = lib.mkIf config.my.desktops.sway.enable (lib.mkMerge [
+  config = lib.mkIf cfg.enable (lib.mkMerge [
     ({
       assertions = [
         ({
@@ -71,26 +82,26 @@
       ];
 
       home.packages = (
-        config.my.desktops.sway.extraPackages ++
-        (lib.optional config.my.desktops.sway.programs.waybar.enable pkgs.waybar)
+        cfg.extraPackages ++
+        (lib.optional cfg.programs.waybar.enable cfg.programs.waybar.package)
       );
     })
-    (lib.mkIf (config.my.desktops.sway.fonts != []) {
+    (lib.mkIf (cfg.fonts != []) {
       fonts.fontconfig.enable = lib.mkDefault true;
-      home.packages = config.my.desktops.sway.fonts;
+      home.packages = cfg.fonts;
     })
-    (lib.mkIf (config.my.desktops.sway.config != null) {
-      xdg.configFile."sway/config".text = config.my.desktops.sway.config;
+    (lib.mkIf (cfg.config != null) {
+      xdg.configFile."sway/config".text = cfg.config;
     })
-    (lib.mkIf (config.my.desktops.sway.programs.waybar.enable) (lib.mkMerge [
-      (lib.mkIf (config.my.desktops.sway.programs.waybar.config != null) {
-        xdg.configFile."waybar/config.jsonc".text = config.my.desktops.sway.programs.waybar.config;
+    (lib.mkIf (cfg.programs.waybar.enable) (lib.mkMerge [
+      (lib.mkIf (cfg.programs.waybar.config != null) {
+        xdg.configFile."waybar/config.jsonc".text = cfg.programs.waybar.config;
       })
-      (lib.mkIf (config.my.desktops.sway.programs.waybar.style != null) {
+      (lib.mkIf (cfg.programs.waybar.style != null) {
         xdg.configFile."waybar/style.css".source = pkgs.runCommandLocal "waybar-style-sccs" {
           nativeBuildInputs = [ pkgs.sassc ];
         } ''
-          echo '${config.my.desktops.sway.programs.waybar.style}' | sassc --stdin $out
+          echo '${cfg.programs.waybar.style}' | sassc --stdin $out
         '';
       })
     ]))
