@@ -27,9 +27,19 @@ in {
       # Disable the legacy channels
       nix.channel.enable = lib.mkForce false;
 
-      # Use Lix!
+      # Use Lix, alongside a thin wrapper that has a rapid fast repl.
       # https://gist.github.com/Frontear/f88e27b0a5c2841c849a1a21e6b70793
       nix.package = pkgs.lix;
+
+      environment.systemPackages = [
+        (let nix = lib.getExe config.nix.package; in pkgs.writeShellScriptBin "nix" ''
+          if [ -n "$1" ] && [ "$1" = "repl" ]; then
+            ${nix} repl --file "${./fast-repl.nix}" "''${@:2}"
+          else
+            ${nix} "$@"
+          fi
+        '')
+      ];
 
       # Use viper's nix wrapper
       programs.nh.enable = true;
