@@ -13,6 +13,11 @@
 
   home.stateVersion = "24.11";
 
+  home.shellAliases = {
+    # Prevent TERM capabilities leaking into a shitty ssh
+    "ssh" = "TERM= ssh";
+  };
+
   my.programs = {
     armcord.enable = true;
 
