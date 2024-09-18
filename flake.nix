@@ -20,7 +20,11 @@
 
   outputs = inputs@{ self, flake-parts, nixpkgs, ... }: flake-parts.lib.mkFlake { inherit inputs; } {
     imports = [
+      ./hosts
+      ./lib
+      ./modules
       ./nix
+      ./pkgs
     ];
 
     systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
