@@ -61,6 +61,10 @@ bindsym --locked {
 }
 
 bindsym --no-repeat {
+  Print exec ${./bin/screenshot}
+}
+
+bindsym --no-repeat {
   --locked Ctrl+Alt+Delete exit
   Ctrl+Alt+R reload
 
