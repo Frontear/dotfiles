@@ -9,5 +9,5 @@ fi
 nix flake archive --json | jq -r 'recurse (.inputs[]) | .path' | cachix push frontear
 
 for host in $(nix eval ".#nixosConfigurations" --apply builtins.attrNames --json | jq -r '.[]'); do
-    nix build ".#cachixJobs.$host" --no-link --print-out-paths | cachix push frontear
+    nix build ".#$host" --no-link --print-out-paths | cachix push frontear
 done
