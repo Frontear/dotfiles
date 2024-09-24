@@ -45,10 +45,6 @@ in {
         checkMeta = true;
         warnUndeclaredOptions = true;
       };
-
-      # TODO: best place?
-      my.persist.directories = [ "/var/tmp" ];
-      systemd.services.nix-daemon.environment.TMPDIR = "/var/tmp";
     }
   ]);
 }

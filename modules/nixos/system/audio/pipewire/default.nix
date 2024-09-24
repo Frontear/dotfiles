@@ -4,27 +4,29 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkForce mkIf mkMerge;
+  cfg = config.my.audio.pipewire;
 in {
-  options.my.audio.pipewire.enable = mkEnableOption "pipewire";
+  options.my.audio.pipewire = {
+    enable = lib.mkEnableOption "pipewire";
+  };
 
-  config = mkIf config.my.audio.pipewire.enable (mkMerge [
+  config = lib.mkIf cfg.enable (lib.mkMerge [
     {
-      # Explicitly disable pulseaudio and alsa
-      hardware.pulseaudio.enable = mkForce false;
+      # Kill PulseAudio and ALSA stuff
+      hardware.pulseaudio.enable = lib.mkForce false;
       hardware.alsa.enablePersistence = false; # https://github.com/NixOS/nixpkgs/issues/330606
-
-      # PipeWire benefits from having realtime priority
+    }
+    {
+      # Enable realtime kit and PipeWire. Additionally,
+      # enable all PipeWire backends for improved compat.
       security.rtkit.enable = true;
-
-      # Enable all pipewire related backends, for maximum compatibility
       services.pipewire = {
         enable = true;
+
         alsa.enable = true;
-        alsa.support32Bit = true;
+        alsa.support32Bit = lib.mkDefault true; # TODO: ?
         pulse.enable = true;
         jack.enable = true;
-        wireplumber.enable = true;
       };
     }
     {

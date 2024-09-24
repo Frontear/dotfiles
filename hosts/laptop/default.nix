@@ -11,6 +11,35 @@
   config = lib.mkMerge [
     ({ system.stateVersion = "24.05"; })
     ({
+      # Set some important system values
+      console.keyMap = "us";
+      i18n.defaultLocale = "en_CA.UTF-8";
+      time.timeZone = "America/Toronto";
+    })
+    ({
+      # Enable relevant swap and /tmp mount configuration
+      my.mounts = {
+        swap.enableZram = true;
+        tmp.enableTmpfs = true;
+      };
+    })
+    ({
+      # Enable networking with some additional powersavings
+      # for this poor, pitiable laptop.
+      my.network.networkmanager = {
+        enable = true;
+        enablePowerSave = true;
+
+        dns.providers.cloudflare.enable = true;
+        hosts.providers.stevenblack.enable = true;
+      };
+
+      boot.extraModprobeConfig = ''
+        options iwlwifi power_level=3 power_save=1 uapsd_disable=0
+        options iwlmvm power_scheme=3
+      '';
+    })
+    ({
       # Setup boot stuff
       my.boot.systemd-boot.enable = true;
       fileSystems."/boot" = {
@@ -20,19 +49,13 @@
       };
     })
     ({
-      # Set some important system values
-      console.keyMap = "us";
-      i18n.defaultLocale = "en_CA.UTF-8";
-      time.timeZone = "America/Toronto";
-    })
-    ({
       # Enable DEs
       my.desktops.plasma.enable = true;
       my.desktops.sway.enable = true;
       my.desktops.sway.default = true;
     })
     ({
-      # Enable impermanence
+      # Enable impermanence and setup mounts
       my.persist.enable = true;
       fileSystems = {
         "/" = {
@@ -52,8 +75,6 @@
       # Unsorted stuff
       boot.kernelPackages = pkgs.linuxPackages_latest;
       my.persist.directories = [ "/var/lib/systemd/backlight" ];
-      my.mounts.swap.enable = true;
-      my.network.networkmanager.enable = true;
     })
   ];
 }
