@@ -8,7 +8,7 @@
   options.my.programs.microsoft-edge = {
     enable = lib.mkEnableOption "microsoft-edge";
     package = lib.mkOption {
-      default = pkgs.callPackage ./package.nix { commandLineArgs = "--user-data-dir=${config.my.programs.microsoft-edge.userDataDir}"; };
+      default = pkgs.callPackage ./package.nix { commandLineArgs = "--user-data-dir=${config.home.homeDirectory}/${config.my.programs.microsoft-edge.userDataDir}"; };
       defaultText = "<wrapped-drv>";
       description = ''
         The microsoft-edge package to use.
