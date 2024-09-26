@@ -74,7 +74,6 @@
     ({
       # Unsorted stuff
       boot.kernelPackages = pkgs.linuxPackages_latest;
-      my.persist.directories = [ "/var/lib/systemd/backlight" ];
     })
   ];
 }

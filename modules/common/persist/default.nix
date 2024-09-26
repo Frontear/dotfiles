@@ -33,6 +33,14 @@ in {
   ];
 
   config = lib.mkIf config.my.persist.enable {
+    # These directories should logically exist to ensure
+    # a consistent and expected system state.
+    #
+    # TODO: trim down?
+    my.persist.directories = [
+      "/var"
+    ];
+
     system.activationScripts.persist = lib.stringAfter [ "users" "groups" ] ''
       log() {
         echo "[persist] $1"
