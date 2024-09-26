@@ -5,233 +5,108 @@
   ...
 }:
 let
-  pathOpts = { user, group, name, ... } @ pathAttrs: {
-    options = {
-      path = lib.mkOption {
-        default = null;
-        description = ''
-          Absolute path to the ${name} as it should be on the rootfs.
-        '';
-      } // lib.removeAttrs pathAttrs [ "user" "group" "name" "default" "description" ];
+  mkPersistActivation = (root: cfg:
+  let
+    dirs = map (e: e.path) cfg.directories;
 
-      user = lib.mkOption {
-        default = user;
-        description = ''
-          The user who owns this ${name}.
-        '';
+    parentExists = (path:
+    let
+      parent = dirOf path;
+    in
+      parent != root
+      && (lib.elem parent dirs
+      || parentExists parent)
+    );
 
-        type = with lib.types; str;
-      };
-
-      group = lib.mkOption {
-        default = group;
-        description = ''
-          The group who owns this ${name}.
-        '';
-
-        type = with lib.types; str;
-      };
-
-      mode = lib.mkOption {
-        default = if name == "directory" then "755" else "644";
-        description = ''
-          The permission modifiers applied to this ${name}.
-        '';
-
-        type = with lib.types; str;
-      };
-    };
-  };
-
-  mkPersistenceModuleOpts = { user, group, optPathAttrs, dir-example, file-example }: {
-    enable = lib.mkEnableOption "persist path entries across ephemeral roots.";
-
-    volume = lib.mkOption {
-      default = "/nix/persist";
-      description = ''
-        The persistent volume where all entries are stored and linked to the rootfs.
-      '';
-
-      type = with lib.types; path;
-    };
-
-    directories = lib.mkOption {
-      default = [];
-      description = ''
-        Directories to persistently store. These are bind mounted upon system activation.
-      '';
-
-      example = dir-example;
-      type = with lib.types; listOf (coercedTo str (path: { inherit path; }) (submodule (pathOpts ({
-        inherit user group;
-        name = "directory";
-      } // optPathAttrs))));
-    };
-
-    files = lib.mkOption {
-      default = [];
-      description = ''
-        Files to persistently store. These are bind mounted upon system activation.
-      '';
-
-      example = file-example;
-      type = with lib.types; listOf (coercedTo str (path: { inherit path; }) (submodule (pathOpts ({
-        inherit user group;
-        name = "file";
-      } // optPathAttrs))));
-    };
-  };
+    uniqueDirs = lib.filter (p: !parentExists p) dirs;
+  in lib.concatStringsSep "\n" ((map (e:
+    if lib.elem e.path uniqueDirs then
+      ''persist "${config.my.persist.volume + e.path}" "${e.path}" "${e.user}" "${e.group}" "${e.mode}" "dir"''
+    else
+      ''mkown "${config.my.persist.volume + e.path}" "${e.path}" "${e.user}" "${e.group}" "${e.mode}" "dir" ''
+  ) cfg.directories) ++ map (e:
+    ''persist "${config.my.persist.volume + e.path}" "${e.path}" "${e.user}" "${e.group}" "${e.mode}" "file"''
+  ) cfg.files));
 in {
-  options.my.persist = mkPersistenceModuleOpts {
-    user = "root";
-    group = "root";
+  imports = [
+    ./module.nix
+  ];
 
-    optPathAttrs = {
-      type = with lib.types; systemPath;
-    };
+  config = lib.mkIf config.my.persist.enable {
+    system.activationScripts.persist = lib.stringAfter [ "users" "groups" ] ''
+      log() {
+        echo "[persist] $1"
+      }
 
-    dir-example = [
-      "/etc/NetworkManager"
-      { path = "/etc/nixos"; user = "root"; group = "wheel"; mode = "755"; }
-    ];
-
-    file-example = [
-      "/etc/machine-id"
-      { path = "/etc/shadow"; user = "root"; group = "shadow"; mode = "640"; }
-    ];
-  };
-
-  config = {
-    my.persist.directories = lib.lists.flatten (lib.mapAttrsToList (_: value: value.my.persist.directories) config.home-manager.users);
-
-    my.persist.files = lib.lists.flatten (lib.mapAttrsToList (_: value: value.my.persist.files) config.home-manager.users);
-
-    system.activationScripts.copy-persisted = lib.stringAfter [ "users" "groups" ] ''
-      # $1 - Path to file/directory written in the persisted volume
-      # $2 - Absolute path to where the file/directory will be placed
-      # $3 - User value for 'chown'
-      # $4 - Group value for 'chown'
-      # $5 - Mode value for 'chown'
-      #
-      # !root && !persist:
-      #   - touch on persist, sync perms, link persist -> root
-      # !root && persist:
-      #   - sync perms, link persist -> root
-      # root && !persist:
-      #   - cp + rm from root, sync perms, link persist -> root
-      # root && persist:
-      #   - ignore
-      #
-      function persistFile() {
-        mkdir -pv "$(dirname "$1")" "$(dirname "$2")" | ${lib.getExe pkgs.gnused} "s|'||g;s|.* ||g" | while read dir; do
-          echo "Creating $dir with $3:$4, $5"
+      # $1 - Path to entry in the persisted volume
+      # $2 - Absolute path to entry as it will be on the rootfs
+      # $3 - User value for permissions
+      # $4 - Group value for permissions
+      # $5 - Mode value for permissions
+      # $6 - Enum of either "dir" or "file"
+      mkown() {
+        # Create all the parent paths with sane default permissions.
+        # This is usually only necessary in cases where the persist
+        # entry was made new, and has not existed in previous contexts
+        mkdir -pv "$(dirname "$1")" "$(dirname "$2")" | ${lib.getExe pkgs.gnused} "s|'||g;s|.* ||g" | while read -r dir; do
+          log "mkown: mkdir $dir '$3:$4' 755"
           chown "$3:$4" "$dir"
           chmod "755" "$dir"
         done
 
-        if [ -f "$1" ] && [ -f "$2" ] && [ "$1" -ef "$2" ]; then
-          echo "$1 => $2 already, ignoring"
+        # Create the entry if it does not exist within the persist volume.
+        # We use either mkdir or touch depending on the type of entry.
+        if [ ! -e "$1" ]; then
+          log "mkown: mkent $1"
+          (test "$6" = "dir" && mkdir -p "$1") || (test "$6" = "file" && touch "$1")
+        fi
+        
+        # Create the entry if it does not exist on the rootfs.
+        # This is necessary for the bind mount to succeed in persist.
+        if [ ! -e "$2" ]; then
+          log "mkown: mkent $2"
+          (test "$6" = "dir" && mkdir -p "$2") || (test "$6" = "file" && touch "$2")
+        fi
+
+        # Correctly enforce desired permissions on the entry in the persist.
+        log "mkown: ch{mod,own} $1"
+        chown "$3:$4" "$1"
+        chmod "$5" "$1"
+      }
+
+      # $1 - Path to entry in the persisted volume
+      # $2 - Absolute path to entry as it will be on the rootfs
+      # $3 - User value for permissions
+      # $4 - Group value for permissions
+      # $5 - Mode value for permissions
+      # $6 - Enum of either "dir" or "file"
+      persist() {
+        # Ensure the existence of the directory tree with sufficient
+        # permissions beforehand. This will not replace anything that
+        # already exists, it is non-destructive.
+        mkown "$1" "$2" "$3" "$4" "$5" "$6"
+
+        # Fast fail in situations where the entry is already linked.
+        # This usually happens when we perform a switch-to-configuration
+        # on a running system.
+        if [ "$1" -ef "$2" ]; then
+          log "persist: skip $1 ==> $2"
           return 0
         fi
 
-        if [ ! -f "$1" ]; then
-          echo "Need to make $1"
-          touch "$1"
-        fi
-
-        echo chown "$3:$4" "$1"
-        chown "$3:$4" "$1"
-        echo chmod "$5" "$1"
-        chmod "$5" "$1"
-        echo touch "$2"
-        touch "$2"
-        echo mount -o bind "$1" "$2"
+        # Create the bind mount onto the rootfs. We make the assumption
+        # that this entry does not exist, as we performed a 'test -ef'
+        # check earlier on.
+        log "persist: bind $1 ==> $2"
         mount -o bind "$1" "$2"
       }
 
-      # $1 - Path to file/directory written in the persisted volume
-      # $2 - Absolute path to where the file/directory will be placed
-      # $3 - User value for 'chown'
-      # $4 - Group value for 'chown'
-      # $5 - Mode value for 'chown'
-      #
-      # !root && !persist:
-      #   - mkdir on persist, sync perms, bind persist -> root
-      # !root && persist:
-      #   - sync perms, bind persist -> root
-      # root && !persist:
-      #   - cp + rm -r from root, sync perms, bind persist -> root
-      # root && persist:
-      #   - ignore
-      #
-      function persistDir() {
-        mkdir -pv "$(dirname "$1")" "$(dirname "$2")" | ${lib.getExe pkgs.gnused} "s|'||g;s|.* ||g" | while read dir; do
-          echo "Creating $dir with $3:$4, $5"
-          chown "$3:$4" "$dir"
-          chmod "755" "$dir"
-        done
-
-        if [ -d "$1" ] && [ -d "$2" ] && [ "$1" -ef "$2" ]; then
-          echo "$1 => $2 already, ignoring"
-          return 0
-        fi
-
-        if [ ! -d "$1" ]; then
-          echo "Need to make $1"
-          mkdir -p "$1"
-        fi
-
-        echo chown "$3:$4" "$1"
-        chown "$3:$4" "$1"
-        echo chmod "$5" "$1"
-        chmod "$5" "$1"
-        echo mkdir -p "$2"
-        mkdir -p "$2"
-        echo mount -o bind "$1" "$2"
-        mount -o bind "$1" "$2"
-      }
-
-      ${if config.my.persist.enable then (lib.pipe config.my.persist.directories [
-        (map (x: ''persistDir "${config.my.persist.volume + x.path}" "${x.path}" "${x.user}" "${x.group}" "${x.mode}"''))
+      ${mkPersistActivation "/" config.my.persist}
+      ${lib.pipe config.home-manager.users [
+        lib.attrValues
+        (map (cfg: mkPersistActivation cfg.home.homeDirectory cfg.my.persist))
         (lib.concatStringsSep "\n")
-      ]) else "# No persistence!"}
-
-      ${if config.my.persist.enable then (lib.pipe config.my.persist.files [
-        (map (x: ''persistFile "${config.my.persist.volume + x.path}" "${x.path}" "${x.user}" "${x.group}" "${x.mode}"''))
-        (lib.concatStringsSep "\n")
-      ]) else "# No persistence!"}
+      ]}
     '';
-
-    home-manager.sharedModules = [
-      (
-        {
-          osConfig,
-          config,
-          lib,
-          ...
-        }:
-        {
-          options.my.persist = lib.removeAttrs (mkPersistenceModuleOpts {
-            user = config.home.username;
-            group = osConfig.users.extraUsers.${config.home.username}.group; # TODO: dangerous assumption?
-
-            optPathAttrs = {
-              type = with lib.types; userPath;
-              apply = lib.replaceStrings [ "~" ] [ config.home.homeDirectory ];
-            };
-
-            dir-example = [
-              "~/.ssh"
-              { path = "~/.gnupg"; user = config.home.username; group = "users"; mode = "700"; }
-            ];
-
-            file-example = [
-              "~/.bash_history"
-              { path = "~/.local/share/lesshst"; user = config.home.username; group = "users"; mode = "600"; }
-            ];
-          }) [ "enable" "volume" ]; # These are system-only values
-        }
-      )
-    ];
   };
 }
