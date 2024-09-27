@@ -6,7 +6,7 @@
 }:
 {
   options.my.programs.nix-index = {
-    enable = lib.mkEnableOption "nix-index" // { default = true; };
+    enable = lib.mkDefaultEnableOption "nix-index";
     package = lib.mkOption {
       default = pkgs.nix-index;
       defaultText = "pkgs.nix-index";

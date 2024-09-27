@@ -7,7 +7,7 @@
 }:
 {
   options.my.programs.direnv = {
-    enable = lib.mkEnableOption "direnv" // { default = true; };
+    enable = lib.mkDefaultEnableOption "direnv";
     package = lib.mkOption {
       default = pkgs.direnv;
       defaultText = "pkgs.direnv";
@@ -28,7 +28,7 @@
     };
 
     nix-direnv = {
-      enable = lib.mkEnableOption "direnv.nix-direnv" // { default = true; };
+      enable = lib.mkDefaultEnableOption "direnv.nix-direnv";
       package = lib.mkOption {
         default = pkgs.nix-direnv.override { nix = osConfig.nix.package; };
         defaultText = "pkgs.nix-direnv";

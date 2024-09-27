@@ -6,7 +6,7 @@
 }:
 {
   options.my.programs.eza = {
-    enable = lib.mkEnableOption "eza" // { default = true; };
+    enable = lib.mkDefaultEnableOption "eza";
     package = lib.mkOption {
       default = pkgs.eza;
       defaultText = "pkgs.eza";

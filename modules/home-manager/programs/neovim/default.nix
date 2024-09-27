@@ -6,7 +6,7 @@
 }:
 {
   options.my.programs.neovim = {
-    enable = lib.mkEnableOption "neovim" // { default = true; };
+    enable = lib.mkDefaultEnableOption "neovim";
     package = lib.mkOption {
       default = pkgs.callPackage ./package.nix {};
       defaultText = "<wrapped-drv>";

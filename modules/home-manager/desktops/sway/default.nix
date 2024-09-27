@@ -40,7 +40,7 @@ in {
 
     programs = {
       waybar = {
-        enable = lib.mkEnableOption "sway.programs.waybar" // { default = true; };
+        enable = lib.mkDefaultEnableOption "sway.programs.waybar";
         package = lib.mkOption {
           default = pkgs.waybar;
           defaultText = "pkgs.waybar";

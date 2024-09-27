@@ -7,7 +7,7 @@ let
   cfg = config.my.mounts.tmp;
 in {
   options.my.mounts.tmp = {
-    enableTmpfs = lib.mkEnableOption "swap.enableTmpfs" // { default = true; };
+    enableTmpfs = lib.mkDefaultEnableOption "swap.enableTmpfs";
   };
 
   config = lib.mkMerge [

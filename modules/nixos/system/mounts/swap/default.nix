@@ -7,7 +7,7 @@ let
   cfg = config.my.mounts.swap;
 in {
   options.my.mounts.swap = {
-    enableZram = lib.mkEnableOption "swap.enableZram" // { default = true; };
+    enableZram = lib.mkDefaultEnableOption "swap.enableZram";
   };
 
   config = lib.mkMerge [

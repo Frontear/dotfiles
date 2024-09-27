@@ -14,7 +14,7 @@ in {
     dns = {
       providers = {
         cloudflare = {
-          enable = lib.mkEnableOption "networkmanager.dns.providers.cloudflare" // { default = true; };
+          enable = lib.mkDefaultEnableOption "networkmanager.dns.providers.cloudflare";
         };
       };
 
@@ -28,7 +28,7 @@ in {
     hosts = {
       providers = {
         stevenblack = {
-          enable = lib.mkEnableOption "networkmanager.hosts.stevenblack" // { default = true; };
+          enable = lib.mkDefaultEnableOption "networkmanager.hosts.stevenblack";
           block = lib.mkOption {
             default = [ "fakenews" "gambling" "porn" ];
 

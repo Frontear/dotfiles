@@ -6,7 +6,7 @@
 }:
 {
   options.my.programs.atool = {
-    enable = lib.mkEnableOption "atool" // { default = true; };
+    enable = lib.mkDefaultEnableOption "atool";
     package = lib.mkOption {
       default = pkgs.callPackage ./package.nix {};
       defaultText = "<wrapped-drv>";

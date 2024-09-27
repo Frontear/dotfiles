@@ -7,7 +7,7 @@
 }:
 {
   options.my.programs.zsh = {
-    enable = lib.mkEnableOption "zsh" // { default = true; };
+    enable = lib.mkDefaultEnableOption "zsh";
 
     dotDir = lib.mkOption {
       default = "${config.xdg.configHome}/zsh";
@@ -49,7 +49,7 @@
 
     plugins = {
       autosuggestions = {
-        enable = lib.mkEnableOption "zsh.plugins.autosuggestions" // { default = true; };
+        enable = lib.mkDefaultEnableOption "zsh.plugins.autosuggestions";
 
         strategy = lib.mkOption {
           default = [];
@@ -62,7 +62,7 @@
       };
 
       syntax-highlighting = {
-        enable = lib.mkEnableOption "zsh.plugins.syntax-highlighting" // { default = true; };
+        enable = lib.mkDefaultEnableOption "zsh.plugins.syntax-highlighting";
 
         highlighters = lib.mkOption {
           default = [];

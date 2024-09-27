@@ -8,7 +8,7 @@ let
   cfg = config.my.programs.gnupg;
 in {
   options.my.programs.gnupg = {
-    enable = lib.mkEnableOption "gnupg" // { default = true; };
+    enable = lib.mkDefaultEnableOption "gnupg";
     package = lib.mkOption {
       default = pkgs.gnupg;
       defaultText = "pkgs.gnupg";
@@ -26,8 +26,8 @@ in {
     };
 
     agent = {
-      enable = lib.mkEnableOption "gnupg.agent" // { default = true; };
-      enableSSHSupport = lib.mkEnableOption "gnupg.agent.ssh" // { default = true; };
+      enable = lib.mkDefaultEnableOption "gnupg.agent";
+      enableSSHSupport = lib.mkDefaultEnableOption "gnupg.agent.ssh";
 
       pinentryPackage = lib.mkOption {
         default = pkgs.pinentry-tty;

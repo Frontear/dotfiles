@@ -19,5 +19,9 @@ in {
   in {
     flake = callLib ./flake.nix "flake";
     types = callLib ./types.nix "types";
+
+    mkDefaultEnableOption = (name:
+      (prev.mkEnableOption name) // { default = true; }
+    );
   });
 }

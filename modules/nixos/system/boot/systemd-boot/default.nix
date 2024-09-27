@@ -9,10 +9,10 @@ in {
   options.my.boot.systemd-boot = {
     enable = lib.mkEnableOption "systemd-boot";
 
-    touchEfi = lib.mkEnableOption "systemd-boot.touchEfi" // { default = true; };
+    touchEfi = lib.mkDefaultEnableOption "systemd-boot.touchEfi";
 
     editor = lib.mkEnableOption "systemd-boot.editor";
-    silent = lib.mkEnableOption "systemd-boot.silent" // { default = true; };
+    silent = lib.mkDefaultEnableOption "systemd-boot.silent";
   };
 
   config = lib.mkIf cfg.enable (lib.mkMerge [
