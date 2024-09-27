@@ -4,7 +4,9 @@
   pkgs,
   ...
 }:
-{
+let
+  cfg = config.my.programs.gnupg;
+in {
   options.my.programs.gnupg = {
     enable = lib.mkEnableOption "gnupg" // { default = true; };
     package = lib.mkOption {
@@ -19,6 +21,8 @@
 
     dotDir = lib.mkOption {
       default = "${config.xdg.dataHome}/gnupg";
+
+      type = with lib.types; path;
     };
 
     agent = {
@@ -46,26 +50,32 @@
     };
   };
 
-  config = lib.mkIf config.my.programs.gnupg.enable {
+  config = lib.mkIf cfg.enable {
     my.persist.directories = [
-      { path = lib.replaceStrings [ config.home.homeDirectory ] [ "~" ] config.my.programs.gnupg.dotDir; mode = "700"; }
+      { path = lib.replaceStrings [ config.home.homeDirectory ] [ "~" ] cfg.dotDir; mode = "700"; }
       { path = "~/.ssh"; mode = "700"; }
     ];
 
+    # https://wiki.archlinux.org/title/GnuPG#Configure_pinentry_to_use_the_correct_TTY
+    programs.ssh.enable = true;
+    programs.ssh.matchBlocks.refresh-tty.match = ''
+      host * exec "${lib.getExe' cfg.package "gpg-connect-agent"} UPDATESTARTUPTTY /bye"
+    '';
+
     programs.gpg = {
       enable = true;
-      package = config.my.programs.gnupg.package;
+      package = cfg.package;
 
-      homedir = config.my.programs.gnupg.dotDir;
+      homedir = cfg.dotDir;
     };
 
     services.gpg-agent = {
-      enable = config.my.programs.gnupg.agent.enable;
-      enableSshSupport = config.my.programs.gnupg.agent.enableSSHSupport;
+      enable = cfg.agent.enable;
+      enableSshSupport = cfg.agent.enableSSHSupport;
 
-      pinentryPackage = config.my.programs.gnupg.agent.pinentryPackage;
+      pinentryPackage = cfg.agent.pinentryPackage;
 
-      sshKeys = config.my.programs.gnupg.agent.sshKeys;
+      sshKeys = cfg.agent.sshKeys;
     };
   };
 }
