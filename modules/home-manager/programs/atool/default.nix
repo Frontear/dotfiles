@@ -4,7 +4,9 @@
   pkgs,
   ...
 }:
-{
+let
+  cfg = config.my.programs.atool;
+in {
   options.my.programs.atool = {
     enable = lib.mkDefaultEnableOption "atool";
     package = lib.mkOption {
@@ -18,7 +20,7 @@
     };
   };
 
-  config = lib.mkIf config.my.programs.atool.enable {
-    home.packages = [ config.my.programs.atool.package ];
+  config = lib.mkIf cfg.enable {
+    home.packages = [ cfg.package ];
   };
 }

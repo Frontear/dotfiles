@@ -4,7 +4,9 @@
   pkgs,
   ...
 }:
-{
+let
+  cfg = config.my.programs.git;
+in {
   options.my.programs.git = {
     enable = lib.mkDefaultEnableOption "git";
     package = lib.mkOption {
@@ -36,13 +38,13 @@
     };
   };
 
-  config = lib.mkIf config.my.programs.git.enable {
+  config = lib.mkIf cfg.enable {
     programs.git = {
       enable = true;
-      package = config.my.programs.git.package;
+      package = cfg.package;
 
-      extraConfig = config.my.programs.git.config;
-      ignores = config.my.programs.git.ignores;
+      extraConfig = cfg.config;
+      ignores = cfg.ignores;
     };
   };
 }

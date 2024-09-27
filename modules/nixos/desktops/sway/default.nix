@@ -5,10 +5,10 @@
   ...
 }:
 let
-  inherit (lib) mkDefault mkEnableOption mkIf mkMerge;
+  cfg = config.my.desktops.sway;
 
   attrs = {
-    my.audio.pipewire.enable = mkDefault true;
+    my.audio.pipewire.enable = lib.mkDefault true;
 
     my.persist.directories = [
       { path = "/var/cache/tuigreet"; user = "greeter"; group = "greeter"; mode = "755"; }
@@ -31,13 +31,13 @@ let
   };
 in {
   options.my.desktops.sway = {
-    enable = mkEnableOption "sway";
+    enable = lib.mkEnableOption "sway";
 
-    default = mkEnableOption "make default";
+    default = lib.mkEnableOption "make default";
   };
 
-  config = mkIf config.my.desktops.sway.enable (mkMerge [
-    (mkIf config.my.desktops.sway.default (mkMerge [
+  config = lib.mkIf cfg.enable (lib.mkMerge [
+    (lib.mkIf cfg.default (lib.mkMerge [
       ({
         assertions = [
           {
@@ -46,9 +46,9 @@ in {
           }
         ];
       })
-      (mkIf (config.specialisation != {}) attrs)
+      (lib.mkIf (config.specialisation != {}) attrs)
     ]))
-    (mkIf (!config.my.desktops.sway.default) {
+    (lib.mkIf (!cfg.default) {
       specialisation.sway.configuration = attrs;
     })
   ]);

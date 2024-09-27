@@ -5,6 +5,8 @@
   ...
 }:
 let
+  cfg = config.my.persist;
+
   mkPersistActivation = (root: cfg:
   let
     dirs = map (e: e.path) cfg.directories;
@@ -32,7 +34,7 @@ in {
     ./module.nix
   ];
 
-  config = lib.mkIf config.my.persist.enable {
+  config = lib.mkIf cfg.enable {
     # These directories should logically exist to ensure
     # a consistent and expected system state.
     #
@@ -109,7 +111,7 @@ in {
         mount -o bind "$1" "$2"
       }
 
-      ${mkPersistActivation "/" config.my.persist}
+      ${mkPersistActivation "/" cfg}
       ${lib.pipe config.home-manager.users [
         lib.attrValues
         (map (cfg: mkPersistActivation cfg.home.homeDirectory cfg.my.persist))

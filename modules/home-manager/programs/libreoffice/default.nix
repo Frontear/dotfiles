@@ -4,7 +4,9 @@
   pkgs,
   ...
 }:
-{
+let
+  cfg = config.my.programs.libreoffice;
+in {
   options.my.programs.libreoffice = {
     enable = lib.mkEnableOption "libreoffice";
     package = lib.mkOption {
@@ -42,14 +44,14 @@
     };
   };
 
-  config = lib.mkIf config.my.programs.libreoffice.enable {
+  config = lib.mkIf cfg.enable {
     fonts.fontconfig.enable = lib.mkDefault true;
 
     home.packages = [
-      config.my.programs.libreoffice.package
+      cfg.package
       pkgs.hunspell
     ] ++
-    config.my.programs.libreoffice.dictionaries ++
-    config.my.programs.libreoffice.fonts;
+    cfg.dictionaries ++
+    cfg.fonts;
   };
 }

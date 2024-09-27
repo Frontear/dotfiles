@@ -4,7 +4,9 @@
   pkgs,
   ...
 }:
-{
+let
+  cfg = config.my.programs.eza;
+in {
   options.my.programs.eza = {
     enable = lib.mkDefaultEnableOption "eza";
     package = lib.mkOption {
@@ -27,12 +29,12 @@
     };
   };
 
-  config = lib.mkIf config.my.programs.eza.enable {
+  config = lib.mkIf cfg.enable {
     programs.eza = {
       enable = true;
-      package = config.my.programs.eza.package;
+      package = cfg.package;
 
-      extraOptions = config.my.programs.eza.extraOptions;
+      extraOptions = cfg.extraOptions;
     };
   };
 }

@@ -4,7 +4,9 @@
   pkgs,
   ...
 }:
-{
+let
+  cfg = config.my.programs.armcord;
+in {
   options.my.programs.armcord = {
     enable = lib.mkEnableOption "armcord";
     package = lib.mkOption {
@@ -18,9 +20,9 @@
     };
   };
 
-  config = lib.mkIf config.my.programs.armcord.enable {
+  config = lib.mkIf cfg.enable {
     my.persist.directories = [ "~/.config/ArmCord" ];
 
-    home.packages = [ config.my.programs.armcord.package ];
+    home.packages = [ cfg.package ];
   };
 }

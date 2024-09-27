@@ -5,7 +5,9 @@
   pkgs,
   ...
 }:
-{
+let
+  cfg = config.my.programs.direnv;
+in {
   options.my.programs.direnv = {
     enable = lib.mkDefaultEnableOption "direnv";
     package = lib.mkOption {
@@ -41,15 +43,15 @@
     };
   };
 
-  config = lib.mkIf config.my.programs.direnv.enable {
+  config = lib.mkIf cfg.enable {
     programs.direnv = {
       enable = true;
-      package = config.my.programs.direnv.package;
+      package = cfg.package;
 
-      config = config.my.programs.direnv.config;
+      config = cfg.config;
 
-      nix-direnv.enable = config.my.programs.direnv.nix-direnv.enable;
-      nix-direnv.package = config.my.programs.direnv.nix-direnv.package;
+      nix-direnv.enable = cfg.nix-direnv.enable;
+      nix-direnv.package = cfg.nix-direnv.package;
     };
   };
 }

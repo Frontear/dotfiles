@@ -4,7 +4,9 @@
   pkgs,
   ...
 }:
-{
+let
+  cfg = config.my.programs.neovim;
+in {
   options.my.programs.neovim = {
     enable = lib.mkDefaultEnableOption "neovim";
     package = lib.mkOption {
@@ -18,10 +20,10 @@
     };
   };
 
-  config = lib.mkIf config.my.programs.neovim.enable {
+  config = lib.mkIf cfg.enable {
     my.persist.directories = [ "~/.local/share/lvim" ];
 
-    home.packages = [ config.my.programs.neovim.package ];
+    home.packages = [ cfg.package ];
 
     home.sessionVariables = {
       EDITOR = "nvim";

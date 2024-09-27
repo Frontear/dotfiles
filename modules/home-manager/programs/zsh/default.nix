@@ -5,7 +5,9 @@
   pkgs,
   ...
 }:
-{
+let
+  cfg = config.my.programs.zsh;
+in {
   options.my.programs.zsh = {
     enable = lib.mkDefaultEnableOption "zsh";
 
@@ -83,7 +85,7 @@
     };
   };
 
-  config = lib.mkIf config.my.programs.zsh.enable {
+  config = lib.mkIf cfg.enable {
     assertions = [
       ({
         assertion = osConfig.programs.zsh.enable;
@@ -101,7 +103,7 @@
     ];
 
     # Persist the history file
-    my.persist.files = [ (lib.replaceStrings [ config.home.homeDirectory ] [ "~" ] config.my.programs.zsh.history.file) ];
+    my.persist.files = [ (lib.replaceStrings [ config.home.homeDirectory ] [ "~" ] cfg.history.file) ];
 
     programs.zsh = lib.mkMerge [
       ({
@@ -115,26 +117,26 @@
       })
       ({
         # Setup prompt
-        initExtra = config.my.programs.zsh.promptInit;
+        initExtra = cfg.promptInit;
       })
       ({
         # Need to strip home from dotDir, because hm decided to append '$HOME' here
         # inconsistent, to say the least.
-        dotDir = lib.replaceStrings [ "${config.home.homeDirectory}/" ] [ "" ] config.my.programs.zsh.dotDir;
+        dotDir = lib.replaceStrings [ "${config.home.homeDirectory}/" ] [ "" ] cfg.dotDir;
       })
       ({
         # Set history attributes
-        history.path = config.my.programs.zsh.history.file;
-        history.save = config.my.programs.zsh.history.save;
-        history.size = config.my.programs.zsh.history.size;
+        history.path = cfg.history.file;
+        history.save = cfg.history.save;
+        history.size = cfg.history.size;
       })
       ({
         # Set up some plugins
-        autosuggestion.enable = config.my.programs.zsh.plugins.autosuggestions.enable;
-        autosuggestion.strategy = config.my.programs.zsh.plugins.autosuggestions.strategy;
+        autosuggestion.enable = cfg.plugins.autosuggestions.enable;
+        autosuggestion.strategy = cfg.plugins.autosuggestions.strategy;
 
         syntaxHighlighting.enable = true;
-        syntaxHighlighting.highlighters = config.my.programs.zsh.plugins.syntax-highlighting.highlighters;
+        syntaxHighlighting.highlighters = cfg.plugins.syntax-highlighting.highlighters;
       })
     ];
   };

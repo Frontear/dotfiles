@@ -5,12 +5,14 @@
   ...
 }:
 let
+  cfg = config.my.programs.vscode;
+
   formats-json = pkgs.formats.json {};
 in {
   options.my.programs.vscode = {
     enable = lib.mkEnableOption "vscode";
     package = lib.mkOption {
-      default = pkgs.callPackage ./package.nix { vscodeExtensions = config.my.programs.vscode.extensions; };
+      default = pkgs.callPackage ./package.nix { vscodeExtensions = cfg.extensions; };
       defaultText = "<wrapped-drv>";
       description = ''
         The vscode package to use.
@@ -38,9 +40,9 @@ in {
     };
   };
 
-  config = lib.mkIf config.my.programs.vscode.enable {
-    home.packages = [ config.my.programs.vscode.package ];
+  config = lib.mkIf cfg.enable {
+    home.packages = [ cfg.package ];
 
-    xdg.configFile."Code/User/settings.json".source = formats-json.generate "settings-json" config.my.programs.vscode.config;
+    xdg.configFile."Code/User/settings.json".source = formats-json.generate "settings-json" cfg.config;
   };
 }
