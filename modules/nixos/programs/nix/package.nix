@@ -22,12 +22,12 @@ symlinkJoin {
 
       # https://discourse.nixos.org/t/how-do-nix-legacy-commands-work-when-they-are-just-symbolic-links-to-nix/52797
       cmd=(
-        "${nix}/bin/$(basename $0)"
+        "$(basename $0)"
         "''${args[@]}"
         "$@"
       )
 
-      exec "''${cmd[@]}"
+      PATH="${nix}/bin:$PATH" exec "''${cmd[@]}"
     '')
     nix
   ];
