@@ -14,12 +14,11 @@ let
 in {
   config = lib.mkIf config.nix.enable (lib.mkMerge [
     {
-      # Use viper's nix cli wrapper, use Lix instead of Nix,
-      # and wrap /bin/nix to have it use my fast-repl
+      # Use viper's nix cli wrapper, use my wrapper and provide it Lix as
+      # the Nix implementation
       programs.nh.enable = true;
 
-      nix.package = pkgs.lix;
-      environment.systemPackages = lib.singleton (pkgs.callPackage ./fast-repl/package.nix { nix-package = config.nix.package; });
+      nix.package = pkgs.callPackage ./package.nix { nix = pkgs.lix; };
     }
     {
       # Disable the legacy channels, set nix path to fix breakages from
