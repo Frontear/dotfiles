@@ -52,7 +52,7 @@ input type:touchpad {
 }
 
 bindsym --locked {
-  XF86AudioMute exec wpctl set-mute @DEFAULT_SINK@ toggle
+  --no-repeat XF86AudioMute exec wpctl set-mute @DEFAULT_SINK@ toggle
   XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_SINK@ 5%-
   XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_SINK@ 5%+ --limit 1.0
 
