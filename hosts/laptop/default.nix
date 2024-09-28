@@ -71,9 +71,5 @@
         };
       };
     })
-    ({
-      # Unsorted stuff
-      boot.kernelPackages = pkgs.linuxPackages_latest;
-    })
   ];
 }
