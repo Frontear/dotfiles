@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   ...
 }:
@@ -15,5 +16,10 @@
         environment.etc."specialisation".text = "${name}";
       };
     }));
+  };
+
+  # TODO: best place?
+  config = lib.mkIf config.nixpkgs.config.allowUnfree {
+    hardware.enableAllFirmware = true;
   };
 }
