@@ -21,6 +21,14 @@ in {
       nix.package = pkgs.callPackage ./package.nix { nix = pkgs.lix; };
     }
     {
+      # Throttle the nix-daemon so it doesn't consume
+      # all available memory immediately.
+      systemd.services.nix-daemon.serviceConfig = {
+        MemoryHigh = "70%";
+        MemorySwapMax = "95%";
+      };
+    }
+    {
       # Disable the legacy channels, set nix path to fix breakages from
       # doing so, and get rid of the stinky flake registry to populate it
       # with out own stuff.
