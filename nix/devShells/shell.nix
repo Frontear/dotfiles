@@ -7,11 +7,11 @@
   gitMinimal, nh, cachix, gnused, jq,
 
   mkShellNoCC,
-  nil
+  nixd
 }:
 mkShellNoCC {
   packages = [
-    nil
+    nixd
     (runCommandLocal "install-bin" {
       nativeBuildInputs = [ makeWrapper ];
     } ''
