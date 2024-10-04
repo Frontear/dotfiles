@@ -29,6 +29,8 @@
       };
     };
 
+    element.enable = true;
+
     eza = {
       enable = true;
 
