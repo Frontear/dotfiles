@@ -6,6 +6,7 @@
 }:
 {
   imports = [
+    ./neovim
     ./plasma
     ./sway
     ./vscode
