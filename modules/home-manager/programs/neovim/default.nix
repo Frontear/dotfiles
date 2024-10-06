@@ -9,10 +9,16 @@ let
 
   pluginSubmodule = {
     options = {
-      plugin = lib.mkOption {
+      bins = lib.mkOption {
+        default = [];
+
+        type = with lib.types; listOf package;
+      };
+
+      plugins = lib.mkOption {
         default = null;
 
-        type = with lib.types; package;
+        type = with lib.types; listOf package;
       };
 
       config = lib.mkOption {
@@ -27,9 +33,10 @@ in {
     enable = lib.mkDefaultEnableOption "neovim";
     package = lib.mkOption {
       default = pkgs.callPackage ./package.nix {
-        inherit (cfg) extraBins;
+        extraBins = cfg.extraBins ++
+          (lib.flatten (map (e: e.bins) cfg.plugins));
 
-        plugins = map (e: e.plugin) cfg.plugins;
+        plugins = lib.flatten (map (e: e.plugins) cfg.plugins);
       };
 
       type = with lib.types; package;
@@ -50,7 +57,9 @@ in {
     plugins = lib.mkOption {
       default = [];
 
-      type = with lib.types; listOf (coercedTo package (plugin: { inherit plugin; }) (submodule pluginSubmodule));
+      type = with lib.types; listOf (coercedTo package (plugins: {
+        inherit plugins;
+      }) (submodule pluginSubmodule));
     };
   };
 
