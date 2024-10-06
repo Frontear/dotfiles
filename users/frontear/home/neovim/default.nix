@@ -13,7 +13,11 @@
     init = ''
       vim.opt.cursorline = true
 
+      vim.opt.scrolloff = 5
+      vim.opt.textwidth=80
+
       vim.opt.wrap = true
+      vim.opt.undofile = true
 
       vim.opt.tabstop = 2
       vim.opt.softtabstop = 2
