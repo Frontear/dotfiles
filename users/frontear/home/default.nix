@@ -56,6 +56,8 @@
         commit.gpgSign = true;
         tag.gpgSign = true;
 
+        merge.tool = "nvimdiff3";
+
         # https:/dandavision.github.io/delta
         core.pager = "${lib.getExe pkgs.delta}";
         interactive.diffFilter = "${lib.getExe pkgs.delta} --color-only";
