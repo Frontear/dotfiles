@@ -87,7 +87,7 @@ in {
           builders-use-substitutes = true;
 
           connect-timeout = 15;
-          cores = 0;
+          cores = 2;
 
           debugger-on-trace = true;
           # debugger-on-warn = true;
