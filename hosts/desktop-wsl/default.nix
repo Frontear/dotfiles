@@ -9,21 +9,18 @@
   ];
 
   config = lib.mkMerge [
-    ({ system.stateVersion = "24.05"; })
-    ({
-      # Setup WSL values
+    {
+      environment.systemPackages = [ pkgs.yt-dlp ];
+    }
+    {
+      # WSL
       wsl.enable = true;
       wsl.nativeSystemd = true;
       wsl.useWindowsDriver = true;
-    })
-    ({
-      # Use nix-ld for vscode server
+
+      # VSCode Server
       programs.nix-ld.enable = true;
-      programs.nix-ld.package = pkgs.nix-ld-rs;
-    })
-    ({
-      # Add yt-dlp to system packages
-      environment.systemPackages = with pkgs; [ yt-dlp ];
-    })
+    }
+    { system.stateVersion = "24.05"; }
   ];
 }

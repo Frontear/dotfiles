@@ -8,23 +8,34 @@
   ];
 
   config = lib.mkMerge [
-    ({ system.stateVersion = "24.05"; })
-    ({
-      # Set some important system values
-      console.keyMap = "us";
-      i18n.defaultLocale = "en_CA.UTF-8";
-      time.timeZone = "America/Toronto";
-    })
-    ({
-      # Enable relevant swap and /tmp mount configuration
-      my.mounts = {
-        swap.enableZram = true;
-        tmp.enableTmpfs = true;
+    {
+      # Systemd Boot
+      my.boot.systemd-boot.enable = true;
+      fileSystems."/boot" = {
+        device = "/dev/disk/by-label/EFI";
+        fsType = "vfat";
+        options = [ "noatime" ];
       };
-    })
-    ({
-      # Enable networking with some additional powersavings
-      # for this poor, pitiable laptop.
+
+      # Root Mounts
+      my.persist.enable = true;
+      fileSystems."/" = {
+        device = "none";
+        fsType = "tmpfs";
+        options = [ "mode=755" "noatime" "size=2G" ];
+      };
+
+      fileSystems."/nix" = {
+        device = "/dev/disk/by-label/store";
+        fsType = "ext4";
+        options = [ "noatime" ];
+      };
+
+      # Miscellaneous Mounts
+      my.mounts.swap.enableZram = true;
+      my.mounts.tmp.enableTmpfs = true;
+
+      # Networking
       my.network.networkmanager = {
         enable = true;
         enablePowerSave = true;
@@ -37,38 +48,17 @@
         options iwlwifi power_level=3 power_save=1 uapsd_disable=0
         options iwlmvm power_scheme=3
       '';
-    })
-    ({
-      # Setup boot stuff
-      my.boot.systemd-boot.enable = true;
-      fileSystems."/boot" = {
-        device = "/dev/disk/by-label/EFI";
-        fsType = "vfat";
-        options = [ "noatime" ];
-      };
-    })
-    ({
-      # Enable DEs
+
+      # System Locale, Keyboard, Timezone
+      console.keyMap = "us";
+      i18n.defaultLocale = "en_CA.UTF-8";
+      time.timeZone = "America/Toronto";
+
+      # Desktop Environments
       my.desktops.plasma.enable = true;
       my.desktops.sway.enable = true;
       my.desktops.sway.default = true;
-    })
-    ({
-      # Enable impermanence and setup mounts
-      my.persist.enable = true;
-      fileSystems = {
-        "/" = {
-          device = "none";
-          fsType = "tmpfs";
-          options = [ "mode=755" "noatime" "size=2G" ];
-        };
-
-        "/nix" = {
-          device = "/dev/disk/by-label/store";
-          fsType = "ext4";
-          options = [ "noatime" ];
-        };
-      };
-    })
+    }
+    { system.stateVersion = "24.05"; }
   ];
 }
