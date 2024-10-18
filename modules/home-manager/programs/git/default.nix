@@ -10,8 +10,8 @@ in {
   options.my.programs.git = {
     enable = lib.mkDefaultEnableOption "git";
     package = lib.mkOption {
-      default = pkgs.gitMinimal;
-      defaultText = "pkgs.gitMinimal";
+      default = pkgs.gitFull;
+      defaultText = "pkgs.gitFull";
       description = ''
         The git package to use.
       '';
