@@ -35,8 +35,8 @@ in {
       };
 
       systemd.services.nix-daemon.serviceConfig = {
-        MemoryHigh = "70%";
-        MemorySwapMax = "90%";
+        MemoryHigh = "75%";
+        MemorySwapMax = "75%";
       };
 
       # TODO: determine the usefulness of these
