@@ -20,6 +20,7 @@ bar {
 }
 
 exec wl-clip-persist --clipboard regular
+exec foot --server
 
 focus_wrapping no
 workspace_layout default
@@ -69,7 +70,7 @@ bindsym --no-repeat {
   Ctrl+Alt+R reload
 
   ${Super}+BackSpace kill
-  ${Super}+Return exec foot
+  ${Super}+Return exec footclient
   ${Super}+E exec rofi -show drun
 
   F11 fullscreen toggle
