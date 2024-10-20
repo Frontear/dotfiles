@@ -19,6 +19,10 @@
     "ssh" = "TERM= ssh";
   };
 
+  home.packages = with pkgs; [
+    dig
+  ];
+
   my.programs = {
     armcord.enable = true;
 
