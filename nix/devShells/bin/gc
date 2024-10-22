@@ -19,5 +19,5 @@ done
 
 
 sudo nix-collect-garbage -d
-sudo nix-store --optimise
+# sudo nix-store --optimise
 sudo /run/current-system/bin/switch-to-configuration switch
