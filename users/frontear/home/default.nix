@@ -21,6 +21,7 @@
 
   home.packages = with pkgs; [
     dig
+    hyperfine
   ];
 
   my.programs = {
