@@ -11,14 +11,14 @@ let
 
   inherit (self) lib;
 in {
-  flake.nixosConfigurations = lib.flake.mkNixOSConfigurations "x86_64-linux" [
+  flake.nixosConfigurations = lib.mkNixOSConfigurations "x86_64-linux" [
     {
       hostName = "LAPTOP-3DT4F02";
       modules = [
         nixos-hardware.nixosModules.dell-inspiron-14-5420
         nixos-hardware.nixosModules.common-hidpi
 
-        ./laptop
+        ../../hosts/laptop
       ];
     }
     {
@@ -26,7 +26,7 @@ in {
       modules = [
         nixos-wsl.nixosModules.default
 
-        ./desktop-wsl
+        ../../hosts/desktop
       ];
     }
   ];
