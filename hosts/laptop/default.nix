@@ -9,27 +9,8 @@
 
   config = lib.mkMerge [
     {
-      # Systemd Boot
       my.boot.systemd-boot.enable = true;
-      fileSystems."/boot" = {
-        device = "/dev/disk/by-label/EFI";
-        fsType = "vfat";
-        options = [ "noatime" ];
-      };
-
-      # Root Mounts
       my.persist.enable = true;
-      fileSystems."/" = {
-        device = "none";
-        fsType = "tmpfs";
-        options = [ "mode=755" "noatime" "size=2G" ];
-      };
-
-      fileSystems."/nix" = {
-        device = "/dev/disk/by-label/store";
-        fsType = "ext4";
-        options = [ "noatime" ];
-      };
 
       # Miscellaneous Mounts
       my.mounts.swap.enableZram = true;
