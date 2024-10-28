@@ -5,23 +5,23 @@
   ...
 }:
 let
-  cfg = config.my.programs.armcord;
+  cfg = config.my.programs.legcord;
 in {
-  options.my.programs.armcord = {
-    enable = lib.mkEnableOption "armcord";
+  imports = [
+    (lib.mkAliasOptionModule [ "my" "programs" "armcord" ] [ "my" "programs" "legcord" ])
+  ];
+
+  options.my.programs.legcord = {
+    enable = lib.mkEnableOption "legcord";
     package = lib.mkOption {
-      default = pkgs.armcord;
-      defaultText = "pkgs.armcord";
-      description = ''
-        The armcord package to use.
-      '';
+      default = pkgs.legcord;
 
       type = with lib.types; package;
     };
   };
 
   config = lib.mkIf cfg.enable {
-    my.persist.directories = [ "~/.config/ArmCord" ];
+    my.persist.directories = [ "~/.config/LegCord" ];
 
     home.packages = [ cfg.package ];
   };
