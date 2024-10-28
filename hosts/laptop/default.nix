@@ -55,9 +55,7 @@
       time.timeZone = "America/Toronto";
 
       # Desktop Environments
-      my.desktops.plasma.enable = true;
       my.desktops.sway.enable = true;
-      my.desktops.sway.default = true;
     }
     { system.stateVersion = "24.05"; }
   ];
