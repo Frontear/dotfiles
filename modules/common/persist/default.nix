@@ -43,6 +43,11 @@ in {
       "/var"
     ];
 
+    # Ensure consistency with some systemd tools.
+    my.persist.files = [
+      "/etc/machine-id"
+    ];
+
     system.activationScripts.persist = lib.stringAfter [ "users" "groups" ] ''
       log() {
         echo "[persist] $1"
