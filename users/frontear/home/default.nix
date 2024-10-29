@@ -55,7 +55,7 @@
       config = {
         user.email = "perm-iterate-0b@icloud.com";
         user.name = "Ali Rizvi";
-        user.signingKey = "5D78E942A4F28228";
+        user.signingKey = "4BC247743ACFF25E";
 
         commit.gpgSign = true;
         tag.gpgSign = true;
@@ -82,7 +82,7 @@
         enable = true;
         enableSSHSupport = true;
 
-        sshKeys = [ "0AB14B8F72350A036F9F10A8DFDC665E9DD51A39" ];
+        sshKeys = [ "3DB8367E2C04F74909B7F39ABA22959A22314C10" ];
       };
     };
 
