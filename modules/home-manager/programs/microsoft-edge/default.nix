@@ -27,11 +27,21 @@ in {
 
       type = with lib.types; userPath;
     };
+
+    useAsPDFViewer = lib.mkDefaultEnableOption "using as pdf viewer";
   };
 
-  config = lib.mkIf cfg.enable {
-    my.persist.directories = [ "${cfg.userDataDir}" ];
+  config = lib.mkIf cfg.enable (lib.mkMerge [
+    {
+      my.persist.directories = [ "${cfg.userDataDir}" ];
 
-    home.packages = [ cfg.package ];
-  };
+      home.packages = [ cfg.package ];
+    }
+    (lib.mkIf cfg.useAsPDFViewer {
+      xdg.mimeApps.enable = true;
+      xdg.mimeApps.defaultApplications = {
+        "application/pdf" = "microsoft-edge.desktop";
+      };
+    })
+  ]);
 }
