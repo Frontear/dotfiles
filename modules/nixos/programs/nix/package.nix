@@ -11,7 +11,7 @@ let
     
     if [ "$1" = "repl" ]; then
       # https://wiki.nixos.org/wiki/Flakes#Getting_Instant_System_Flakes_Repl
-      args+=(repl --expr "builtins // { inherit (import <nixpkgs> {}) pkgs lib; }")
+      args+=(repl --expr "builtins // { inherit (import <nixpkgs> { config.allowUnfree = true; }) pkgs lib; }")
       shift 1
     fi
 
