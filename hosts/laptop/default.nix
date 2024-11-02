@@ -9,6 +9,36 @@
 
   config = lib.mkMerge [
     {
+      my.persist.enable = lib.mkForce false;
+      fileSystems = {
+        "/" = lib.mkForce {
+          device = "tmpfs";
+          fsType = "tmpfs";
+          options = [ "noatime" "size=1G" ];
+        };
+
+        "/boot" = lib.mkForce {
+          device = "/dev/disk/by-label/EFI";
+          fsType = "vfat";
+          options = [ "noatime" "fmask=0022" "dmask=0022" ];
+        };
+
+        # chattr +C /nix/store (prevent copy-on-write)
+        "/nix" = lib.mkForce {
+          device = "/dev/disk/by-label/nix";
+          fsType = "btrfs";
+          options = [ "noatime" "compress=zstd:15" "subvol=nix" ];
+        };
+
+        # chattr +m /nix/persist (prevent compression)
+        "/nix/persist" = lib.mkForce {
+          device = "/dev/disk/by-label/nix";
+          fsType = "btrfs";
+          options = [ "subvol=persist" ];
+        };
+      };
+    }
+    {
       my.boot.systemd-boot.enable = true;
       my.persist.enable = true;
 
