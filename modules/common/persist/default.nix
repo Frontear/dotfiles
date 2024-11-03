@@ -37,11 +37,13 @@ in {
   config = lib.mkIf cfg.enable {
     # These directories should logically exist to ensure
     # a consistent and expected system state.
-    #
-    # TODO: trim down?
     my.persist.directories = [
-      "/var"
-    ];
+      "/var/lib"
+      "/var/log"
+    ] ++ lib.optionals config.security.sudo.enable [{
+      path = "/var/db/sudo/lectured";
+      mode = "700";
+    }];
 
     # Ensure consistency with some systemd tools.
     my.persist.files = [

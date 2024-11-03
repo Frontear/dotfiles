@@ -52,8 +52,14 @@ in {
 
   config = lib.mkIf cfg.enable {
     my.persist.directories = [
-      { path = lib.replaceStrings [ config.home.homeDirectory ] [ "~" ] cfg.dotDir; mode = "700"; }
-      { path = "~/.ssh"; mode = "700"; }
+      {
+        path = lib.replaceStrings [ config.home.homeDirectory ] [ "~" ] cfg.dotDir;
+        mode = "700";
+      }
+      {
+        path = "~/.ssh";
+        mode = "700";
+      }
     ];
 
     # https://wiki.archlinux.org/title/GnuPG#Configure_pinentry_to_use_the_correct_TTY

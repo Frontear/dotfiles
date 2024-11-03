@@ -5,17 +5,12 @@
 {
   imports = [
     ./hardware-configuration.nix
+
+    ./mounts.nix
   ];
 
   config = lib.mkMerge [
     {
-      my.boot.systemd-boot.enable = true;
-      my.persist.enable = true;
-
-      # Miscellaneous Mounts
-      my.mounts.swap.enableZram = true;
-      my.mounts.tmp.enableTmpfs = true;
-
       # Networking
       my.network.networkmanager = {
         enable = true;

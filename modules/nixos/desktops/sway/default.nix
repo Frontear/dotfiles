@@ -14,9 +14,12 @@ in {
   config = lib.mkIf cfg.enable {
     my.audio.pipewire.enable = lib.mkDefault true;
 
-    my.persist.directories = [
-      { path = "/var/cache/tuigreet"; user = "greeter"; group = "greeter"; mode = "755"; }
-    ];
+    my.persist.directories = [{
+      path = "/var/cache/tuigreet";
+      user = "greeter";
+      group = "greeter";
+      mode = "700";
+    }];
 
     services.greetd = {
       enable = true;

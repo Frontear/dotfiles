@@ -8,7 +8,7 @@
   imports = [
     ./neovim
     ./sway
-    ./vscode
+    #./vscode
   ];
 
   home.stateVersion = "24.11";
