@@ -46,10 +46,9 @@ in {
     }];
 
     # Ensure consistency with some systemd tools.
-    my.persist.files = [{
-      path = "/etc/machine-id";
-      mode = "444";
-    }];
+    my.persist.files = [
+      "/etc/machine-id"
+    ];
 
     system.activationScripts.persist = lib.stringAfter [ "users" "groups" ] ''
       log() {

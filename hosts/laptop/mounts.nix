@@ -19,17 +19,11 @@
       };
 
       # chattr +C /nix/store (prevent copy-on-write)
+      # chattr +m /nix/persist (prevent compression)
       "/nix" = {
         device = "/dev/disk/by-label/nix";
         fsType = "btrfs";
-        options = [ "noatime" "compress=zstd:15" "subvol=nix" ];
-      };
-
-      # chattr +m /nix/persist (prevent compression)
-      "/nix/persist" = {
-        device = "/dev/disk/by-label/nix";
-        fsType = "btrfs";
-        options = [ "subvol=persist" ];
+        options = [ "noatime" "compress=zstd:15" ];
       };
     };
 
