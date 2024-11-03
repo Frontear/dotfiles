@@ -1,26 +1,8 @@
 {
-  lib,
-  pkgs,
-  ...
-}:
-{
   imports = [
+    ./configuration.nix
     ./hardware-configuration.nix
   ];
 
-  config = lib.mkMerge [
-    {
-      environment.systemPackages = [ pkgs.yt-dlp ];
-    }
-    {
-      # WSL
-      wsl.enable = true;
-      wsl.nativeSystemd = true;
-      wsl.useWindowsDriver = true;
-
-      # VSCode Server
-      programs.nix-ld.enable = true;
-    }
-    { system.stateVersion = "24.05"; }
-  ];
+  config.system.stateVersion = "24.05";
 }
