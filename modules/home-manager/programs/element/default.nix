@@ -18,7 +18,10 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    my.persist.directories = [ "~/.config/Element" ];
+    my.persist.directories = [{
+      path = "~/.config/Element";
+      mode = "700";
+    }];
 
     home.packages = [ cfg.package ];
   };

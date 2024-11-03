@@ -21,7 +21,10 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    my.persist.directories = [ "~/.config/legcord" ];
+    my.persist.directories = [{
+      path = "~/.config/legcord";
+      mode = "700";
+    }];
 
     home.packages = [ cfg.package ];
   };

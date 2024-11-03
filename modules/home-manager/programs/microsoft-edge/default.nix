@@ -33,7 +33,16 @@ in {
 
   config = lib.mkIf cfg.enable (lib.mkMerge [
     {
-      my.persist.directories = [ "${cfg.userDataDir}" ];
+      my.persist.directories = [
+        {
+          path = "${cfg.userDataDir}";
+          mode = "700";
+        }
+        {
+          path = "~/.cache/microsoft-edge";
+          mode = "700";
+        }
+      ];
 
       home.packages = [ cfg.package ];
     }

@@ -64,11 +64,10 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    my.persist.directories = [
-      "~/.cache/nvim"
-      "~/.local/share/nvim"
-      "~/.local/state/nvim"
-    ];
+    my.persist.directories = [{
+      path = "~/.local/state/nvim";
+      mode = "700";
+    }];
 
     xdg.configFile."nvim/init.lua".text = ''
       ${cfg.init}

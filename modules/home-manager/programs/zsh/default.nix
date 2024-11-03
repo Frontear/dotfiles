@@ -103,7 +103,11 @@ in {
     ];
 
     # Persist the history file
-    my.persist.files = [ (lib.replaceStrings [ config.home.homeDirectory ] [ "~" ] cfg.history.file) ];
+    my.persist.files = [{
+      path = (lib.replaceStrings [ config.home.homeDirectory ] [ "~" ]
+        cfg.history.file);
+      mode= "600";
+    }];
 
     programs.zsh = lib.mkMerge [
       ({
