@@ -27,6 +27,16 @@
       };
     };
 
+    services.btrfs.autoScrub = {
+      enable = true;
+
+      fileSystems = [
+        "/nix"
+      ];
+
+      interval = "weekly";
+    };
+
     my.mounts.swap.enableZram = true;
     my.mounts.tmp.enableTmpfs = true;
   };
