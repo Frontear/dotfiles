@@ -1,5 +1,4 @@
 {
-  lib,
   ...
 }:
 {
@@ -11,7 +10,7 @@
       options = [ "noatime" "fmask=0022" "dmask=0022" ];
     };
 
-    my.persist.enable = lib.mkForce false;
+    my.persist.enable = true;
     fileSystems = {
       "/" = {
         device = "tmpfs";
