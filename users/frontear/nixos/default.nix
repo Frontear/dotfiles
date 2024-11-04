@@ -24,6 +24,11 @@ lib.mkMerge [
     programs.light.enable = true;
     users.extraUsers.frontear.extraGroups = lib.singleton "video";
   })
+  (lib.mkIf config.my.desktops.sway.enable {
+    programs.ydotool.enable = true;
+    users.extraUsers.frontear.extraGroups =
+      lib.singleton config.programs.ydotool.group;
+  })
   ({
     # Sets shell to ZSH
     users.extraUsers.frontear.shell = pkgs.zsh;

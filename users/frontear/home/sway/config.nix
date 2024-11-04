@@ -52,6 +52,16 @@ input type:touchpad {
   tap_button_map lrm
 }
 
+bindsym {
+  Ctrl+Left exec ydotool mousemove -- -20 0
+  Ctrl+Right exec ydotool mousemove -- 20 0
+  Ctrl+Up exec ydotool mousemove -- 0 -20
+  Ctrl+Down exec ydotool mousemove -- 0 20
+
+  Ctrl+Alt+Left exec ydotool click c0
+  Ctrl+Alt+Right exec ydotool click c1
+}
+
 bindsym --locked {
   --no-repeat XF86AudioMute exec wpctl set-mute @DEFAULT_SINK@ toggle
   XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_SINK@ 5%-
