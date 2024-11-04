@@ -18,13 +18,20 @@
     "ssh" = "TERM= ssh";
   };
 
-  home.packages = with pkgs; [
-    dig
-    hyperfine
-  ];
-
   my.programs = {
     armcord.enable = true;
+
+    cheat = {
+      enable = true;
+
+      settings = {
+        editor = "nvim";
+        colorize = true;
+        style = "onedark";
+        formatter = "terminal256";
+        pager = "less";
+      };
+    };
 
     direnv = {
       enable = true;
