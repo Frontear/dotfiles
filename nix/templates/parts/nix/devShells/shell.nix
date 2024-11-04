@@ -1,0 +1,8 @@
+{
+  mkShellNoCC,
+}:
+mkShellNoCC {
+  packages = [
+
+  ];
+}

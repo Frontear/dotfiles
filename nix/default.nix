@@ -8,5 +8,6 @@
     ./nixosConfigurations
     ./nixosModules
     ./packages
+    ./templates
   ];
 }
