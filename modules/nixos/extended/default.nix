@@ -21,5 +21,8 @@
   # TODO: best place?
   config = lib.mkIf config.nixpkgs.config.allowUnfree {
     hardware.enableAllFirmware = true;
+
+    # Enable SysRq
+    boot.kernel.sysctl."kernel.sysrq" = 1;
   };
 }
