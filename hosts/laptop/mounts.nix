@@ -5,7 +5,7 @@
   config = {
     my.boot.systemd-boot.enable = true;
     fileSystems."/boot" = {
-      device = "/dev/disk/by-label/EFI";
+      device = "/dev/disk/by-partlabel/boot";
       fsType = "vfat";
       options = [ "noatime" "fmask=0022" "dmask=0022" ];
     };
@@ -21,7 +21,7 @@
       # chattr +C /nix/store (prevent copy-on-write)
       # chattr +m /nix/persist (prevent compression)
       "/nix" = {
-        device = "/dev/disk/by-label/nix";
+        device = "/dev/disk/by-partlabel/nix";
         fsType = "btrfs";
         options = [ "noatime" "compress=zstd:15" ];
       };
