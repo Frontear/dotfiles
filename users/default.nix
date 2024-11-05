@@ -7,20 +7,20 @@ let
     builtins.readDir
     (lib.filterAttrs (_: type: type == "directory"))
     (lib.mapAttrs (name: _: {
-      nixos = ({
+      nixos = {
         imports = [
           ./${name}/nixos
         ];
 
-        users.extraUsers.${name} = {
+        users.users."${name}" = {
           inherit name;
           home = "/home/${name}";
 
           isNormalUser = true;
         };
-      });
+      };
 
-      home = ({
+      home = {
         imports = [
           ./${name}/home
         ];
@@ -29,11 +29,11 @@ let
           username = name;
           homeDirectory = "/home/${name}";
         };
-      });
+      };
     }))
   ];
 
-  mkUsers = ({
+  mkUsers = {
     imports = lib.mapAttrsToList (_: value: value.nixos) allUsers;
 
     home-manager = {
@@ -42,5 +42,5 @@ let
 
       users = lib.mapAttrs (_: value: value.home) allUsers;
     };
-  });
+  };
 in mkUsers

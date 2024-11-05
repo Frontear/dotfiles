@@ -29,5 +29,11 @@ in {
         ../../hosts/desktop
       ];
     }
+    {
+      hostName = "ISO-3DT4F02";
+      modules = [
+        ../../hosts/iso
+      ];
+    }
   ];
 }
