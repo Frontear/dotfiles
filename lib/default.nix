@@ -12,7 +12,7 @@
   mkModules = (modulesPath: { ... } @ extraArgs: {
     imports = final.pipe modulesPath [
       final.filesystem.listFilesRecursive
-      (final.filter (final.hasSuffix "default.nix"))
+      (final.filter (final.hasSuffix "module.nix"))
       (map (mod:
       let
         imported = import mod;

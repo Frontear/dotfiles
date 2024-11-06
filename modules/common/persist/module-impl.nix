@@ -30,10 +30,6 @@ let
     ''persist "${config.my.persist.volume + e.path}" "${e.path}" "${e.user}" "${e.group}" "${e.mode}" "file"''
   ) cfg.files));
 in {
-  imports = [
-    ./module.nix
-  ];
-
   config = lib.mkIf cfg.enable {
     # These directories should logically exist to ensure
     # a consistent and expected system state.

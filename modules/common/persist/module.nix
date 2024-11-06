@@ -53,6 +53,10 @@ let
     };
   };
 in {
+  imports = [
+    ./module-impl.nix
+  ];
+
   options.my.persist = mkPersistOption "root" "root" (with lib.types; systemPath) (x: x);
 
   config = {
