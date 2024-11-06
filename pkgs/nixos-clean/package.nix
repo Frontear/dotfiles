@@ -2,6 +2,9 @@
   lib,
   stdenvNoCC,
 
+  installShellFiles,
+  pandoc,
+
   coreutils,
 }:
 stdenvNoCC.mkDerivation {
@@ -10,10 +13,21 @@ stdenvNoCC.mkDerivation {
 
   src = ./src;
 
+  nativeBuildInputs = [
+    installShellFiles
+    pandoc
+  ];
+
+  buildPhase = ''
+    pandoc nixos-clean.1.md -f markdown -t man -s -o nixos-clean.1
+  '';
+
   installPhase = ''
     runHook preInstall
 
     install -Dm755 nixos-clean.sh $out/bin/nixos-clean
+
+    installManPage nixos-clean.1
 
     runHook postInstall
   '';
