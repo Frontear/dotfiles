@@ -12,10 +12,10 @@
   mkModules = (modulesPath: { ... } @ extraArgs: {
     imports = final.pipe modulesPath [
       final.filesystem.listFilesRecursive
-      (final.filter (x: baseNameOf x == "default.nix"))
-      (map (x:
+      (final.filter (final.hasSuffix "default.nix"))
+      (map (mod:
       let
-        imported = import x;
+        imported = import mod;
       in {
         # args = { config, lib, modulesPath, options, pkgs, ... }
         __functor = _: args: imported (args // extraArgs);
@@ -40,6 +40,16 @@
           }
         ] ++ modules;
       } // (removeAttrs extraArgs [ "hostName" "modules" "specialArgs" ]);
+    }))
+    final.listToAttrs
+  ]);
+
+  mkPackages = (pkgs: pkgsPath: final.pipe pkgsPath [
+    final.filesystem.listFilesRecursive
+    (final.filter (final.hasSuffix "package.nix"))
+    (map (drv: rec {
+      name = final.getName value;
+      value = pkgs.callPackage drv {};
     }))
     final.listToAttrs
   ]);
