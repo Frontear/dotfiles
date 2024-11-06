@@ -4,8 +4,10 @@
     ./hardware-configuration.nix
   ];
 
-  config.isoImage = {
-    edition = "frontear-iso";
-    squashfsCompression = "lz4";
+  config = {
+    isoImage = {
+      edition = "frontear-iso";
+      squashfsCompression = "lz4";
+    };
   };
 }

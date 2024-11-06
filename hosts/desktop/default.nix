@@ -4,5 +4,7 @@
     ./hardware-configuration.nix
   ];
 
-  config.system.stateVersion = "24.05";
+  config = {
+    system.stateVersion = "24.05";
+  };
 }
