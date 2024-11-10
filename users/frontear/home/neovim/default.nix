@@ -58,6 +58,8 @@
           basedpyright
           clang-tools
           nixd
+          rust-analyzer
+          zls
         ];
 
         plugins = with pkgs.vimPlugins; [
@@ -101,6 +103,14 @@
           })
 
           lspconfig.nixd.setup({
+            capabilities = capabilities,
+          })
+
+          lspconfig.rust_analyzer.setup({
+            capabilities = capabilities,
+          })
+
+          lspconfig.zls.setup({
             capabilities = capabilities,
           })
         '';
