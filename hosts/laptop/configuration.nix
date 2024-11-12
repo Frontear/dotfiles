@@ -3,7 +3,9 @@
 }:
 {
   imports = [
+    ./hardware
     ./mounts.nix
+    ./time-sync.nix
   ];
 
   config = {
