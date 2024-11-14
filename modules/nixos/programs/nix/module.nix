@@ -86,12 +86,12 @@ in {
 
           builders-use-substitutes = true;
 
-          connect-timeout = 15;
+          connect-timeout = 5;
           cores = 2;
 
           debugger-on-trace = true;
           # debugger-on-warn = true;
-          download-attempts = 3;
+          download-attempts = 2;
           eval-cache = true;
 
           # It's useful to know when a substitute is failing!
@@ -99,7 +99,7 @@ in {
 
           # Improve the chances of the store surviving a random crash.
           fsync-metadata = true;
-          # fsync-store-paths = true;
+          # fsync-store-paths = true; TODO: on next Lix release
 
           # Keeping these is very useful for development.
           keep-build-log = true;
@@ -110,7 +110,7 @@ in {
           max-jobs = "auto";
           min-free = 10 * 1024 * 1024 * 1024;
 
-          preallocate-contents = true;
+          preallocate-contents = false; # Unnecessary on modern I/O
 
           # Never allow a non-sandboxed build
           sandbox-fallback = false;
