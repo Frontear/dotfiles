@@ -19,8 +19,7 @@ in {
 
       # Wrap the official nix binary with a snippet to allow
       # rapid repl access to `pkgs.*` and `lib.*` attributes.
-      #nix.package = pkgs.callPackage ./package.nix { nix = pkgs.lix; };
-      nix.package = pkgs.lix;
+      nix.package = pkgs.callPackage ./package.nix { nix = pkgs.lix; };
     }
     {
       # Throttle the nix-daemon so it doesn't consume
