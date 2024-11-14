@@ -64,8 +64,8 @@ bindsym --locked {
   XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_SINK@ 5%-
   XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_SINK@ 5%+ --limit 1.0
 
-  XF86MonBrightnessUp exec light -A 10
-  XF86MonBrightnessDown exec light -U 10
+  XF86MonBrightnessUp exec xbacklight -inc 10
+  XF86MonBrightnessDown exec xbacklight -dec 10
 }
 
 bindsym --no-repeat {

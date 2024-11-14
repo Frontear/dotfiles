@@ -10,7 +10,7 @@
       config.programs.ydotool.group
     ];
 
-    programs.light.enable = true;
+    hardware.acpilight.enable = true;
     programs.ydotool.enable = true;
   };
 }
