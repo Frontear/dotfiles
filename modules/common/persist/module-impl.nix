@@ -41,10 +41,15 @@ in {
       mode = "700";
     }];
 
-    # Ensure consistency with some systemd tools.
+    # machine-id is widely used by systemd to track system-specific
+    # things, very important to persist it for general expectations.
     my.persist.files = [
       "/etc/machine-id"
     ];
+
+    # Kill the systemd-machine-id-commit.service from systemd 256.7,
+    # it does what we already handle via the activation script.
+    systemd.services."systemd-machine-id-commit".enable = false;
 
     system.activationScripts.persist = lib.stringAfter [ "users" "groups" ] ''
       log() {
