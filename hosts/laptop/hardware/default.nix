@@ -1,5 +1,6 @@
 {
   imports = [
-    ./power-savings.nix
+    ./mounts.nix
+    ./power-savings
   ];
 }

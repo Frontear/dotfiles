@@ -4,8 +4,6 @@
 {
   imports = [
     ./hardware
-    ./mounts.nix
-    ./time-sync.nix
   ];
 
   config = {
@@ -17,13 +15,6 @@
       dns.providers.cloudflare.enable = true;
       hosts.providers.stevenblack.enable = true;
     };
-
-    # Enable chipset-specific power saving tunings
-    # TODO: move elsewhere?
-    boot.extraModprobeConfig = ''
-      options iwlwifi power_level=3 power_save=1 uapsd_disable=0
-      options iwlmvm power_scheme=3
-    '';
 
     # Enable a desktop environment
     my.desktops.sway.enable = true;
