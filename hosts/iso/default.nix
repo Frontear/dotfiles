@@ -6,7 +6,7 @@
 
   config = {
     isoImage = {
-      edition = "frontear-iso";
+      isoBaseName = "frontear-nixos";
       squashfsCompression = "lz4";
     };
   };
