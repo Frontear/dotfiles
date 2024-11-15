@@ -18,8 +18,6 @@
         options = [ "noatime" "size=256M" ];
       };
 
-      # chattr +C /nix/store (prevent copy-on-write)
-      # chattr +m /nix/persist (prevent compression)
       "/nix" = {
         device = "/dev/disk/by-partlabel/nix";
         fsType = "btrfs";
