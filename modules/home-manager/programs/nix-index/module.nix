@@ -10,11 +10,14 @@ in {
   options.my.programs.nix-index = {
     enable = lib.mkDefaultEnableOption "nix-index";
     package = lib.mkOption {
-      default = pkgs.nix-index;
-      defaultText = "pkgs.nix-index";
-      description = ''
-        The nix-index package to use.
-      '';
+      default = pkgs.nix-index.override (prev: {
+        nix-index-unwrapped = prev.nix-index-unwrapped.overrideAttrs (prevAttrs: {
+          patches = (prevAttrs.patches or []) ++ [
+            # https://github.com/nix-community/nix-index/pull/243
+            ./skip-fhs-by-default.patch
+          ];
+        });
+      });
 
       type = with lib.types; package;
     };
@@ -24,6 +27,8 @@ in {
     my.persist.directories = [ "~/.cache/nix-index" ];
 
     programs.command-not-found.enable = lib.mkForce false;
-    programs.nix-index.enable = true;
+    programs.nix-index = {
+      inherit (cfg) enable package;
+    };
   };
 }
