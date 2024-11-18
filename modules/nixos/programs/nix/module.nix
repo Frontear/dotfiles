@@ -148,6 +148,7 @@ in {
             # Some interesting features.
             # "fetch-closures"
             "no-url-literals"
+            "pipe-operator"
           ];
         }
       ];
