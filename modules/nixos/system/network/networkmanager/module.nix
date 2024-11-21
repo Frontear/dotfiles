@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -44,6 +45,11 @@ in {
       # Enable NetworkManager and persist it's important directories
       my.persist.directories = [ "/etc/NetworkManager" ];
       networking.networkmanager.enable = true;
+
+      # Grab the OpenVPN Plugin
+      networking.networkmanager.plugins = with pkgs; [
+        networkmanager-openvpn
+      ];
 
       # Enable powersaving if demanded
       networking.networkmanager.wifi.powersave = cfg.enablePowerSave;
