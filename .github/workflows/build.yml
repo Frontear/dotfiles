@@ -7,16 +7,23 @@ on:
       - staging
 
 jobs:
-  tests:
+  test:
+    name: Test
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        outputs: [
+          'nixosConfigurations.LAPTOP-3DT4F02.config.system.build.toplevel',
+          'nixosConfigurations.DESKTOP-3DT4F02.config.system.build.toplevel',
+          'nixosConfigurations.ISO-3DT4F02.config.system.build.isoImage'
+        ]
     steps:
-      - uses: actions/checkout@v4.2.2
-
       - name: Free Disk Space
         uses: jlumbroso/free-disk-space@v1.3.1
-        with:
-          tool-cache: true
 
+      - name: Checkout Repository
+        uses: actions/checkout@v4.2.2
+      
       - name: Install Nix
         uses: cachix/install-nix-action@v30
         with:
@@ -24,11 +31,8 @@ jobs:
             allow-import-from-derivation = false
             eval-cache = false
 
-      - name: Run Flake Check
-        run: nix flake check
+      - run:
+          nix flake check
 
-      - name: Build NixOS Configurations
-        run: |
-          nix build '.#nixosConfigurations.LAPTOP-3DT4F02.config.system.build.toplevel'
-          nix build '.#nixosConfigurations.DESKTOP-3DT4F02.config.system.build.toplevel'
-          nix build '.#nixosConfigurations.ISO-3DT4F02.config.system.build.isoImage'
+      - run:
+          nix build '.#${{ matrix.outputs }}'
