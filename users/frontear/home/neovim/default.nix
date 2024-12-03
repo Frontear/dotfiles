@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   ...
 }:
@@ -57,6 +58,7 @@
         bins = with pkgs; [
           basedpyright
           clang-tools
+          jdt-language-server
           nixd
           rust-analyzer
           zls
@@ -69,6 +71,8 @@
           cmp_luasnip
           luasnip
           nvim-cmp
+
+          lsp-format-nvim
 
           nvim-lspconfig
         ];
@@ -91,28 +95,27 @@
             }),
           })
 
+          local lsp_format = require("lsp-format")
+
+          lsp_format.setup {}
+
           local lspconfig = require("lspconfig")
           local capabilities = require("cmp_nvim_lsp").default_capabilities()
+          local on_attach = lsp_format.on_attach
 
-          lspconfig.basedpyright.setup({
-            capabilities = capabilities,
-          })
-
-          lspconfig.clangd.setup({
-            capabilities = capabilities,
-          })
-
-          lspconfig.nixd.setup({
-            capabilities = capabilities,
-          })
-
-          lspconfig.rust_analyzer.setup({
-            capabilities = capabilities,
-          })
-
-          lspconfig.zls.setup({
-            capabilities = capabilities,
-          })
+          ${lib.concatStringsSep "\n" (map (lsp: ''
+            lspconfig.${lsp}.setup({
+              capabilities = capabilities,
+              on_attach = on_attach
+            })
+          '') [
+            "basedpyright"
+            "clangd"
+            "jdtls"
+            "nixd"
+            "rust_analyzer"
+            "zls"
+          ])}
         '';
       }
       {
