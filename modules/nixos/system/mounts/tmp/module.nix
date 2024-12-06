@@ -13,7 +13,7 @@ in {
   config = lib.mkMerge [
     (lib.mkIf cfg.enableTmpfs {
       # Force the Nix builder into a sane TMPDIR
-      my.persist.directories = [{ path = "/var/tmp"; mode = "1777"; }];
+      my.persist.directories = [ "/var/tmp" ];
       systemd.services.nix-daemon.environment.TMPDIR = "/var/tmp";
 
       # Use tmpfs for /tmp as it's just easier to use.

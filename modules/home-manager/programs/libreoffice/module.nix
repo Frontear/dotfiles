@@ -45,10 +45,9 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    my.persist.directories = [{
-      path = "~/.config/libreoffice";
-      mode = "700";
-    }];
+    my.persist.directories = [
+      "~/.config/libreoffice"
+    ];
 
     fonts.fontconfig.enable = lib.mkDefault true;
 

@@ -60,28 +60,8 @@
     outputsToRemove = [ "inputs" "outputs" "sourceInfo" ];
   in (removeSystemAttr (removeAttrs flake outputsToRemove)));
 
-  types = (
-  let
-    mkPathOption = { name, prefix }: prev.mkOptionType {
-      inherit name;
-      description = "An absolute path, prefixed with ${prefix}.";
-      descriptionClass = "nonRestrictiveClause";
-                                                                
-      check = (x:
-        prev.isStringLike x &&
-        prev.substring 0 1 x == prefix
-      );
-      merge = prev.mergeEqualOption;
-    };
-  in {
-    systemPath = mkPathOption {
-      name = "systemPath";
-      prefix = "/";
-    };
-                                                                
-    userPath = mkPathOption {
-      name = "userPath";
-      prefix = "~";
-    };
-  } // prev.types);
+  types = rec {
+    systemPath = prev.types.path;
+    userPath = prev.types.either systemPath (prev.types.strMatching "~/.+");
+  } // prev.types;
 }
