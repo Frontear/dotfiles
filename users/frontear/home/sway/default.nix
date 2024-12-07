@@ -20,7 +20,7 @@
     config = import ./config.nix;
 
     fonts = with pkgs; [
-      (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+      nerd-fonts.symbols-only
     ];
 
     programs.waybar = {
