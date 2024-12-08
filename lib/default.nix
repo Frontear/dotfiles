@@ -19,8 +19,8 @@
       in {
         # args = { config, lib, modulesPath, options, pkgs, ... }
         __functor = _: args: (imported (args // extraArgs)) // {
-            _file = mod; # better error reporting in the module system
-          };
+          _file = mod; # better error reporting in the module system
+        };
         __functionArgs = final.functionArgs imported;
       }))
     ];
