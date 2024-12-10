@@ -102,9 +102,17 @@ in {
       (lib.mkIf (!osConfig.programs.zsh.enableCompletion) "The home-manager module will not handle completions, please enable programs.zsh.enableCompletions in your NixOS configuration if this is undesirable.")
     ];
 
-    # Persist the history file
-    my.persist.files = [
-      cfg.history.file
+    # Persisting the file itself is not possible due to the way
+    # ZSH attempts to merge history files together -- by trying
+    # to copy $HISTFILE.new onto $HISTFILE.
+    #
+    # This doesn't work well on a bind mount, so as a avoidance
+    # we simply persist the entire directory the history file
+    # is part of. This isn't ideal if the user tries to place
+    # the file in an extremely open path (like ~/.history), but
+    # there isn't any better handling here.
+    my.persist.directories = [
+      (builtins.dirOf cfg.history.file)
     ];
 
     programs.zsh = lib.mkMerge [
