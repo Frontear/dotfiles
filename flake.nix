@@ -11,11 +11,6 @@
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware";
     };
-
-    nixos-wsl = {
-      url = "github:nix-community/NixOS-WSL";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } {

@@ -14,7 +14,6 @@ jobs:
       matrix:
         outputs: [
           'nixosConfigurations.LAPTOP-3DT4F02.config.system.build.toplevel',
-          'nixosConfigurations.DESKTOP-3DT4F02.config.system.build.toplevel',
           'nixosConfigurations.ISO-3DT4F02.config.system.build.isoImage'
         ]
     steps:

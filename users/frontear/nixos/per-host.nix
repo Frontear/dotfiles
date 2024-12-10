@@ -8,9 +8,5 @@
     (lib.optionalAttrs (options ? isoImage) {
       services.displayManager.autoLogin.user = "frontear";
     })
-
-    (lib.optionalAttrs (options ? wsl) {
-      wsl.defaultUser = "frontear";
-    })
   ];
 }

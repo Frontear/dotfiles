@@ -6,7 +6,6 @@
 let
   inherit (inputs)
     nixos-hardware
-    nixos-wsl
     ;
 
   inherit (self) lib;
@@ -19,14 +18,6 @@ in {
         nixos-hardware.nixosModules.common-hidpi
 
         ../../hosts/laptop
-      ];
-    }
-    {
-      hostName = "DESKTOP-3DT4F02";
-      modules = [
-        nixos-wsl.nixosModules.default
-
-        ../../hosts/desktop
       ];
     }
     {
