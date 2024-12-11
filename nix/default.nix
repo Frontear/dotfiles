@@ -3,6 +3,7 @@
 }:
 {
   imports = [
+    ./checks
     ./devShells
     ./lib
     ./nixosConfigurations

@@ -10,12 +10,6 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        outputs: [
-          'nixosConfigurations.LAPTOP-3DT4F02.config.system.build.toplevel',
-          'nixosConfigurations.ISO-3DT4F02.config.system.build.isoImage'
-        ]
     steps:
       - name: Free Disk Space
         uses: jlumbroso/free-disk-space@v1.3.1
@@ -34,6 +28,3 @@ jobs:
 
       - run:
           nix flake check
-
-      - run:
-          nix build '.#${{ matrix.outputs }}'
