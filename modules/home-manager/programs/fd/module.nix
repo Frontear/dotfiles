@@ -16,9 +16,5 @@ in {
 
   config = lib.mkIf cfg.enable {
     home.packages = [ cfg.package ];
-
-    home.shellAliases = {
-      find = lib.getExe cfg.package;
-    };
   };
 }

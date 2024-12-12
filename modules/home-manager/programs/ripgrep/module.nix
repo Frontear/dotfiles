@@ -18,9 +18,5 @@ in {
 
   config = lib.mkIf cfg.enable {
     home.packages = [ cfg.package ];
-
-    home.shellAliases = {
-      "grep" = "${baseNameOf (lib.getExe cfg.package)}";
-    };
   };
 }
