@@ -14,28 +14,27 @@
     init = ''
       vim.opt.cursorline = true
 
-      vim.opt.scrolloff = 5
-      vim.opt.textwidth = 80
-
-      vim.opt.wrap = true
-      vim.opt.undofile = true
+      vim.opt.fileencoding = "utf-8"
+      vim.opt.fileformat = "unix"
 
       vim.opt.tabstop = 2
       vim.opt.softtabstop = 2
       vim.opt.shiftwidth = 2
       vim.opt.expandtab = true
 
+      vim.opt.fixeol = true
+      vim.opt.eol = true
+
+      vim.opt.textwidth = 80
+      vim.opt.spelllang = "en_us"
+
+      vim.opt.scrolloff = 5
+
+      vim.opt.wrap = true
+      vim.opt.undofile = true
+
       vim.opt.number = true
       vim.cmd("highlight LineNr ctermfg=grey")
-
-      require("editorconfig").properties = {
-        charset = "utf-8",
-        indent_size = "2",
-        indent_style = "space",
-        max_line_length = 80,
-        tab_width = 2,
-        trim_trailing_whitespace = true,
-      }
     '';
 
     plugins = [
