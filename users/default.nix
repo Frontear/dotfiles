@@ -3,44 +3,37 @@
   ...
 }:
 let
-  allUsers = lib.pipe ./. [
-    builtins.readDir
-    (lib.filterAttrs (_: type: type == "directory"))
-    (lib.mapAttrs (name: _: {
-      nixos = {
-        imports = [
-          ./${name}/nixos
-        ];
+  usersAttr = builtins.readDir ./.
+  |> lib.filterAttrs (name: _: name != "default.nix")
+  |> lib.mapAttrs (name: _: {
+    nixos = {
+      imports = [
+        ./${name}/nixos
+      ];
 
-        users.users."${name}" = {
-          inherit name;
-          home = "/home/${name}";
+      users.users."${name}" = {
+        inherit name;
+        home = "/home/${name}";
 
-          isNormalUser = true;
-        };
+        isNormalUser = true;
       };
+    };
+
+    home = {
+      imports = [
+        ./${name}/home
+      ];
 
       home = {
-        imports = [
-          ./${name}/home
-        ];
-
-        home = {
-          username = name;
-          homeDirectory = "/home/${name}";
-        };
+        username = name;
+        homeDirectory = "/home/${name}";
       };
-    }))
-  ];
-
-  mkUsers = {
-    imports = lib.mapAttrsToList (_: value: value.nixos) allUsers;
-
-    home-manager = {
-      useUserPackages = true;
-      useGlobalPkgs = true;
-
-      users = lib.mapAttrs (_: value: value.home) allUsers;
     };
+  });
+in {
+  imports = lib.mapAttrsToList (_: value: value.nixos) usersAttr;
+
+  config = {
+    home-manager.users = lib.mapAttrs (_: value: value.home) usersAttr;
   };
-in mkUsers
+}

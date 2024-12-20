@@ -20,8 +20,13 @@ in {
       ../../users
     ];
 
-    config.home-manager.sharedModules = [
-      (lib.mkModules ../../modules/home-manager {})
-    ];
+    config.home-manager = {
+      useGlobalPkgs = true;
+      useUserPackages = true;
+
+      sharedModules = [
+        (lib.mkModules ../../modules/home-manager {})
+      ];
+    };
   };
 }

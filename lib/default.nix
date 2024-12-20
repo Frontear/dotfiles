@@ -10,10 +10,9 @@
   );
 
   mkModules = (modulesPath: { ... } @ extraArgs: {
-    imports = final.pipe modulesPath [
-      final.filesystem.listFilesRecursive
-      (final.filter (final.hasSuffix "module.nix"))
-      (map (mod:
+    imports = final.filesystem.listFilesRecursive modulesPath
+      |> final.filter (final.hasSuffix "module.nix")
+      |> map (mod:
       let
         imported = import mod;
       in {
@@ -22,12 +21,11 @@
           _file = mod; # better error reporting in the module system
         };
         __functionArgs = final.functionArgs imported;
-      }))
-    ];
-  });
+      });
+    });
                                                                                       
-  mkNixOSConfigurations = (system: list: final.pipe list [
-    (map ({ hostName, modules, ... } @ extraArgs: {
+  mkNixOSConfigurations = (system: list: list
+    |> map ({ hostName, modules, ... } @ extraArgs: {
       name = hostName;
       value = final.nixosSystem {
         specialArgs = {
@@ -42,19 +40,18 @@
           }
         ] ++ modules;
       } // (removeAttrs extraArgs [ "hostName" "modules" "specialArgs" ]);
-    }))
-    final.listToAttrs
-  ]);
+    })
+    |> final.listToAttrs
+  );
 
-  mkPackages = (pkgs: pkgsPath: final.pipe pkgsPath [
-    final.filesystem.listFilesRecursive
-    (final.filter (final.hasSuffix "package.nix"))
-    (map (drv: rec {
+  mkPackages = (pkgs: pkgsPath: final.filesystem.listFilesRecursive pkgsPath
+    |> final.filter (final.hasSuffix "package.nix")
+    |> map (drv: rec {
       name = final.getName value;
       value = pkgs.callPackage drv {};
-    }))
-    final.listToAttrs
-  ]);
+    })
+    |> final.listToAttrs
+  );
                                                                                       
   stripSystem = (system: flake:
   let
