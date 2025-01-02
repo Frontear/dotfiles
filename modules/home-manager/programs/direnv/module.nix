@@ -44,6 +44,8 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    my.toplevel.cachix = [ cfg.package ];
+
     programs.direnv = {
       enable = true;
       package = cfg.package;

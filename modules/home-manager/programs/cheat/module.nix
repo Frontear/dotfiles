@@ -23,6 +23,9 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    my.toplevel.cachix = [
+      config.xdg.configFile."cheat/cheatsheets/community".source ];
+
     home.packages = [ cfg.package ];
 
     my.programs.cheat.settings = {

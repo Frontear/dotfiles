@@ -14,6 +14,10 @@ let
 in {
   config = lib.mkIf config.nix.enable (lib.mkMerge [
     {
+      # Cache our nix wrapper via cachix. This isn't strictly necessary
+      # since the build is extremely small and fast, but why not.
+      my.toplevel.cachix = [ config.nix.package ];
+
       # Use github:viperML/nh as our "nix wrapper" program.
       programs.nh.enable = true;
 

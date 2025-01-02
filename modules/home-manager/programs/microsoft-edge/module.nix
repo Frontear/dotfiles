@@ -33,6 +33,8 @@ in {
 
   config = lib.mkIf cfg.enable (lib.mkMerge [
     {
+      my.toplevel.cachix = [ cfg.package ];
+
       my.persist.directories = [
         "${cfg.userDataDir}"
         "~/.cache/microsoft-edge"

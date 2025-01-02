@@ -24,6 +24,8 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    my.toplevel.cachix = [ cfg.package ];
+
     my.persist.directories = [ "~/.cache/nix-index" ];
 
     programs.command-not-found.enable = lib.mkForce false;
