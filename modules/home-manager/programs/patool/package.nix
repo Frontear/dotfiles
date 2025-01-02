@@ -2,6 +2,7 @@
   lib,
   symlinkJoin,
   makeWrapper,
+  gcc13Stdenv,
 
   patool,
 
@@ -34,9 +35,25 @@
   zpaq,
   zstd,
 }:
-symlinkJoin {
+let
+  stdenv = gcc13Stdenv;
+
+  patool' = (builtins.getFlake "github:NixOS/nixpkgs/7fa1a3c6b3d22f5e53bb765518a749847a25bb65").legacyPackages.${stdenv.system}.patool;
+
+  arj' = arj.override {
+    inherit stdenv;
+  };
+
+  lha' = lha.override {
+    inherit stdenv;
+  };
+
+  rzip' = rzip.override {
+    inherit stdenv;
+  };
+in symlinkJoin {
   name = "patool";
-  paths = [ patool ];
+  paths = [ patool' ];
 
   nativeBuildInputs = [ makeWrapper ];
 
@@ -44,7 +61,7 @@ symlinkJoin {
     wrapProgram $out/bin/patool \
       --prefix PATH : ${lib.makeBinPath [
         archiver
-        arj
+        arj'
         bintools
         bzip2
         bzip3
@@ -55,7 +72,7 @@ symlinkJoin {
         gnutar
         gzip
         lcab
-        lha
+        lha'
         lrzip
         lz4
         lzip
@@ -64,7 +81,7 @@ symlinkJoin {
         ncompress
         p7zip
         rar
-        rzip
+        rzip'
         sharutils
         unar
         xz
