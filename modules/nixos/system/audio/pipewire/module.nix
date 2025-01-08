@@ -13,7 +13,7 @@ in {
   config = lib.mkIf cfg.enable (lib.mkMerge [
     {
       # Kill PulseAudio and ALSA stuff
-      hardware.pulseaudio.enable = lib.mkForce false;
+      services.pulseaudio.enable = lib.mkForce false;
       hardware.alsa.enablePersistence = false; # https://github.com/NixOS/nixpkgs/issues/330606
     }
     {
