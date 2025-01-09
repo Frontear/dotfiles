@@ -23,7 +23,7 @@ in {
 
       # Wrap the official nix binary with a snippet to allow
       # rapid repl access to `pkgs.*` and `lib.*` attributes.
-      nix.package = pkgs.callPackage ./package.nix { nix = pkgs.lix; };
+      nix.package = pkgs.callPackage ./package.nix { nix = pkgs.nixVersions.git; };
     }
     {
       # Throttle the nix-daemon so it doesn't consume
@@ -91,19 +91,21 @@ in {
           builders-use-substitutes = true;
 
           connect-timeout = 5;
-          cores = 2;
+          cores = 2; # cores *per* derivation (that support parallel builds)
 
           debugger-on-trace = true;
           # debugger-on-warn = true;
           download-attempts = 2;
-          eval-cache = true;
 
           # It's useful to know when a substitute is failing!
+          # Can use `--fallback` on the CLI when needed.
           fallback = false;
 
           # Improve the chances of the store surviving a random crash.
           fsync-metadata = true;
-          # fsync-store-paths = true; TODO: on next Lix release
+          fsync-store-paths = true;
+
+          http-connections = 0; # unlimited connections!!
 
           # Keeping these is very useful for development.
           keep-build-log = true;
@@ -111,16 +113,21 @@ in {
           keep-failed = true;
           keep-outputs = true;
 
-          max-jobs = "auto";
+          log-lines = 100;
+
+          max-jobs = "auto"; # no. of derivations in parallel (auto = all cores)
           min-free = 10 * 1024 * 1024 * 1024;
 
           preallocate-contents = false; # Unnecessary on modern I/O
+          # TODO: force a cachix upload after each build?
+          # post-build-hook = "";
+          print-missing = false; # I don't really need to see this.
 
           # Never allow a non-sandboxed build
           sandbox-fallback = false;
 
           show-trace = true;
-          sync-before-registering = true;
+          sync-before-registering = true; # TODO: needed with fsync options?
 
           trace-verbose = true;
           trusted-users = [
@@ -152,7 +159,7 @@ in {
             # Some interesting features.
             # "fetch-closures"
             "no-url-literals"
-            "pipe-operator"
+            "pipe-operators"
           ];
         }
       ];
