@@ -18,6 +18,13 @@ in {
       # since the build is extremely small and fast, but why not.
       my.toplevel.cachix = [ config.nix.package ];
 
+      # Instruct the daemon to use `/var/tmp` as the TMPDIR instead of `/tmp`.
+      # This is because `/tmp` can be a tmpfs (and honestly should). `/var/tmp`
+      # is designed to contain persistent, yet temporary files, a definition
+      # that fits Nix's usage of the TMPDIR perfectly.
+      my.persist.directories = [ "/var/tmp" ];
+      systemd.services.nix-daemon.environment.TMPDIR = "/var/tmp";
+
       # Use github:viperML/nh as our "nix wrapper" program.
       programs.nh.enable = true;
 

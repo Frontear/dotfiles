@@ -26,7 +26,6 @@ in {
         enable = true;
         memoryPercent = 150; # https://unix.stackexchange.com/a/596929
         priority = 100;
-        # TODO: writebackDevice?
       };
     })
   ];

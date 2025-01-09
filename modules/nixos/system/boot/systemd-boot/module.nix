@@ -25,7 +25,7 @@ in {
         editor = cfg.editor;
       };
     }
-    (lib.mkIf cfg.silent {
+    (lib.mkIf cfg.silent rec {
       # https://wiki.archlinux.org/title/Silent_boot
       boot.consoleLogLevel = 3;
       boot.initrd.verbose = false;
@@ -35,7 +35,7 @@ in {
       boot.kernelParams = [
         "quiet"
         "systemd.show_status=auto"
-        "udev.log_level=${toString config.boot.consoleLogLevel}"
+        "udev.log_level=${toString boot.consoleLogLevel}"
       ];
     })
   ]);
