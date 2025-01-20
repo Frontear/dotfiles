@@ -60,7 +60,7 @@
       enable = true;
 
       config = {
-        user.email = "perm-iterate-0b@icloud.com";
+        user.email = "contact@frontear.dev";
         user.name = "Ali Rizvi";
         user.signingKey = "4BC247743ACFF25E";
 
