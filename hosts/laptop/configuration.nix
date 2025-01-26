@@ -23,6 +23,14 @@
     # Enable a desktop environment
     my.desktops.sway.enable = true;
 
+    # Grab the `libimobiledevice` suite of tools.
+    services.usbmuxd.enable = true;
+    environment.systemPackages = with pkgs; [
+      ifuse
+      idevicerestore
+      libimobiledevice
+    ];
+
     # Set locale, keymap and timezone
     console.keyMap = "us";
     i18n.defaultLocale = "en_CA.UTF-8";
