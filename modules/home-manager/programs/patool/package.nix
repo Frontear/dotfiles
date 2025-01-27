@@ -6,6 +6,10 @@
 
   patool,
 
+  # To help disambiguate different archives
+  file,
+
+  # Various archive formats supported by patool.
   # TODO: arc, unace, unadf, unalz, xdms, shorten, zoo
   arj,
   bintools,
@@ -53,6 +57,8 @@ in symlinkJoin {
   postBuild = ''
     wrapProgram $out/bin/patool \
       --prefix PATH : ${lib.makeBinPath [
+        file
+
         arj
         bintools
         bzip2
