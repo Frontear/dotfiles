@@ -11,6 +11,7 @@
 
   # Various archive formats supported by patool.
   # TODO: arc, unace, unadf, unalz, xdms, shorten, zoo
+  _7zz,
   arj,
   bintools,
   bzip2,
@@ -29,7 +30,6 @@
   lzop,
   monkeysAudio,
   ncompress,
-  p7zip,
   rar,
   rzip,
   sharutils,
@@ -59,6 +59,7 @@ in symlinkJoin {
       --prefix PATH : ${lib.makeBinPath [
         file
 
+        _7zz
         arj
         bintools
         bzip2
@@ -77,7 +78,6 @@ in symlinkJoin {
         lzop
         monkeysAudio
         ncompress
-        p7zip
         rar
         rzip'
         sharutils
