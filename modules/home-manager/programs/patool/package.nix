@@ -6,8 +6,7 @@
 
   patool,
 
-  # TODO: unace, unadf, unalz, xdms, shorten, zoo
-  archiver,
+  # TODO: arc, unace, unadf, unalz, xdms, shorten, zoo
   arj,
   bintools,
   bzip2,
@@ -54,7 +53,6 @@ in symlinkJoin {
   postBuild = ''
     wrapProgram $out/bin/patool \
       --prefix PATH : ${lib.makeBinPath [
-        archiver
         arj
         bintools
         bzip2
