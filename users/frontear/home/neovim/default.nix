@@ -94,18 +94,18 @@
             }),
           })
 
-          local lsp_format = require("lsp-format")
+          --local lsp_format = require("lsp-format")
 
-          lsp_format.setup {}
+          --lsp_format.setup {}
 
           local lspconfig = require("lspconfig")
           local capabilities = require("cmp_nvim_lsp").default_capabilities()
-          local on_attach = lsp_format.on_attach
+          --local on_attach = lsp_format.on_attach
 
           ${lib.concatStringsSep "\n" (map (lsp: ''
             lspconfig.${lsp}.setup({
               capabilities = capabilities,
-              on_attach = on_attach
+              --on_attach = on_attach
             })
           '') [
             "basedpyright"
