@@ -12,29 +12,31 @@
     ];
 
     init = ''
-      vim.opt.cursorline = true
-
-      vim.opt.fileencoding = "utf-8"
-      vim.opt.fileformat = "unix"
+      vim.g.mapleader = ' '
+      vim.g.localmapleader = ' '
 
       vim.opt.tabstop = 2
       vim.opt.softtabstop = 2
       vim.opt.shiftwidth = 2
       vim.opt.expandtab = true
 
-      vim.opt.fixeol = true
-      vim.opt.eol = true
-
-      vim.opt.textwidth = 80
-      vim.opt.spelllang = "en_us"
-
-      vim.opt.scrolloff = 5
-
-      vim.opt.wrap = true
-      vim.opt.undofile = true
-
+      vim.opt.cursorline = true
       vim.opt.number = true
       vim.cmd("highlight LineNr ctermfg=grey")
+
+      vim.opt.scrolloff = 5
+      vim.opt.textwidth = 80
+      vim.opt.wrap = true
+
+      vim.opt.undofile = true
+
+      vim.opt.splitright = true
+      vim.opt.splitbelow = true
+
+      vim.keymap.set('n', "<C-Left>", "<cmd>wincmd h<CR>")
+      vim.keymap.set('n', "<C-Right>", "<cmd>wincmd l<CR>")
+      vim.keymap.set('n', "<C-Up>", "<cmd>wincmd k<CR>")
+      vim.keymap.set('n', "<C-Down>", "<cmd>wincmd j<CR>")
     '';
 
     plugins = [
