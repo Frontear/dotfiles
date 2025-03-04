@@ -28,9 +28,9 @@ in {
       # Use github:viperML/nh as our "nix wrapper" program.
       programs.nh.enable = true;
 
-      # Wrap the official nix binary with a snippet to allow
+      # Wrap a compatible nix binary with a snippet to allow
       # rapid repl access to `pkgs.*` and `lib.*` attributes.
-      nix.package = pkgs.callPackage ./package.nix { nix = pkgs.nixVersions.git; };
+      nix.package = pkgs.callPackage ./package.nix { nix = pkgs.lix; };
     }
     {
       # Throttle the nix-daemon so it doesn't consume
@@ -110,7 +110,7 @@ in {
 
           # Improve the chances of the store surviving a random crash.
           fsync-metadata = true;
-          fsync-store-paths = true;
+          # fsync-store-paths = true; TODO: bring back when Lix 2.92
 
           http-connections = 0; # unlimited connections!!
 
@@ -166,7 +166,7 @@ in {
             # Some interesting features.
             # "fetch-closures"
             "no-url-literals"
-            "pipe-operators"
+            "pipe-operator"
           ];
         }
       ];
