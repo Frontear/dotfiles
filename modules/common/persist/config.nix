@@ -66,7 +66,7 @@ in {
     # for these mounts.
     boot.initrd.systemd.storePaths = [ persist-helper ];
     boot.initrd.systemd.services = lib.listToAttrs (map (path: {
-      name = "persist-mount-${utils.escapeSystemdPath path}";
+      name = "persist-mount-${utils.escapeSystemdPath path.dst}";
       value = {
         unitConfig = {
           DefaultDependencies = "no";
@@ -75,8 +75,8 @@ in {
           Before = "initrd-root-fs.target";
 
           ConditionPathExists = [
-            "/sysroot/${cfg.volume}/${path}"
-            "!/sysroot/${path}"
+            "/sysroot/${path.src}"
+            "!/sysroot/${path.dst}"
           ];
 
           RequiresMountsFor = [ "/sysroot/${cfg.volume}" ];
@@ -84,7 +84,7 @@ in {
 
         serviceConfig = {
           ExecStart = "${persist-helper} 'mount'"
-            + " '/sysroot/${cfg.volume}' '/sysroot' '${path}'";
+            + " '/sysroot/${cfg.volume}' '/sysroot' '${path.dst}'";
         };
 
         requiredBy = [ "initrd-root-fs.target" ];
@@ -107,7 +107,7 @@ in {
     # minimum level of directories (mostly for the permissions) so that a
     # reasonable directory tree is produced in the persistent location.
     systemd.services = lib.listToAttrs (map (path: {
-      name = "persist-copy-${utils.escapeSystemdPath path}";
+      name = "persist-copy-${utils.escapeSystemdPath path.dst}";
       value = {
         unitConfig = {
           DefaultDependencies = "no";
@@ -115,8 +115,8 @@ in {
           Before = "final.target";
 
           ConditionPathExists = [
-            "${path}"
-            "!${cfg.volume}/${path}"
+            "${path.dst}"
+            "!${path.src}"
           ];
 
           RequiresMountsFor = [ "${cfg.volume}" ];
@@ -124,7 +124,7 @@ in {
 
         serviceConfig = {
           ExecStart = "${persist-helper} 'copy' '/' '${cfg.volume}'"
-            + " '${path}'";
+            + " '${path.dst}'";
         };
 
         requiredBy = [ "final.target" ];

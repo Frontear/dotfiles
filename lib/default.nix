@@ -61,6 +61,6 @@
 
   types = rec {
     systemPath = prev.types.path;
-    userPath = prev.types.either systemPath (prev.types.strMatching "~/.+");
+    userPath = prev.types.either systemPath (prev.types.strMatching "~/[^~]+");
   } // prev.types;
 }

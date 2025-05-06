@@ -14,6 +14,20 @@ let
     type = with lib.types; listOf systemPath;
   } // attrs);
 
+  # Convert our finalized list of unique path entries into a compact attrset
+  # that exposes the source and destination paths for our entry. This is very
+  # useful for the configuration to resolve things without needing to manually
+  # append `${cfg.volume}/${path}` everywhere. It also exposes a consistent
+  # place to modify the `src` in the case of specification-specific persistence.
+  toplevelSubmodule = {
+    options = lib.genAttrs [ "src" "dst" ] (_: lib.mkOption {
+      type = with lib.types; path;
+
+      readOnly = true;
+      internal = true;
+    });
+  };
+
   # Optimizes a list of filesystem directories by intelligently
   # deciding which are redundant based on whether their parents
   # exist as part of the list.
@@ -46,29 +60,6 @@ let
     |> joinAttrs "/"
     |> lib.flatten
   ));
-
-  # We prefer to use '~' as a prefix for our home-manager paths,
-  # since it feels natural to type and use. This is obviously
-  # not something that works when resolving paths, so we normalize
-  # these paths to strip off the '~' and replace it with the user's
-  # home directory.
-  #
-  # We intentionally perform the check to prevent breaking any paths
-  # which are absolute. In the 99% case, these absolute paths are
-  # to directories within the users control, so it won't pose a
-  # permissions problem. In the 1% mishap, the activation will fail,
-  # and I think that's sufficient.
-  normalizeUserPaths = (config:
-  let
-    cfg = config.my.persist;
-  in cfg.directories ++ cfg.files
-    |> map (path:
-      if lib.hasPrefix "~" path then
-        config.home.homeDirectory + (lib.removePrefix "~" path)
-      else
-        path
-    )
-  );
 in {
   options = {
     my.persist = {
@@ -84,7 +75,10 @@ in {
       };
 
       toplevel = lib.mkOption {
-        type = with lib.types; listOf path;
+        type = with lib.types; listOf (coercedTo path (path: {
+          src = "${cfg.volume}/${path}";
+          dst = "${path}";
+        }) (submodule toplevelSubmodule));
 
         readOnly = true;
         internal = true;
@@ -98,19 +92,22 @@ in {
       cfg.directories ++
       cfg.files ++ (
         lib.attrValues config.home-manager.users
-        |> map normalizeUserPaths
+        |> map (config: config.my.persist)
+        |> map (cfg: cfg.directories ++ cfg.files)
         |> lib.flatten
       )
     );
 
-    home-manager.sharedModules = [{
+    home-manager.sharedModules = [({ config, ... }: {
       options = {
-        # Ensure our custom paths are valid. We will resolve them later on so
-        # this won't pose a problem.
         my.persist = commonOpts {
-          type = with lib.types; listOf userPath;
+          # Manipulate our paths to be normal directories here to make it easier
+          # later, when resolving the `toplevel` attribute.
+          type = with lib.types; listOf (coercedTo userPath (path:
+            lib.replaceStrings [ "~" ] [ "${config.home.homeDirectory}" ] path
+          ) path);
         };
       };
-    }];
+    })];
   };
 }
