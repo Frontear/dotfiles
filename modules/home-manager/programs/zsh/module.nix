@@ -127,7 +127,7 @@ in {
       })
       ({
         # Setup prompt
-        initExtra = cfg.promptInit;
+        initContent = cfg.promptInit;
       })
       ({
         # Need to strip home from dotDir, because hm decided to append '$HOME' here

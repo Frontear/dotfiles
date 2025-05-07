@@ -73,7 +73,7 @@ in {
       enable = cfg.agent.enable;
       enableSshSupport = cfg.agent.enableSSHSupport;
 
-      pinentryPackage = cfg.agent.pinentryPackage;
+      pinentry.package = cfg.agent.pinentryPackage;
 
       sshKeys = cfg.agent.sshKeys;
     };
