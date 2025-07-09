@@ -5,7 +5,7 @@
   nix,
 }:
 stdenvNoCC.mkDerivation {
-  inherit (nix) name;
+  inherit (nix) name version;
 
   src = with lib.fileset; toSource {
     root = ./.;

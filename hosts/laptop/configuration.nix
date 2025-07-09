@@ -35,5 +35,17 @@
     console.keyMap = "us";
     i18n.defaultLocale = "en_CA.UTF-8";
     time.timeZone = "America/Toronto";
+
+    nixpkgs.overlays = [
+      (final: prev: {
+        # see: https://github.com/NixOS/nixpkgs/pull/419291
+        libirecovery = prev.libirecovery.overrideAttrs {
+          configureFlags = [
+            "--with-udevrulesdir=${placeholder "out"}/lib/udev/rules.d"
+            ''--with-udevrule=OWNER="root",GROUP="myusergroup",MODE="0660"''
+          ];
+        };
+      })
+    ];
   };
 }

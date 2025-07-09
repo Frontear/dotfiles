@@ -7,7 +7,7 @@
 let
   wrapper = callPackage ./wrapper { inherit nix; };
 in buildEnv {
-  inherit (nix) name;
+  inherit (nix) name version;
 
   paths = [
     wrapper
