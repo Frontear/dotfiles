@@ -46,6 +46,9 @@ in {
       my.persist.directories = [ "/etc/NetworkManager" ];
       networking.networkmanager.enable = true;
 
+      # Disable ModemManager as it serves no purpose on any of my devices.
+      networking.modemmanager.enable = lib.mkForce false;
+
       # Grab the OpenVPN Plugin
       networking.networkmanager.plugins = with pkgs; [
         networkmanager-openvpn
