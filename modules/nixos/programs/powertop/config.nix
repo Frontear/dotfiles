@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
@@ -10,6 +9,8 @@ in {
   config = lib.mkIf cfg.enable {
     my.persist.directories = [ "/var/cache/powertop" ];
 
-    environment.systemPackages = [ pkgs.powertop ];
+    environment.systemPackages = [
+      cfg.package
+    ];
   };
 }
