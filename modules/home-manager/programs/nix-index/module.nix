@@ -10,14 +10,7 @@ in {
   options.my.programs.nix-index = {
     enable = lib.mkDefaultEnableOption "nix-index";
     package = lib.mkOption {
-      default = pkgs.nix-index.override (prev: {
-        nix-index-unwrapped = prev.nix-index-unwrapped.overrideAttrs (prevAttrs: {
-          patches = (prevAttrs.patches or []) ++ [
-            # https://github.com/nix-community/nix-index/pull/243
-            ./skip-fhs-by-default.patch
-          ];
-        });
-      });
+      default = pkgs.nix-index;
 
       type = with lib.types; package;
     };
