@@ -1,33 +1,38 @@
 {
-  osConfig,
+  config,
+  lib,
   pkgs,
   ...
 }:
-{
-  my.desktops.sway = {
-    enable = osConfig.my.desktops.sway.enable;
-    extraPackages = with pkgs; [
-      foot
+let
+  cfg = config.my.desktops.sway;
+  fs = pkgs.callPackage ./fs {};
+in {
+  config = lib.mkIf cfg.enable {
+    my.desktops.sway.config = "${fs}/sway/config";
+
+    my.programs = {
+      foot.enable = true;
+      waybar = {
+        enable = true;
+
+        config = "${fs}/waybar/config.jsonc";
+        style = "${fs}/waybar/style.css";
+      };
+    };
+
+
+    fonts.fontconfig.enable = true;
+
+    home.packages = with pkgs; [
+      nerd-fonts.symbols-only
+
+      brightnessctl
+      perlPackages.Apppapersway
       rofi
       swayidle
       swaylock
-
-      perlPackages.Apppapersway
-
       wl-clip-persist
     ];
-
-    config = import ./config.nix;
-
-    fonts = with pkgs; [
-      nerd-fonts.symbols-only
-    ];
-
-    programs.waybar = {
-      enable = true;
-
-      config = import ./waybar/config.nix;
-      style = import ./waybar/style.nix;
-    };
   };
 }

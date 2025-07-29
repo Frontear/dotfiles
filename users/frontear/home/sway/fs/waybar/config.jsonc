@@ -1,5 +1,3 @@
-# vim:ft=jsonc tabstop=2 shiftwidth=2
-''
 {
   "layer": "top",
   "position": "top",
@@ -133,4 +131,3 @@
     },
   },
 }
-''

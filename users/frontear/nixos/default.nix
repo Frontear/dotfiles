@@ -7,7 +7,6 @@
   imports = [
     ./per-host.nix
     ./shell.nix
-    ./desktop.nix
   ];
 
   config.users.users."frontear" = {
