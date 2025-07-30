@@ -21,6 +21,11 @@ in {
     ];
 
     config.home-manager = {
+      # TODO: remove this workaround once sd-switch is fixed.
+      #
+      # see: https://github.com/nix-community/home-manager/issues/7583
+      enableLegacyProfileManagement = true;
+
       useGlobalPkgs = true;
       useUserPackages = true;
 
