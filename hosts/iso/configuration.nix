@@ -10,12 +10,7 @@
   config = {
     my.mounts.swap.enableZram = true;
 
-    my.network.networkmanager = {
-      enable = true;
-
-      dns.providers.cloudflare.enable = true;
-      hosts.providers.stevenblack.enable = true;
-    };
+    my.network.networkmanager.enable = true;
 
     services.desktopManager.plasma6.enable = true;
     services.displayManager.defaultSession = "plasmax11";
