@@ -130,9 +130,7 @@ in {
         initContent = cfg.promptInit;
       })
       ({
-        # Need to strip home from dotDir, because hm decided to append '$HOME' here
-        # inconsistent, to say the least.
-        dotDir = lib.replaceStrings [ "${config.home.homeDirectory}/" ] [ "" ] cfg.dotDir;
+        inherit (cfg) dotDir;
       })
       ({
         # Set history attributes
