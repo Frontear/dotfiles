@@ -34,5 +34,17 @@ in {
       swaylock
       wl-clip-persist
     ];
+
+
+    my.programs = {
+      armcord.enable = true;
+
+      chromium = {
+        enable = true;
+        package = pkgs.microsoft-edge;
+      };
+
+      element.enable = true;
+    };
   };
 }

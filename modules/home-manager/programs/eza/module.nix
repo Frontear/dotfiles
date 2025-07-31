@@ -36,5 +36,12 @@ in {
 
       extraOptions = cfg.extraOptions;
     };
+
+
+    fonts.fontconfig.enable = lib.mkDefault true;
+
+    home.packages = [
+      pkgs.nerd-fonts.symbols-only
+    ];
   };
 }

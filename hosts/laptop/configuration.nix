@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   ...
 }:
 {
@@ -8,6 +9,16 @@
   ];
 
   config = {
+    specialisation.gnome.configuration = {
+      services.auto-cpufreq.enable = lib.mkForce false;
+
+
+      my.desktops = {
+        sway.enable = lib.mkForce false;
+        gnome.enable = true;
+      };
+    };
+
     # Use the latest xanmod kernel, mainly for the Clear Linux patches
     boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 

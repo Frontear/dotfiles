@@ -6,8 +6,8 @@
 }:
 {
   imports = [
+    ./desktops
     ./neovim
-    ./sway
     #./vscode
   ];
 
@@ -19,8 +19,6 @@
   };
 
   my.programs = {
-    armcord.enable = true;
-
     cheat = {
       enable = true;
 
@@ -40,8 +38,6 @@
         whitelist.prefix = [ "${config.home.homeDirectory}/Documents" ];
       };
     };
-
-    element.enable = true;
 
     eza = {
       enable = true;
@@ -91,21 +87,6 @@
 
         sshKeys = [ "3DB8367E2C04F74909B7F39ABA22959A22314C10" ];
       };
-    };
-
-    libreoffice = {
-      enable = true;
-
-      dictionaries = with pkgs.hunspellDicts; [
-        en_CA
-        en_US
-      ];
-
-      fonts = [ pkgs.corefonts ];
-    };
-
-    microsoft-edge = {
-      enable = true;
     };
 
     zsh = {

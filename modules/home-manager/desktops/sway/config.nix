@@ -15,5 +15,8 @@ in {
 
 
     xdg.configFile."sway/config".source = cfg.config;
+
+
+    xdg.mimeApps.enable = true;
   };
 }
