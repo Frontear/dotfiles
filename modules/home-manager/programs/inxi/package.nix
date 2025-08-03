@@ -35,9 +35,13 @@ let
   ];
 in symlinkJoin {
   name = "inxi";
-  paths = [ inxi ];
+  paths = [
+    inxi
+  ];
 
-  nativeBuildInputs = [ makeWrapper ];
+  nativeBuildInputs = [
+    makeWrapper
+  ];
 
   postBuild = ''
     wrapProgram $out/bin/inxi \

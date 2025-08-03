@@ -25,6 +25,7 @@ in {
     fonts.fontconfig.enable = true;
 
     home.packages = with pkgs; [
+      noto-fonts
       nerd-fonts.symbols-only
 
       brightnessctl
@@ -37,14 +38,14 @@ in {
 
 
     my.programs = {
-      armcord.enable = true;
-
       chromium = {
         enable = true;
         package = pkgs.microsoft-edge;
       };
 
       element.enable = true;
+
+      legcord.enable = true;
     };
   };
 }

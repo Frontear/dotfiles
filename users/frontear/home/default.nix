@@ -19,37 +19,12 @@
   };
 
   my.programs = {
-    cheat = {
-      enable = true;
-
-      settings = {
-        editor = "nvim";
-        colorize = true;
-        style = "onedark";
-        formatter = "terminal256";
-        pager = "less";
-      };
-    };
-
     direnv = {
       enable = true;
 
       config = {
         whitelist.prefix = [ "${config.home.homeDirectory}/Documents" ];
       };
-    };
-
-    eza = {
-      enable = true;
-
-      extraOptions = [
-        "--git"
-        "--group"
-        "--group-directories-first"
-        "--icons"
-        "--header"
-        "--octal-permissions"
-      ];
     };
 
     git = {
