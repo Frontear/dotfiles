@@ -15,7 +15,7 @@ in {
     systemd.user = {
       services.foot-server = {
         Service = {
-          ExecStart = "${lib.getExe cfg.package} --server=3";
+          ExecStart = "${lib.getExe cfg.package} -c ${cfg.config} --server=3";
           UnsetEnvironment = [ "LISTEN_PID" "LISTEN_FDS" "LISTEN_FDNAMES" ];
           NonBlocking = true;
         };

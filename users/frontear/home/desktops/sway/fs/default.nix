@@ -14,6 +14,7 @@ in stdenvNoCC.mkDerivation {
   src = with lib.fileset; toSource {
     root = ./.;
     fileset = unions [
+      ./foot/foot.ini
       ./sway/backgrounds
       ./sway/config
       ./waybar/config.jsonc
@@ -32,6 +33,7 @@ in stdenvNoCC.mkDerivation {
   installPhase = ''
     runHook preInstall
 
+    install -Dm644 $src/foot/foot.ini $out/foot/foot.ini
     install -Dm644 -t $out/sway/backgrounds $src/sway/backgrounds/*
     install -Dm644 $src/sway/config $out/sway/config
     install -Dm644 $src/waybar/config.jsonc $out/waybar/config.jsonc

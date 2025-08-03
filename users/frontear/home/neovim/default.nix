@@ -33,6 +33,8 @@
       vim.opt.splitright = true
       vim.opt.splitbelow = true
 
+      vim.opt.guicursor = ""
+
       vim.keymap.set('n', "<C-Left>", "<cmd>wincmd h<CR>")
       vim.keymap.set('n', "<C-Right>", "<cmd>wincmd l<CR>")
       vim.keymap.set('n', "<C-Up>", "<cmd>wincmd k<CR>")

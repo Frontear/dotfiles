@@ -12,7 +12,12 @@ in {
     my.desktops.sway.config = "${fs}/sway/config";
 
     my.programs = {
-      foot.enable = true;
+      foot = {
+        enable = true;
+
+        config = "${fs}/foot/foot.ini";
+      };
+
       waybar = {
         enable = true;
 
