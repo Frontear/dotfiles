@@ -12,5 +12,7 @@ in {
 
   foot = callPackage ./foot {};
 
+  swayidle = callPackage ./swayidle {};
+
   waybar = callPackage ./waybar {};
 }

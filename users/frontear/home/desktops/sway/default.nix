@@ -20,6 +20,12 @@ in {
         config = "${fs.foot}/foot.ini";
       };
 
+      swayidle = {
+        enable = true;
+
+        config = "${fs.swayidle}/config";
+      };
+
       waybar = {
         enable = true;
 
@@ -38,8 +44,6 @@ in {
       brightnessctl
       perlPackages.Apppapersway
       rofi
-      swayidle
-      swaylock
       wl-clip-persist
     ];
 

@@ -16,10 +16,6 @@ gaps outer 4
 
 exec papersway
 exec wl-clip-persist --clipboard regular
-exec swayidle -w \
-  timeout 120 'swaylock -fls solid_color -c 000000' \
-  timeout 300 'swaymsg "output * dpms off"' \
-  resume 'swaymsg "output * dpms on"'
 
 focus_wrapping no
 workspace_layout default
@@ -60,7 +56,7 @@ bindsym --no-repeat {
 
 set $mod Mod4
 bindsym --no-repeat {
-  --locked Ctrl+Alt+Delete exit
+  --locked Ctrl+Alt+Delete exec uwsm stop
   Ctrl+Alt+R reload
 
   $mod+BackSpace kill

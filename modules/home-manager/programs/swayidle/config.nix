@@ -4,7 +4,7 @@
   ...
 }:
 let
-  cfg = config.my.programs.foot;
+  cfg = config.my.programs.swayidle;
 in {
   config = lib.mkIf cfg.enable {
     home.packages = [
@@ -12,7 +12,7 @@ in {
     ];
 
 
-    systemd.user.services.foot-server = {
+    systemd.user.services.swayidle = {
       Unit = {
         After = [ "graphical-session.target" ];
         PartOf = [ "graphical-session.target" ];
@@ -20,10 +20,10 @@ in {
       };
 
       Service = {
-        ExecStart = "${lib.getExe cfg.package} -c ${cfg.config} --server";
+        ExecStart = "${lib.getExe cfg.package} -C ${cfg.config} -w";
 
         Restart = "on-failure";
-        Slice = "app.slice";
+        Slice = "background.slice";
       };
 
       Install = {
@@ -32,4 +32,3 @@ in {
     };
   };
 }
-
