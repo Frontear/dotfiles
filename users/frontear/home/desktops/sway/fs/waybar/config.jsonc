@@ -27,10 +27,14 @@
 
   "custom/os-logo": {
     "format": "",
+
+    "tooltip": false,
   },
 
   "custom/spacer": {
     "format": "|",
+
+    "tooltip": false,
   },
 
   "sway/workspaces": {
@@ -82,6 +86,9 @@
     "format-icons": [ "󰕿", "󰖀", "󰕾", ],
 
     "on-click": "wpctl set-mute @DEFAULT_SINK@ toggle",
+
+    "tooltip": true,
+    "tooltip-format": "{volume}%",
   },
 
   "network": {
@@ -92,7 +99,7 @@
     "format-icons": [ "󰤯", "󰤟", "󰤢", "󰤥", "󰤨", ],
 
     "tooltip": true,
-    "tooltip-format": "TODO",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)",
   },
   
   "backlight": {

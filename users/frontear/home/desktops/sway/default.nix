@@ -6,23 +6,25 @@
 }:
 let
   cfg = config.my.desktops.sway;
-  fs = pkgs.callPackage ./fs {};
+  fs = import ./fs {
+    inherit (pkgs) callPackage;
+  };
 in {
   config = lib.mkIf cfg.enable {
-    my.desktops.sway.config = "${fs}/sway/config";
+    my.desktops.sway.config = "${fs.sway}/config";
 
     my.programs = {
       foot = {
         enable = true;
 
-        config = "${fs}/foot/foot.ini";
+        config = "${fs.foot}/foot.ini";
       };
 
       waybar = {
         enable = true;
 
-        config = "${fs}/waybar/config.jsonc";
-        style = "${fs}/waybar/style.css";
+        config = "${fs.waybar}/config.jsonc";
+        style = "${fs.waybar}/style.css";
       };
     };
 
