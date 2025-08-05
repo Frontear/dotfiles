@@ -22,7 +22,9 @@ in {
     };
 
 
-    my.persist.directories = [ "/var/cache/tuigreet" ];
+    my.persist.directories = [
+      "/var/cache/tuigreet"
+    ];
 
     services.greetd = {
       enable = true;
