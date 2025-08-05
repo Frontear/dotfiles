@@ -14,6 +14,10 @@ in {
     }];
 
 
+    home.sessionVariables.NIXOS_OZONE_WL = "1";
+    systemd.user.sessionVariables.NIXOS_OZONE_WL = "1";
+
+
     xdg.configFile."sway/config".source = cfg.config;
 
 
