@@ -1,0 +1,10 @@
+configuration {
+  modes: "drun";
+  font: "Noto Sans Mono 12";
+  show-icons: true;
+	icon-theme: "Papirus-Dark";
+
+  icon {
+    theme: "Papirus-Dark";
+  }
+}

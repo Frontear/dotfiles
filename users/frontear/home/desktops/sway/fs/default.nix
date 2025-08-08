@@ -10,7 +10,11 @@ in {
   };
 
 
+  dunst = callPackage ./dunst {};
+
   foot = callPackage ./foot {};
+
+  rofi = callPackage ./rofi {};
 
   swayidle = callPackage ./swayidle {};
 

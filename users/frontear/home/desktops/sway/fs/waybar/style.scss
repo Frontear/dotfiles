@@ -10,17 +10,34 @@
 
 tooltip {
   background: rgba(black, 0.4);
-  border-radius: 8px;
+  border-radius: 0.5rem;
 
   & * {
     color: white;
   }
 }
 
-.modules-left, .modules-center, .modules-right {
-  background-color: rgba(black, 0.4);
-  border-radius: 1.5rem;
-  padding: 0.25rem 0.5rem;
+window#waybar {
+  %common {
+    background-color: rgba(black, 0.4);
+    border-radius: 1.5rem;
+  }
+
+  &.top {
+    .modules-left,
+    .modules-center,
+    .modules-right {
+      @extend %common;
+      padding: 0.25rem 0.5rem;
+    }
+  }
+
+  &.bottom {
+    .modules-center {
+      @extend %common;
+      padding: 0.25rem;
+    }
+  }
 }
 
 #workspaces button,
@@ -32,4 +49,13 @@ tooltip {
 #wireplumber,
 #battery {
   @include fontStyle("Symbols Nerd Font", 1.1rem);
+}
+
+#custom-icon {
+  @include fontStyle("Symbols Nerd Font", 1.925rem);
+
+  &:hover {
+    background-color: rgba(white, 0.1);
+    border-radius: 1.25rem;
+  }
 }

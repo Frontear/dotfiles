@@ -14,10 +14,23 @@ in {
     my.desktops.sway.config = "${fs.sway}/config";
 
     my.programs = {
+      dunst = {
+        enable = true;
+
+        config = "${fs.dunst}/dunstrc";
+      };
+
       foot = {
         enable = true;
 
         config = "${fs.foot}/foot.ini";
+      };
+
+      rofi = {
+        enable = true;
+
+        config = "${fs.rofi}/config.rasi";
+        theme = "${fs.rofi}/theme.rasi";
       };
 
       swayidle = {
@@ -43,7 +56,6 @@ in {
 
       brightnessctl
       perlPackages.Apppapersway
-      rofi
       wl-clip-persist
     ];
 
@@ -57,6 +69,42 @@ in {
       element.enable = true;
 
       legcord.enable = true;
+
+      thunar.enable = true;
+    };
+
+
+    qt = {
+      enable = true;
+
+      platformTheme.name = "gtk3";
+
+      style = {
+        name = "adwaita-dark";
+        package = with pkgs; [
+          adwaita-qt
+          adwaita-qt6
+        ];
+      };
+    };
+
+    gtk = {
+      enable = true;
+
+      font = {
+        name = "Noto Sans";
+        package = pkgs.noto-fonts;
+      };
+
+      iconTheme = {
+        name = "Papirus-Dark";
+        package = pkgs.papirus-icon-theme;
+      };
+
+      theme = {
+        name = "Adwaita-dark";
+        package = pkgs.gnome-themes-extra;
+      };
     };
 
 
