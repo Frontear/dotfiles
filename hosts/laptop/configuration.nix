@@ -22,9 +22,6 @@
     # Use the latest xanmod kernel, mainly for the Clear Linux patches
     boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
-    # Enable networking support
-    my.network.networkmanager.enable = true;
-
     # Enable a desktop environment
     my.desktops.sway.enable = true;
 

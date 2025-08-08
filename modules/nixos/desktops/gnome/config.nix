@@ -9,6 +9,7 @@ let
 in {
   config = lib.mkIf cfg.enable {
     my.audio.pipewire.enable = true;
+    my.network.networkmanager.enable = true;
 
     services = {
       desktopManager.gnome.enable = true;
