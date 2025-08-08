@@ -18,10 +18,5 @@ in {
     home.packages = [
       cfg.package
     ];
-
-
-    xdg.mimeApps.defaultApplications = {
-      "application/pdf" = [ "${cfg.package}.desktop" ];
-    };
   };
 }
