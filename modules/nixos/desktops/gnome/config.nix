@@ -8,8 +8,10 @@ let
   cfg = config.my.desktops.gnome;
 in {
   config = lib.mkIf cfg.enable {
-    my.audio.pipewire.enable = true;
-    my.network.networkmanager.enable = true;
+    my.services = {
+      networkmanager.enable = true;
+      pipewire.enable = true;
+    };
 
     services = {
       desktopManager.gnome.enable = true;

@@ -10,7 +10,7 @@
   config = {
     my.mounts.swap.enableZram = true;
 
-    my.network.networkmanager.enable = true;
+    my.services.networkmanager.enable = true;
 
     services.desktopManager.plasma6.enable = true;
     services.displayManager.defaultSession = "plasmax11";

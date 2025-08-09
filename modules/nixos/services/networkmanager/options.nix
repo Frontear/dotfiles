@@ -4,7 +4,7 @@
 }:
 {
   options = {
-    my.network.networkmanager = {
+    my.services.networkmanager = {
       enable = lib.mkEnableOption "networkmanager";
     };
   };

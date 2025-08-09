@@ -4,12 +4,8 @@
   ...
 }:
 let
-  cfg = config.my.audio.pipewire;
+  cfg = config.my.services.pipewire;
 in {
-  options.my.audio.pipewire = {
-    enable = lib.mkEnableOption "pipewire";
-  };
-
   config = lib.mkIf cfg.enable (lib.mkMerge [
     {
       # Kill PulseAudio and ALSA stuff
