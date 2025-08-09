@@ -48,10 +48,20 @@ in {
     };
 
 
-    fonts.fontconfig.enable = true;
+    fonts.fontconfig = {
+      enable = true;
+
+      defaultFonts = {
+        emoji = lib.singleton "Noto Color Emoji";
+        monospace = lib.singleton "Noto Sans Mono";
+        serif = lib.singleton "Noto Serif";
+        sansSerif = lib.singleton "Noto Sans";
+      };
+    };
 
     home.packages = with pkgs; [
       noto-fonts
+      noto-fonts-emoji
       nerd-fonts.symbols-only
 
       brightnessctl
@@ -74,18 +84,14 @@ in {
     };
 
 
-    qt = {
+    home.pointerCursor = {
       enable = true;
+      package = pkgs.bibata-cursors;
 
-      platformTheme.name = "gtk3";
+      name = "Bibata-Modern-Classic";
+      size = 16;
 
-      style = {
-        name = "adwaita-dark";
-        package = with pkgs; [
-          adwaita-qt
-          adwaita-qt6
-        ];
-      };
+      gtk.enable = true;
     };
 
     gtk = {
@@ -104,6 +110,18 @@ in {
       theme = {
         name = "Adwaita-dark";
         package = pkgs.gnome-themes-extra;
+      };
+    };
+
+    qt = {
+      enable = true;
+
+      style = {
+        name = "adwaita-dark";
+        package = with pkgs; [
+          adwaita-qt
+          adwaita-qt6
+        ];
       };
     };
 

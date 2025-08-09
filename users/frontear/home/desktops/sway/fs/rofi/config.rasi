@@ -1,6 +1,6 @@
 configuration {
   modes: "drun";
-  font: "Noto Sans Mono 12";
+  font: "Noto Sans Mono 10";
   show-icons: true;
 	icon-theme: "Papirus-Dark";
 

@@ -3,6 +3,7 @@
   frame_width = 2
   gap_size = 4
   font = "Noto Sans Mono 8"
+  icon_theme = "Papirus-Dark"
   corner_radius = 4
 
   background = "#1f2329"
