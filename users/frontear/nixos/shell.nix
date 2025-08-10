@@ -1,18 +1,11 @@
 {
-  pkgs,
+  config,
   ...
 }:
 {
   config = {
-    users.users."frontear".shell = pkgs.zsh;
+    my.programs.zsh.enable = true;
 
-    programs.zsh = {
-      enable = true;
-      enableBashCompletion = true;
-      enableCompletion = true;
-      enableGlobalCompInit = true;
-
-      promptInit = "";
-    };
+    users.users."frontear".shell = config.my.programs.zsh.package;
   };
 }

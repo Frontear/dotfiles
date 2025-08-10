@@ -9,7 +9,9 @@ let
   cfg = config.my.programs.zsh;
 in {
   options.my.programs.zsh = {
-    enable = lib.mkDefaultEnableOption "zsh";
+    enable = lib.mkEnableOption "zsh" // {
+      default = osConfig.my.programs.zsh.enable;
+    };
 
     dotDir = lib.mkOption {
       default = "${config.xdg.configHome}/zsh";
@@ -86,21 +88,10 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    assertions = [
-      ({
-        assertion = osConfig.programs.zsh.enable;
-        message = "Please add programs.zsh.enable to your NixOS configuration.";
-      })
-      ({
-        assertion = osConfig.programs.zsh.promptInit == "";
-        message = "Please do not use programs.zsh.promptInit in your NixOS configuration, home-manager will handle it for you";
-      })
-    ];
-
-    warnings = [
-      (lib.mkIf (!osConfig.programs.zsh.enableBashCompletion) "The home-manager module will not handle bash completions, please enable programs.zsh.enableBashCompletions in your NixOS configuration if this is undesirable.")
-      (lib.mkIf (!osConfig.programs.zsh.enableCompletion) "The home-manager module will not handle completions, please enable programs.zsh.enableCompletions in your NixOS configuration if this is undesirable.")
-    ];
+    assertions = [{
+      assertion = osConfig.my.programs.zsh.enable;
+      message = "Please enable my.programs.zsh to your NixOS configuration.";
+    }];
 
     # Persisting the file itself is not possible due to the way
     # ZSH attempts to merge history files together -- by trying
