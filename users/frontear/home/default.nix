@@ -23,7 +23,11 @@
       enable = true;
 
       config = {
-        whitelist.prefix = [ "${config.home.homeDirectory}/Documents" ];
+        global.strict_env = true;
+
+        whitelist.prefix = [
+          "${config.home.homeDirectory}/Documents"
+        ];
       };
     };
 
@@ -47,21 +51,14 @@
 
         init.defaultBranch = "main";
       };
-
-      ignores = [
-        ".envrc"
-      ];
     };
 
     gnupg = {
       enable = true;
 
-      agent = {
-        enable = true;
-        enableSSHSupport = true;
-
-        sshKeys = [ "3DB8367E2C04F74909B7F39ABA22959A22314C10" ];
-      };
+      agent.sshKeys = [
+        "3DB8367E2C04F74909B7F39ABA22959A22314C10"
+      ];
     };
 
     zsh = {
