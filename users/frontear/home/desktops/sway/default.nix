@@ -39,6 +39,12 @@ in {
         config = "${fs.swayidle}/config";
       };
 
+      swayosd = {
+        enable = true;
+
+        style = "${fs.swayosd}/style.css";
+      };
+
       waybar = {
         enable = true;
 
@@ -64,7 +70,6 @@ in {
       noto-fonts-emoji
       nerd-fonts.symbols-only
 
-      brightnessctl
       perlPackages.Apppapersway
       wl-clip-persist
     ];
