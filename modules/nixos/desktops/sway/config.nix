@@ -33,7 +33,7 @@ in {
       enable = true;
 
       settings.default_session = {
-        command = ''${lib.getExe pkgs.greetd.tuigreet} --greeting "Welcome to NixOS (${lib.versions.majorMinor lib.version})!" --time --remember --asterisks'';
+        command = ''${lib.getExe pkgs.tuigreet} --greeting "Welcome to NixOS (${lib.versions.majorMinor lib.version})!" --time --remember --asterisks'';
       };
     };
 

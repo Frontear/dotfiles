@@ -169,7 +169,6 @@ in {
             # Critical flags for flakes.
             "flakes"
             "nix-command"
-            "repl-flake"
 
             # Some interesting features.
             # "fetch-closures"
