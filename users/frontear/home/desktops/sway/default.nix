@@ -24,6 +24,10 @@ in {
       };
 
       fonts = {
+        sizes = {
+          terminal = 9;
+        };
+
         emoji = {
           name = "Noto Color Emoji";
           package = pkgs.noto-fonts-emoji;
@@ -63,23 +67,40 @@ in {
       fontconfig.enable = true;
       font-packages.enable = true;
 
+      foot.enable = true;
+
       gtk.enable = true;
       qt.enable = true;
     };
 
     my.desktops.sway.config = "${fs.sway}/config";
 
+    programs = {
+      foot.enable = true;
+      foot.settings = {
+        cursor = {
+          style = "beam";
+          unfocused-style = "none";
+          blink = "yes";
+          beam-thickness = "1.0";
+        };
+
+        key-bindings = {
+          search-start = "Control+f";
+        };
+
+        search-bindings = {
+          find-prev = "Up";
+          find-next = "Down";
+        };
+      };
+    };
+
     my.programs = {
       dunst = {
         enable = true;
 
         config = "${fs.dunst}/dunstrc";
-      };
-
-      foot = {
-        enable = true;
-
-        config = "${fs.foot}/foot.ini";
       };
 
       rofi = {
