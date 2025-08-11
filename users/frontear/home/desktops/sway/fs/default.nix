@@ -12,8 +12,6 @@ in {
 
   dunst = callPackage ./dunst {};
 
-  rofi = callPackage ./rofi {};
-
   swayidle = callPackage ./swayidle {};
 
   swayosd = callPackage ./swayosd {};
