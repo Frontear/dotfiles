@@ -10,8 +10,6 @@ in {
   };
 
 
-  dunst = callPackage ./dunst {};
-
   swayidle = callPackage ./swayidle {};
 
   swayosd = callPackage ./swayosd {};

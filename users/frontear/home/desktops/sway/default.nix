@@ -67,6 +67,7 @@ in {
       fontconfig.enable = true;
       font-packages.enable = true;
 
+      dunst.enable = true;
       foot.enable = true;
       rofi.enable = true;
 
@@ -214,13 +215,19 @@ in {
       };
     };
 
-    my.programs = {
-      dunst = {
-        enable = true;
-
-        config = "${fs.dunst}/dunstrc";
+    services = {
+      dunst.enable = true;
+      dunst.settings = {
+        global = {
+          offset = "(4, 4)";
+          frame_width = 2;
+          gap_size = 4;
+          corner_radius = 4;
+        };
       };
+    };
 
+    my.programs = {
       swayidle = {
         enable = true;
 
