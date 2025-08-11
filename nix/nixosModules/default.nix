@@ -4,7 +4,10 @@
   ...
 }:
 let
-  inherit (inputs) home-manager;
+  inherit (inputs)
+    home-manager
+    stylix
+    ;
 
   inherit (self) lib;
 in {
@@ -25,6 +28,8 @@ in {
       useUserPackages = true;
 
       sharedModules = [
+        stylix.homeModules.stylix
+
         (lib.mkModules ../../modules/home-manager {})
       ];
     };

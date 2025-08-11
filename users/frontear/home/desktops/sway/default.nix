@@ -11,6 +11,62 @@ let
   };
 in {
   config = lib.mkIf cfg.enable {
+    stylix = {
+      enable = true;
+
+      base16Scheme = ./base16.yaml;
+
+      cursor = {
+        name = "Bibata-Modern-Classic";
+        package = pkgs.bibata-cursors;
+
+        size = 16;
+      };
+
+      fonts = {
+        emoji = {
+          name = "Noto Color Emoji";
+          package = pkgs.noto-fonts-emoji;
+        };
+
+        monospace = {
+          name = "Noto Sans Mono";
+          package = pkgs.noto-fonts;
+        };
+
+        sansSerif = {
+          name = "Noto Sans";
+          package = pkgs.noto-fonts;
+        };
+
+        serif = {
+          name = "Noto Serif";
+          package = pkgs.noto-fonts;
+        };
+      };
+
+      icons = {
+        enable = true;
+        package = pkgs.papirus-icon-theme;
+
+        dark = "Papirus-Dark";
+        light = "Papirus-Light";
+      };
+
+      image = ./fs/sway/backgrounds/bg_dark.jpg;
+      imageScalingMode = "fit";
+
+      polarity = "dark";
+    };
+
+    stylix.targets = {
+      fontconfig.enable = true;
+      font-packages.enable = true;
+
+      gtk.enable = true;
+      qt.enable = true;
+    };
+
     my.desktops.sway.config = "${fs.sway}/config";
 
     my.programs = {
@@ -54,20 +110,9 @@ in {
     };
 
 
-    fonts.fontconfig = {
-      enable = true;
-
-      defaultFonts = {
-        emoji = lib.singleton "Noto Color Emoji";
-        monospace = lib.singleton "Noto Sans Mono";
-        serif = lib.singleton "Noto Serif";
-        sansSerif = lib.singleton "Noto Sans";
-      };
-    };
+    fonts.fontconfig.enable = true;
 
     home.packages = with pkgs; [
-      noto-fonts
-      noto-fonts-emoji
       nerd-fonts.symbols-only
 
       perlPackages.Apppapersway
@@ -86,66 +131,6 @@ in {
       legcord.enable = true;
 
       thunar.enable = true;
-    };
-
-
-    home.pointerCursor = {
-      enable = true;
-      package = pkgs.bibata-cursors;
-
-      name = "Bibata-Modern-Classic";
-      size = 16;
-
-      gtk.enable = true;
-    };
-
-    dconf.settings = {
-      "org/gnome/desktop/interface" = {
-        color-scheme = "prefer-dark";
-      };
-    };
-
-    gtk = {
-      enable = true;
-
-      gtk2.extraConfig = ''
-        gtk-application-prefer-dark-theme = 1
-      '';
-
-      gtk3.extraConfig = {
-        gtk-application-prefer-dark-theme = 1;
-      };
-
-      gtk4.extraConfig = {
-        gtk-application-prefer-dark-theme = 1;
-      };
-
-      font = {
-        name = "Noto Sans";
-        package = pkgs.noto-fonts;
-      };
-
-      iconTheme = {
-        name = "Papirus-Dark";
-        package = pkgs.papirus-icon-theme;
-      };
-
-      theme = {
-        name = "Adwaita-dark";
-        package = pkgs.gnome-themes-extra;
-      };
-    };
-
-    qt = {
-      enable = true;
-
-      style = {
-        name = "adwaita-dark";
-        package = with pkgs; [
-          adwaita-qt
-          adwaita-qt6
-        ];
-      };
     };
 
 
