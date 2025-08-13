@@ -1,0 +1,29 @@
+name: Benchmark Evaluation Speed
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - staging
+
+jobs:
+  benchmark:
+    name: Benchmark NixOS Configuration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v30
+        with:
+          extra_nix_config: |
+            allow-import-from-derivation = false
+            eval-cache = false
+            experimental-features = flakes nix-command
+            extra-experimental-features = pipe-operators
+
+      - name: Benchmark LAPTOP-3DT4F02
+        run: |
+          nix build .#nix-benchmark &> /dev/null # only see benchmark output
+          sudo ./result/bin/nix-benchmark --flake '.#nixosConfigurations.LAPTOP-3DT4F02.config.system.build.toplevel'
