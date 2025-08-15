@@ -7,8 +7,7 @@
 {
   imports = [
     ./desktops
-    ./neovim
-    #./vscode
+    ./programs
   ];
 
   home.stateVersion = "24.11";
