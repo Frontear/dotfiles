@@ -20,12 +20,6 @@ in {
     my.desktops.sway.config = "${fs.sway}/config";
 
     my.programs = {
-      swayidle = {
-        enable = true;
-
-        config = "${fs.swayidle}/config";
-      };
-
       swayosd = {
         enable = true;
 

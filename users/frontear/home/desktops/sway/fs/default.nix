@@ -10,8 +10,6 @@ in {
   };
 
 
-  swayidle = callPackage ./swayidle {};
-
   swayosd = callPackage ./swayosd {};
 
   waybar = callPackage ./waybar {};

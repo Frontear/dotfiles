@@ -5,5 +5,6 @@
   imports = [
     ./foot
     ./rofi
+    ./swaylock
   ];
 }
