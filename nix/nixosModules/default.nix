@@ -29,6 +29,7 @@ in {
 
       sharedModules = [
         stylix.homeModules.stylix
+        { config.stylix.autoEnable = false; }
 
         (lib.mkModules ../../modules/home-manager {})
       ];
