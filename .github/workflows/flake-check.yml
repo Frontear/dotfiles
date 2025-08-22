@@ -7,8 +7,8 @@ on:
       - staging
 
 jobs:
-  test:
-    name: Test
+  check:
+    name: Check Evaluation + Building
     runs-on: ubuntu-latest
     steps:
       - name: Free Disk Space
