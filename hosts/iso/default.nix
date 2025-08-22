@@ -1,5 +1,4 @@
 {
-  lib,
   ...
 }:
 {
@@ -10,7 +9,7 @@
 
   config = {
     isoImage = {
-      isoBaseName = lib.mkForce "frontear-nixos";
+      edition = "frontear";
       squashfsCompression = "lz4";
     };
   };
