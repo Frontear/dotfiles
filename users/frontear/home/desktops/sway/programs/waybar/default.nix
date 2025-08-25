@@ -6,6 +6,8 @@
 }:
 let
   cfg = config.my.desktops.sway;
+
+  icon_path = "${config.gtk.iconTheme.package}/share/icons/${config.gtk.iconTheme.name}/24x24";
 in {
   config = lib.mkIf cfg.enable {
     programs.waybar = {
@@ -100,19 +102,21 @@ in {
 
           # TODO: move these into their own respective modules.
           modules-center = [
-            "custom/icon#browser"
-            "custom/icon#file_manager"
+            "image#browser"
+            "image#file_manager"
           ];
 
 
-          "custom/icon#browser" = {
-            format = "󰇩";
+          "image#browser" = {
+            path = "${icon_path}/apps/com.microsoft.Edge.svg";
+            size = 28;
             on-click = "uwsm app microsoft-edge";
             tooltip = false;
           };
 
-          "custom/icon#file_manager" = {
-            format = "󰉋";
+          "image#file_manager" = {
+            path = "${icon_path}/apps/org.xfce.thunar.svg";
+            size = 28;
             on-click = "uwsm app thunar";
             tooltip = false;
           };

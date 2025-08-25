@@ -51,8 +51,8 @@ window#waybar {
   @include fontStyle("Symbols Nerd Font", 1.1rem);
 }
 
-#custom-icon {
-  @include fontStyle("Symbols Nerd Font", 1.925rem);
+#image {
+  min-width: (1.925rem / 2) * 3;
 
   &:hover {
     background-color: rgba(white, 0.1);
