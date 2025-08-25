@@ -6,5 +6,6 @@
     ./foot
     ./rofi
     ./swaylock
+    ./waybar
   ];
 }

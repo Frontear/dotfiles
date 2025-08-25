@@ -25,13 +25,6 @@ in {
 
         style = "${fs.swayosd}/style.css";
       };
-
-      waybar = {
-        enable = true;
-
-        config = "${fs.waybar}/config.jsonc";
-        style = "${fs.waybar}/style.css";
-      };
     };
 
 

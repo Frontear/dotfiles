@@ -11,6 +11,4 @@ in {
 
 
   swayosd = callPackage ./swayosd {};
-
-  waybar = callPackage ./waybar {};
 }
