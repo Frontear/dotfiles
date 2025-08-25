@@ -11,9 +11,8 @@ in {
     programs.waybar = {
       enable = true;
 
-      settings = [
-        {
-          name = "top";
+      settings = {
+        top = {
           layer = "top";
           position = "top";
           margin = "4 4 0 4";
@@ -90,16 +89,17 @@ in {
               discharging = [ "󱃍" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
             };
           };
-        }
-        {
-          name = "bottom";
+        };
+
+        bottom = {
           layer = "top";
           position = "bottom";
           margin = "0 4 4 4";
           spacing = 0;
           mode = "dock";
 
-          modules-center =[
+          # TODO: move these into their own respective modules.
+          modules-center = [
             "custom/icon#browser"
             "custom/icon#file_manager"
           ];
@@ -116,8 +116,8 @@ in {
             on-click = "uwsm app thunar";
             tooltip = false;
           };
-        }
-      ];
+        };
+      };
 
       style = pkgs.callPackage ./style {};
     };
