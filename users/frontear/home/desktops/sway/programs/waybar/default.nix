@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
@@ -9,6 +8,10 @@ let
 
   icon_path = "${config.gtk.iconTheme.package}/share/icons/${config.gtk.iconTheme.name}/24x24";
 in {
+  imports = [
+    ./style.nix
+  ];
+
   config = lib.mkIf cfg.enable {
     programs.waybar = {
       enable = true;
@@ -122,8 +125,6 @@ in {
           };
         };
       };
-
-      style = pkgs.callPackage ./style {};
     };
   };
 }
