@@ -5,8 +5,6 @@
 }:
 let
   cfg = config.my.desktops.sway;
-
-  icon_path = "${config.gtk.iconTheme.package}/share/icons/${config.gtk.iconTheme.name}/24x24";
 in {
   imports = [
     ./style.nix
@@ -102,27 +100,6 @@ in {
           margin = "0 4 4 4";
           spacing = 0;
           mode = "dock";
-
-          # TODO: move these into their own respective modules.
-          modules-center = [
-            "image#browser"
-            "image#file_manager"
-          ];
-
-
-          "image#browser" = {
-            path = "${icon_path}/apps/com.microsoft.Edge.svg";
-            size = 28;
-            on-click = "uwsm app microsoft-edge";
-            tooltip = false;
-          };
-
-          "image#file_manager" = {
-            path = "${icon_path}/apps/org.xfce.thunar.svg";
-            size = 28;
-            on-click = "uwsm app thunar";
-            tooltip = false;
-          };
         };
       };
     };

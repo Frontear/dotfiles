@@ -16,7 +16,7 @@ in {
 
     programs.waybar = {
       settings.bottom = {
-        modules-center = lib.mkAfter [
+        modules-center = lib.mkOrder 3 [
           "image#process_monitor"
         ];
 
@@ -24,7 +24,7 @@ in {
         "image#process_monitor" = {
           path = "${icon}";
           size = 28;
-          on-click = "uwsm app missioncenter";
+          on-click = "uwsm app io.missioncenter.MissionCenter.desktop";
           tooltip = false;
         };
       };

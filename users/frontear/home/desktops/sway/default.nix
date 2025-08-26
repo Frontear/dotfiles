@@ -39,25 +39,9 @@ in {
 
 
     my.programs = {
-      chromium = {
-        enable = true;
-        package = pkgs.microsoft-edge;
-      };
-
       element.enable = true;
 
       legcord.enable = true;
-
-      thunar.enable = true;
-    };
-
-
-    xdg.mimeApps = {
-      enable = true;
-
-      defaultApplications = {
-        "application/pdf" = [ "microsoft-edge.desktop" ];
-      };
     };
   };
 }
