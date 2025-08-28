@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -100,6 +101,8 @@ in {
           margin = "0 4 4 4";
           spacing = 0;
           mode = "dock";
+
+          modules-center = lib.mkOrder 0 [];
         };
       };
     };

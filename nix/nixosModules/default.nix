@@ -11,7 +11,7 @@ let
 
   inherit (self) lib;
 in {
-  flake.nixosModules.default = {
+  flake.nixosModules.default = { pkgs, ... }: {
     imports = [
       home-manager.nixosModules.default
 
@@ -24,6 +24,10 @@ in {
     ];
 
     config.home-manager = {
+      extraSpecialArgs = {
+        self = lib.stripSystem pkgs.system self;
+      };
+
       useGlobalPkgs = true;
       useUserPackages = true;
 

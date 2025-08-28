@@ -52,11 +52,11 @@ in {
       }
 
 
-      #image {
+      #icon {
         min-width: ${toString ((1.925 / 2) * 3)}rem;
       }
 
-      #image:hover {
+      #icon:hover {
         background-color: alpha(${fg}, 0.1);
         border-radius: 1.25rem;
       }

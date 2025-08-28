@@ -1,4 +1,5 @@
 {
+  self,
   config,
   lib,
   pkgs,
@@ -6,8 +7,6 @@
 }:
 let
   cfg = config.my.desktops.sway;
-
-  icon = "${config.gtk.iconTheme.package}/share/icons/${config.gtk.iconTheme.name}/24x24/apps/com.microsoft.Edge.svg";
 in {
   config = lib.mkIf cfg.enable {
     my.programs.chromium = {
@@ -18,12 +17,13 @@ in {
     programs.waybar = {
       settings.bottom = {
         modules-center = lib.mkOrder 1 [
-          "image#browser"
+          "cffi/browser"
         ];
 
-        "image#browser" = {
-          path = "${icon}";
-          size = 28;
+        "cffi/browser" = {
+          module_path = self.packages.waybar-icon.lib;
+
+          icon-name = "com.microsoft.Edge";
           on-click = "uwsm app com.microsoft.Edge.desktop";
           tooltip = false;
         };

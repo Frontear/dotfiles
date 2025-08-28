@@ -1,12 +1,11 @@
 {
+  self,
   config,
   lib,
   ...
 }:
 let
   cfg = config.my.desktops.sway;
-
-  icon = "${config.gtk.iconTheme.package}/share/icons/${config.gtk.iconTheme.name}/24x24/apps/org.xfce.thunar.svg";
 in {
   config = lib.mkIf cfg.enable {
     my.programs = {
@@ -16,12 +15,13 @@ in {
     programs.waybar = {
       settings.bottom = {
         modules-center = lib.mkOrder 2 [
-          "image#file_manager"
+          "cffi/file_manager"
         ];
 
-        "image#file_manager" = {
-          path = "${icon}";
-          size = 28;
+        "cffi/file_manager" = {
+          module_path = self.packages.waybar-icon.lib;
+
+          icon-name = "org.xfce.thunar";
           on-click = "uwsm app thunar.desktop";
           tooltip = false;
         };

@@ -29,7 +29,7 @@
       name = hostName;
       value = final.nixosSystem {
         specialArgs = {
-          # self = flake.stripSystem system self;
+          self = final.stripSystem system self;
         } // (if extraArgs ? specialArgs then extraArgs.specialArgs else {});
                                                                                       
         modules = [
