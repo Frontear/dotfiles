@@ -5,8 +5,6 @@
 }:
 {
   flake = {
-    lib = inputs.nixpkgs.lib.extend (final: prev:
-      import ../../lib { inherit final prev self; }
-    );
+    lib = inputs.nixpkgs.lib.extend (import ../../lib { inherit self; });
   };
 }

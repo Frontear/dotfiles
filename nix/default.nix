@@ -8,6 +8,7 @@
     ./lib
     ./nixosConfigurations
     ./nixosModules
+    ./overlays
     ./packages
     ./templates
   ];

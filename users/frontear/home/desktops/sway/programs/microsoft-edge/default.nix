@@ -1,5 +1,4 @@
 {
-  self,
   config,
   lib,
   pkgs,
@@ -21,7 +20,7 @@ in {
         ];
 
         "cffi/browser" = {
-          module_path = self.packages.waybar-icon.lib;
+          module_path = pkgs.waybar-icon.lib;
 
           icon-name = "com.microsoft.Edge";
           on-click = "uwsm app com.microsoft.Edge.desktop";

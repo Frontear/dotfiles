@@ -1,7 +1,7 @@
 {
-  self,
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -19,7 +19,7 @@ in {
         ];
 
         "cffi/file_manager" = {
-          module_path = self.packages.waybar-icon.lib;
+          module_path = pkgs.waybar-icon.lib;
 
           icon-name = "org.xfce.thunar";
           on-click = "uwsm app thunar.desktop";

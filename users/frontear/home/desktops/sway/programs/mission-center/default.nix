@@ -1,5 +1,4 @@
 {
-  self,
   config,
   lib,
   pkgs,
@@ -21,7 +20,7 @@ in {
 
 
         "cffi/process_monitor" = {
-          module_path = self.packages.waybar-icon.lib;
+          module_path = pkgs.waybar-icon.lib;
 
           icon-name = "io.missioncenter.MissionCenter";
           on-click = "uwsm app io.missioncenter.MissionCenter.desktop";
