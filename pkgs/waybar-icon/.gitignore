@@ -1,6 +1,8 @@
 .direnv/
 .envrc
 
+flake.lock
+
 target/
 
 result
