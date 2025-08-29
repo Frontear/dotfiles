@@ -24,6 +24,13 @@ in {
       ];
     }
     {
+      # Disable power saving to resolve issues with the connection dropping
+      # or being extremely slow, which hurts usability of the system.
+      #
+      # Using `lib.mkDefault` to allow overriding for hosts that _really_
+      # need the power savings.
+      networking.networkmanager.wifi.powersave = lib.mkDefault false;
+
       # Disable ModemManager, as I don't have any use for it.
       networking.modemmanager.enable = lib.mkForce false;
     }
