@@ -9,10 +9,12 @@ stdenvNoCC.mkDerivation {
   pname = "persist-helper";
   version = "0.1.1";
 
-  src = with lib.fileset; toSource {
-    root = ./.;
-    fileset = unions [
-      ./persist-helper.sh
+  src = ./src;
+
+  env = {
+    path = lib.makeBinPath [
+      coreutils
+      util-linux
     ];
   };
 
@@ -26,10 +28,12 @@ stdenvNoCC.mkDerivation {
 
   postInstall = ''
     substituteInPlace $out/bin/persist-helper \
-      --subst-var-by path ${lib.makeBinPath [ coreutils util-linux ]}
+      --subst-var path
   '';
 
   meta = with lib; {
+    description = "Helper script to safely configure an ephemeral root setup";
+
     license = licenses.agpl3Plus;
     maintainers = with maintainers; [ frontear ];
     platforms = platforms.linux;
