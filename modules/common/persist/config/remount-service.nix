@@ -52,5 +52,26 @@ in {
         requiredBy = [ "local-fs-pre.target" ];
       };
     }) cfg.toplevel);
+
+    # Create a persistent mount unit to safely overtake the transient one after
+    # remounting from the above service. This will prevent systemd from trying
+    # to unmount the mount during the shutdown phase, delaying it's unmount
+    # into the exitrd, where root `/` is brought down.
+    #
+    # This unit does not conflict with the transient unit produced by the call
+    # to `mount` from the initrd service. It permanently remains inactive until
+    # after the remount service fires, upon which systemd will recognize the
+    # unit, and activate it. This disables the default dependencies of a mount
+    # unit, which is a safe operation to do as we strictly control the lifetime
+    # of our mounts, from the initrd and until the shutdown. Doing this will
+    # intertwine the lifetime of our persist mounts with our root `/`.
+    systemd.mounts = map (path: {
+      unitConfig = {
+        DefaultDependencies = "no";
+      };
+
+      what = "${path.src}";
+      where = "${path.dst}";
+    }) cfg.toplevel;
   };
 }
