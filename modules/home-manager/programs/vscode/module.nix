@@ -41,8 +41,6 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    my.toplevel.cachix = [ cfg.package ];
-
     home.packages = [ cfg.package ];
 
     xdg.configFile."Code/User/settings.json".source = formats-json.generate "settings-json" cfg.config;

@@ -17,11 +17,6 @@ let
   };
 in {
   config = lib.mkIf cfg.enable {
-    my.toplevel.cachix = [
-      nix-direnv'
-    ];
-
-
     programs.direnv = {
       inherit (cfg)
         enable

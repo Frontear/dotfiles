@@ -16,10 +16,6 @@ let
 in {
   config = lib.mkIf cfg.enable (lib.mkMerge [
     {
-      # Cache our nix wrapper via cachix. This isn't strictly necessary
-      # since the build is extremely small and fast, but why not.
-      my.toplevel.cachix = [ config.nix.package ];
-
       # Instruct the daemon to use `/var/tmp` as the TMPDIR instead of `/tmp`.
       # This is because `/tmp` can be a tmpfs (and honestly should). `/var/tmp`
       # is designed to contain persistent, yet temporary files, a definition
@@ -94,11 +90,6 @@ in {
       # see: https://nix.dev/manual/nix/development/command-ref/conf-file.html
       nix.settings = lib.mkMerge [
         {
-          # Leverage my custom substituters, courtesy of Cachix.
-          substituters = lib.singleton "https://frontear.cachix.org";
-          trusted-public-keys = lib.singleton "frontear.cachix.org-1:rrVt1C9dFaJf9QpG1Vu6sHqEUy0Q8ezLCCaxz7oZPOM=";
-        }
-        {
           allow-import-from-derivation = false;
           auto-optimise-store = true;
 
@@ -133,7 +124,6 @@ in {
           min-free = 10 * 1024 * 1024 * 1024;
 
           preallocate-contents = false; # Unnecessary on modern I/O
-          # TODO: force a cachix upload after each build?
           # post-build-hook = "";
           print-missing = false; # I don't really need to see this.
 

@@ -64,8 +64,6 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    my.toplevel.cachix = [ cfg.package ];
-
     my.persist.directories = [
       "~/.local/state/nvim"
     ];
