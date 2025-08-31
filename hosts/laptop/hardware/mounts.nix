@@ -39,6 +39,5 @@
     };
 
     my.mounts.swap.enableZram = true;
-    my.mounts.tmp.enableTmpfs = true;
   };
 }
