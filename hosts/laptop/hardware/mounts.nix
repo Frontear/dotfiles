@@ -3,12 +3,15 @@
 }:
 {
   config = {
-    my.boot.systemd-boot.enable = true;
+    boot.loader.efi.canTouchEfiVariables = true;
+    boot.loader.systemd-boot.enable = true;
+
     fileSystems."/boot" = {
       device = "/dev/disk/by-partlabel/boot";
       fsType = "vfat";
       options = [ "noatime" "fmask=0022" "dmask=0022" ];
     };
+
 
     my.persist.enable = true;
     fileSystems = {
