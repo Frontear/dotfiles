@@ -68,6 +68,11 @@ in {
     systemd.mounts = map (path: {
       unitConfig = {
         DefaultDependencies = "no";
+
+        ConditionPathExists = [
+          "${path.dst}"
+          "${path.src}"
+        ];
       };
 
       what = "${path.src}";
