@@ -8,6 +8,7 @@
       inherit (self'.packages)
         nix-benchmark
         nixos-clean
+        nixos-rollback
         ;
     };
   };
