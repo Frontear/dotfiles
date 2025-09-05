@@ -16,15 +16,15 @@ stdenvNoCC.mkDerivation {
 
   env = {
     nixBins = lib.escapeShellArgs (map lib.getExe [
-      nixVersions.nix_2_24
       nixVersions.nix_2_28
       nixVersions.nix_2_29
       nixVersions.nix_2_30
+      nixVersions.nix_2_31
       nixVersions.git
       lixPackageSets.lix_2_91.lix
       lixPackageSets.lix_2_92.lix
       lixPackageSets.lix_2_93.lix
-      #lixPackageSets.git.lix
+      lixPackageSets.git.lix
     ]);
 
     path = lib.makeBinPath [
