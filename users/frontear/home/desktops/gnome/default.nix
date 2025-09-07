@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
@@ -9,10 +8,7 @@ let
 in {
   config = lib.mkIf cfg.enable {
     my.programs = {
-      chromium = {
-        enable = true;
-        package = pkgs.google-chrome;
-      };
+      microsoft-edge.enable = true;
 
       libreoffice.enable = true;
     };

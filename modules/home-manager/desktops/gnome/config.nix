@@ -16,9 +16,18 @@ in {
 
     # TODO: determine what actually needs to be kept and what doesn't
     my.persist.directories = [
-      "~/.cache"
-      "~/.config"
-      "~/.local"
+      {
+        path = "~/.cache";
+        unique = true;
+      }
+      {
+        path = "~/.config";
+        unique = true;
+      }
+      {
+        path = "~/.local";
+        unique = true;
+      }
     ];
   };
 }

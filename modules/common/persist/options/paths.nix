@@ -3,10 +3,10 @@
   ...
 }:
 let
-  pathSubmodule = {
+  pathSubmodule = coercedType: coercedFunc: {
     options = {
       path = lib.mkOption {
-        type = with lib.types; path;
+        type = with lib.types; coercedTo coercedType coercedFunc path;
       };
 
       unique = lib.mkOption {
@@ -17,18 +17,19 @@ let
     };
   };
 
-  mkOption' = { coercedType, coercedFunc, } :
+  mkOption' = { coercedType, coercedFunc, }:
     lib.genAttrs [ "directories" "files" ] (_: lib.mkOption {
       default = [];
 
-      type = with lib.types; listOf (coercedTo coercedType
-        coercedFunc (submodule pathSubmodule));
+      type = with lib.types; listOf (coercedTo coercedType (path: {
+        inherit path;
+      }) (submodule (pathSubmodule coercedType coercedFunc)));
     });
 in {
   options = {
     my.persist = mkOption' {
       coercedType = with lib.types; systemPath;
-      coercedFunc = path: { inherit path; };
+      coercedFunc = lib.id;
     };
   };
 
@@ -37,10 +38,7 @@ in {
       options = {
         my.persist = mkOption' {
           coercedType = with lib.types; userPath;
-          coercedFunc = path: {
-            path =
-              lib.replaceStrings [ "~" ] [ config.home.homeDirectory ] path;
-          };
+          coercedFunc = lib.replaceStrings [ "~" ] [ config.home.homeDirectory ];
         };
       };
     })];

@@ -1,8 +1,8 @@
 {
-  chromium,
+  microsoft-edge,
 
   commandLineArgs ? "",
 }:
-chromium.override {
+microsoft-edge.override {
   inherit commandLineArgs;
 }

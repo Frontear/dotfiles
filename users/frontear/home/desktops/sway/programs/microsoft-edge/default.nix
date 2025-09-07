@@ -8,10 +8,7 @@ let
   cfg = config.my.desktops.sway;
 in {
   config = lib.mkIf cfg.enable {
-    my.programs.chromium = {
-      enable = true;
-      package = pkgs.microsoft-edge;
-    };
+    my.programs.microsoft-edge.enable = true;
 
     programs.waybar = {
       settings.bottom = {

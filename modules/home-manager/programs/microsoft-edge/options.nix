@@ -6,11 +6,13 @@
 }:
 {
   options = {
-    my.programs.chromium = {
-      enable = lib.mkEnableOption "chromium";
+    my.programs.microsoft-edge = {
+      enable = lib.mkEnableOption "microsoft-edge";
       package = lib.mkOption {
+        default = pkgs.microsoft-edge;
+
         apply = pkg: pkgs.callPackage ./package.nix {
-          chromium = pkg;
+          microsoft-edge = pkg;
 
           commandLineArgs =
             "--user-data-dir=${config.xdg.configHome}/${lib.getName pkg}";
