@@ -17,7 +17,11 @@ in {
     # to persist on a standard system.
     my.persist = {
       directories = [
-        "/var/lib" # contains persistent information about system state for services
+        {
+          # contains persistent information about system state for services
+          path = "/var/lib";
+          unique = true;
+        }
         {
           # logging.. fairly straightforward, you'd always want this.
           path = "/var/log";
