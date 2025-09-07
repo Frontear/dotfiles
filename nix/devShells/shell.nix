@@ -1,16 +1,8 @@
 {
   mkShellNoCC,
 
-  introduce-bin,
-  nix-benchmark,
-  nixos-clean,
-  nixos-rollback,
+  packages ? [],
 }:
 mkShellNoCC {
-  packages = [
-    introduce-bin
-    nix-benchmark
-    nixos-clean
-    nixos-rollback
-  ];
+  inherit packages;
 }

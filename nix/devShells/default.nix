@@ -1,15 +1,17 @@
 {
+  lib,
   ...
 }:
 {
   perSystem = { self', pkgs, ... }: {
     devShells.default = pkgs.callPackage ./shell.nix {
-      introduce-bin = pkgs.callPackage ./bin {};
-      inherit (self'.packages)
-        nix-benchmark
-        nixos-clean
-        nixos-rollback
-        ;
+      packages =
+        self'.packages
+        |> lib.attrVals [
+          "nix-benchmark"
+          "nixos-clean"
+          "nixos-rollback"
+        ];
     };
   };
 }
