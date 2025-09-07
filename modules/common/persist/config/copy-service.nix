@@ -9,41 +9,40 @@ let
   cfg = config.my.persist;
 in {
   config = lib.mkIf cfg.enable {
-    # Perform a possibly mostly safe copy of file contents as they are
-    # found during the shutdown phase of the system.
+    # Perform a late copy of contents into the persist as a one-off service.
+    # This service attempts to orient itself after most compliant services are
+    # shutdown (via `shutdown.target`), to ensure that copying can capture as
+    # much as possible. For non-compliant services, this will possibly lose
+    # some data, but it will be able to synchronise permissions, since that
+    # is an extremely fast operation.
     #
-    # There is no truly safe way to perform this without losing some minimal
-    # amount of data during the copy, especially for services that refuse to
-    # let their fd's go. We cannot reasonably do anything at this stage, so
-    # we instead opt to perform a one-off copy to obtain the initial set of
-    # files from whatever we wanted to persist.
-    #
-    # The expectation here is that this directory won't be too big given the
-    # root is mostly expected to be a tmpfs, and even if the files are big
-    # and the copy takes a long time, we can justify it by remembering that
-    # this copy won't happen again. It's a one-off service to obtain the bare
-    # minimum level of directories (mostly for the permissions) so that a
-    # reasonable directory tree is produced in the persistent location.
+    # The primary purpose of this service is to create a base-line directory
+    # structure in the persistent volume with permissions copied over. This is
+    # then used in the next boot to correctly synchronise permissions and create
+    # the bind mounts. Copying data is a secondary objective to salvage as much
+    # as possible for the next boot.
     systemd.services = lib.listToAttrs (map (path: {
       name = "persist-copy-${utils.escapeSystemdPath path.dst}";
       value = {
         unitConfig = {
           DefaultDependencies = "no";
 
+          After = "shutdown.target";
           Before = "final.target";
+
+          RequiresMountsFor = "${path.src}";
 
           ConditionPathExists = [
             "${path.dst}"
             "!${path.src}"
           ];
-
-          RequiresMountsFor = [ "${cfg.volume}" ];
         };
 
         serviceConfig = {
           Type = "oneshot";
+
           ExecStart = "${lib.getExe pkgs.frontear.persist-helper} 'copy'"
-            + " '/' '${cfg.volume}' '${path.dst}'";
+            + " '/' '${lib.removeSuffix path.dst path.src}' '${path.dst}'";
         };
 
         requiredBy = [ "final.target" ];

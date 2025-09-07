@@ -107,9 +107,6 @@ case "$operation" in
       logVerbose "$logEntry"
       runVerbose mkdir "$targetPath"
     fi
-
-    logVerbose "mounting from '$sourcePath' to '$targetPath'"
-    runVerbose mount --bind "$sourcePath" "$targetPath"
     ;;
   "copy")
     logVerbose "copying from '$sourcePath' to '$targetPath'"
