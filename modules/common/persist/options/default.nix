@@ -13,7 +13,7 @@
       enable = lib.mkEnableOption "persist";
 
       volume = lib.mkOption {
-        default = "/nix/persist-ng";
+        default = "/nix/persist";
 
         type = with lib.types; path;
       };
