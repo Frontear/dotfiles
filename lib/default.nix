@@ -12,6 +12,7 @@ let
     flakes = callLib ./flakes.nix;
 
     options = callLib ./options.nix // prev.options;
+    path = callLib ./path.nix // prev.path;
     types = callLib ./types.nix // prev.types;
 
 

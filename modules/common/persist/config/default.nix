@@ -18,13 +18,21 @@ in {
     my.persist = {
       directories = [
         "/var/lib" # contains persistent information about system state for services
-        "/var/log" # logging.. fairly straightforward, you'd always want this.
+        {
+          # logging.. fairly straightforward, you'd always want this.
+          path = "/var/log";
+          unique = true;
+        }
       ] ++ lib.optionals config.security.sudo.enable [
         "/var/db/sudo/lectured" # preferential.
       ];
 
       files = [
-        "/etc/machine-id" # systemd uses this to match up system-specific data.
+        {
+          # systemd uses this to match up system-specific data.
+          path = "/etc/machine-id";
+          unique = true;
+        }
       ];
     };
 
