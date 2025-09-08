@@ -10,7 +10,7 @@ in {
     my.persist.directories = [
       {
         path = "~/.config/${lib.getName cfg.package}";
-        unique = true;
+        unique = false;
       }
       {
         path = "~/.cache/${lib.getName cfg.package}";
