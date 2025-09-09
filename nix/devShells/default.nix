@@ -3,6 +3,10 @@
   ...
 }:
 {
+  imports = [
+    ./per-package.nix
+  ];
+
   perSystem = { self', pkgs, ... }: {
     devShells.default = pkgs.callPackage ./shell.nix {
       packages =

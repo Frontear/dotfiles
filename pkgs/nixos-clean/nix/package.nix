@@ -11,7 +11,18 @@ stdenvNoCC.mkDerivation {
   pname = "nixos-clean";
   version = "0.1.0";
 
-  src = ./src;
+  src = with lib.fileset; toSource {
+    root = ../.;
+    fileset = unions [
+      ../src
+    ];
+  };
+
+  env = {
+    path = lib.makeBinPath [
+      coreutils
+    ];
+  };
 
   nativeBuildInputs = [
     installShellFiles
@@ -19,13 +30,13 @@ stdenvNoCC.mkDerivation {
   ];
 
   buildPhase = ''
-    pandoc nixos-clean.1.md -f markdown -t man -s -o nixos-clean.1
+    pandoc src/nixos-clean.1.md -f markdown -t man -s -o nixos-clean.1
   '';
 
   installPhase = ''
     runHook preInstall
 
-    install -Dm755 nixos-clean.sh $out/bin/nixos-clean
+    install -Dm755 src/nixos-clean.sh $out/bin/nixos-clean
 
     installManPage nixos-clean.1
 
@@ -34,7 +45,7 @@ stdenvNoCC.mkDerivation {
 
   postInstall = ''
     substituteInPlace $out/bin/nixos-clean \
-      --subst-var-by path ${lib.makeBinPath [ coreutils ]}
+      --subst-var path
   '';
 
   meta = with lib; {

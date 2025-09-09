@@ -12,7 +12,12 @@ stdenvNoCC.mkDerivation {
   pname = "nix-benchmark";
   version = "0.1.0";
 
-  src = ./src;
+  src = with lib.fileset; toSource {
+    root = ../.;
+    fileset = unions [
+      ../src
+    ];
+  };
 
   env = {
     nixBins = lib.escapeShellArgs (map lib.getExe [
@@ -36,7 +41,7 @@ stdenvNoCC.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    install -Dm755 nix-benchmark.sh $out/bin/nix-benchmark
+    install -Dm755 src/nix-benchmark.sh $out/bin/nix-benchmark
 
     runHook postInstall
   '';

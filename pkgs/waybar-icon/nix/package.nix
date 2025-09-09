@@ -11,16 +11,16 @@
   gtk3,
   pango,
 }:
-rustPlatform.buildRustPackage (finalAttrs: {
+rustPlatform.buildRustPackage {
   pname = "waybar-icon";
   version = "0.1.0";
 
   src = with lib.fileset; toSource {
-    root = ../..;
+    root = ../.;
     fileset = unions [
-      ../../src
-      ../../Cargo.lock
-      ../../Cargo.toml
+      ../src
+      ../Cargo.lock
+      ../Cargo.toml
     ];
   };
 
@@ -29,7 +29,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
     "lib" # Convenience output
   ];
 
-  cargoLock.lockFile = ../../Cargo.lock;
+  cargoLock.lockFile = ../Cargo.lock;
 
   nativeBuildInputs = [
     pkg-config
@@ -55,4 +55,4 @@ rustPlatform.buildRustPackage (finalAttrs: {
     maintainers = with maintainers; [ frontear ];
     platforms = platforms.linux;
   };
-})
+}

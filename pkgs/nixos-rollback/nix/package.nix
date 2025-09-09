@@ -8,7 +8,12 @@ stdenvNoCC.mkDerivation {
   pname = "nixos-rollback";
   version = "0.1.0";
 
-  src = ./src;
+  src = with lib.fileset; toSource {
+    root = ../.;
+    fileset = unions [
+      ../src
+    ];
+  };
 
   env = {
     path = lib.makeBinPath [
@@ -19,7 +24,7 @@ stdenvNoCC.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    install -Dm755 nixos-rollback.sh $out/bin/nixos-rollback
+    install -Dm755 src/nixos-rollback.sh $out/bin/nixos-rollback
 
     runHook postInstall
   '';

@@ -9,7 +9,12 @@ stdenvNoCC.mkDerivation {
   pname = "persist-helper";
   version = "0.1.1";
 
-  src = ./src;
+  src = with lib.fileset; toSource {
+    root = ../.;
+    fileset = unions [
+      ../src
+    ];
+  };
 
   env = {
     path = lib.makeBinPath [
@@ -21,7 +26,7 @@ stdenvNoCC.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    install -Dm755 persist-helper.sh $out/bin/persist-helper
+    install -Dm755 src/persist-helper.sh $out/bin/persist-helper
 
     runHook postInstall
   '';

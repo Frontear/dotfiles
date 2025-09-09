@@ -1,6 +1,4 @@
 .direnv/
 .envrc
 
-target/
-
 result

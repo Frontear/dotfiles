@@ -43,12 +43,7 @@ let
 
     mkPackages = (pkgs: directory: builtins.readDir directory
       |> lib.mapAttrs (name: _:
-        # This is the legacy directory structure, only has a package.nix
-        if lib.pathExists "${directory}/${name}/package.nix" then
-          pkgs.callPackage "${directory}/${name}/package.nix" {}
-        # This is the new directory structure, uses a nix flake
-        else
-          pkgs.callPackage "${directory}/${name}/nix/packages/package.nix" {}
+        pkgs.callPackage "${directory}/${name}/nix/package.nix" {}
       )
     );
 
