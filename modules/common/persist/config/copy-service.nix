@@ -41,8 +41,13 @@ in {
         serviceConfig = {
           Type = "oneshot";
 
-          ExecStart = "${lib.getExe pkgs.frontear.persist-helper} 'copy'"
-            + " '/' '${lib.removeSuffix path.dst path.src}' '${path.dst}'";
+          ExecStart = [
+            ("${lib.getExe pkgs.frontear.persist-make}"
+              + " '/' '${lib.removeSuffix path.dst path.src}' '${path.dst}'")
+            ("${lib.getExe' pkgs.coreutils "cp"}"
+              + " '--archive' '${path.dst}' '${path.src}'"
+            )
+          ];
         };
 
         requiredBy = [ "final.target" ];

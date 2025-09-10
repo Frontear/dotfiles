@@ -9,7 +9,7 @@ let
   cfg = config.my.persist;
 in {
   config = lib.mkIf cfg.enable {
-    boot.initrd.systemd.storePaths = [ pkgs.frontear.persist-helper ];
+    boot.initrd.systemd.storePaths = [ pkgs.frontear.persist-make ];
 
     # Create the directory tree needed for the mount to materialise. This will
     # synchronise permissions at each directory, keeping them synced with the
@@ -42,7 +42,7 @@ in {
         serviceConfig = {
           Type = "oneshot";
 
-          ExecStart = "${lib.getExe pkgs.frontear.persist-helper} 'mount'"
+          ExecStart = "${lib.getExe pkgs.frontear.persist-make}"
             + " '${lib.removeSuffix path.dst "/sysroot/${path.src}"}'"
             + " '/sysroot' '${path.dst}'";
         };
