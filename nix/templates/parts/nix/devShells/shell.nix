@@ -3,6 +3,5 @@
 }:
 mkShellNoCC {
   packages = [
-
   ];
 }
