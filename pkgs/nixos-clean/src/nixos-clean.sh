@@ -40,7 +40,7 @@ run() {
   elif [ -n "$verbose" ]; then
     $@
   else
-    local discard=$($@ 2>&1) 
+    local discard=$($@ 2>&1)
   fi
 }
 

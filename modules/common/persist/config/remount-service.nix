@@ -25,7 +25,7 @@ in {
       name = "persist-remount-${utils.escapeSystemdPath path.dst}";
       value = {
         unitConfig = {
-          DefaultDependencies = "no"; 
+          DefaultDependencies = "no";
 
           Before = "local-fs-pre.target";
 

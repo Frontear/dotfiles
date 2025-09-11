@@ -16,7 +16,7 @@
   ncurses,
   pciutils,
   zlib,
- 
+
   xorg,
 }:
 
