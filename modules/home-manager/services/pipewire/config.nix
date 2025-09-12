@@ -14,8 +14,9 @@ in {
     }];
 
 
-    my.persist.directories = [
-      "~/.local/state/wireplumber"
-    ];
+    my.persist.directories = [{
+      path = "~/.local/state/wireplumber";
+      unique = true;
+    }];
   };
 }

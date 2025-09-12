@@ -11,9 +11,10 @@ in {
     {
       # Enable NetworkManager and persist it's directory to preserve
       # connection information across reboots.
-      my.persist.directories = [
-        "/etc/NetworkManager"
-      ];
+      my.persist.directories = [{
+        path = "/etc/NetworkManager";
+        unique = false;
+      }];
 
       networking.networkmanager.enable = true;
     }

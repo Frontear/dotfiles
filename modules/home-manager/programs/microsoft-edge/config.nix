@@ -8,8 +8,14 @@ let
 in {
   config = lib.mkIf cfg.enable {
     my.persist.directories = [
-      "~/.config/${lib.getName cfg.package}"
-      "~/.cache/${lib.getName cfg.package}"
+      {
+        path = "~/.config/${lib.getName cfg.package}";
+        unique = true;
+      }
+      {
+        path = "~/.cache/${lib.getName cfg.package}";
+        unique = true;
+      }
     ];
 
     home.packages = [

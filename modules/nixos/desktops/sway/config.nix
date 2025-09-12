@@ -25,9 +25,10 @@ in {
     };
 
 
-    my.persist.directories = [
-      "/var/cache/tuigreet"
-    ];
+    my.persist.directories = [{
+      path = "/var/cache/tuigreet";
+      unique = true;
+    }];
 
     services.greetd = {
       enable = true;

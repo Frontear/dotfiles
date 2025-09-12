@@ -8,9 +8,10 @@ let
   cfg = config.my.programs.libreoffice;
 in {
   config = lib.mkIf cfg.enable {
-    my.persist.directories = [
-      "~/.config/libreoffice"
-    ];
+    my.persist.directories = [{
+      path = "~/.config/libreoffice";
+      unique = true;
+    }];
 
     fonts.fontconfig.enable = lib.mkDefault true;
 

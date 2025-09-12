@@ -27,9 +27,10 @@ in {
           path = "/var/log";
           unique = true;
         }
-      ] ++ lib.optionals config.security.sudo.enable [
-        "/var/db/sudo/lectured" # preferential.
-      ];
+      ] ++ lib.optionals config.security.sudo.enable [{
+        path = "/var/db/sudo/lectured"; # preferential.
+        unique = false;
+      }];
 
       files = [
         {
