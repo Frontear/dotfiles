@@ -102,9 +102,10 @@ in {
     # is part of. This isn't ideal if the user tries to place
     # the file in an extremely open path (like ~/.history), but
     # there isn't any better handling here.
-    my.persist.directories = [
-      (builtins.dirOf cfg.history.file)
-    ];
+    my.persist.directories = [{
+      path = builtins.dirOf cfg.history.file;
+      unique = false;
+    }];
 
     programs.zsh = lib.mkMerge [
       ({

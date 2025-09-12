@@ -10,19 +10,17 @@ let
       };
 
       unique = lib.mkOption {
-        default = false;
-
         type = with lib.types; bool;
       };
     };
   };
 
-  mkOption' = { coercedType, coercedFunc, }:
+  mkOption' = { coercedType, coercedFunc, unique }:
     lib.genAttrs [ "directories" "files" ] (_: lib.mkOption {
       default = [];
 
       type = with lib.types; listOf (coercedTo coercedType (path: {
-        inherit path;
+        inherit path unique;
       }) (submodule (pathSubmodule coercedType coercedFunc)));
     });
 in {
@@ -30,6 +28,9 @@ in {
     my.persist = mkOption' {
       coercedType = with lib.types; systemPath;
       coercedFunc = lib.id;
+
+      # System state usually wants to be shared
+      unique = false;
     };
   };
 
@@ -39,6 +40,9 @@ in {
         my.persist = mkOption' {
           coercedType = with lib.types; userPath;
           coercedFunc = lib.replaceStrings [ "~" ] [ config.home.homeDirectory ];
+
+          # User state usually wants to be unique
+          unique = true;
         };
       };
     })];

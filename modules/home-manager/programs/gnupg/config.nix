@@ -9,8 +9,14 @@ let
 in {
   config = lib.mkIf cfg.enable {
     my.persist.directories = [
-      config.programs.gpg.homedir
-      "~/.ssh"
+      {
+        path = config.programs.gpg.homedir;
+        unique = false;
+      }
+      {
+        path = "~/.ssh";
+        unique = false;
+      }
     ];
 
 
