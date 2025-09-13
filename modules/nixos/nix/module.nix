@@ -6,7 +6,7 @@
   ...
 }:
 let
-  cfg = config.my.programs.nix;
+  cfg = config.nix;
 
   # thanks lychee :3
   # https://github.com/itslychee/config/blob/69290575cc0829d40b516654e19d6b789edf32d0/modules/nix/settings.nix
@@ -21,11 +21,8 @@ in {
 
       # Set the system Nix package to our custom wrapper, which provides
       # instant access to all `pkgs` and `lib` attributes.
-      nix = {
-        inherit (cfg)
-          enable
-          package
-          ;
+      nix.package = pkgs.callPackage ./package.nix {
+        nix = pkgs.lixPackageSets.latest.lix;
       };
     }
     {

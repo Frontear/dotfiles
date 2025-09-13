@@ -9,7 +9,7 @@ let
 in {
   config = lib.mkIf cfg.enable {
     assertions = [{
-      assertion = osConfig.my.services.pipewire.enable;
+      assertion = osConfig.services.pipewire.enable;
       message = "Please enable my.services.pipewire in your NixOS configuration";
     }];
 

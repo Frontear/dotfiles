@@ -8,9 +8,7 @@
   ];
 
   config = {
-    my.mounts.swap.enableZram = true;
-
-    my.services.networkmanager.enable = true;
+    networking.networkmanager.enable = true;
 
     services.desktopManager.plasma6.enable = true;
     services.displayManager.defaultSession = "plasmax11";
@@ -23,6 +21,8 @@
     console.keyMap = "us";
     i18n.defaultLocale = "en_CA.UTF-8";
     time.timeZone = "America/Toronto";
+
+    zramSwap.enable = true;
 
     nixpkgs.config.allowUnfree = true;
   };

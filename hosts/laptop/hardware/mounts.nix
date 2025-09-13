@@ -38,6 +38,6 @@
       interval = "weekly";
     };
 
-    my.mounts.swap.enableZram = true;
+    zramSwap.enable = true;
   };
 }

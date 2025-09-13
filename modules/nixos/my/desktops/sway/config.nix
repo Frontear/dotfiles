@@ -8,10 +8,8 @@ let
   cfg = config.my.desktops.sway;
 in {
   config = lib.mkIf cfg.enable {
-    my.services = {
-      networkmanager.enable = true;
-      pipewire.enable = true;
-    };
+    networking.networkmanager.enable = true;
+    services.pipewire.enable = true;
 
 
     programs.uwsm = {
