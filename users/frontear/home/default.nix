@@ -17,6 +17,28 @@
     "ssh" = "TERM= ssh";
   };
 
+  programs.zsh = {
+    enable = true;
+
+    history.save = 10000;
+    history.size = 10000;
+
+    initContent = ''
+      PS1='%B%F{green}[%n@%m %1~]%(#.#.$)%F{white}%b '
+      RPS1='%B%(?.%F{green}.%F{red})%?%f%b'
+    '';
+
+    autosuggestion = {
+      enable = true;
+      strategy = [ "history" ];
+    };
+
+    syntaxHighlighting = {
+      enable = true;
+      highlighters = [ "main" "brackets" ];
+    };
+  };
+
   my.programs = {
     direnv = {
       enable = true;
@@ -58,32 +80,6 @@
       agent.sshKeys = [
         "3DB8367E2C04F74909B7F39ABA22959A22314C10"
       ];
-    };
-
-    zsh = {
-      enable = true;
-
-      history = {
-        save = 10000;
-        size = 10000;
-      };
-
-      plugins = {
-        autosuggestions = {
-          enable = true;
-          strategy = [ "history" ];
-        };
-
-        syntax-highlighting = {
-          enable = true;
-          highlighters = [ "main" "brackets" ];
-        };
-      };
-
-      promptInit = ''
-        PS1='%B%F{green}[%n@%m %1~]%(#.#.$)%F{white}%b '
-        RPS1='%B%(?.%F{green}.%F{red})%?%f%b'
-      '';
     };
   };
 }
