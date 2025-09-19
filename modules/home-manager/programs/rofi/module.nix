@@ -12,8 +12,6 @@ in {
   config = lib.mkIf cfg.enable {
     programs.rofi = {
       package = pkgs.callPackage ./package.nix {
-        rofi = pkgs.rofi-wayland;
-
         extraArgs = "-config ${conf}";
       };
 
