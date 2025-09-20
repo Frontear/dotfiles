@@ -18,7 +18,7 @@
       "/" = {
         device = "tmpfs";
         fsType = "tmpfs";
-        options = [ "noatime" "size=256M" ];
+        options = [ "noatime" "mode=0755" "noswap" "size=256M" ];
       };
 
       "/nix" = {
