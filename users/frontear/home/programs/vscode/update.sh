@@ -1,14 +1,19 @@
-#!/usr/bin/env nix-shell
-#! nix-shell -i bash
-#! nix-shell -p git
+#!/usr/bin/env bash
 
-echo "Do not use this program, it is out of date." >&2
-exit 1
+set -o errexit
+set -o nounset
+set -o pipefail
 
-if ! nix run "github:Frontear/code2nix" -- $((`nproc` / 4)) latest > extensions-new.nix; then
-    echo "Extension update failed"
-    exit 1
+currentDir="$(dirname "$(readlink -f "$0")")"
+
+# safety to prevent issues from changing the extensions.nix file
+if ! nix run "github:Frontear/code2nix" -- -f "$currentDir/extensions.nix" -o "$currentDir/extensions.nix.new"; then
+  echo "Extension update failed"
+  exit 1
 fi
 
-mv extensions{-new,}.nix
-nix build ".#nixosConfigurations.$(hostname).config.home-manager.users.frontear.my.programs.vscode.package" --no-link --print-out-paths
+# atomically replace
+mv "$currentDir/extensions.nix"{.new,}
+
+# pretty-format (TODO: make this part of code2nix?)
+nix run "nixpkgs#nixfmt" -- "$currentDir/extensions.nix"
