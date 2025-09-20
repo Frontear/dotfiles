@@ -6,12 +6,10 @@
 }:
 let
   cfg = config.programs.zed-editor;
-
-  zed-editor = pkgs.callPackage ./package.nix {};
 in {
   config = lib.mkIf cfg.enable {
     programs.zed-editor = {
-      package = zed-editor;
+      package = pkgs.zed-editor.fhs;
     };
 
     my.persist.directories = [
