@@ -85,6 +85,13 @@
   }
   {
     arch = "";
+    hash = "sha256-MYPYhSKAxgaZ0UijxU+xiO4HDPLtXGymhN+2YmTev8M=";
+    name = "editorconfig";
+    publisher = "editorconfig";
+    version = "0.17.4";
+  }
+  {
+    arch = "";
     hash = "sha256-GwuFtBVj0Z2rHryst/7cegskvZIMPsrAH12+K942+JA=";
     name = "atomize-atom-one-dark-theme";
     publisher = "emroussel";
