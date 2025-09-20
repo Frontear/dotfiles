@@ -94,6 +94,7 @@ in {
           debugger-on-trace = true;
           # debugger-on-warn = true;
           download-attempts = 2;
+          download-speed = 5 * 1000; # 5 MB/s to prevent bandwidth exhaustion.
 
           # It's useful to know when a substitute is failing!
           # Can use `--fallback` on the CLI when needed.
@@ -101,9 +102,9 @@ in {
 
           # Improve the chances of the store surviving a random crash.
           fsync-metadata = true;
-          # fsync-store-paths = true; TODO: bring back when Lix 2.92
+          # fsync-store-paths = true; TODO: not on Lix
 
-          http-connections = 0; # unlimited connections!!
+          http-connections = 10; # Don't open too many connections at once.
 
           # Keeping these is very useful for development.
           keep-build-log = true;
@@ -124,6 +125,7 @@ in {
           sandbox-fallback = false;
 
           show-trace = true;
+          stalled-download-timeout = 30; # wait 30s before cancelling
           sync-before-registering = true; # TODO: needed with fsync options?
 
           trace-verbose = true;
@@ -136,6 +138,7 @@ in {
 
           # This is such a silly warning.
           warn-dirty = false;
+          # warn-short-path-literals = true; # TODO: not on Lix
         }
         {
           # Disallow flake configs by default, and enable automatic
