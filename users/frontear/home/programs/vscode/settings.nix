@@ -6,7 +6,7 @@
   "editor.cursorBlinking" = "phase";
   "editor.cursorSmoothCaretAnimation" = "on";
   "editor.folding" = false;
-  "editor.fontFamily" = "monospace, Symbols Nerd Font";
+  "editor.fontFamily" = "Noto Sans Mono, Symbols Nerd Font";
   "editor.guides.bracketPairs" = true;
   "editor.matchBrackets" = "never";
   "editor.minimap.enabled" = false;
@@ -54,7 +54,7 @@
   # Extensions
 
   "nix.enableLanguageServer" = true;
-  "nix.serverPath" = "nil";
+  "nix.serverPath" = "nixd";
 
   "subtleBrackets.disableNative" = false; # we handle it ourselves
 
