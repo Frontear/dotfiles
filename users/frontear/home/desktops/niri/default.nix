@@ -84,6 +84,17 @@ in {
         }
 
 
+        window-rule {
+          // matches on any of the following
+          match app-id="code"
+          match app-id="Element"
+          match app-id="legcord"
+          match app-id="microsoft-edge"
+
+          open-maximized true
+        }
+
+
         binds {
           XF86AudioMute allow-when-locked=true repeat=false { spawn-sh "swayosd-client --output-volume mute-toggle"; }
           XF86AudioLowerVolume allow-when-locked=true { spawn-sh "swayosd-client --output-volume -5"; }
