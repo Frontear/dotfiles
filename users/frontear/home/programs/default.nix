@@ -5,6 +5,5 @@
   imports = [
     ./neovim
     ./vscode
-    ./zed
   ];
 }
