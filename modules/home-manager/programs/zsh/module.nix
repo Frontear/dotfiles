@@ -1,5 +1,4 @@
 {
-  osConfig,
   config,
   lib,
   pkgs,
@@ -9,11 +8,6 @@ let
   cfg = config.programs.zsh;
 in {
   config = lib.mkIf cfg.enable {
-    assertions = [{
-      assertion = osConfig.programs.zsh.enable;
-      message = "Please enable programs.zsh to your NixOS configuration.";
-    }];
-
     # ZSH tries to atomically replace $HISTFILE, which fails if the file
     # is a bind-mount. As an alternative, persist the entire directory
     # around the file instead.
@@ -23,7 +17,7 @@ in {
     }];
 
     programs.zsh = {
-      # Prevent home-manager from trying to include a _second_ ZSH in my PATH..
+      # Prevent home-manager from trying to include a _second_ ZSH in my  PATH..
       package = pkgs.emptyDirectory;
 
       # These are set at system-level

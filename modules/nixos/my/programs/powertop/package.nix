@@ -20,7 +20,7 @@
   xorg,
 }:
 
-stdenv.mkDerivation (finalAttrs: {
+stdenv.mkDerivation {
   pname = "powertop";
   version = "2.15-unstable-2025-06-27";
 
@@ -66,4 +66,4 @@ stdenv.mkDerivation (finalAttrs: {
     substituteInPlace src/calibrate/calibrate.cpp --replace-fail "/usr/bin/xset" "${lib.getExe xorg.xset}"
     substituteInPlace src/tuning/bluetooth.cpp --replace-fail "/usr/bin/hcitool" "hcitool"
   '';
-})
+}

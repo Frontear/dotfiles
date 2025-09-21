@@ -17,29 +17,7 @@
     "ssh" = "TERM= ssh";
   };
 
-  programs.zsh = {
-    enable = true;
-
-    history.save = 10000;
-    history.size = 10000;
-
-    initContent = ''
-      PS1='%B%F{green}[%n@%m %1~]%(#.#.$)%F{white}%b '
-      RPS1='%B%(?.%F{green}.%F{red})%?%f%b'
-    '';
-
-    autosuggestion = {
-      enable = true;
-      strategy = [ "history" ];
-    };
-
-    syntaxHighlighting = {
-      enable = true;
-      highlighters = [ "main" "brackets" ];
-    };
-  };
-
-  my.programs = {
+  programs = {
     direnv = {
       enable = true;
 
@@ -53,9 +31,7 @@
     };
 
     git = {
-      enable = true;
-
-      config = {
+      extraConfig = {
         user.email = "contact@frontear.dev";
         user.name = "Ali Rizvi";
         user.signingKey = "4BC247743ACFF25E";
@@ -74,6 +50,28 @@
       };
     };
 
+    zsh = {
+      history.save = 10000;
+      history.size = 10000;
+
+      initContent = ''
+        PS1='%B%F{green}[%n@%m %1~]%(#.#.$)%F{white}%b '
+        RPS1='%B%(?.%F{green}.%F{red})%?%f%b'
+      '';
+
+      autosuggestion = {
+        enable = true;
+        strategy = [ "history" ];
+      };
+
+      syntaxHighlighting = {
+        enable = true;
+        highlighters = [ "main" "brackets" ];
+      };
+    };
+  };
+
+  my.programs = {
     gnupg = {
       enable = true;
 

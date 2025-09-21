@@ -16,14 +16,22 @@ let
 in {
   config = lib.mkIf cfg.enable (lib.mkMerge [
     {
+      # Overlay nixpkgs to use Lix as our default Nix derivation.
+      #
+      # This is a better way to propagate the Nix package change, as many
+      # derivations internally use `pkgs.nix` in some form. Rather than
+      # tracking state across the modules, we can overlay it here.
+      nixpkgs.overlays = [(final: prev: {
+        nix = final.lixPackageSets.latest.lix;
+      })];
+    }
+    {
       # Use github:viperML/nh as our "nix wrapper" program.
       programs.nh.enable = true;
 
       # Set the system Nix package to our custom wrapper, which provides
       # instant access to all `pkgs` and `lib` attributes.
-      nix.package = pkgs.callPackage ./package.nix {
-        nix = pkgs.lixPackageSets.latest.lix;
-      };
+      nix.package = pkgs.callPackage ./package.nix {};
     }
     {
       # Throttle the nix-daemon so it doesn't consume

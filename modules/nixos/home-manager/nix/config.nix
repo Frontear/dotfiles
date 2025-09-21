@@ -1,10 +1,10 @@
 {
-  config,
+  nixosConfig,
   lib,
   ...
 }:
 let
-  cfg = config.my.programs.nix;
+  cfg = nixosConfig.nix;
 in {
   config = lib.mkIf cfg.enable {
     my.persist.directories = [{

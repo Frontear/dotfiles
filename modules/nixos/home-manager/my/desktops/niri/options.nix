@@ -1,5 +1,5 @@
 {
-  osConfig,
+  nixosConfig,
   lib,
   ...
 }:
@@ -7,7 +7,9 @@
   options = {
     my.desktops.niri = {
       enable = lib.mkEnableOption "niri" // {
-        default = osConfig.my.desktops.niri.enable;
+        default = nixosConfig.my.desktops.niri.enable;
+
+        readOnly = true;
       };
 
       config = lib.mkOption {
