@@ -4,11 +4,11 @@
 {
   imports = [
     ./foot
-    ./microsoft-edge
     ./mission-center
-    ./thunar
+    ./obs-studio
     ./rofi
     ./swaylock
+    ./thunar
     ./waybar
   ];
 }

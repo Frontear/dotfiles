@@ -11,6 +11,6 @@ in {
     # polkit authentication agent as well.
     services.polkit-gnome.enable = true;
 
-    xdg.configFile."niri/config.kdl".source = cfg.config;
+    xdg.configFile."niri/config.kdl".text = cfg.settings;
   };
 }

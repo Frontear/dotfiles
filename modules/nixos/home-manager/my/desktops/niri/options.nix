@@ -12,8 +12,8 @@
         readOnly = true;
       };
 
-      config = lib.mkOption {
-        type = with lib.types; path;
+      settings = lib.mkOption {
+        type = with lib.types; lines;
       };
     };
   };

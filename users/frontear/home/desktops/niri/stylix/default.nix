@@ -55,8 +55,7 @@ in {
         light = "Papirus-Light";
       };
 
-      # TODO: move this path to this folder
-      image = ../fs/niri/backgrounds/bg_dark.jpg;
+      image = ./assets/bg_dark.jpg;
       imageScalingMode = "fit";
 
       polarity = "dark";
