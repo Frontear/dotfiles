@@ -14,7 +14,7 @@
 
 
       my.desktops = {
-        sway.enable = lib.mkForce false;
+        niri.enable = lib.mkForce false;
         gnome.enable = true;
       };
     };
@@ -23,7 +23,7 @@
     boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
     # Enable a desktop environment
-    my.desktops.sway.enable = true;
+    my.desktops.niri.enable = true;
 
     # Set locale, keymap and timezone
     console.keyMap = "us";

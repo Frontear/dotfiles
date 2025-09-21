@@ -4,6 +4,6 @@
 {
   imports = [
     ./gnome
-    ./sway
+    ./niri
   ];
 }
