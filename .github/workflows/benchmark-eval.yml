@@ -2,12 +2,14 @@ name: Benchmark Evaluation Speed
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - master
+  pull_request:
+    types:
+      - closed
 
 jobs:
   benchmark:
+    if: github.event.pull_request.merged == true
+
     name: Benchmark NixOS Configuration
     runs-on: ubuntu-latest
     steps:
