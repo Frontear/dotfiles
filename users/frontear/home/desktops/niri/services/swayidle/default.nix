@@ -11,6 +11,13 @@ in {
     services.swayidle = {
       enable = true;
 
+      events = [
+        {
+          event = "before-sleep";
+          command = "${lib.getExe' config.programs.swaylock.package "swaylock"}";
+        }
+      ];
+
       timeouts = [
         {
           timeout = 60 * 2;

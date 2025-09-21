@@ -52,6 +52,10 @@ in {
           xcursor-size ${toString config.stylix.cursor.size}
         }
 
+        switch-events {
+          lid-close { spawn "swaylock"; }
+        }
+
 
         spawn-sh-at-startup "${lib.getExe pkgs.wl-clip-persist} --clipboard regular"
         spawn-sh-at-startup "${lib.getExe pkgs.swaybg} -i '${config.stylix.image}' -m '${config.stylix.imageScalingMode}'"
@@ -95,9 +99,9 @@ in {
           Ctrl+Alt+Delete repeat=false { quit; }
 
           Mod+BackSpace repeat=false { close-window; }
-          Mod+Return repeat=false { spawn-sh "footclient"; }
+          Mod+Return repeat=false { spawn "footclient"; }
           Mod+E repeat=false { spawn-sh "rofi -show drun -run-command 'app2unit -- {cmd}'"; }
-          Mod+L repeat=false { spawn-sh "swaylock"; }
+          Mod+L repeat=false { spawn "swaylock"; }
 
           F11 repeat=false { fullscreen-window; }
           Mod+F repeat=false { maximize-column; }
