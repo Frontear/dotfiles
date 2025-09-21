@@ -78,6 +78,7 @@ binds {
   Mod+BackSpace repeat=false { close-window; }
   Mod+Return repeat=false { spawn-sh "footclient"; }
   Mod+E repeat=false { spawn-sh "rofi -show drun -run-command 'app2unit -- {cmd}'"; }
+  Mod+L repeat=false { spawn-sh "swaylock"; }
 
   F11 repeat=false { fullscreen-window; }
   Mod+F repeat=false { maximize-column; }
@@ -85,13 +86,13 @@ binds {
   Mod+Tab repeat=false { toggle-overview; }
 
   Mod+Left  { focus-column-left; }
-  Mod+Down  { focus-window-down; }
-  Mod+Up    { focus-window-up; }
+  Mod+Down  { focus-window-or-workspace-down; }
+  Mod+Up    { focus-window-or-workspace-up; }
   Mod+Right { focus-column-right; }
 
   Mod+Shift+Left  { move-column-left; }
-  Mod+Shift+Down  { move-window-down; }
-  Mod+Shift+Up    { move-window-up; }
+  Mod+Shift+Down  { move-window-down-or-to-workspace-down; }
+  Mod+Shift+Up    { move-window-up-or-to-workspace-up; }
   Mod+Shift+Right { move-column-right; }
 
   Mod+1 { focus-workspace 1; }
