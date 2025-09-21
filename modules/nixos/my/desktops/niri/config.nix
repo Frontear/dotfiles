@@ -9,6 +9,7 @@ let
 in {
   config = lib.mkIf cfg.enable {
     networking.networkmanager.enable = true;
+    services.gnome.gnome-keyring.enable = true;
     services.pipewire.enable = true;
 
 
