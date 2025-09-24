@@ -57,7 +57,7 @@ in {
         }
 
 
-        spawn-sh-at-startup "${lib.getExe pkgs.wl-clip-persist} --clipboard regular"
+        spawn-sh-at-startup "${lib.getExe pkgs.wl-clip-persist} --clipboard regular --reconnect-tries 0"
         spawn-sh-at-startup "${lib.getExe pkgs.swaybg} -i '${config.stylix.image}' -m '${config.stylix.imageScalingMode}'"
 
 
