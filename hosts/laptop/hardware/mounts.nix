@@ -37,7 +37,5 @@
 
       interval = "weekly";
     };
-
-    zramSwap.enable = true;
   };
 }
