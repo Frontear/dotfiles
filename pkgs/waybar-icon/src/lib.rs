@@ -26,7 +26,7 @@ impl Module for Icon {
 
     let g_theme = gtk::IconTheme::default().unwrap();
     if let Some(info) = g_theme.lookup_icon(&config.icon_name, 24, gtk::IconLookupFlags::FORCE_SVG) {
-      let scaled_size = 28 * g_image.scale_factor();
+      let scaled_size = 34 * g_image.scale_factor();
 
       let pixbuf = gtk::gdk_pixbuf::Pixbuf::from_file_at_size(&info.filename().unwrap(), scaled_size, scaled_size).unwrap();
       let surface = pixbuf.create_surface::<gtk::gdk::Window>(g_image.scale_factor(), None).unwrap();

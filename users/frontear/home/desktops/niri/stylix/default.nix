@@ -22,8 +22,10 @@ in {
 
       fonts = {
         sizes = {
-          applications = 11;
-          terminal = 8;
+          applications = 12;
+          desktop = 12;
+          terminal = 10;
+          popups = 12;
         };
 
         emoji = {

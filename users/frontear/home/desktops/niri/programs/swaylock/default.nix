@@ -18,7 +18,7 @@ in {
 
         indicator = true;
         clock = true;
-        datestr = "%a, %B %d, %Y";
+        datestr = "%a, %b %d, %Y";
 
         effect-blur = "16x2";
       };
