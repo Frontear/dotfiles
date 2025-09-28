@@ -20,7 +20,7 @@ in {
           module_path = pkgs.frontear.waybar-icon.lib;
 
           icon-name = "discord";
-          on-click = "app2unit legcord.desktop";
+          on-click = "app2unit -- legcord.desktop";
           tooltip = false;
         };
       };

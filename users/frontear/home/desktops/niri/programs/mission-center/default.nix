@@ -23,7 +23,7 @@ in {
           module_path = pkgs.frontear.waybar-icon.lib;
 
           icon-name = "io.missioncenter.MissionCenter";
-          on-click = "app2unit io.missioncenter.MissionCenter.desktop";
+          on-click = "app2unit -- io.missioncenter.MissionCenter.desktop";
           tooltip = false;
         };
       };

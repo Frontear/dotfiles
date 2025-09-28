@@ -160,8 +160,8 @@ in {
 
     home.packages = with pkgs; [
       nerd-fonts.symbols-only
-
-      app2unit
     ];
+
+    my.programs.app2unit.enable = true;
   };
 }

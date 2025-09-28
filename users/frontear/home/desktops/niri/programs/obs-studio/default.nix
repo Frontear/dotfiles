@@ -20,7 +20,7 @@ in {
           module_path = pkgs.frontear.waybar-icon.lib;
 
           icon-name = "com.obsproject.Studio";
-          on-click = "app2unit com.obsproject.Studio.desktop";
+          on-click = "app2unit -- com.obsproject.Studio.desktop";
           tooltip = false;
         };
       };

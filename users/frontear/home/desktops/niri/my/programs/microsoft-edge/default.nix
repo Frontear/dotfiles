@@ -20,7 +20,7 @@ in {
           module_path = pkgs.frontear.waybar-icon.lib;
 
           icon-name = "com.microsoft.Edge";
-          on-click = "app2unit com.microsoft.Edge.desktop";
+          on-click = "app2unit -- com.microsoft.Edge.desktop";
           tooltip = false;
         };
       };

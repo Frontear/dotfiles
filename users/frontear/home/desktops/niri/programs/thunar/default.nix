@@ -22,7 +22,7 @@ in {
           module_path = pkgs.frontear.waybar-icon.lib;
 
           icon-name = "org.xfce.thunar";
-          on-click = "app2unit thunar.desktop";
+          on-click = "app2unit -- thunar.desktop";
           tooltip = false;
         };
       };
