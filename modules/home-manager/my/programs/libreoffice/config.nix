@@ -19,6 +19,7 @@ in {
       cfg.package
 
       pkgs.corefonts
+      pkgs.vista-fonts
 
       (pkgs.hunspell.withDicts (dict: [
         dict.en_CA
