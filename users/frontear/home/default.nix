@@ -36,24 +36,16 @@
         user.name = "Ali Rizvi";
         user.signingKey = "4BC247743ACFF25E";
 
-        commit.gpgSign = true;
-        tag.gpgSign = true;
-
         merge.tool = "nvimdiff3";
 
         # https:/dandavision.github.io/delta
         core.pager = "${lib.getExe pkgs.delta}";
         interactive.diffFilter = "${lib.getExe pkgs.delta} --color-only";
         delta.line-numbers = true;
-
-        init.defaultBranch = "main";
       };
     };
 
     zsh = {
-      history.save = 10000;
-      history.size = 10000;
-
       initContent = ''
         PS1='%B%F{green}[%n@%m %1~]%(#.#.$)%F{white}%b '
         RPS1='%B%(?.%F{green}.%F{red})%?%f%b'

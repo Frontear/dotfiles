@@ -155,13 +155,6 @@ in {
     };
 
 
-    # TODO: de-duplicate fontconfig and `nerd-fonts.symbols-only` snippets
-    fonts.fontconfig.enable = true;
-
-    home.packages = with pkgs; [
-      nerd-fonts.symbols-only
-    ];
-
     my.programs.app2unit.enable = true;
   };
 }

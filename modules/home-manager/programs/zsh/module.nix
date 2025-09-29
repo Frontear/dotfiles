@@ -29,6 +29,9 @@ in {
 
       history.path = lib.mkIf config.xdg.enable
         "${config.xdg.dataHome}/zsh/zsh_history";
+
+      history.save = 10000;
+      history.size = 10000;
     };
   };
 }

@@ -20,6 +20,13 @@ in {
         ignores = [
           ".envrc"
         ];
+
+        extraConfig = {
+          commit.gpgSign = true;
+          tag.gpgSign = true;
+
+          init.defaultBranch = "main";
+        };
       };
     })
   ];
