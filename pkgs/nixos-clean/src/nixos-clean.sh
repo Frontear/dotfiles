@@ -16,14 +16,13 @@ showUsage() {
   exit 1
 }
 
-if [ "$UID" -eq 0 ]; then
-  echo "Do not run this script as root."
+if [ "$UID" -ne 0 ]; then
+  echo "Please run this script as root."
   exit 1
 fi
 
 origArgs=("$@")
 systemProfiles=/nix/var/nix/profiles
-userProfiles=${XDG_STATE_HOME:-$HOME/.local/state}/nix/profiles
 dryRun=
 verbose=
 cleanStore=
@@ -70,39 +69,22 @@ cleanNixOS() {
   for p in $systemProfiles/system*; do
     if [ "$(readlink -f $p)" != "$latest" ]; then
       log "going to delete $p"
-      run sudo rm -f "$p"
+      run rm -f "$p"
     fi
   done
 
   log "regenerating boot entries"
-  run sudo /run/current-system/bin/switch-to-configuration switch
-}
-
-cleanHomeManager() {
-  log "cleaning up home-manager generations..."
-
-  local latest="$(readlink -f $userProfiles/home-manager)"
-  for p in $userProfiles/home-manager*; do
-    if [ "$(readlink -f $p)" != "$latest" ]; then
-      log "going to delete $p"
-      run rm -f "$p"
-    fi
-  done
+  run /run/current-system/bin/switch-to-configuration boot
 }
 
 cleanNix() {
   log "cleaning up the /nix/store"
 
-  run sudo nix-collect-garbage -d
+  run nix-collect-garbage -d
 }
 
 if [ -f /etc/NIXOS ]; then
   cleanNixOS
-  cleanStore=1
-fi
-
-if [ -L $userProfiles/home-manager ]; then
-  cleanHomeManager
   cleanStore=1
 fi
 
