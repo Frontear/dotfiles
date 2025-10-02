@@ -17,6 +17,7 @@ in {
         home-manager.nixosModules.default
 
         (lib.mkModules ../../modules/common {})
+        (lib.mkModules ../../modules/shared {})
         (lib.mkModules ../../modules/nixos {
           inherit inputs;
         })
