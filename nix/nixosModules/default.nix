@@ -14,14 +14,11 @@ in {
   flake = {
     nixosModules.default = {
       imports = [
-        home-manager.nixosModules.default
-
-        (lib.mkModules ../../modules/common {})
-        (lib.mkModules ../../modules/shared {})
-        (lib.mkModules ../../modules/nixos {
+        (lib.mkModules ../../modules {
           inherit inputs;
         })
 
+        home-manager.nixosModules.default
         ../../users
       ];
 
@@ -37,8 +34,6 @@ in {
           sharedModules = [
             stylix.homeModules.stylix
             { config.stylix.autoEnable = false; }
-
-            (lib.mkModules ../../modules/home-manager {})
           ];
         };
       };
