@@ -5,33 +5,51 @@
 
   inxi,
 
-  bluez,
+  # `inxi --recommnds` system programs
   bluez-tools,
-  busybox,
   dig,
   dmidecode,
+  file,
+  hddtemp,
+  iproute2,
+  kmod,
   lm_sensors,
+  lvm2,
+  mdadm,
+  pciutils,
+  procps,
   smartmontools,
-  toybox,
+  tree,
   usbutils,
-  virtualgl,
+
+  # `inxi --recommends` display information programs
+  mesa-demos,
   vulkan-tools,
   wayland-utils,
+  wlr-randr,
 }:
 let
   runtimeInputs = [
-    bluez
     bluez-tools
-    busybox
     dig
     dmidecode
+    file
+    hddtemp
+    iproute2
+    kmod
     lm_sensors
+    lvm2
+    mdadm
+    pciutils
+    procps
     smartmontools
-    toybox
+    tree
     usbutils
-    virtualgl
+
+    mesa-demos
     vulkan-tools
     wayland-utils
+    wlr-randr
   ];
 in symlinkJoin {
   name = "inxi";
