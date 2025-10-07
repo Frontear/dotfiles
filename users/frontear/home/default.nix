@@ -12,11 +12,6 @@
 
   home.stateVersion = "24.11";
 
-  home.shellAliases = {
-    # Prevent TERM capabilities leaking into a shitty ssh
-    "ssh" = "TERM= ssh";
-  };
-
   programs = {
     direnv = {
       enable = true;
