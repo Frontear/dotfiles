@@ -294,25 +294,11 @@
     version = "2025.13.2025091201";
   }
   {
-    arch = "linux-x64";
-    hash = "sha256-cdPPACBdUKYyClvh3/qV8Te4rfZJieFHeVfgJYGtCUs=";
-    name = "python";
-    publisher = "ms-python";
-    version = "2025.15.2025091901";
-  }
-  {
     arch = "";
     hash = "sha256-Z2R7gUZw1S2iL3KX/3fB326lFzE39v9LGq17Ec2aHCA=";
     name = "vscode-pylance";
     publisher = "ms-python";
     version = "2025.8.2";
-  }
-  {
-    arch = "linux-x64";
-    hash = "sha256-UlSNIfMSQQCFTaJQ/sNzZPcnKcql2V8wP1xPAoOq5os=";
-    name = "cpptools";
-    publisher = "ms-vscode";
-    version = "1.27.7";
   }
   {
     arch = "";
@@ -376,13 +362,6 @@
     name = "java";
     publisher = "redhat";
     version = "1.46.2025091808";
-  }
-  {
-    arch = "linux-x64";
-    hash = "sha256-d3Qy3efm9AtdY9wRauJfcKYXdrtu0eK1YG5/tfgvQHg=";
-    name = "rust-analyzer";
-    publisher = "rust-lang";
-    version = "0.4.2619";
   }
   {
     arch = "";

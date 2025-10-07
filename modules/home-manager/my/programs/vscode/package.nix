@@ -3,10 +3,9 @@
   vscode-with-extensions,
 
   withExtensions ? [],
-  withPackages ? (pkgs: []),
 }:
 vscode-with-extensions.override {
-  vscode = vscode.fhsWithPackages withPackages;
+  inherit vscode;
 
   vscodeExtensions = withExtensions;
 }

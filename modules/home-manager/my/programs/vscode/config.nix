@@ -7,11 +7,6 @@
 let
   cfg = config.my.programs.vscode;
   fmt = pkgs.formats.json {};
-
-  vscode = pkgs.callPackage ./package.nix {
-    withExtensions = cfg.extensions;
-    withPackages = cfg.packages;
-  };
 in {
   config = lib.mkIf cfg.enable {
     my.persist.directories = [
@@ -19,7 +14,7 @@ in {
     ];
 
     home.packages = [
-      vscode
+      cfg.package
     ];
 
     xdg.configFile."Code/User/settings.json".source =

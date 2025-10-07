@@ -49,6 +49,7 @@
   "workbench.layoutControl.enabled" = false;
   "workbench.list.smoothScrolling" = true;
   "workbench.productIconTheme" = "material-product-icons";
+  "workbench.secondarySideBar.defaultVisibility" = "hidden"; # stupid LLM chat
   "workbench.startupEditor" = "newUntitledFile";
 
   # Extensions
