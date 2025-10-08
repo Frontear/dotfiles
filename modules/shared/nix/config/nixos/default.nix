@@ -31,7 +31,7 @@ in {
 
       # Set the system Nix package to our custom wrapper, which provides
       # instant access to all `pkgs` and `lib` attributes.
-      nix.package = pkgs.callPackage ./package.nix {};
+      nix.package = pkgs.callPackage ./package {};
     }
     {
       # Throttle the nix-daemon so it doesn't consume

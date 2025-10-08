@@ -5,7 +5,9 @@
   nix,
 }:
 let
-  wrapper = callPackage ./wrapper { inherit nix; };
+  wrapper = callPackage ./package.nix {
+    inherit nix;
+  };
 in buildEnv {
   inherit (nix) name version;
 

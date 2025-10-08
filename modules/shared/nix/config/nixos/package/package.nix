@@ -10,14 +10,14 @@ stdenvNoCC.mkDerivation {
   src = with lib.fileset; toSource {
     root = ./.;
     fileset = unions [
-      ./nix.sh
+      ./src
     ];
   };
 
   installPhase = ''
     runHook preInstall
 
-    install -Dm755 nix.sh $out/bin/nix
+    install -Dm755 src/nix.sh $out/bin/nix
 
     runHook postInstall
   '';
