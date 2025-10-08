@@ -27,6 +27,7 @@
   vulkan-tools,
   wayland-utils,
   wlr-randr,
+  xrandr,
 }:
 let
   runtimeInputs = [
@@ -50,6 +51,7 @@ let
     vulkan-tools
     wayland-utils
     wlr-randr
+    xrandr
   ];
 in symlinkJoin {
   name = "inxi";
