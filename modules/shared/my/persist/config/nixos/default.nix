@@ -27,10 +27,13 @@ in {
           path = "/var/log";
           unique = true;
         }
-      ] ++ lib.optionals config.security.sudo.enable [{
-        path = "/var/db/sudo/lectured"; # preferential.
-        unique = false;
-      }];
+        {
+          # contrary to the name, it's intended to hold persistent data.
+          # see: https://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch05s15.html
+          path = "/var/tmp";
+          unique = true;
+        }
+      ];
 
       files = [
         {
@@ -54,8 +57,8 @@ in {
     # save it, which causes the service to fail.
     #
     # This doesn't matter at all for our setup because we have the confidence
-    # in knowing the file is safe. If for some reason it's not, then that was
-    # a concious decision by the user and they can handle the problems with it.
+    # in knowing the file is safe. If for some reason it's not, then that was a
+    # conscious decision by the user and they can handle the problems with it.
     boot.initrd.systemd.suppressedUnits = [ "systemd-machine-id-commit.service" ];
     systemd.suppressedSystemUnits = [ "systemd-machine-id-commit.service" ];
   };
