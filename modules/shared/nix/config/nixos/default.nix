@@ -101,8 +101,8 @@ in {
 
           debugger-on-trace = true;
           # debugger-on-warn = true;
-          download-attempts = 2;
-          download-speed = 5 * 1000; # 5 MB/s to prevent bandwidth exhaustion.
+          download-attempts = 5;
+          # download-speed = 5 * 1000; # TODO: determine a better value
 
           # It's useful to know when a substitute is failing!
           # Can use `--fallback` on the CLI when needed.
@@ -112,7 +112,7 @@ in {
           fsync-metadata = true;
           # fsync-store-paths = true; TODO: not on Lix
 
-          http-connections = 10; # Don't open too many connections at once.
+          # http-connections = 10; # TODO: determine a better value
 
           # Keeping these is very useful for development.
           keep-build-log = true;
@@ -133,7 +133,7 @@ in {
           sandbox-fallback = false;
 
           show-trace = true;
-          stalled-download-timeout = 30; # wait 30s before cancelling
+          # stalled-download-timeout = 30; # TODO: determine a better value
           sync-before-registering = true; # TODO: needed with fsync options?
 
           trace-verbose = true;
