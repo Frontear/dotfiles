@@ -6,8 +6,9 @@
   neovim-unwrapped,
 
   # from module
-  extraBins,
+  bins,
   plugins,
+  config,
 }:
 wrapNeovimUnstable neovim-unwrapped (neovimUtils.makeNeovimConfig {
   # withPython3 = true;
@@ -18,5 +19,9 @@ wrapNeovimUnstable neovim-unwrapped (neovimUtils.makeNeovimConfig {
 
   wrapRc = false;
 } // {
-  wrapperArgs = lib.escapeShellArgs [ "--prefix" "PATH" ":" "${lib.makeBinPath extraBins}" ];
+  wrapperArgs = lib.escapeShellArgs [
+    "--prefix" "PATH" ":" "${lib.makeBinPath bins}"
+    "--add-flags" "-u"
+    "--add-flags" "${config}"
+  ];
 })

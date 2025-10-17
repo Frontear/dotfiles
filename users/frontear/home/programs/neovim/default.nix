@@ -11,7 +11,7 @@
       wl-clipboard
     ];
 
-    init = ''
+    extraConfig = ''
       vim.g.mapleader = ' '
       vim.g.localmapleader = ' '
 
