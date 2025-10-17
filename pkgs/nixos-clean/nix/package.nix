@@ -5,6 +5,8 @@
   installShellFiles,
   pandoc,
 
+  zsh,
+
   coreutils,
 }:
 stdenvNoCC.mkDerivation {
@@ -27,6 +29,10 @@ stdenvNoCC.mkDerivation {
   nativeBuildInputs = [
     installShellFiles
     pandoc
+  ];
+
+  buildInputs = [
+    zsh
   ];
 
   buildPhase = ''
