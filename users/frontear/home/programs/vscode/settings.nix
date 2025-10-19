@@ -1,12 +1,8 @@
 {
-  "update.mode" = "none";
-  "extensions.autoCheckUpdates" = false;
-
   "editor.accessibilitySupport" = "off";
   "editor.cursorBlinking" = "phase";
   "editor.cursorSmoothCaretAnimation" = "on";
   "editor.folding" = false;
-  "editor.fontFamily" = "Noto Sans Mono, Symbols Nerd Font";
   "editor.guides.bracketPairs" = true;
   "editor.matchBrackets" = "never";
   "editor.minimap.enabled" = false;
@@ -44,7 +40,6 @@
     "editorBracketHighlight.foreground6" = "#abb2c0";
     "editorBracketHighlight.unexpectedBracket.foreground" = "#db6165";
   };
-  "workbench.colorTheme" = "Atomize";
   "workbench.iconTheme" = "material-icon-theme";
   "workbench.layoutControl.enabled" = false;
   "workbench.list.smoothScrolling" = true;
