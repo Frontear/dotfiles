@@ -4,6 +4,14 @@
   ...
 }:
 let
+  # TODO: this doesn't clearly communicate the intent of how modules should be
+  # structured in the shared directory. From just this snippet, it appears that
+  # modules should be in the form `<module-dir>/{nixos.nix,home-manager.nix}`,
+  # but I'm doing `<module-dir>/{config,options}/{nixos.nix,home-manager.nix}`.
+  #
+  # There should be a strict requirement here, I'm not sure whether I want to
+  # enforce the `config/options` directory or `nixos/home-manager` as the first
+  # directory. I can see valid use-cases for both..
   sharedNixOSEntrypoints = [ "nixos.nix" "nixos" ];
   sharedHomeManagerEntrypoints = [ "home-manager.nix" "home-manager" ];
 
