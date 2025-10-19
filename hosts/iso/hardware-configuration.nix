@@ -1,11 +1,11 @@
 {
-  config,
   lib,
+  pkgs,
   ...
 }:
 {
   config.hardware = {
-    enableAllFirmware = config.nixpkgs.config.allowUnfree;
+    enableAllFirmware = pkgs.config.allowUnfree;
     enableRedistributableFirmware = lib.mkForce true;
 
     cpu = lib.genAttrs [ "amd" "intel" ] (_: {

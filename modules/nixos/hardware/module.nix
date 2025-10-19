@@ -1,10 +1,10 @@
 {
-  config,
   lib,
+  pkgs,
   ...
 }:
 {
-  config = lib.mkIf config.nixpkgs.config.allowUnfree {
+  config = lib.mkIf pkgs.config.allowUnfree {
     # An easy catch-all to enable all possible firmware needed by the system.
     hardware.enableAllFirmware = true;
   };
