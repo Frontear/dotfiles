@@ -35,6 +35,13 @@ in {
       enable = true;
     };
 
+    # TODO: resolve this.
+    #
+    # see: https://github.com/Frontear/dotfiles/issues/63
+    security.pam.services.swaylock = {
+      fprintAuth = false;
+    };
+
     # This is being overriden from what Niri provides by default so that it can
     # support other file-managers besides Nautilus, since the GNOME Portal only
     # defaults to Nautilus for the file chooser dialog.
