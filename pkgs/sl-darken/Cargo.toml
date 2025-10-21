@@ -1,0 +1,10 @@
+[package]
+name = "sl-darken"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+hsl = "0.1.1"

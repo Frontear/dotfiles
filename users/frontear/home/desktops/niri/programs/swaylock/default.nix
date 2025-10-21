@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -20,7 +21,8 @@ in {
         clock = true;
         datestr = "%a, %b %d, %Y";
 
-        effect-blur = "16x2";
+        effect-blur = "7x3";
+        effect-custom = "${pkgs.frontear.sl-darken}/${pkgs.frontear.sl-darken.libPath}";
       };
     };
   };
