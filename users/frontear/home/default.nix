@@ -26,7 +26,7 @@
     };
 
     git = {
-      extraConfig = {
+      settings = {
         user.email = "contact@frontear.dev";
         user.name = "Ali Rizvi";
         user.signingKey = "4BC247743ACFF25E";

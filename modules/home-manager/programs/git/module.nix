@@ -21,7 +21,7 @@ in {
           ".envrc"
         ];
 
-        extraConfig = {
+        settings = {
           commit.gpgSign = true;
           tag.gpgSign = true;
 
