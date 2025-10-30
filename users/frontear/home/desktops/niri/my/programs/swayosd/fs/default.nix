@@ -1,10 +1,10 @@
 {
   lib,
-  runCommandNoCCLocal,
+  runCommandLocal,
 
   sassc,
 }:
-runCommandNoCCLocal "fs-swayosd" {
+runCommandLocal "fs-swayosd" {
   src = with lib.fileset; toSource {
     root = ./.;
     fileset = difference ./. ./default.nix;
