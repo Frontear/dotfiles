@@ -19,6 +19,7 @@
           ++ (with pkgs.vscode-extensions; [
             # TODO: prefer Nixpkgs extensions when possible
             ms-python.python
+            ms-vscode.cmake-tools
             ms-vscode.cpptools
             rust-lang.rust-analyzer
           ]);
