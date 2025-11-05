@@ -31,8 +31,10 @@ in {
         ];
 
         specialArgs = {
-          nixos-facter =
-            inputs.nixos-facter.packages."x86_64-linux".nixos-facter;
+          inputs = {
+            nixos-facter =
+              lib.flakes.stripSystem "x86_64-linux" inputs.nixos-facter;
+          };
         };
       }
     ];

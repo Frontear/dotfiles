@@ -1,6 +1,6 @@
 {
+  inputs,
   modulesPath,
-  nixos-facter,
   ...
 }:
 {
@@ -14,7 +14,7 @@
     services.displayManager.autoLogin.enable = true;
 
     environment.systemPackages = [
-      nixos-facter
+      inputs.nixos-facter.packages.nixos-facter
     ];
 
     console.keyMap = "us";
