@@ -15,7 +15,5 @@
     console.keyMap = "us";
     i18n.defaultLocale = "en_CA.UTF-8";
     time.timeZone = "America/Toronto";
-
-    nixpkgs.config.allowUnfree = true;
   };
 }
