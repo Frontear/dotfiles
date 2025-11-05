@@ -16,7 +16,9 @@
 
       nixosConfigurations = (pkgs.linkFarm "all-nixosConfigurations" (
         self.nixosConfigurations
-        |> lib.filterAttrs (_: value: value.pkgs.system == pkgs.system)
+        |> lib.filterAttrs (_: value:
+          value.pkgs.stdenv.hostPlatform == pkgs.stdenv.hostPlatform
+        )
         |> lib.mapAttrs (_: value: value.config.system.build)
         |> lib.mapAttrsToList (name: value: {
           inherit name;
