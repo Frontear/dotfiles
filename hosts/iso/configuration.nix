@@ -1,5 +1,6 @@
 {
   modulesPath,
+  nixos-facter,
   ...
 }:
 {
@@ -11,6 +12,10 @@
     my.desktops.gnome.enable = true;
 
     services.displayManager.autoLogin.enable = true;
+
+    environment.systemPackages = [
+      nixos-facter
+    ];
 
     console.keyMap = "us";
     i18n.defaultLocale = "en_CA.UTF-8";

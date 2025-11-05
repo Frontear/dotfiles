@@ -29,6 +29,11 @@ in {
         modules = [
           ../../hosts/iso
         ];
+
+        specialArgs = {
+          nixos-facter =
+            inputs.nixos-facter.packages."x86_64-linux".nixos-facter;
+        };
       }
     ];
   };

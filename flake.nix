@@ -5,7 +5,18 @@
 
     home-manager = {
       url = "github:nix-community/home-manager";
+
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixos-facter = {
+      url = "github:nix-community/nixos-facter";
+
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixos-facter-modules = {
+      url = "github:nix-community/nixos-facter-modules";
     };
 
     nixos-hardware = {
