@@ -6,7 +6,6 @@
 
   config = {
     services = {
-      fwupd.enable = true;
       thermald.enable = true;
 
       fprintd.enable = true;
