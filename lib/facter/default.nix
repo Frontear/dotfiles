@@ -15,7 +15,6 @@ let
   # If at any point the definitions can be completed, consider doing so, and
   # subsequently consider upstreaming.
   self' = {
-    cpu = callLib ./cpu.nix;
     disk = callLib ./disk.nix;
     gpu = callLib ./gpu.nix;
     machine = callLib ./machine.nix;

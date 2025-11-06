@@ -5,7 +5,7 @@
   ...
 }:
 let
-  validGPU = lib.facter.cpu.isTigerlake config && lib.facter.gpu.isIntel config;
+  validGPU = lib.facter.gpu.isTigerlake config;
 in {
   # TODO: way too opinionated. This is unsuitable for here and should be dropped
   # if/when there is a proper upstream module for Intel graphics.
