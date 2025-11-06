@@ -5,18 +5,11 @@
   ...
 }:
 let
-  usingFacter = config.facter.reportPath != null;
-
-  # TODO: migrate to `xe` module once stable
-  hasIntelGpu =
-    lib.any (x: x.driver == "i915") config.facter.report.hardware.graphics_card;
-
-  isTigerlake = lib.any (x:
-    x.family == 6 &&
-    x.model == 140
-  ) config.facter.report.hardware.cpu;
+  validGPU = lib.facter.cpu.isTigerlake config && lib.facter.gpu.isIntel config;
 in {
-  config = lib.mkIf (usingFacter && hasIntelGpu && isTigerlake) {
+  # TODO: way too opinionated. This is unsuitable for here and should be dropped
+  # if/when there is a proper upstream module for Intel graphics.
+  config = lib.mkIf validGPU {
     boot.kernelParams = [ "i915.enable_guc=3" ];
 
     hardware.graphics.extraPackages = with pkgs; [

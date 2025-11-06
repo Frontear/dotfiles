@@ -4,12 +4,11 @@
   ...
 }:
 let
-  usingFacter = config.facter.reportPath != null;
-
-  hasSSD =
-    lib.any (disk: disk.driver == "nvme") config.facter.report.hardware.disk;
+  validDisk = lib.facter.disk.isNVMe config;
 in {
-  config = lib.mkIf (usingFacter && hasSSD) {
+  # TODO: way too opinionated. This is unsuitable for here and should be dropped
+  # if/when there is a proper upstream module for Intel graphics.
+  config = lib.mkIf validDisk {
     services.fstrim.enable = lib.mkDefault true;
   };
 }

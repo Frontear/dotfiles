@@ -10,6 +10,7 @@ let
 
   self' = {
     flakes = callLib ./flakes.nix;
+    facter = callLib ./facter;
 
     options = callLib ./options.nix // prev.options;
     path = callLib ./path.nix // prev.path;
