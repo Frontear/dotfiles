@@ -10,7 +10,7 @@
 
     # Enable both auto-cpufreq and thermald.
     services = {
-      auto-cpufreq.enable = true;
+      #auto-cpufreq.enable = true;
       thermald.enable = true;
     };
 

@@ -10,7 +10,6 @@ in {
   imports = [
     ./my
     ./programs
-    ./services
     ./stylix
   ];
 
@@ -53,12 +52,11 @@ in {
         }
 
         switch-events {
-          lid-close { spawn "swaylock"; }
+          lid-close { spawn "dms ipc lock lock"; }
         }
 
 
-        spawn-sh-at-startup "${lib.getExe pkgs.wl-clip-persist} --clipboard regular --reconnect-tries 0"
-        spawn-sh-at-startup "${lib.getExe pkgs.swaybg} -i '${config.stylix.image}' -m '${config.stylix.imageScalingMode}'"
+        spawn-sh-at-startup "wl-paste --watch cliphist store"
 
 
         // rounded corners always
@@ -72,6 +70,9 @@ in {
           // emulates inner-gap of 2, and outer-gap of 4
           gaps 2
           struts { left 2; right 2; top 2; bottom 2; }
+
+          // DankMaterialShell controls wallpaper
+          background-color "transparent"
 
           focus-ring { off; }
 
@@ -96,12 +97,12 @@ in {
 
 
         binds {
-          XF86AudioMute allow-when-locked=true repeat=false { spawn-sh "swayosd-client --output-volume mute-toggle"; }
-          XF86AudioLowerVolume allow-when-locked=true { spawn-sh "swayosd-client --output-volume -5"; }
-          XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "swayosd-client --output-volume +5"; }
+          XF86AudioMute allow-when-locked=true repeat=false { spawn-sh "dms ipc audio mute"; }
+          XF86AudioLowerVolume allow-when-locked=true { spawn-sh "dms ipc audio decrement 5"; }
+          XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "dms ipc audio increment 5"; }
 
-          XF86MonBrightnessDown allow-when-locked=true { spawn-sh "swayosd-client --brightness -5"; }
-          XF86MonBrightnessUp allow-when-locked=true { spawn-sh "swayosd-client --brightness +5"; }
+          XF86MonBrightnessDown allow-when-locked=true { spawn-sh "dms ipc brightness decrement 5 '''"; }
+          XF86MonBrightnessUp allow-when-locked=true { spawn-sh "dms ipc brightness increment 5 '''"; }
 
 
           Print repeat=false { screenshot; }
@@ -111,8 +112,8 @@ in {
 
           Mod+BackSpace repeat=false { close-window; }
           Mod+Return repeat=false { spawn "footclient"; }
-          Mod+E repeat=false { spawn-sh "rofi -show drun -run-command 'app2unit -- {cmd}'"; }
-          Mod+L repeat=false { spawn "swaylock"; }
+          Mod+E repeat=false { spawn-sh "dms ipc spotlight toggle"; }
+          Mod+L repeat=false { spawn-sh "dms ipc lock lock"; }
 
           F11 repeat=false { fullscreen-window; }
           Mod+F repeat=false { maximize-column; }

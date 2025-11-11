@@ -35,12 +35,9 @@ in {
       enable = true;
     };
 
-    # TODO: resolve this.
-    #
-    # see: https://github.com/Frontear/dotfiles/issues/63
-    security.pam.services.swaylock = {
-      fprintAuth = false;
-    };
+    # DankMaterialShell uses these
+    services.power-profiles-daemon.enable = true;
+    services.upower.enable = true;
 
     # This is being overriden from what Niri provides by default so that it can
     # support other file-managers besides Nautilus, since the GNOME Portal only
