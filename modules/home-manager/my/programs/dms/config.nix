@@ -86,9 +86,25 @@ in {
       Unit = {
         PartOf = [ config.wayland.systemd.target ];
         After = [ config.wayland.systemd.target ];
+
+        X-Restart-Triggers = [
+          config.programs.quickshell.configs.dms
+        ];
       };
 
       Service = {
+        # Synchronise the default settings onto the expected settings path
+        # before DMS starts up.
+        #
+        # This fixes an issue with DMS failing to update its state after copying
+        # the default settings on startup. Instead, we perform the copy for it,
+        # which will correctly configure DMS.
+        #
+        # Note that this will destructively copy over any pre-existing file.
+        ExecStartPre = "${lib.getExe' pkgs.coreutils "cp"} " +
+          "--dereference --no-preserve=all " +
+          "${config.xdg.configHome}/DankMaterialShell/default-settings.json " +
+          "${config.xdg.configHome}/DankMaterialShell/settings.json";
         ExecStart = "${lib.getExe dms-cli} run";
         Restart = "on-failure";
       };
