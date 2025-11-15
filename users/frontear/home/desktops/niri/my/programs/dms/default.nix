@@ -5,12 +5,6 @@
 }:
 let
   cfg = config.my.desktops.niri;
-
-  toSentenceCase = string: let
-    head = lib.substring 0 1 string;
-    tail = lib.substring 1 (-1) string;
-  in
-    (lib.toUpper head) + tail;
 in {
   config = lib.mkIf cfg.enable {
     my.programs.dms = {
