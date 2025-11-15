@@ -1,9 +1,0 @@
-{
-  ...
-}:
-{
-  imports = [
-    ./dunst
-    ./swayidle
-  ];
-}
