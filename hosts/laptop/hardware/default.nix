@@ -6,8 +6,6 @@
 
   config = {
     services = {
-      thermald.enable = true;
-
       fprintd.enable = true;
     };
   };
