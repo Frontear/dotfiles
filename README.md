@@ -1,17 +1,35 @@
 # Frontear's Dotfiles
 
-Massively WIP!
+Declarative and reproducible configuration for my systems, powered by NixOS ❄️.
+
+## Installation
+
+1. Build the latest ISO image and copy it to a USB drive
+
+    ```console
+    $ nix build github:Frontear/dotfiles#ISO-3DT4F02.config.system.build.isoImage
+    ```
+
+2. Format drives in the following format:
+
+    |  **Mount**  | **FS Type** | **Size** |
+    |:------------|:-----------:|:--------:|
+    | `/`         |   `tmpfs`   |   256M   |
+    | `/boot`     |   `fat32`   |    1G    |
+    | `/nix`      |   `btrfs`   |   rest   |
+
+3. Install configuration to target root in `/mnt`
+
+   ```console
+   $ nixos-install --flake github:Frontear/dotfiles#<HOST> --no-channel-copy --no-root-password
+   ```
+
+<!--
+## Usage
+
+## Contributing
+-->
 
 ## License
 
-> [!WARNING]
-> I do not encourage you to use any of the code in this repository, as it's
-> extremely personalized and not intended to work or be used outside of this
-> context.
-
-All of the content in this repository is subject to the GNU AGPL v3 or later.
-
-As an added clause, I'd appreciate any code which is derived from my works and
-improves upon my code to be pull requested back onto this repository. This is
-not a legally-binding requirement, and as such not an extension of the AGPL, but
-something I humbly request as the code author.
+[GNU AGPL v3 or later](LICENSE)
