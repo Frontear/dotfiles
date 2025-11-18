@@ -44,7 +44,7 @@ Declarative and reproducible configuration for my systems, powered by NixOS ‚ùÑÔ
     $ wipefs --all /dev/disk/by-partlabel/boot
     $ wipefs --all /dev/disk/by-partlabel/nix
     $ mkfs.fat -F 32 /dev/disk/by-partlabel/boot
-    $ mkfs.btrfs -n 64k --compress zstd:15 /dev/disk/by-partlabel/nix
+    $ mkfs.btrfs -n 64k /dev/disk/by-partlabel/nix
     ```
 
 4. Mount them into `/mnt` for the installer:
