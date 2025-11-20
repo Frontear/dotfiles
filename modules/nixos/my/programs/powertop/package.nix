@@ -42,6 +42,12 @@ stdenv.mkDerivation {
       url = "https://patch-diff.githubusercontent.com/raw/fenrus75/powertop/pull/164.diff";
       hash = "sha256-qAsLMEnyDr04Xvkpzo51ozTnNAI3co2tENMQUv4jrsA=";
     })
+
+    # Prevent random values from being printed if sysfs polling fails.
+    (fetchpatch {
+      url = "https://patch-diff.githubusercontent.com/raw/fenrus75/powertop/pull/183.patch";
+      hash = "sha256-ukSMRREXfjku7Fa3AyI7i+IN4CmQgQOz2tPJcJoofDM=";
+    })
   ];
 
   nativeBuildInputs = [

@@ -95,6 +95,38 @@ rollbackGeneration() {
   local current_path="$(readlink -f "$currentGeneration")"
   log "resolved current generation path to: '$current_path'"
 
+  # Normal detection will fail when booted into a specialisation.
+  # This is because the system profiles GC root the main system closure,
+  # which indirectly roots the specialisation closure, since the main closure
+  # contains the specialisation at `/nix/store/<closure>/specialisations`.
+  #
+  # To fix detection, we need to find the main system closure. This only makes
+  # sense if we are in a specialisation, and since my configs always produce
+  # `/etc/specialisation` as a file, I can use that to disambiguate the cases.
+  if [ -f "/etc/specialisation" ]; then
+    log "found '/etc/specialisation', trying to find the main system closure"
+
+    # Find all store paths that reference the specialisation, and remove the
+    # specialisation from the output with `grep -v`.
+    local referrers="$(nix-store --query --referrers "$current_path" | grep -v "$current_path")"
+    log "found all referrers to specialisation closure:"
+    log "$referrers"
+
+    # Normally, this should only find 1 store path, the main system closure,
+    # since the main system closure references the specialisation closure in
+    # `/nix/store/<main-closure>/specialisations/<name>`.
+    #
+    # Although I do not believe it is possible for there to be more referrers,
+    # I'm going to add a safety check to prevent an unexpected scenario.
+    if [ "$(echo "$referrers" | wc -l)" != "1" ]; then
+      err "found more than 1 root for the specialisation, cannot proceed"
+      exit 1
+    fi
+
+    log "resolved the actual generation path: $referrers"
+    current_path="$referrers"
+  fi
+
   if [ "$(readlink -f "$systemProfile")" = "$current_path" ]; then
     warn "current generation matches latest, nothing to do"
     exit 0
