@@ -16,5 +16,7 @@ in {
       legcord.enable = true;
       libreoffice.enable = true;
     };
+
+    programs.obs-studio.enable = true;
   };
 }
