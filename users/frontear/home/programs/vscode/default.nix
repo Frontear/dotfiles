@@ -21,6 +21,7 @@
             ms-python.python
             ms-vscode.cmake-tools
             ms-vscode.cpptools
+            myriad-dreamin.tinymist
             rust-lang.rust-analyzer
           ]);
 
