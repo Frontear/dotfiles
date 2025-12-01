@@ -6,6 +6,15 @@
     DankMaterialShell = {
       url = "github:AvengeMedia/DankMaterialShell";
 
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        dms-cli.follows = "dms-cli";
+      };
+    };
+
+    dms-cli = {
+      url = "path:./nix/inputs/dms-cli";
+
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
