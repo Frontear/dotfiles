@@ -14,8 +14,8 @@ let
   system = pkgs.stdenv.hostPlatform.system;
 
   dgop = inputDms.inputs.dgop.packages.${system}.default;
-  dms = inputDms.packages.${system}.default;
-  dms-cli = inputDms.inputs.dms-cli.packages.${system}.default;
+  dms = inputDms.packages.${system}.dankMaterialShell;
+  dms-cli = inputDms.packages.${system}.dmsCli;
   quickshell = inputQs.packages.${system}.default;
 
   # DankMaterialShell's `wallpaperFillMode` option requires sentence casing
@@ -105,7 +105,7 @@ in {
           "--dereference --no-preserve=all " +
           "${config.xdg.configHome}/DankMaterialShell/default-settings.json " +
           "${config.xdg.configHome}/DankMaterialShell/settings.json";
-        ExecStart = "${lib.getExe dms-cli} run";
+        ExecStart = "${lib.getExe dms-cli} run --session";
         Restart = "on-failure";
       };
 
