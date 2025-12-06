@@ -166,7 +166,7 @@ in {
 
             # Some interesting features.
             # "fetch-closures"
-            "no-url-literals"
+            #"no-url-literals" # gone from Lix 2.94
             "pipe-operator"
           ];
         }
