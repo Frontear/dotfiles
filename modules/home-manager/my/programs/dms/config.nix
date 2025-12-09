@@ -14,8 +14,7 @@ let
   system = pkgs.stdenv.hostPlatform.system;
 
   dgop = inputDms.inputs.dgop.packages.${system}.default;
-  dms = inputDms.packages.${system}.dankMaterialShell;
-  dms-cli = inputDms.packages.${system}.dmsCli;
+  dms-shell = inputDms.packages.${system}.dms-shell;
   quickshell = inputQs.packages.${system}.default;
 
   # DankMaterialShell's `wallpaperFillMode` option requires sentence casing
@@ -32,7 +31,7 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages = [
       dgop
-      dms-cli
+      dms-shell
     ] ++ (with pkgs; [
       # Needed for brightness functionality
       brightnessctl
@@ -78,7 +77,7 @@ in {
       package = quickshell;
 
       configs = {
-        dms = "${dms}/etc/xdg/quickshell/dms";
+        dms = "${dms-shell}/share/quickshell/dms";
       };
     };
 
@@ -105,7 +104,7 @@ in {
           "--dereference --no-preserve=all " +
           "${config.xdg.configHome}/DankMaterialShell/default-settings.json " +
           "${config.xdg.configHome}/DankMaterialShell/settings.json";
-        ExecStart = "${lib.getExe dms-cli} run --session";
+        ExecStart = "${lib.getExe dms-shell} run --session";
         Restart = "on-failure";
       };
 

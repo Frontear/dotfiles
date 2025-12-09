@@ -28,6 +28,7 @@ stdenvNoCC.mkDerivation {
       nixVersions.nix_2_32
       nixVersions.git
       lixPackageSets.lix_2_93.lix
+      lixPackageSets.lix_2_94.lix
       lixPackageSets.git.lix
     ]);
 
