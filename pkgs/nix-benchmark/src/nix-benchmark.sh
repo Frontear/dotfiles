@@ -21,10 +21,6 @@ showUsage() {
 
 origArgs=("$@")
 nixBins=(@nixBins@)
-# We use both `pipe-operator` and `pipe-operators` because Lix decided to be
-# quirky and remove the 's' from the name, whilst every other Nix version still
-# uses 'operators'. Extremly irritating change on Lix's end.
-nixEvalArgs="eval --option eval-cache false --option extra-experimental-features 'pipe-operator pipe-operators' --raw"
 flakeRef=
 
 while [ "$#" -gt 0 ]; do
@@ -56,8 +52,26 @@ fi
 
 benchmarkNixEval() {
   local nixBinary="$1"
+  local nixEvalArgs="eval --raw --option 'eval-cache' 'false' --option 'extra-experimental-features'"
 
   local name="$($nixBinary --version 2> /dev/null | head -n1)"
+
+  # Both Nix and Lix support the pipe (`|>`) operator through an optional
+  # experimental feature toggle. However, they both use different names for
+  # the feature. Lix uses 'pipe-operator', whilst Nix uses 'pipe-operators'.
+  #
+  # Lix's reasoning is that their implementation of the operator differs from
+  # official Nix, and as a result should be disambiguated. In practice I have
+  # not actually seen much of a difference, but I'll take their word for it.
+  #
+  # In order to respect this difference, I append to the experimental feature
+  # depending on which version of Nix is being used for benchmarking.
+  if [[ "$name" == "nix (Lix, like Nix)"* ]]; then
+    nixEvalArgs="$nixEvalArgs 'pipe-operator'"
+  else
+    nixEvalArgs="$nixEvalArgs 'pipe-operators'"
+  fi
+
   local cmd="$nixBinary $nixEvalArgs '$flakeRef.drvPath'"
 
   hyperfine --warmup 5 --runs 20 --command-name "$name" "$cmd"
