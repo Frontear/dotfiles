@@ -74,7 +74,7 @@ benchmarkNixEval() {
 
   local cmd="$nixBinary $nixEvalArgs '$flakeRef.drvPath'"
 
-  hyperfine --warmup 5 --runs 20 --command-name "$name" "$cmd"
+  hyperfine --warmup 4 --runs 8 --command-name "$name" "$cmd"
 }
 
 for bin in "${nixBins[@]}"; do
