@@ -16,5 +16,10 @@
       extraGroups = [ "wheel" ] ++
         (lib.optional config.networking.networkmanager.enable "networkmanager");
     };
+
+    # Allow my user to control the OpenRazer daemon.
+    hardware.openrazer.users = [
+      "frontear"
+    ];
   };
 }
