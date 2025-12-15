@@ -26,6 +26,12 @@ in {
             repeat-rate 25
           }
 
+          mouse {
+            accel-profile "flat"
+            // scroll-button 274 // found with `libinput debug-events`
+            // scroll-method "on-button-down"
+          }
+
           touchpad {
             accel-profile "adaptive"
             click-method "clickfinger"
