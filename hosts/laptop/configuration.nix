@@ -14,7 +14,6 @@
     # Use the latest xanmod kernel, mainly for the Clear Linux patches
     boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
-    # TODO: detect from `facter.json`?
     hardware.openrazer.enable = true;
 
     services = {
