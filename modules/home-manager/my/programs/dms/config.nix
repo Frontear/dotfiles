@@ -13,7 +13,6 @@ let
   inputQs = inputs.quickshell;
   system = pkgs.stdenv.hostPlatform.system;
 
-  dgop = inputDms.inputs.dgop.packages.${system}.default;
   dms-shell = inputDms.packages.${system}.dms-shell;
   quickshell = inputQs.packages.${system}.default;
 
@@ -30,7 +29,7 @@ in {
   # see: https://github.com/AvengeMedia/DankMaterialShell/blob/master/nix/default.nix
   config = lib.mkIf cfg.enable {
     home.packages = [
-      dgop
+      pkgs.dgop
       dms-shell
     ] ++ (with pkgs; [
       # Needed for brightness functionality
