@@ -22,7 +22,7 @@
   gnutar,
   gzip,
   lcab,
-  lha,
+  #lha,
   lrzip,
   lz4,
   lzip,
@@ -53,7 +53,7 @@ let
     gnutar
     gzip
     lcab
-    lha
+    #lha
     lrzip
     lz4
     lzip

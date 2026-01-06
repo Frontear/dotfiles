@@ -22,7 +22,6 @@ stdenvNoCC.mkDerivation {
   env = {
     nixBins = lib.escapeShellArgs (map lib.getExe [
       nixVersions.nix_2_28
-      nixVersions.nix_2_29
       nixVersions.nix_2_30
       nixVersions.nix_2_31
       nixVersions.nix_2_32

@@ -9,7 +9,7 @@ let
     inherit nix;
   };
 in buildEnv {
-  inherit (nix) name version;
+  inherit (nix) name pname version;
 
   paths = [
     wrapper
