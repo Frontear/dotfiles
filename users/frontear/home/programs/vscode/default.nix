@@ -22,6 +22,7 @@
             ms-vscode.cmake-tools
             ms-vscode.cpptools
             myriad-dreamin.tinymist
+            redhat.java
             rust-lang.rust-analyzer
           ]);
 

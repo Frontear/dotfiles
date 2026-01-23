@@ -50,10 +50,10 @@
   }
   {
     arch = "";
-    hash = "sha256-rpYgvo5H1RBviV5L/pfDWqVXIYaZonRiqh4TLFGEODw=";
+    hash = "sha256-Ip9q7BroIVNsxbO/OcZuJWagYsYtV2xJhe0z0NFiR2U=";
     name = "vscode-eslint";
     publisher = "dbaeumer";
-    version = "3.0.19";
+    version = "3.0.21";
   }
   {
     arch = "";
@@ -85,10 +85,10 @@
   }
   {
     arch = "";
-    hash = "sha256-MYPYhSKAxgaZ0UijxU+xiO4HDPLtXGymhN+2YmTev8M=";
+    hash = "sha256-pFd1CTJL3xQ3HHzQs3f4R5f6xlCghNh8Kv+3AT/Qrqo=";
     name = "editorconfig";
     publisher = "editorconfig";
-    version = "0.17.4";
+    version = "0.18.1";
   }
   {
     arch = "";
@@ -99,10 +99,10 @@
   }
   {
     arch = "";
-    hash = "sha256-DkqAxXqZ+YqvPJCjivS3W4dDvoT2xr9KZgi5Rx4elio=";
+    hash = "sha256-mr6AaJC6SqtmZ/mbcCo8M/LUuXovNQak8hWzzeeWdQU=";
     name = "vscode-glsl";
     publisher = "geforcelegend";
-    version = "0.3.3";
+    version = "0.3.4";
   }
   {
     arch = "";
@@ -120,10 +120,10 @@
   }
   {
     arch = "";
-    hash = "sha256-+xnQnrnKlbLaPwSFklmjEbhW5tYFcPlSep6XjHrkWR4=";
+    hash = "sha256-b0RiydB4XqVlr0Q75ioqe5CU4LtlQkwOJe+6Y3KbmZY=";
     name = "applescript";
     publisher = "idleberg";
-    version = "0.28.0";
+    version = "0.29.0";
   }
   {
     arch = "";
@@ -183,10 +183,10 @@
   }
   {
     arch = "";
-    hash = "sha256-Rfsmqo6U6oxTqSz4YKo0OCmM4HVJ2/dXXJl+OliuFkI=";
+    hash = "sha256-WWvo9rzKi2nga0kDLpxAMgO5pJ3Q45qt07hcVdIMfa8=";
     name = "better-perl-syntax";
     publisher = "jeff-hykin";
-    version = "1.0.14";
+    version = "1.0.17";
   }
   {
     arch = "";
@@ -218,10 +218,10 @@
   }
   {
     arch = "";
-    hash = "sha256-MnuFMrP52CcWZTyf2OKSqQ/oqCS3PPivwEIja25N2D0=";
+    hash = "sha256-epdEMPAkSo0IXsd+ozicI8bjPPquDKIzB3ONRUYWwn8=";
     name = "nix-ide";
     publisher = "jnoortheen";
-    version = "0.4.23";
+    version = "0.5.5";
   }
   {
     arch = "";
@@ -281,24 +281,24 @@
   }
   {
     arch = "";
-    hash = "sha256-IPgPE5vM9tzHPioRBZeJs4hqut6t++SjZJlHnz/ismA=";
+    hash = "sha256-xZpK6pJNXnxudauzJihEi9VASRXi89+hn7vfF33qRgY=";
     name = "rainbow-csv";
     publisher = "mechatroner";
-    version = "3.21.0";
+    version = "3.24.1";
   }
   {
     arch = "linux-x64";
-    hash = "sha256-Uf0FoYW+Du97mTA+kgeMJlob7J0JYp8h0pF7Ba8qMWk=";
+    hash = "sha256-jTDzOMa7l3RIZQMnpsp290+ncqar4RL3ikmNGiv4ai0=";
     name = "debugpy";
     publisher = "ms-python";
-    version = "2025.13.2025091201";
+    version = "2025.19.2026012301";
   }
   {
     arch = "";
-    hash = "sha256-Z2R7gUZw1S2iL3KX/3fB326lFzE39v9LGq17Ec2aHCA=";
+    hash = "sha256-s1YBgWrsorAxotNRBR4dgtmLJekTpQO2gzYPQMIxYT8=";
     name = "vscode-pylance";
     publisher = "ms-python";
-    version = "2025.8.2";
+    version = "2025.12.101";
   }
   {
     arch = "";
@@ -316,10 +316,10 @@
   }
   {
     arch = "";
-    hash = "sha256-vP5jMijMIKHUmvSaTX+eEO6Z3dzUCR6S/ZdPxjJHIT8=";
+    hash = "sha256-B2+yaKX/nhBLdeFDffwt4CmeWo+Jr4oMxcWBEaAhRtg=";
     name = "material-icon-theme";
     publisher = "pkief";
-    version = "5.27.0";
+    version = "5.31.0";
   }
   {
     arch = "";
@@ -357,13 +357,6 @@
     version = "0.0.4";
   }
   {
-    arch = "linux-x64";
-    hash = "sha256-spsfZEPYn0dhtv5pIa6yNFMHF+Av+h7Oiib7eiVtjgM=";
-    name = "java";
-    publisher = "redhat";
-    version = "1.46.2025091808";
-  }
-  {
     arch = "";
     hash = "sha256-zgCqKwnP7Fm655FPUkD5GL+/goaplST8507X890Tnhc=";
     name = "scala";
@@ -372,10 +365,10 @@
   }
   {
     arch = "";
-    hash = "sha256-b8VFojeIkplnr48D8el0HeEtN47al/tgqgq52ozjw9M=";
+    hash = "sha256-Dkx4ecPFXTX1ilerkcnUc6Pu/mnXpswYVnHWqR4TYOA=";
     name = "ruby-lsp";
     publisher = "shopify";
-    version = "0.9.32";
+    version = "0.9.33";
   }
   {
     arch = "";
@@ -393,10 +386,10 @@
   }
   {
     arch = "";
-    hash = "sha256-veP2G/5vcaimjd98ur6Mhl4x1NKuvS21oO+HFJLHN+I=";
+    hash = "sha256-sOwVE42dyzYhG0JBV7rjNkMDSS4oE2L9RhfJnC0jvzM=";
     name = "code-spell-checker";
     publisher = "streetsidesoftware";
-    version = "4.2.6";
+    version = "4.4.1";
   }
   {
     arch = "";
