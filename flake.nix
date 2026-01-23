@@ -3,13 +3,6 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    DankMaterialShell = {
-      url = "github:AvengeMedia/DankMaterialShell";
-
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.quickshell.follows = "quickshell";
-    };
-
     home-manager = {
       url = "github:nix-community/home-manager";
 
@@ -24,12 +17,6 @@
 
     nixos-facter-modules = {
       url = "github:nix-community/nixos-facter-modules";
-    };
-
-    quickshell = {
-      url = "github:quickshell-mirror/quickshell";
-
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     stylix = {

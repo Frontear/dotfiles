@@ -1,5 +1,4 @@
 {
-  inputs,
   config,
   lib,
   pkgs,
@@ -8,13 +7,6 @@
 let
   cfg = config.my.programs.dms;
   fmt = pkgs.formats.json { };
-
-  inputDms = inputs.DankMaterialShell;
-  inputQs = inputs.quickshell;
-  system = pkgs.stdenv.hostPlatform.system;
-
-  dms-shell = inputDms.packages.${system}.dms-shell;
-  quickshell = inputQs.packages.${system}.default;
 
   # DankMaterialShell's `wallpaperFillMode` option requires sentence casing
   toSentenceCase = string: let
@@ -28,10 +20,10 @@ in {
   #
   # see: https://github.com/AvengeMedia/DankMaterialShell/blob/master/nix/default.nix
   config = lib.mkIf cfg.enable {
-    home.packages = [
-      pkgs.dgop
+    home.packages = with pkgs; [
+      dgop
       dms-shell
-    ] ++ (with pkgs; [
+
       # Needed for brightness functionality
       brightnessctl
 
@@ -47,7 +39,7 @@ in {
 
       # Needed for soundlets
       kdePackages.qtmultimedia
-    ]);
+    ];
 
     # Set some values for Stylix
     my.programs.dms = lib.mkIf config.stylix.enable {
@@ -73,10 +65,10 @@ in {
 
     programs.quickshell = {
       enable = true;
-      package = quickshell;
+      package = pkgs.quickshell;
 
       configs = {
-        dms = "${dms-shell}/share/quickshell/dms";
+        dms = "${pkgs.dms-shell}/share/quickshell/dms";
       };
     };
 
@@ -103,7 +95,7 @@ in {
           "--dereference --no-preserve=all " +
           "${config.xdg.configHome}/DankMaterialShell/default-settings.json " +
           "${config.xdg.configHome}/DankMaterialShell/settings.json";
-        ExecStart = "${lib.getExe dms-shell} run --session";
+        ExecStart = "${lib.getExe pkgs.dms-shell} run --session";
         Restart = "on-failure";
       };
 
