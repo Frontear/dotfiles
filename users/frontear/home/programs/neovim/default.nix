@@ -127,14 +127,12 @@
           nvim-treesitter.withAllGrammars
         ];
 
+        # Indiscriminantly enable treesitter for all possible filetypes.
+        # This might be a dangerous operation but I am certaintly not
+        # knowledgable enough to know or care.
         config = ''
-          require("nvim-treesitter").setup({
-            highlight = {
-              enable = true,
-            },
-            indent = {
-              enable = true,
-            },
+          vim.api.nvim_create_autocmd("FileType", {
+            callback = function() vim.treesitter.start() end,
           })
         '';
       }
