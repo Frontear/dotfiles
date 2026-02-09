@@ -8,11 +8,29 @@ let
   cfg = config.networking.networkmanager;
 in {
   config = lib.mkIf cfg.enable {
-    my.persist.directories = [{
-      # TODO: better to persist `system-connections` directory only?
-      path = "/etc/NetworkManager";
-      unique = false;
-    }];
+    my.persist.directories = [
+      {
+        # TODO: better to persist `system-connections` directory only?
+        path = "/etc/NetworkManager";
+        unique = false;
+      }
+      {
+        # Due to NixOS hardening the `wpa_supplicant` daemon by default,
+        # the daemon can no longer arbitrarily read files on the filesystem.
+        #
+        # This has affected my certificates, which are imperatively stored and
+        # configured on a network-basis. To counter this, NixOS exposes the
+        # `/etc/wpa_supplicant` directory, which is where certificates should
+        # go, with the daemon being configured to read this directory.
+        #
+        # Files placed in the aforementioned directory must also be owned by
+        # the `wpa_supplicant` user and group of the same name.
+        #
+        # see: https://github.com/NixOS/nixpkgs/pull/427528
+        path = "/etc/wpa_supplicant";
+        unique = false;
+      }
+    ];
 
     # Enables broadband support, but I don't need this.
     networking.modemmanager.enable = lib.mkForce false;
