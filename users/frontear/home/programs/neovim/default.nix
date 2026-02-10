@@ -127,12 +127,19 @@
           nvim-treesitter.withAllGrammars
         ];
 
-        # Indiscriminantly enable treesitter for all possible filetypes.
-        # This might be a dangerous operation but I am certaintly not
-        # knowledgable enough to know or care.
+        # Automatically enable treesitter for all languages that are supported.
+        #
+        # see: https://github.com/nvim-treesitter/nvim-treesitter/issues/8031#issuecomment-3120353040
         config = ''
           vim.api.nvim_create_autocmd("FileType", {
-            callback = function() vim.treesitter.start() end,
+            callback = function(args)
+              local filetype = vim.bo[args.buf].filetype
+              local lang = vim.treesitter.language.get_lang(filetype)
+
+              if lang and vim.treesitter.language.add(lang) then
+                vim.treesitter.start()
+              end
+            end,
           })
         '';
       }
