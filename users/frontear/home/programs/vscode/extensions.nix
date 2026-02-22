@@ -120,10 +120,10 @@
   }
   {
     arch = "";
-    hash = "sha256-b0RiydB4XqVlr0Q75ioqe5CU4LtlQkwOJe+6Y3KbmZY=";
+    hash = "sha256-1AuxPO/Pj6Q+1qu4NctDpiGMERreXXNiciLRfN6cDns=";
     name = "applescript";
     publisher = "idleberg";
-    version = "0.29.0";
+    version = "0.29.4";
   }
   {
     arch = "";
@@ -288,17 +288,17 @@
   }
   {
     arch = "linux-x64";
-    hash = "sha256-jTDzOMa7l3RIZQMnpsp290+ncqar4RL3ikmNGiv4ai0=";
+    hash = "sha256-FzH5ADvCyM3DXRMwmJd+exVdqMU7+D+DmV78CzK/vys=";
     name = "debugpy";
     publisher = "ms-python";
-    version = "2025.19.2026012301";
+    version = "2025.19.2026021801";
   }
   {
     arch = "";
-    hash = "sha256-s1YBgWrsorAxotNRBR4dgtmLJekTpQO2gzYPQMIxYT8=";
+    hash = "sha256-82zIUJBgjbBW0R6ExBLXGYYtYxm1vC7bz/3BvP3IIXA=";
     name = "vscode-pylance";
     publisher = "ms-python";
-    version = "2025.12.101";
+    version = "2026.1.1";
   }
   {
     arch = "";
@@ -365,10 +365,10 @@
   }
   {
     arch = "";
-    hash = "sha256-Dkx4ecPFXTX1ilerkcnUc6Pu/mnXpswYVnHWqR4TYOA=";
+    hash = "sha256-RSNcyoyrkVJsFp02aMDDZn51YBKohE+gy+bgHFP45v4=";
     name = "ruby-lsp";
     publisher = "shopify";
-    version = "0.9.33";
+    version = "0.10.0";
   }
   {
     arch = "";
@@ -386,10 +386,10 @@
   }
   {
     arch = "";
-    hash = "sha256-sOwVE42dyzYhG0JBV7rjNkMDSS4oE2L9RhfJnC0jvzM=";
+    hash = "sha256-AAakZeChN5HkhhqbGUWSMXm4Tbq7n+ydWutEDPUdRqQ=";
     name = "code-spell-checker";
     publisher = "streetsidesoftware";
-    version = "4.4.1";
+    version = "4.5.6";
   }
   {
     arch = "";
