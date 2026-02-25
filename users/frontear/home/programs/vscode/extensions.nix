@@ -393,6 +393,13 @@
   }
   {
     arch = "";
+    hash = "sha256-QSlmYzV7N/k8VhSOPfRqrPHp++6wVqgjnX9kAiyH+jo=";
+    name = "code-spell-checker-canadian-english";
+    publisher = "streetsidesoftware";
+    version = "1.1.31";
+  }
+  {
+    arch = "";
     hash = "sha256-7+Yo6X+t56tnZzepBKEo5hJdgLxiF3+83hSFqpkhVpA=";
     name = "sass-indented";
     publisher = "syler";

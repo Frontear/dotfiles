@@ -1,4 +1,6 @@
 {
+  # ============================= VSCode Settings =============================
+
   "editor.accessibilitySupport" = "off";
   "editor.cursorBlinking" = "phase";
   "editor.cursorSmoothCaretAnimation" = "on";
@@ -47,7 +49,9 @@
   "workbench.secondarySideBar.defaultVisibility" = "hidden"; # stupid LLM chat
   "workbench.startupEditor" = "newUntitledFile";
 
-  # Extensions
+  # ============================ VSCode Extensions ============================
+
+  "cSpell.language" = "en,en-CA";
 
   "nix.enableLanguageServer" = true;
   "nix.serverPath" = "nixd";
