@@ -53,6 +53,12 @@
 
   "cSpell.language" = "en,en-CA";
 
+  # Automatically reload gradle project when changed.
+  "java.configuration.updateBuildConfiguration" = "automatic";
+  # Extension gets confused when multiple *.java files exist and misconfigures
+  # the workspace, so it's better to set it manually.
+  "java.import.projectSelection" = "manual";
+
   "nix.enableLanguageServer" = true;
   "nix.serverPath" = "nixd";
 
