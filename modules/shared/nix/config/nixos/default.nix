@@ -28,6 +28,13 @@ in {
     {
       # Use github:viperML/nh as our "nix wrapper" program.
       programs.nh.enable = true;
+      # TODO: remove when the issue regarding specialisations not being setup
+      # is fixed upstream.
+      #
+      # see: https://github.com/nix-community/nh/issues/586
+      programs.nh.package = pkgs.nh.override {
+        nh-unwrapped = pkgs.callPackage ./nh-unwrapped-package.nix {};
+      };
 
       # Set the system Nix package to our custom wrapper, which provides
       # instant access to all `pkgs` and `lib` attributes.
