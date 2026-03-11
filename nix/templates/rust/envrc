@@ -1,0 +1,19 @@
+# If an existing lock file isn't found, one is created which attempts to sync
+# the revisions of `flake-parts` and `nixpkgs` for this local flake with the
+# revisions found in the system registry.
+#
+# Thank you @waffle8946 for this snippet.
+# see: https://discourse.nixos.org/t/using-the-global-registry-to-create-the-initial-flake-lock/76098/2
+if [ ! -f $PWD/flake.lock ]; then
+  FLAKE_PARTS_REF=$(nix flake metadata flake-parts --json | nix run nixpkgs#jq -- -r ".locked.rev")
+  NIXPKGS_REF=$(nix flake metadata nixpkgs --json | nix run nixpkgs#jq -- -r ".locked.rev")
+
+  nix flake update \
+    --override-input flake-parts github:hercules-ci/flake-parts/$FLAKE_PARTS_REF \
+    --override-input nixpkgs github:NixOS/nixpkgs/$NIXPKGS_REF
+fi
+
+export CARGO_HOME="$(direnv_layout_dir)/cargo"
+
+watch_dir nix
+use flake
