@@ -24,7 +24,7 @@ in {
     programs.ssh = lib.mkIf (cfg.agent.sshKeys != []) {
       enable = true;
 
-      matchBlocks.refresh-tty.match = ''
+      settings.refresh-tty.header = ''
         host * exec "${lib.getExe' cfg.package "gpg-connect-agent"} UPDATESTARTUPTTY /bye"
       '';
     };
