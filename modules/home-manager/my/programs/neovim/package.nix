@@ -1,6 +1,5 @@
 {
   lib,
-  neovimUtils,
   wrapNeovimUnstable,
 
   neovim-unwrapped,
@@ -10,7 +9,7 @@
   plugins,
   config,
 }:
-wrapNeovimUnstable neovim-unwrapped (neovimUtils.makeNeovimConfig {
+wrapNeovimUnstable neovim-unwrapped {
   # withPython3 = true;
   # withNodeJs = false;
   # withRuby = true;
@@ -18,10 +17,9 @@ wrapNeovimUnstable neovim-unwrapped (neovimUtils.makeNeovimConfig {
   inherit plugins;
 
   wrapRc = false;
-} // {
   wrapperArgs = lib.escapeShellArgs [
     "--prefix" "PATH" ":" "${lib.makeBinPath bins}"
     "--add-flags" "-u"
     "--add-flags" "${config}"
   ];
-})
+}
