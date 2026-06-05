@@ -90,6 +90,10 @@
               end,
             },
 
+            mapping = cmp.mapping.preset.insert({
+              ['<Esc>'] = cmp.mapping.abort(),
+            }),
+
             sources = cmp.config.sources({
               { name = "luasnip" },
               { name = "nvim_lsp" },
