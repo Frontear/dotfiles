@@ -16,6 +16,8 @@
 
     hardware.openrazer.enable = true;
 
+    programs.virt-manager.enable = true;
+
     services = {
       # NTP daemon that's more suitable for laptops
       chrony.enable = true;
