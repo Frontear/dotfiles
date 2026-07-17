@@ -38,8 +38,26 @@
   zstd,
 }:
 let
+  # Fix the `file` derivation to resolve a `patool` build failure.
+  #
+  # TODO: drop when https://github.com/NixOS/nixpkgs/pull/540742 is in unstable
+  file' = file.overrideAttrs (prevAttrs: {
+    postPatch = (prevAttrs.postPatch or "") + ''
+      substituteInPlace src/landlock.c --replace-fail \
+        "LANDLOCK_ACCESS_FS_READ_FILE | LANDLOCK_ACCESS_FS_READ_DIR" \
+        "LANDLOCK_ACCESS_FS_READ_FILE | LANDLOCK_ACCESS_FS_READ_DIR | LANDLOCK_ACCESS_FS_EXECUTE"
+    '';
+  });
+
+  # Temporary override to fix the aforementioned issue.
+  #
+  # TODO: remove with above snippet when PR lands in unstable.
+  patool' = patool.override {
+    file = file';
+  };
+
   runtimeInputs = [
-    file
+    file'
 
     _7zz
     arj
@@ -71,7 +89,7 @@ let
 in symlinkJoin {
   name = "patool";
   paths = [
-    patool
+    patool'
   ];
 
   nativeBuildInputs = [
