@@ -8,7 +8,7 @@ let
 in {
   config = lib.mkIf cfg.enable {
     my.programs.dms = {
-      enable = true;
+      enable = false;
 
       session = {
         # Displays

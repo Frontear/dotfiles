@@ -7,5 +7,6 @@
     ./element
     ./legcord
     ./microsoft-edge
+    ./noctalia
   ];
 }
