@@ -19,6 +19,12 @@
       url = "github:nix-community/nixos-facter-modules";
     };
 
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     stylix = {
       url = "github:nix-community/stylix";
 

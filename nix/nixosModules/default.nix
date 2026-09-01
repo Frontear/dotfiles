@@ -7,6 +7,7 @@ let
   inherit (inputs)
     home-manager
     nixos-facter-modules
+    nix-index-database
     stylix
     ;
 
@@ -35,7 +36,11 @@ in {
 
           sharedModules = [
             stylix.homeModules.stylix
-            { config.stylix.autoEnable = false; }
+            nix-index-database.homeModules.default
+
+            {
+              config.stylix.autoEnable = false;
+            }
           ];
         };
       };
