@@ -35,8 +35,8 @@ in {
       enable = true;
     };
 
-    # DankMaterialShell uses these
-    services.power-profiles-daemon.enable = true;
+    # Noctalia uses these
+    services.tuned.enable = true;
     services.upower.enable = true;
 
     # This is being overriden from what Niri provides by default so that it can
