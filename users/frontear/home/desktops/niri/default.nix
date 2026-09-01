@@ -77,7 +77,7 @@ in {
           gaps 2
           struts { left 2; right 2; top 2; bottom 2; }
 
-          // DankMaterialShell controls wallpaper
+          // Noctalia controls wallpaper
           background-color "transparent"
 
           focus-ring { off; }
