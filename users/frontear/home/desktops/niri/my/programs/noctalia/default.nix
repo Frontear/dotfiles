@@ -246,7 +246,7 @@ in {
           "session"
         ];
 
-        widget."workspaces".display = "none";
+        widget."workspaces".show_labels = false;
         widget."workspaces".pill_scale = 0.7;
         widget."workspaces".active_pill_size = 3.0;
         widget."workspaces".focused_color = "on_surface";
