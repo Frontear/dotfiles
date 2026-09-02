@@ -15,6 +15,11 @@ in {
     services = {
       desktopManager.gnome.enable = true;
       displayManager.gdm.enable = true;
+
+      # Replace power-profiles-daemon with TuneD, which has a shim that offers
+      # PPD compatibility.
+      tuned.enable = true;
+      power-profiles-daemon.enable = false;
     };
 
     # TODO: de-duplicate from Niri

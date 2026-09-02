@@ -58,7 +58,7 @@ in {
         }
 
         switch-events {
-          lid-close { spawn "dms ipc lock lock"; }
+          lid-close { spawn "noctalia" "msg" "session" "lock-and-suspend"; }
         }
 
 
@@ -77,7 +77,7 @@ in {
           gaps 2
           struts { left 2; right 2; top 2; bottom 2; }
 
-          // DankMaterialShell controls wallpaper
+          // Noctalia controls wallpaper
           background-color "transparent"
 
           focus-ring { off; }
@@ -103,12 +103,12 @@ in {
 
 
         binds {
-          XF86AudioMute allow-when-locked=true repeat=false { spawn-sh "dms ipc audio mute"; }
-          XF86AudioLowerVolume allow-when-locked=true { spawn-sh "dms ipc audio decrement 5"; }
-          XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "dms ipc audio increment 5"; }
+          XF86AudioMute allow-when-locked=true repeat=false { spawn-sh "noctalia msg volume-mute"; }
+          XF86AudioLowerVolume allow-when-locked=true { spawn-sh "noctalia msg volume-down"; }
+          XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "noctalia msg volume-up"; }
 
-          XF86MonBrightnessDown allow-when-locked=true { spawn-sh "dms ipc brightness decrement 5 '''"; }
-          XF86MonBrightnessUp allow-when-locked=true { spawn-sh "dms ipc brightness increment 5 '''"; }
+          XF86MonBrightnessDown allow-when-locked=true { spawn-sh "noctalia msg brightness-down"; }
+          XF86MonBrightnessUp allow-when-locked=true { spawn-sh "noctalia msg brightness-up"; }
 
 
           Print repeat=false { screenshot; }
@@ -118,8 +118,9 @@ in {
 
           Mod+BackSpace repeat=false { close-window; }
           Mod+Return repeat=false { spawn "footclient"; }
-          Mod+E repeat=false { spawn-sh "dms ipc spotlight toggle"; }
-          Mod+L repeat=false { spawn-sh "dms ipc lock lock"; }
+          Mod+E repeat=false { spawn-sh "noctalia msg panel-toggle launcher"; }
+          Mod+L repeat=false { spawn-sh "noctalia msg session lock"; }
+          Mod+V repeat=false { spawn-sh "noctalia msg panel-toggle clipboard"; }
 
           F11 repeat=false { fullscreen-window; }
           Mod+F repeat=false { maximize-column; }

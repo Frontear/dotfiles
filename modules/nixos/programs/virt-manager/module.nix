@@ -11,10 +11,14 @@ in {
     virtualisation.libvirtd = {
       enable = true;
 
-      # Enable the ability to share a folder with a guest.
-      qemu.vhostUserPackages = with pkgs; [
-        virtiofsd
-      ];
+      qemu = {
+        swtpm.enable = true; # Emulate TPM inside of VMs.
+
+        # Enable the ability to share a folder with a guest.
+        vhostUserPackages = [
+          pkgs.virtiofsd
+        ];
+      };
     };
   };
 }
