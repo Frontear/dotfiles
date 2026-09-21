@@ -6,7 +6,6 @@
 let
   inherit (inputs)
     home-manager
-    nixos-facter-modules
     nix-index-database
     stylix
     ;
@@ -21,7 +20,6 @@ in {
         })
 
         home-manager.nixosModules.default
-        nixos-facter-modules.nixosModules.facter
         ../../users
       ];
 

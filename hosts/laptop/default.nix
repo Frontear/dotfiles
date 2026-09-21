@@ -4,7 +4,7 @@
   ];
 
   config = {
-    facter.reportPath = ./facter.json;
+    hardware.facter.reportPath = ./facter.json;
 
     system.stateVersion = "25.05";
   };
