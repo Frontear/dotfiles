@@ -6,8 +6,8 @@
 let
   cfg = config.services.fwupd;
 
-  usingFacter = config.facter.reportPath != null;
-  isBaremetal = config.facter.detected.virtualisation.none.enable;
+  usingFacter = config.hardware.facter.reportPath != null;
+  isBaremetal = config.hardware.facter.detected.virtualisation.none.enable;
 in {
   config = lib.mkMerge [
     (lib.mkIf (usingFacter && isBaremetal) {

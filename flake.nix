@@ -1,7 +1,7 @@
 {
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -15,8 +15,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-facter-modules = {
-      url = "github:nix-community/nixos-facter-modules";
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware";
+
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-index-database = {

@@ -8,7 +8,7 @@ let
 
     # Used by all lib functions to immediately return false if this is false.
     facterGuard = config:
-      config.facter.reportPath != null;
+      config.hardware.facter.reportPath != null;
   };
 
   # NOTE: many of these definitions are incomplete, due to lacking hardware.
