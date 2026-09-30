@@ -79,8 +79,7 @@ in {
       # breakages from doing so.
       nix.channel.enable = lib.mkForce false;
 
-      nix.nixPath = lib.mkForce [ "${inputFarm}" ];
-      nix.settings.nix-path = lib.mkForce config.nix.nixPath;
+      nix.settings.nix-path = lib.mkForce [ "${inputFarm}" ];
     }
     {
       # Fully replace the flake registry with relevant inputs.
