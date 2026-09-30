@@ -10,9 +10,8 @@ in {
     { programs.nix-index.enable = lib.mkDefault true; }
 
     (lib.mkIf cfg.enable {
-      programs.command-not-found = {
-        enable = lib.mkForce false;
-      };
+      # Disable the `command-not-found` replacement functionality.
+      programs.nix-index.enableZshIntegration = false;
     })
   ];
 }
