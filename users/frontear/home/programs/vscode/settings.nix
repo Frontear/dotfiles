@@ -1,6 +1,8 @@
 {
   # ============================= VSCode Settings =============================
 
+  "chat.disableAIFeatures" = true;
+
   "editor.accessibilitySupport" = "off";
   "editor.cursorBlinking" = "phase";
   "editor.cursorSmoothCaretAnimation" = "on";
