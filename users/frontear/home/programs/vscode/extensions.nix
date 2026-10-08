@@ -50,10 +50,10 @@
   }
   {
     arch = "";
-    hash = "sha256-Ip9q7BroIVNsxbO/OcZuJWagYsYtV2xJhe0z0NFiR2U=";
+    hash = "sha256-ynCPFzne4YS4WNjQSmGky+e2IaE3SLxj6FkjKyLPcAs=";
     name = "vscode-eslint";
     publisher = "dbaeumer";
-    version = "3.0.21";
+    version = "3.0.34";
   }
   {
     arch = "";
@@ -85,10 +85,10 @@
   }
   {
     arch = "";
-    hash = "sha256-pFd1CTJL3xQ3HHzQs3f4R5f6xlCghNh8Kv+3AT/Qrqo=";
+    hash = "sha256-y8A3D/IEvBbYSj7mgwU2/AQ1WFb6DolasGThoDz8uEo=";
     name = "editorconfig";
     publisher = "editorconfig";
-    version = "0.18.1";
+    version = "0.18.2";
   }
   {
     arch = "";
@@ -120,10 +120,10 @@
   }
   {
     arch = "";
-    hash = "sha256-1AuxPO/Pj6Q+1qu4NctDpiGMERreXXNiciLRfN6cDns=";
+    hash = "sha256-/VWgQa4WwloVziDQ9xNzkI3crwJ6jDJgx0RQjjFWlmg=";
     name = "applescript";
     publisher = "idleberg";
-    version = "0.29.4";
+    version = "0.32.2";
   }
   {
     arch = "";
@@ -211,17 +211,17 @@
   }
   {
     arch = "";
-    hash = "sha256-/CctaLcG+dA2Cf69/ACeDKdRLsu/VUGbAxUbyhI0VyA=";
+    hash = "sha256-YJb0wojBdEPt/FWp+pNkAtPubVlyKdW0h2sh28/Ymmk=";
     name = "vscode-todo-highlight";
     publisher = "jgclark";
-    version = "2.0.8";
+    version = "2.2.5";
   }
   {
     arch = "";
-    hash = "sha256-epdEMPAkSo0IXsd+ozicI8bjPPquDKIzB3ONRUYWwn8=";
+    hash = "sha256-0pMMnYFX+Ghs42Tvfcv9QqwhrEhCjIa7+6xJ51Fa0Dk=";
     name = "nix-ide";
     publisher = "jnoortheen";
-    version = "0.5.5";
+    version = "0.5.13";
   }
   {
     arch = "";
@@ -232,10 +232,10 @@
   }
   {
     arch = "";
-    hash = "sha256-rZXRzPmu7IYmyRWANtpJp3wp0r/RwB7eGHEJa7hBvoQ=";
+    hash = "sha256-wDGvGKI+YDwkbYKV0ijnB3+NwWPZAuwLN4MpFV37KFs=";
     name = "language-haskell";
-    publisher = "justusadam";
-    version = "3.6.0";
+    publisher = "haskell";
+    version = "3.8.0";
   }
   {
     arch = "";
@@ -288,24 +288,24 @@
   }
   {
     arch = "linux-x64";
-    hash = "sha256-FzH5ADvCyM3DXRMwmJd+exVdqMU7+D+DmV78CzK/vys=";
+    hash = "sha256-tNgCPrYpliTk4bJH1hKfleoUPAWCTQsf6elFAb7G2CE=";
     name = "debugpy";
     publisher = "ms-python";
-    version = "2025.19.2026021801";
+    version = "2026.7.12731008";
   }
   {
     arch = "";
-    hash = "sha256-82zIUJBgjbBW0R6ExBLXGYYtYxm1vC7bz/3BvP3IIXA=";
+    hash = "sha256-PmydC6DGaA5u8o0a9cbhOETjmoceVATL+qrttc0NjPs=";
     name = "vscode-pylance";
     publisher = "ms-python";
-    version = "2026.1.1";
+    version = "2026.4.1";
   }
   {
     arch = "";
-    hash = "sha256-MibP2zqTwlXXVsXQOSuoi5SO8BskJC/AihrhJFg8tac=";
+    hash = "sha256-XD8iLG8HA9u5Y4CKQKLnmeAN4IFf1LGDvhTKuroxkHg=";
     name = "vsliveshare";
     publisher = "ms-vsliveshare";
-    version = "1.0.5959";
+    version = "1.1.122";
   }
   {
     arch = "";
@@ -316,10 +316,10 @@
   }
   {
     arch = "";
-    hash = "sha256-B2+yaKX/nhBLdeFDffwt4CmeWo+Jr4oMxcWBEaAhRtg=";
+    hash = "sha256-+nUVgxotaLH3i9At5A+WJgv+dO+wOiOMK95wJl4EtpY=";
     name = "material-icon-theme";
     publisher = "pkief";
-    version = "5.31.0";
+    version = "5.38.1";
   }
   {
     arch = "";
@@ -358,17 +358,17 @@
   }
   {
     arch = "";
-    hash = "sha256-zgCqKwnP7Fm655FPUkD5GL+/goaplST8507X890Tnhc=";
+    hash = "sha256-hGJbu/tRt1Du/OYuui7z/CINlMug/SlUQjPNy8Rvkxg=";
     name = "scala";
     publisher = "scala-lang";
-    version = "0.5.9";
+    version = "0.5.10";
   }
   {
     arch = "";
-    hash = "sha256-RSNcyoyrkVJsFp02aMDDZn51YBKohE+gy+bgHFP45v4=";
+    hash = "sha256-5yEfTSgcSv9SQILOu7hyfNcK+m5IBHKpLDjXXwOZb/I=";
     name = "ruby-lsp";
     publisher = "shopify";
-    version = "0.10.0";
+    version = "0.10.6";
   }
   {
     arch = "";
@@ -386,17 +386,17 @@
   }
   {
     arch = "";
-    hash = "sha256-AAakZeChN5HkhhqbGUWSMXm4Tbq7n+ydWutEDPUdRqQ=";
+    hash = "sha256-hbflpJznfxN6mmUkq9ZiyvOz/+KBJB6zPLALHSUWVtU=";
     name = "code-spell-checker";
     publisher = "streetsidesoftware";
-    version = "4.5.6";
+    version = "4.9.5";
   }
   {
     arch = "";
-    hash = "sha256-QSlmYzV7N/k8VhSOPfRqrPHp++6wVqgjnX9kAiyH+jo=";
+    hash = "sha256-DTcJtzOkSQKkscqM2XB9wQ7ljC4GP6xYi2D7i4/3l3U=";
     name = "code-spell-checker-canadian-english";
     publisher = "streetsidesoftware";
-    version = "1.1.31";
+    version = "1.1.32";
   }
   {
     arch = "";

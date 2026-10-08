@@ -261,7 +261,9 @@ in {
         widget."volume".show_label = false;
         widget."volume".mute_color = "on_surface";
 
+        widget."battery".display_mode = "graphic";
         widget."battery".show_label = false;
+        widget."battery".scale = 0.7;
       };
     };
   };
