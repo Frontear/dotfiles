@@ -22,7 +22,7 @@ in {
       # derivations internally use `pkgs.nix` in some form. Rather than
       # tracking state across the modules, we can overlay it here.
       nixpkgs.overlays = [(final: prev: {
-        nix = final.lixPackageSets.latest.lix;
+        nix = final.lixPackageSets.git.lix;
       })];
     }
     {
