@@ -3,32 +3,28 @@
   stdenv,
   fetchFromGitHub,
 
-  fetchpatch,
-
-  autoconf-archive,
-  autoreconfHook,
+  meson,
+  ninja,
   pkg-config,
+
+  pciutils,
 
   gettext,
   libnl,
   libtraceevent,
   libtracefs,
   ncurses,
-  pciutils,
-  zlib,
-
-  xset,
 }:
 
 stdenv.mkDerivation {
   pname = "powertop";
-  version = "2.15-unstable-2025-06-27";
+  version = "2.16.1-unstable-2026-10-23";
 
   src = fetchFromGitHub {
     owner = "fenrus75";
     repo = "powertop";
-    rev = "49045c0c8ca7d3f47b8e289a9436d5ab2f4e93d9";
-    hash = "sha256-OrDhavETzXoM6p66owFifKXv5wc48o7wipSypcorPmA=";
+    rev = "993dc340c43b51655fb43c4cfa64883348b30583";
+    hash = "sha256-ifo01yE3EMWBUSap5W9hUHtPQLAiX0qKc03N1hsELts=";
   };
 
   outputs = [
@@ -36,23 +32,9 @@ stdenv.mkDerivation {
     "man"
   ];
 
-  patches = [
-    # Prevents `--auto-tune` from affecting I/O devices like mouse and keyboard.
-    (fetchpatch {
-      url = "https://patch-diff.githubusercontent.com/raw/fenrus75/powertop/pull/164.diff";
-      hash = "sha256-qAsLMEnyDr04Xvkpzo51ozTnNAI3co2tENMQUv4jrsA=";
-    })
-
-    # Prevent random values from being printed if sysfs polling fails.
-    (fetchpatch {
-      url = "https://patch-diff.githubusercontent.com/raw/fenrus75/powertop/pull/183.patch";
-      hash = "sha256-ukSMRREXfjku7Fa3AyI7i+IN4CmQgQOz2tPJcJoofDM=";
-    })
-  ];
-
   nativeBuildInputs = [
-    autoconf-archive
-    autoreconfHook
+    meson
+    ninja
     pkg-config
   ];
 
@@ -62,14 +44,11 @@ stdenv.mkDerivation {
     libtraceevent
     libtracefs
     ncurses
-    pciutils
-    zlib
   ];
-
 
   postPatch = ''
     substituteInPlace src/main.cpp --replace-fail "/sbin/modprobe" "modprobe"
-    substituteInPlace src/calibrate/calibrate.cpp --replace-fail "/usr/bin/xset" "${lib.getExe xset}"
-    substituteInPlace src/tuning/bluetooth.cpp --replace-fail "/usr/bin/hcitool" "hcitool"
+    substituteInPlace src/lib.cpp \
+      --replace-fail "/usr/share/hwdata/pci.ids" "${pciutils}/share/pci.ids"
   '';
 }
