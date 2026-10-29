@@ -19,6 +19,11 @@
     programs.virt-manager.enable = true;
 
     services = {
+      # NTP daemon that's more suitable for laptops.
+      #
+      # see: https://discourse.nixos.org/t/why-are-we-using-systemd-timesyncd-by-default/74052
+      chrony.enable = true;
+
       # Use the fingerprint sensor on my laptop.
       #
       # TODO: detect from `facter.json`
