@@ -19,6 +19,9 @@
     programs.virt-manager.enable = true;
 
     services = {
+      # NTP daemon that's more suitable for laptops
+      chrony.enable = true;
+
       # Use the fingerprint sensor on my laptop.
       #
       # TODO: detect from `facter.json`
