@@ -41,11 +41,6 @@
     };
 
     zsh = {
-      initContent = ''
-        PS1='%B%F{green}[%n@%m %1~]%(#.#.$)%F{white}%b '
-        RPS1='%B%(?.%F{green}.%F{red})%?%f%b'
-      '';
-
       autosuggestion = {
         enable = true;
         strategy = [ "history" ];

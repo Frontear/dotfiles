@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -29,6 +30,9 @@
         userSettings = import ./settings.nix // {
           # TODO: these colors aren't amazing..
           "workbench.colorTheme" = lib.mkForce "Atomize";
+
+          # Ensure VSCode can render nerd font symbols in the terminal
+          "terminal.integrated.fontFamily" = "Symbols Nerd Font, ${config.stylix.fonts.monospace.name}";
         };
       };
     };
