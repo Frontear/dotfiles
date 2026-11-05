@@ -17,7 +17,7 @@ in {
     my.desktops.niri = {
       settings = ''
         output "eDP-1" {
-          scale 1.25
+          scale 2.0
         }
 
         input {
