@@ -5,7 +5,7 @@
 {
   options = {
     my.defaults = {
-      enable = lib.mkEnableOption "defaults";
+      enable = lib.mkDefaultEnableOption "defaults";
     };
   };
 }

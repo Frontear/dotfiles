@@ -9,8 +9,6 @@
   ];
 
   config = {
-    my.defaults.enable = true;
-
     # Use the latest xanmod kernel, mainly for the Clear Linux patches
     boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
