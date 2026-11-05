@@ -18,7 +18,7 @@ in {
           "${nixos-hardware}/common/pc/laptop"
           "${nixos-hardware}/common/gpu/intel/tiger-lake"
 
-          ../../hosts/laptop
+          ../../hosts/dell-inspiron-14-5410
         ];
       }
       {
