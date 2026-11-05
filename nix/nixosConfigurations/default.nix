@@ -15,10 +15,9 @@ in {
       {
         hostName = "LAPTOP-3DT4F02";
         modules = [
-          "${nixos-hardware}/common/pc/laptop"
-          "${nixos-hardware}/common/gpu/intel/tiger-lake"
+          "${nixos-hardware}/framework/13-inch/intel-core-ultra-series3"
 
-          ../../hosts/dell-inspiron-14-5410
+          ../../hosts/framework-13-pro
         ];
       }
       {
