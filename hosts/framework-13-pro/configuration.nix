@@ -9,9 +9,6 @@
   ];
 
   config = {
-    # Use the latest xanmod kernel, mainly for the Clear Linux patches
-    boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
-
     services = {
       # NTP daemon that's more suitable for laptops.
       #

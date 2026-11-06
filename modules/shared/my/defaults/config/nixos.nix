@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -11,5 +12,8 @@ in {
     console.keyMap = "us";
     i18n.defaultLocale = "en_CA.UTF-8";
     time.timeZone = "America/Toronto";
+
+    # XanMod kernel has Clear Linux patches
+    boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
   };
 }
