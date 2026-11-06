@@ -15,6 +15,7 @@
           "nix-benchmark"
           "nixos-clean"
           "nixos-rollback"
+          "update-dotfiles"
         ];
     };
   };
