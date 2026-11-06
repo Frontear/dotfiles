@@ -5,10 +5,11 @@
 {
   imports = [
     ./hardware
-    ./specialisations
   ];
 
   config = {
+    my.desktops.gnome.enable = true;
+
     services = {
       # NTP daemon that's more suitable for laptops.
       #
