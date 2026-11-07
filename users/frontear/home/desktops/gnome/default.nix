@@ -26,9 +26,12 @@ in {
           ambient-enabled = false;
         };
 
-        # Show weekday on top bar
         "org/gnome/desktop/interface" = {
+          # Show weekday on top bar
           clock-show-weekday = true;
+
+          # Disable activity overview on touching the top-left corner
+          enable-hot-corners = false;
         };
 
         # Allow GNOME to get my location, mostly for the night light
@@ -43,6 +46,22 @@ in {
 
           # Requires location information to get sunrise/sunset timings
           night-light-schedule-automatic = true;
+        };
+
+        "org/gnome/settings-daemon/plugins/media-keys" = {
+          custom-keybindings = [
+            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+          ];
+
+          # Disable this shortcut (was Super + F1)
+          help = [];
+        };
+
+        # New shortcut to open the terminal with Super + Return
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+          binding = "<Super>Return";
+          command = "kgx";
+          name = "Open Console";
         };
       };
     };
