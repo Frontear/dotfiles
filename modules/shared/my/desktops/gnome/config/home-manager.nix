@@ -22,5 +22,10 @@ in {
         unique = true;
       }
     ];
+
+    # Prevent the GNOME initial setup screen from ever appearing.
+    xdg.configFile."gnome-initial-setup-done".text = ''
+      yes
+    '';
   };
 }
