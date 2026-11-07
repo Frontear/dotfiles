@@ -213,7 +213,7 @@ in {
         bar.default.radius_bottom_left = 8;
         bar.default.radius_bottom_right = 8;
         bar.default.concave_edge_corners = true;
-        bar.default.border = "outline";
+        bar.default.border = "outline_variant";
         bar.default.border_width = 0.0;
 
         ## ===== Effects =====

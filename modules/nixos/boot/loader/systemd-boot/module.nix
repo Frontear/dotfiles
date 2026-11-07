@@ -10,7 +10,7 @@ in {
     # https://wiki.archlinux.org/title/Silent_boot
     boot = {
       consoleLogLevel = 3;
-      loader.timeout = 0;
+      loader.timeout = 5;
 
       kernelParams = [
         "quiet"

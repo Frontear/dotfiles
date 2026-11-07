@@ -8,7 +8,23 @@
   coreutils,
   hyperfine,
 }:
-stdenvNoCC.mkDerivation {
+let
+  nixDrvs =
+    nixVersions
+    |> lib.attrValues
+    |> lib.map lib.tryEval
+    |> lib.map (x: x.value)
+    |> lib.filter lib.isDerivation
+    |> lib.unique;
+  lixDrvs =
+    lixPackageSets
+    |> lib.attrValues
+    |> lib.map lib.tryEval
+    |> lib.map (x: x.value)
+    |> lib.filter (x: lib.isAttrs x && lib.hasAttr "lix" x)
+    |> lib.map (x: x.lix)
+    |> lib.unique;
+in stdenvNoCC.mkDerivation {
   pname = "nix-benchmark";
   version = "0.1.0";
 
@@ -20,14 +36,7 @@ stdenvNoCC.mkDerivation {
   };
 
   env = {
-    nixBins = lib.escapeShellArgs (map lib.getExe [
-      nixVersions.nix_2_31
-      nixVersions.nix_2_34
-      nixVersions.nix_2_35
-      nixVersions.git
-      lixPackageSets.lix_2_95.lix
-      lixPackageSets.git.lix
-    ]);
+    nixBins = lib.escapeShellArgs (map lib.getExe (nixDrvs ++ lixDrvs));
 
     path = lib.makeBinPath [
       coreutils

@@ -4,6 +4,7 @@
 {
   imports = [
     ./neovim
+    ./starship
     ./vscode
   ];
 }

@@ -59,7 +59,7 @@ in {
       };
 
       image = ./assets/bg_dark.jpg;
-      imageScalingMode = "fit";
+      imageScalingMode = "fill";
 
       polarity = "dark";
     };

@@ -7,6 +7,18 @@
 let
   cfg = config.my.programs.noctalia;
   fmt = pkgs.formats.toml { };
+
+  # Stylix `imageScalingMode` enums do not translate 1-to-1 in Noctalia, so
+  # this is a simple translation map.
+  wallpaperFillMode = {
+    "center" = "center";
+    "fill" = "crop";
+    "fit" = "fit";
+    "stretch" = "stretch";
+    # TODO: figure out what these correspond to.
+    # "???" = "repeat";
+    # "???" = "span";
+  };
 in {
   config = lib.mkIf cfg.enable {
     home.packages = [
@@ -28,7 +40,7 @@ in {
         wallpaper = {
           enabled = true;
 
-          fill_mode = config.stylix.imageScalingMode;
+          fill_mode = wallpaperFillMode."${config.stylix.imageScalingMode}";
 
           # TODO: does not seem to apply. The stateful data in ~/.local/state
           # gets created with the Noctalia default, even if I delete the state.

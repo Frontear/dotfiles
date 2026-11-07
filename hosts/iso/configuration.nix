@@ -11,8 +11,6 @@
   ];
 
   config = {
-    my.defaults.enable = true;
-
     my.desktops.gnome.enable = true;
 
     services.displayManager.autoLogin.enable = true;

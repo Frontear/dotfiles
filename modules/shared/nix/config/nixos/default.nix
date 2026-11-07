@@ -22,19 +22,12 @@ in {
       # derivations internally use `pkgs.nix` in some form. Rather than
       # tracking state across the modules, we can overlay it here.
       nixpkgs.overlays = [(final: prev: {
-        nix = final.lixPackageSets.latest.lix;
+        nix = final.lixPackageSets.git.lix;
       })];
     }
     {
       # Use github:viperML/nh as our "nix wrapper" program.
       programs.nh.enable = true;
-      # TODO: remove when the issue regarding specialisations not being setup
-      # is fixed upstream.
-      #
-      # see: https://github.com/nix-community/nh/issues/586
-      programs.nh.package = pkgs.nh.override {
-        nh-unwrapped = pkgs.callPackage ./nh-unwrapped-package.nix {};
-      };
 
       # Set the system Nix package to our custom wrapper, which provides
       # instant access to all `pkgs` and `lib` attributes.
