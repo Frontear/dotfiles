@@ -211,10 +211,10 @@
   }
   {
     arch = "";
-    hash = "sha256-YJb0wojBdEPt/FWp+pNkAtPubVlyKdW0h2sh28/Ymmk=";
+    hash = "sha256-YcnGXDr0P6SWPN6S4NHpGL/v+nySVBS3sYAao0tADQ8=";
     name = "vscode-todo-highlight";
     publisher = "jgclark";
-    version = "2.2.5";
+    version = "2.3.0";
   }
   {
     arch = "";
@@ -288,17 +288,17 @@
   }
   {
     arch = "linux-x64";
-    hash = "sha256-tNgCPrYpliTk4bJH1hKfleoUPAWCTQsf6elFAb7G2CE=";
+    hash = "sha256-vbkj5hwCpLxFSeBaoO8sbR52TMosorz1DcqraRZBnsg=";
     name = "debugpy";
     publisher = "ms-python";
-    version = "2026.7.12731008";
+    version = "2026.7.13061008";
   }
   {
     arch = "";
-    hash = "sha256-PmydC6DGaA5u8o0a9cbhOETjmoceVATL+qrttc0NjPs=";
+    hash = "sha256-itup/szNRoSgloxUiU8GF5QPGyaFtrWdsKhHLRz7JSA=";
     name = "vscode-pylance";
     publisher = "ms-python";
-    version = "2026.4.1";
+    version = "2026.4.101";
   }
   {
     arch = "";
@@ -316,10 +316,10 @@
   }
   {
     arch = "";
-    hash = "sha256-+nUVgxotaLH3i9At5A+WJgv+dO+wOiOMK95wJl4EtpY=";
+    hash = "sha256-VbVl8gCIGr/YB7r5vlL85F/VL+8BO6cbD4OUmEzhrgY=";
     name = "material-icon-theme";
     publisher = "pkief";
-    version = "5.38.1";
+    version = "5.40.0";
   }
   {
     arch = "";
@@ -365,10 +365,10 @@
   }
   {
     arch = "";
-    hash = "sha256-5yEfTSgcSv9SQILOu7hyfNcK+m5IBHKpLDjXXwOZb/I=";
+    hash = "sha256-dEfBaXvAxI9JdAMBdZRZ1Fk/QjaSZPTs/okE8FGcQNU=";
     name = "ruby-lsp";
     publisher = "shopify";
-    version = "0.10.6";
+    version = "0.10.8";
   }
   {
     arch = "";
@@ -386,17 +386,17 @@
   }
   {
     arch = "";
-    hash = "sha256-hbflpJznfxN6mmUkq9ZiyvOz/+KBJB6zPLALHSUWVtU=";
+    hash = "sha256-C1h6OMTHiIenghWPcnu9rd+rLerjzg2A77q0DVZHVjg=";
     name = "code-spell-checker";
     publisher = "streetsidesoftware";
-    version = "4.9.5";
+    version = "4.10.0";
   }
   {
     arch = "";
-    hash = "sha256-DTcJtzOkSQKkscqM2XB9wQ7ljC4GP6xYi2D7i4/3l3U=";
+    hash = "sha256-/4Rmxv74ZCZ00FB/XCiXM5NvOCOdhrzT/JhyiiQOPII=";
     name = "code-spell-checker-canadian-english";
     publisher = "streetsidesoftware";
-    version = "1.1.32";
+    version = "2.0.1";
   }
   {
     arch = "";
