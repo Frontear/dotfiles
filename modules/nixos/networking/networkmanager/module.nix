@@ -6,6 +6,10 @@
 }:
 let
   cfg = config.networking.networkmanager;
+
+  blocklist = pkgs.concatText "blocklist" [
+    "${pkgs.stevenblack-blocklist}/alternates/fakenews-gambling-porn/hosts"
+  ];
 in {
   config = lib.mkIf cfg.enable {
     my.persist.directories = [
@@ -36,17 +40,6 @@ in {
     networking.modemmanager.enable = lib.mkForce false;
 
     networking.networkmanager = {
-      # Throw the Cloudflare DNS servers _before_ any DHCP ones. This will
-      # preferentially use Cloudflare for any DNS queries, and any queries
-      # that cannot be resolved through Cloudflare will simply try the next
-      # best DNS servers.
-      insertNameservers = [
-        "1.1.1.1"
-        "1.0.0.1"
-        "2606:4700:4700::1111"
-        "2606:4700:4700::1001"
-      ];
-
       # OpenVPN plugin for the school VPN service.
       plugins = with pkgs; [
         networkmanager-openvpn
@@ -57,13 +50,35 @@ in {
       wifi.powersave = lib.mkDefault false;
     };
 
-    # Amazing curated list of hosts to throw into `/etc/hosts`.
-    #
-    # see: https://github.com/StevenBlack/hosts
-    networking.stevenblack = {
+    # Use `dnsmasq` as our local DNS resolver to accomplish two things.
+    # Firstly, it will use the Cloudflare DNS servers to route DNS requests,
+    # and secondly, it will block connections in StevenBlack/hosts without
+    # needing to add them to `/etc/hosts`.
+    services.dnsmasq = {
       enable = true;
 
-      block = [ "fakenews" "gambling" "porn" ];
+      settings = {
+        # Force `dnsmasq` to act locally only.
+        bind-interfaces = true;
+        listen-address = [
+          "127.0.0.1"
+          "::1"
+        ];
+
+        # Force `dnsmasq` to preferentially use Cloudflare's DNS servers first.
+        strict-order = true;
+        server = [
+          "1.1.1.1"
+          "1.0.0.1"
+          "2606:4700:4700::1111"
+          "2606:4700:4700::1001"
+        ];
+
+        # Blocklist of known bad connections.
+        addn-hosts = "${blocklist}";
+
+        cache-size = 10000; # default of 150 is too small
+      };
     };
   };
 }
