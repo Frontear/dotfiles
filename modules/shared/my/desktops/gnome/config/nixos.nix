@@ -16,10 +16,15 @@ in {
       desktopManager.gnome.enable = true;
       displayManager.gdm.enable = true;
 
+      # Replace `gnome-keyring` with `oo7`, a desktop independent secrets
+      # implementation, as the former is unmaintained.
+      gnome.gnome-keyring.enable = false;
+      oo7.enable = true;
+
       # Replace power-profiles-daemon with TuneD, which has a shim that offers
       # PPD compatibility.
-      tuned.enable = true;
       power-profiles-daemon.enable = false;
+      tuned.enable = true;
     };
 
     # TODO: de-duplicate from Niri
