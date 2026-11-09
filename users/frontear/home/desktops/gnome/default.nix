@@ -34,9 +34,14 @@ in {
           enable-hot-corners = false;
         };
 
-        # Allow GNOME to get my location, mostly for the night light
+        # Allow GNOME to get my location
         "org/gnome/system/location" = {
           enabled = true;
+        };
+
+        # Grab my location automatically for weather
+        "org/gnome/shell/weather" = {
+          automatic-location = true;
         };
 
         # Configuring the night light
