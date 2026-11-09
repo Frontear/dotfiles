@@ -68,6 +68,14 @@ in {
           command = "kgx";
           name = "Open Console";
         };
+
+        "org/gnome/shell" = {
+          # Only show these apps on the dock
+          favorite-apps = [
+            "microsoft-edge.desktop"
+            "org.gnome.Nautilus.desktop"
+          ];
+        };
       };
     };
   };
