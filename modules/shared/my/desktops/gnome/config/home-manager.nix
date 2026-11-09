@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -27,5 +28,14 @@ in {
     xdg.configFile."gnome-initial-setup-done".text = ''
       yes
     '';
+
+    dconf = {
+      settings = {
+        "org/gnome/shell" = {
+          # Prevent GNOME Tour from appearing on first startup.
+          welcome-dialog-last-shown-version = pkgs.gnome-shell.version;
+        };
+      };
+    };
   };
 }
