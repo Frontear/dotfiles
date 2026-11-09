@@ -21,7 +21,7 @@ in {
       # This is a better way to propagate the Nix package change, as many
       # derivations internally use `pkgs.nix` in some form. Rather than
       # tracking state across the modules, we can overlay it here.
-      nixpkgs.overlays = [(final: prev: {
+      nixpkgs.overlays = [(final: _: {
         nix = final.lixPackageSets.git.lix;
       })];
     }
