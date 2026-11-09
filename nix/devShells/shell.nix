@@ -1,8 +1,12 @@
 {
   mkShellNoCC,
 
-  packages ? [],
+  nixd,
+
+  scripts ? [],
 }:
 mkShellNoCC {
-  inherit packages;
+  packages = scripts ++ [
+    nixd
+  ];
 }

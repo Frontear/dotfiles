@@ -9,7 +9,7 @@
 
   perSystem = { self', pkgs, ... }: {
     devShells.default = pkgs.callPackage ./shell.nix {
-      packages =
+      scripts =
         self'.packages
         |> lib.attrVals [
           "nix-benchmark"
