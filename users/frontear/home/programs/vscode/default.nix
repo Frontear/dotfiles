@@ -19,6 +19,7 @@
           pkgs.vscode-utils.extensionsFromVscodeMarketplace (import ./extensions.nix)
           ++ (with pkgs.vscode-extensions; [
             # TODO: prefer Nixpkgs extensions when possible
+            github.vscode-github-actions
             ms-python.python
             ms-vscode.cmake-tools
             ms-vscode.cpptools
