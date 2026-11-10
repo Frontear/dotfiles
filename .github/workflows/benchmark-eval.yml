@@ -29,3 +29,12 @@ jobs:
         run: |
           nix build .#nix-benchmark &> /dev/null # only see benchmark output
           sudo ./result/bin/nix-benchmark --flake '.#nixosConfigurations.LAPTOP-3DT4F02.config.system.build.toplevel'
+
+      - name: "Commit Benchmark Result"
+        uses: planetscale/ghcommit-action@v0.2.22
+        with:
+          commit_message: "feat: publish latest benchmark results"
+          repo: ${{ github.repository }}
+          branch: ${{ github.head_ref || github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
