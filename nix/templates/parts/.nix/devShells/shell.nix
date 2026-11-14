@@ -1,7 +1,13 @@
 {
-  mkShellNoCC,
+  mkShell,
+
+  app,
 }:
-mkShellNoCC {
+mkShell {
+  inputsFrom = [
+    app
+  ];
+
   packages = [
   ];
 }
