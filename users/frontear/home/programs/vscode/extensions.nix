@@ -211,10 +211,10 @@
   }
   {
     arch = "linux-x64";
-    hash = "sha256-vbkj5hwCpLxFSeBaoO8sbR52TMosorz1DcqraRZBnsg=";
+    hash = "sha256-nwps6giU4qTxuVroR0iLUP9yBn9eUcV0QyEhe2Uuff8=";
     name = "debugpy";
     publisher = "ms-python";
-    version = "2026.7.13061008";
+    version = "2026.7.13161007";
   }
   {
     arch = "";
