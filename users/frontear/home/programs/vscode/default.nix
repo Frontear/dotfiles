@@ -20,6 +20,7 @@
           ++ [
             pkgs.vscode-extensions."13xforever".language-x86-64-assembly
           ] ++ (with pkgs.vscode-extensions; [
+            astro-build.astro-vscode
             bbenoist.nix
             codezombiech.gitignore
             dbaeumer.vscode-eslint
@@ -45,6 +46,7 @@
             shopify.ruby-lsp
             streetsidesoftware.code-spell-checker
             tamasfe.even-better-toml
+            unifiedjs.vscode-mdx
             visualstudioexptteam.intellicode-api-usage-examples
             visualstudioexptteam.vscodeintellicode
           ]);
