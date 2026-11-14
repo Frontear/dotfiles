@@ -5,6 +5,7 @@
   imports = [
     ./checks
     ./devShells
+    ./formatter
     ./lib
     ./nixosConfigurations
     ./nixosModules
