@@ -7,15 +7,15 @@ rustPlatform.buildRustPackage (finalAttrs: {
   version = "0.1.0";
 
   src = with lib.fileset; toSource {
-    root = ../..;
+    root = ../../app;
     fileset = unions [
-      ../../src
-      ../../Cargo.lock
-      ../../Cargo.toml
+      ../../app/src
+      ../../app/Cargo.lock
+      ../../app/Cargo.toml
     ];
   };
 
-  cargoLock.lockFile = ../../Cargo.lock;
+  cargoLock.lockFile = ../../app/Cargo.lock;
 
   meta = with lib; {
   };

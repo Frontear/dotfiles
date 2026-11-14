@@ -7,7 +7,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   version = "0.1.0";
 
   src = with lib.fileset; toSource {
-    root = ../..;
+    root = ../../app;
     fileset = unions [
     ];
   };

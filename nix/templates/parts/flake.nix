@@ -6,7 +6,7 @@
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } {
     imports = [
-      ./nix
+      ./.nix
     ];
 
     systems = inputs.nixpkgs.lib.systems.flakeExposed;

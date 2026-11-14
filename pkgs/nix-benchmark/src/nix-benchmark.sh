@@ -50,11 +50,10 @@ if [ -z "$flakeRef" ]; then
   exit 1
 fi
 
-benchmarkNixEval() {
+constructHyperfineNixCmd() {
   local nixBinary="$1"
+  local nixName="$($nixBinary --version 2> /dev/null | head -n1)"
   local nixEvalArgs="eval --raw --option 'eval-cache' 'false' --option 'extra-experimental-features'"
-
-  local name="$($nixBinary --version 2> /dev/null | head -n1)"
 
   # Both Nix and Lix support the pipe (`|>`) operator through an optional
   # experimental feature toggle. However, they both use different names for
@@ -66,17 +65,28 @@ benchmarkNixEval() {
   #
   # In order to respect this difference, I append to the experimental feature
   # depending on which version of Nix is being used for benchmarking.
-  if [[ "$name" == "nix (Lix, like Nix)"* ]]; then
+  if [[ "$nixName" == "nix (Lix, like Nix)"* ]]; then
     nixEvalArgs="$nixEvalArgs 'pipe-operator'"
   else
     nixEvalArgs="$nixEvalArgs 'pipe-operators'"
   fi
 
-  local cmd="$nixBinary $nixEvalArgs '$flakeRef.drvPath'"
+  local nixCmd="$nixBinary $nixEvalArgs '$flakeRef.drvPath'"
 
-  hyperfine --warmup 4 --runs 8 --command-name "$name" "$cmd"
+  echo "--command-name \"$nixName\" \"$nixCmd\""
 }
 
-for bin in "${nixBins[@]}"; do
-  benchmarkNixEval "$bin"
-done
+benchmarkNixEval() {
+  mkdir -p assets/benchmarks
+
+  local hyperfineCmd="hyperfine --warmup 4 --runs 8 --export-markdown=assets/benchmarks/$(date "+%Y-%m-%d").md"
+
+  for bin in "${nixBins[@]}"; do
+    hyperfineCmd="$hyperfineCmd $(constructHyperfineNixCmd "$bin")"
+  done
+
+  # To preserve the quotes constructed by `constructHyperfineNixCmd`
+  $SHELL -c "$hyperfineCmd"
+}
+
+benchmarkNixEval
