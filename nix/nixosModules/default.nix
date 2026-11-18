@@ -6,6 +6,7 @@
 let
   inherit (inputs)
     home-manager
+    lanzaboote
     nix-index-database
     stylix
     ;
@@ -20,6 +21,8 @@ in {
         })
 
         home-manager.nixosModules.default
+        lanzaboote.nixosModules.default
+
         ../../users
       ];
 

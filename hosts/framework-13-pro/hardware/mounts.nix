@@ -4,7 +4,7 @@
 {
   config = {
     boot.loader.efi.canTouchEfiVariables = true;
-    boot.loader.systemd-boot.enable = true;
+    boot.lanzaboote.enable = true;
 
     fileSystems."/boot" = {
       device = "/dev/disk/by-partlabel/boot";

@@ -10,7 +10,7 @@ Declarative and reproducible configuration for my systems, powered by NixOS ‚ùÑÔ
     $ nix build github:Frontear/dotfiles#ISO-3DT4F02.config.system.build.isoImage
     ```
 
-    Then, copy it to a USB drive and boot from it.
+    Then, copy it to a USB drive and boot from it. Make sure to **disable** Secure Boot, you will re-enable it later.
 
 2. Create the expected partition table using the following script:
     ```bash
@@ -60,6 +60,8 @@ Declarative and reproducible configuration for my systems, powered by NixOS ‚ùÑÔ
    ```console
    $ nixos-install --flake "github:Frontear/dotfiles#<HOST>" --no-channel-copy --no-root-password
    ```
+
+6. Re-enable Secure Boot by following the [Lanzaboote guide](https://nix-community.github.io/lanzaboote/getting-started/enable-secure-boot.html).
 
 <!--
 ## Usage
