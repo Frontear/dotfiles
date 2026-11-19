@@ -38,13 +38,20 @@ Declarative and reproducible configuration for my systems, powered by NixOS ‚ùÑÔ
     sfdisk --part-label "$DISK" 2 "nix"
     ```
 
-3. Format the created partitions with the expected fs types:
+3. Setup LUKS on `/dev/disk/by-partlabel/nix`, then mount it:
+
+    ```console
+    $ cryptsetup luksFormat /dev/disk/by-partlabel/nix
+    $ cryptsetup luksOpen /dev/disk/by-partlabel/nix crypted
+    ```
+
+    Then, format the created partitions with the expected fs types:
 
     ```console
     $ wipefs --all /dev/disk/by-partlabel/boot
-    $ wipefs --all /dev/disk/by-partlabel/nix
+    $ wipefs --all /dev/mapper/crypted
     $ mkfs.fat -F 32 /dev/disk/by-partlabel/boot
-    $ mkfs.btrfs -n 64k /dev/disk/by-partlabel/nix
+    $ mkfs.btrfs -n 64k /dev/mapper/crypted
     ```
 
 4. Mount them into `/mnt` for the installer:
@@ -52,7 +59,7 @@ Declarative and reproducible configuration for my systems, powered by NixOS ‚ùÑÔ
     ```console
     $ mount -t tmpfs -o mode=0755,noatime,noswap,size=1G tmpfs /mnt --mkdir
     $ mount -o dmask=0022,fmask=0022,noatime /dev/disk/by-partlabel/boot /mnt/boot --mkdir
-    $ mount -o compress=zstd:15,noatime /dev/disk/by-partlabel/nix /mnt/nix --mkdir
+    $ mount -o compress=zstd:15,noatime /dev/mapper/crypted /mnt/nix --mkdir
     ```
 
 5. Install configuration to target root in `/mnt`:
@@ -61,7 +68,17 @@ Declarative and reproducible configuration for my systems, powered by NixOS ‚ùÑÔ
    $ nixos-install --flake "github:Frontear/dotfiles#<HOST>" --no-channel-copy --no-root-password
    ```
 
+   You can now exit the Live ISO and boot into the real system.
+
 6. Re-enable Secure Boot by following the [Lanzaboote guide](https://nix-community.github.io/lanzaboote/getting-started/enable-secure-boot.html).
+
+   Then, enroll the LUKS unlock to the TPM device, on PCRS 7:
+
+   ```console
+   $ systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=7 /dev/disk/by-partlabel/nix
+   ```
+
+   You will need to re-run this on firmware updates, especially ones that modify the Secure Boot database.
 
 <!--
 ## Usage
