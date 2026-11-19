@@ -25,7 +25,7 @@ in {
       enable = true;
 
       settings.refresh-tty.header = ''
-        host * exec "${lib.getExe' cfg.package "gpg-connect-agent"} UPDATESTARTUPTTY /bye"
+        Match host * exec "${lib.getExe' cfg.package "gpg-connect-agent"} UPDATESTARTUPTTY /bye"
       '';
     };
 
