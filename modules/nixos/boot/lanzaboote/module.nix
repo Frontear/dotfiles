@@ -21,7 +21,7 @@ in {
 
     boot = {
       consoleLogLevel = 3;
-      loader.timeout = 5; # TODO: fix devices not showing menu when this is 0
+      loader.timeout = 0;
 
       kernelParams = [
         "quiet"
