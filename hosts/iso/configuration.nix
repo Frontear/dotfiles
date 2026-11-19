@@ -29,6 +29,14 @@
       inputs.nixos-facter.packages.nixos-facter
     ];
 
+    # Running `sudo nixos-install` on the live ISO can fail when `use-cgroups`
+    # is enabled. By proxy, `auto-allocate-uids` fails to work without cgroups,
+    # so we need to disable both.
+    nix.settings = {
+      auto-allocate-uids = lib.mkForce false;
+      use-cgroups = lib.mkForce false;
+    };
+
     # Override `defaultPackages` to remove a couple of unnecessary packages.
     # Mainly removing `pkgs.firefox` (since we have Microsoft Edge), and
     # `pkgs.vim` and `pkgs.nano` (since we have Neovim).
