@@ -13,5 +13,5 @@ if [ ! -f $PWD/flake.lock ]; then
     --override-input nixpkgs github:NixOS/nixpkgs/$NIXPKGS_REF
 fi
 
-watch_dir nix
+watch_dir .nix
 use flake

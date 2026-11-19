@@ -4,7 +4,7 @@
 {
   config = {
     boot.loader.efi.canTouchEfiVariables = true;
-    boot.loader.systemd-boot.enable = true;
+    boot.lanzaboote.enable = true;
 
     fileSystems."/boot" = {
       device = "/dev/disk/by-partlabel/boot";
@@ -14,6 +14,9 @@
 
 
     my.persist.enable = true;
+
+    boot.initrd.luks.devices."crypted".device = "/dev/disk/by-partlabel/nix";
+
     fileSystems = {
       "/" = {
         device = "tmpfs";
@@ -22,7 +25,7 @@
       };
 
       "/nix" = {
-        device = "/dev/disk/by-partlabel/nix";
+        device = "/dev/mapper/crypted";
         fsType = "btrfs";
         options = [ "noatime" "compress=zstd:15" ];
       };

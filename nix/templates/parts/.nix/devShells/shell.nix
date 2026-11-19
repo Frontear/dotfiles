@@ -1,10 +1,13 @@
 {
   mkShell,
 
-  default,
+  app,
 }:
 mkShell {
   inputsFrom = [
-    default
+    app
+  ];
+
+  packages = [
   ];
 }

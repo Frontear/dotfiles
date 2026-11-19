@@ -13,11 +13,29 @@
   config = {
     my.desktops.gnome.enable = true;
 
+    # Use the long-term variant of the XanMod kernel to ensure the ZFS kernel
+    # module is not broken. It matters here a lot since the ISO is built with
+    # ZFS support, and I don't really know how to remove it, nor do I think
+    # I want to.
+    #
+    # The latest XanMod kernel that `my.defaults` sets doesn't always compile
+    # with the ZFS package. That's why we use the long-term variant, which
+    # should usually always have the package available since its so old.
+    boot.kernelPackages = lib.mkForce pkgs.linuxPackages_xanmod;
+
     services.displayManager.autoLogin.enable = true;
 
     environment.systemPackages = [
       inputs.nixos-facter.packages.nixos-facter
     ];
+
+    # Running `sudo nixos-install` on the live ISO can fail when `use-cgroups`
+    # is enabled. By proxy, `auto-allocate-uids` fails to work without cgroups,
+    # so we need to disable both.
+    nix.settings = {
+      auto-allocate-uids = lib.mkForce false;
+      use-cgroups = lib.mkForce false;
+    };
 
     # Override `defaultPackages` to remove a couple of unnecessary packages.
     # Mainly removing `pkgs.firefox` (since we have Microsoft Edge), and
