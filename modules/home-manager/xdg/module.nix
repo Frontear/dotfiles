@@ -5,6 +5,10 @@
 }:
 let
   dirs = [
+    "~/.cache/thumbnails"
+
+    "~/.local/share/Trash"
+
     "~/Desktop"
     "~/Documents"
     "~/Downloads"
