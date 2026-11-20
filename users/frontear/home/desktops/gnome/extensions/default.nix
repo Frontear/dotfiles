@@ -1,0 +1,8 @@
+{
+  ...
+}:
+{
+  imports = [
+    ./better-tray-icons
+  ];
+}

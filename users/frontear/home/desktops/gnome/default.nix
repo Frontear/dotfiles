@@ -7,6 +7,7 @@ let
   cfg = config.my.desktops.gnome;
 in {
   imports = [
+    ./extensions
     ./stylix
   ];
 

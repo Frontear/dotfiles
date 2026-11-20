@@ -34,18 +34,25 @@ in {
       files = mkPersist persistFiles;
     };
 
-    # Prevent the GNOME initial setup screen from ever appearing.
-    xdg.configFile."gnome-initial-setup-done".text = ''
-      yes
-    '';
-
     dconf = {
       settings = {
         "org/gnome/shell" = {
+          # Enable all extensions that the user configured
+          enabled-extensions = cfg.extensions
+            # TODO: error when invalid package given?
+            |> lib.map (drv: drv.extensionUuid);
+
           # Prevent GNOME Tour from appearing on first startup.
           welcome-dialog-last-shown-version = pkgs.gnome-shell.version;
         };
       };
     };
+
+    home.packages = cfg.extensions;
+
+    # Prevent the GNOME initial setup screen from ever appearing.
+    xdg.configFile."gnome-initial-setup-done".text = ''
+      yes
+    '';
   };
 }
