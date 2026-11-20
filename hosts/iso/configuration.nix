@@ -12,6 +12,10 @@
 
   config = {
     my.defaults = {
+      # Both of these options are only relevant for installed systems.
+      useBootloader = false;
+      useFilesystems = false;
+
       # The ISO comes with the ZFS kernel module, which usually isn't able to
       # work against the latest kernels. Since this option sets the kernel
       # to XanMod latest, disable it.

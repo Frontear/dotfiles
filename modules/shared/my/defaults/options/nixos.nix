@@ -16,6 +16,8 @@ in {
     my.defaults = {
       enable = lib.mkDefaultEnableOption "defaults";
 
+      useBootloader = mkUseOption {};
+      useFilesystems = mkUseOption {};
       useKernel = mkUseOption {};
     };
   };
