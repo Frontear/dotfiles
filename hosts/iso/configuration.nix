@@ -11,17 +11,14 @@
   ];
 
   config = {
-    my.desktops.gnome.enable = true;
+    my.defaults = {
+      # The ISO comes with the ZFS kernel module, which usually isn't able to
+      # work against the latest kernels. Since this option sets the kernel
+      # to XanMod latest, disable it.
+      useKernel = false;
+    };
 
-    # Use the long-term variant of the XanMod kernel to ensure the ZFS kernel
-    # module is not broken. It matters here a lot since the ISO is built with
-    # ZFS support, and I don't really know how to remove it, nor do I think
-    # I want to.
-    #
-    # The latest XanMod kernel that `my.defaults` sets doesn't always compile
-    # with the ZFS package. That's why we use the long-term variant, which
-    # should usually always have the package available since its so old.
-    boot.kernelPackages = lib.mkForce pkgs.linuxPackages_xanmod;
+    my.desktops.gnome.enable = true;
 
     services.displayManager.autoLogin.enable = true;
 
