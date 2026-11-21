@@ -267,10 +267,10 @@
   }
   {
     arch = "";
-    hash = "sha256-qPszeI4MIrYNUq+G6PFXPe0IfKJVixZAKT3HKcNnFYU=";
+    hash = "sha256-WBZLoVxd9vxzat1VAF6DWeyvBaTQDVxpshxaqAllEpM=";
     name = "code-spell-checker-canadian-english";
     publisher = "streetsidesoftware";
-    version = "2.0.2";
+    version = "2.0.3";
   }
   {
     arch = "";
