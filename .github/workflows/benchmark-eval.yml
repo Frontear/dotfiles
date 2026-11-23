@@ -12,6 +12,8 @@ jobs:
 
     name: Benchmark NixOS Configuration
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v7.0.1
