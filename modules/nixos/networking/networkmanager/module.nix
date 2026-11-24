@@ -39,6 +39,9 @@ in {
     # Enables broadband support, but I don't need this.
     networking.modemmanager.enable = lib.mkForce false;
 
+    # NetworkManager runs its own DHCPCD.
+    networking.dhcpcd.enable = false;
+
     networking.networkmanager = {
       # OpenVPN plugin for the school VPN service.
       plugins = with pkgs; [
