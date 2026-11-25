@@ -16,6 +16,7 @@ in {
       microsoft-edge.enable = true;
       legcord.enable = true;
       libreoffice.enable = true;
+      parsec.enable = true;
     };
 
     programs.obs-studio.enable = true;
