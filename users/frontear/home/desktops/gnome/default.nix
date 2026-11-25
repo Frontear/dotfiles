@@ -13,9 +13,9 @@ in {
 
   config = lib.mkIf cfg.enable {
     my.programs = {
-      microsoft-edge.enable = true;
       legcord.enable = true;
       libreoffice.enable = true;
+      microsoft-edge.enable = true;
       parsec.enable = true;
     };
 
