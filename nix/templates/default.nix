@@ -8,10 +8,17 @@
         '';
       };
 
+      python = {
+        path = ./python;
+        description = ''
+          An opinionated Python template.
+        '';
+      };
+
       rust = {
         path = ./rust;
         description = ''
-          An optionated Rust template.
+          An opinionated Rust template.
         '';
 
         welcomeText = ''
