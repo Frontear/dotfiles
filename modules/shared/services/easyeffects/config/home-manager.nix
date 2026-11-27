@@ -16,7 +16,18 @@ in {
     services.easyeffects = {
       enable = true;
 
-      extraPresets = cfg.presets;
+      # By default, load the "nothing" preset. Preset loading should be setup
+      # via autoload, and unfortunately this is imperative.
+      #
+      # TODO: make autoload partially declarative?
+      preset = "nothing";
+
+      extraPresets = {
+        nothing = lib.genAttrs [ "input" "output" ] (_: {
+          blocklist = [];
+          plugins_order = [];
+        });
+      } // cfg.presets;
     };
   };
 }
