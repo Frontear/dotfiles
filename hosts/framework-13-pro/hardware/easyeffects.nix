@@ -6,6 +6,20 @@
     services.easyeffects = {
       enable = true;
 
+      # Generated imperatively via EasyEffects, then copied verbatim.
+      #
+      # TODO: is there a better way?
+      autoload = {
+        output = [
+          {
+            device = "alsa_output.pci-0000_00_1f.3.analog-stereo";
+            device-description = "Built-in Audio Analog Stereo";
+            device-profile = "Speakers";
+            preset-name = "framework-13-pro";
+          }
+        ];
+      };
+
       presets = {
         # Thank you to @stirlingsilver for the amazing EasyEffects profile.
         #

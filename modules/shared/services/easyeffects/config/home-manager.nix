@@ -1,10 +1,20 @@
 {
   nixosConfig,
   lib,
+  pkgs,
   ...
 }:
 let
   cfg = nixosConfig.services.easyeffects;
+  fmt = pkgs.formats.json {};
+
+  mkAutoload = type: cfg.autoload.${type}
+    |> lib.map (x: {
+      name = "easyeffects/autoload/${type}/${x.device}:${x.device-profile}.json";
+      value = {
+        source = fmt.generate "${x.device}:${x.device-profile}.json" x;
+      };
+    });
 in {
   config = lib.mkIf cfg.enable {
     my.persist.directories = [{
@@ -13,13 +23,15 @@ in {
       unique = true;
     }];
 
+    xdg.dataFile = lib.listToAttrs (
+      mkAutoload "input" ++ mkAutoload "output"
+    );
+
     services.easyeffects = {
       enable = true;
 
       # By default, load the "nothing" preset. Preset loading should be setup
-      # via autoload, and unfortunately this is imperative.
-      #
-      # TODO: make autoload partially declarative?
+      # via autoload.
       preset = "nothing";
 
       extraPresets = {
