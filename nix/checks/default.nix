@@ -4,6 +4,10 @@
   ...
 }:
 {
+  imports = [
+    ./templates.nix
+  ];
+
   perSystem = { self', pkgs, ... }: {
     checks = {
       devShells = (pkgs.linkFarm "all-devShells" (
