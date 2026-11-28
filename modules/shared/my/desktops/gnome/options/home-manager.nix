@@ -11,6 +11,13 @@
 
         readOnly = true;
       };
+
+      extensions = lib.mkOption {
+        default = [];
+
+        # TODO: more strict type-checking?
+        type = with lib.types; listOf package;
+      };
     };
   };
 }

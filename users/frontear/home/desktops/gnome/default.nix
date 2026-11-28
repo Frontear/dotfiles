@@ -7,14 +7,16 @@ let
   cfg = config.my.desktops.gnome;
 in {
   imports = [
+    ./extensions
     ./stylix
   ];
 
   config = lib.mkIf cfg.enable {
     my.programs = {
-      microsoft-edge.enable = true;
       legcord.enable = true;
       libreoffice.enable = true;
+      microsoft-edge.enable = true;
+      parsec.enable = true;
     };
 
     programs.obs-studio.enable = true;
@@ -78,5 +80,15 @@ in {
         };
       };
     };
+
+    # The order here is very Windows-inspired.
+    gtk.gtk3.bookmarks = [
+      "file://${config.home.homeDirectory}/Desktop"
+      "file://${config.home.homeDirectory}/Downloads"
+      "file://${config.home.homeDirectory}/Documents"
+      "file://${config.home.homeDirectory}/Pictures"
+      "file://${config.home.homeDirectory}/Music"
+      "file://${config.home.homeDirectory}/Videos"
+    ];
   };
 }

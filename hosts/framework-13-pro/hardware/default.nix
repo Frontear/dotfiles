@@ -1,5 +1,5 @@
 {
   imports = [
-    ./mounts.nix
+    ./easyeffects.nix
   ];
 }

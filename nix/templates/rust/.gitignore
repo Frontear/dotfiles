@@ -2,6 +2,3 @@
 .direnv/
 .envrc
 result
-
-# Rust
-target/

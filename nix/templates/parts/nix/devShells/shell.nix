@@ -1,7 +1,0 @@
-{
-  mkShellNoCC,
-}:
-mkShellNoCC {
-  packages = [
-  ];
-}

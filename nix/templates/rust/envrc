@@ -15,5 +15,5 @@ fi
 
 export CARGO_HOME="$(direnv_layout_dir)/cargo"
 
-watch_dir nix
+watch_dir .nix
 use flake
