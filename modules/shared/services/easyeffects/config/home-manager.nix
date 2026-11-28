@@ -17,11 +17,20 @@ let
     });
 in {
   config = lib.mkIf cfg.enable {
-    my.persist.directories = [{
-      # TODO: needed?
-      path = "~/.config/easyeffects";
-      unique = true;
-    }];
+    my.persist.directories = [
+      {
+        # TODO: needed?
+        path = "~/.config/easyeffects";
+        unique = true;
+      }
+      {
+        # TODO: this is only being done because of the autoload folder.
+        # There are some things I don't want to declare, but still want to have.
+        # Is this reasonable..?
+        path = "~/.local/share/easyeffects";
+        unique = true;
+      }
+    ];
 
     xdg.dataFile = lib.listToAttrs (
       mkAutoload "input" ++ mkAutoload "output"
